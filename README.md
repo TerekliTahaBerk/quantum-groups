@@ -2,8 +2,10 @@
 
 Bu depo, kuantum grup **U_q(sl_2)**'yi sembolik olarak modelleyen, sonlu
 boyutlu indirgenemez temsillerini açık matrislerle inşa eden, tanımlayıcı
-bağıntılarını matris düzeyinde doğrulayan ve ağırlık/kristal yapısını
-görselleştiren bir lisans tezi projesidir.
+bağıntılarını ve Hopf cebir aksiyomlarını matris düzeyinde doğrulayan,
+tensör çarpımı/Clebsch-Gordan ayrışımı, R-matrisi, Yang-Baxter denklemi,
+Hecke bağıntısı ve klasik/birim-kök limitlerini hesaplamalı olarak inceleyen
+bir lisans tezi projesidir.
 
 Proje hem **matematiksel bir tez bölümü** hem de **modüler bir Python
 paketi** olarak tasarlanmıştır.
@@ -39,7 +41,7 @@ limitinde V_n'nin "kombinatoryal gölgesi" olan **kristal taban B(n)**
 ortaya çıkar; bu, b_0 → b_1 → … → b_n yönlü yolu olarak modellenir.
 
 Tam teorik bölüm (gruplar → Lie cebirleri → Hopf cebirleri → kuantum
-gruplar → temsiller → kristaller) tezde verilmiştir.
+gruplar → temsiller → kristaller → R-matris ve limitler) tezde verilmiştir.
 
 ---
 
@@ -53,12 +55,23 @@ quantum-groups/
 │   ├── generators.py          # E, F, K, K^{-1}, q sembolleri
 │   ├── relations.py           # bağıntı motoru ve doğrulama
 │   ├── representations.py     # V_n matrislerini inşa eder
+│   ├── hopf.py                # eş-çarpım, eş-birim, antipot ve Hopf aksiyomları
+│   ├── tensor.py              # tensör çarpımı ve Clebsch-Gordan hesapları
+│   ├── r_matrix.py            # V_1 ⊗ V_1 R-matrisi, QYBE ve Hecke doğrulamaları
+│   ├── limits.py              # q→1 ve birim kök analizleri
 │   ├── crystal.py             # B(n) kristal grafiği
 │   ├── visualization.py       # ağırlık & kristal diyagramları
 │   └── utils.py               # q-tamsayı, q-faktöriyel, q-binom
 ├── tests/                     # pytest test paketi
+│   ├── test_hopf.py
+│   ├── test_limits.py
+│   ├── test_r_matrix.py
 │   ├── test_relations.py
-│   └── test_representations.py
+│   ├── test_representations.py
+│   └── test_tensor.py
+├── thesis/
+│   ├── thesis.tex             # kapsamlı LaTeX tez metni
+│   └── thesis.pdf             # Tectonic ile üretilen PDF
 ├── notebooks/
 │   └── exploration.ipynb      # adım adım gösterim
 ├── main.py                    # uçtan uca demo
@@ -118,7 +131,7 @@ jupyter notebook notebooks/exploration.ipynb
 python3 -m pytest tests/ -q
 ```
 
-Beklenen sonuç: **65 passed**.
+Beklenen sonuç: **97 passed**.
 
 ---
 
@@ -143,9 +156,9 @@ ve B(4) kristal grafiğini üretir.
 
 - Tip 1 dışındaki temsiller (işaret kıvrımları)
 - Birim kökünde kuantum grup (q^N = 1) ve sonlu boyutlu blok yapısı
-- Tensör çarpımları ve Clebsch–Gordan ayrışımı
+- Jones polinomu hesaplaması için örgü temsili ve Markov izi
 - Yüksek rank: U_q(sl_n), genel Cartan tipi
-- R-matris ve Yang–Baxter denkleminin sayısal doğrulanması
+- Kristal tensör çarpımı B(m) ⊗ B(n)
 
 ---
 

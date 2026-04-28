@@ -1,0 +1,793 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Fonts / Unicode ---
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Menlo}
+
+% --- Math ---
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}
+
+% --- Graphics + color (loaded BEFORE babel-turkish to avoid catcode clash) ---
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+% --- Layout ---
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{enumitem}
+\emergencystretch=3em
+
+% --- Code listings ---
+\usepackage{listings}
+
+% --- Turkish (last among textual packages) ---
+% Turkish babel shorthands make "=" active, which breaks package internals
+% under Tectonic/XeTeX when graphicx is loaded lazily.
+\usepackage[shorthands=off,turkish]{babel}
+\definecolor{codegreen}{rgb}{0.0,0.5,0.0}
+\definecolor{codegray}{rgb}{0.4,0.4,0.4}
+\definecolor{codepurple}{rgb}{0.5,0.0,0.35}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.97}
+\lstdefinestyle{pycode}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{codepurple}\bfseries,
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codegreen},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  language=Python,
+  frame=single,
+  rulecolor=\color{codegray!30},
+  xleftmargin=0.5cm,
+}
+\lstset{style=pycode}
+
+% --- Hyperref ---
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black]{hyperref}
+
+% --- Theorems ---
+\newtheorem{theorem}{Teorem}[section]
+\newtheorem{proposition}[theorem]{Önerme}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Sonuç}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Tanım}
+\newtheorem{example}[theorem]{Örnek}
+\newtheorem{remark}[theorem]{Not}
+
+% --- Macros ---
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\gfrak}{\mathfrak{g}}
+\newcommand{\Uq}{U_q(\sl_2)}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\cop}{\Delta}
+\newcommand{\Dop}{\Delta^{\mathrm{op}}}
+\newcommand{\qint}[1]{[#1]_q}
+\newcommand{\qfact}[1]{[#1]_q!}
+\newcommand{\qbin}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}_q}
+\newcommand{\Vn}[1]{V_{#1}}
+\newcommand{\hwt}{v_0}
+\newcommand{\Rcheck}{\check{R}}
+
+% --- Title ---
+\title{
+  \vspace{-1cm}
+  \textbf{Kuantum Grup $\Uq$'nin Sembolik Modellenmesi:} \\[0.3em]
+  \large{Temsil Teorisi, Hopf Yapısı, R-Matrisi ve $q$-Limitlerin Hesaplamalı İncelemesi}
+}
+\author{Taha Berk Terekli}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-0.5cm}
+
+\begin{abstract}
+\noindent
+Bu çalışma, Drinfeld--Jimbo kuantum grubu $\Uq$'nin sembolik (SymPy)
+ve modüler bir Python paketi olarak modellenmesini, sonlu boyutlu
+indirgenemez en yüksek ağırlıklı temsillerinin açık matrislerle
+inşasını, tanımlayıcı bağıntıların ve tüm Hopf cebir aksiyomlarının
+matris düzeyinde otomatik doğrulanmasını içermektedir. Klasik teorik
+sunumun ötesine geçilerek üç orijinal hesaplama bölümü eklenmiştir:
+\textbf{(i)} tensör çarpımı $V_m \otimes V_n$ için Clebsch--Gordan
+ayrışımının en yüksek ağırlık vektörlerinin sembolik biçimde
+hesaplanması (q-deforme katsayılarla); \textbf{(ii)} $V_1 \otimes V_1$
+üzerinde $R$-matrisinin inşası, kuantum Yang--Baxter denkleminin
+$8\times 8$ matris düzeyinde sıfır-kalıntı kanıtı ve örgülü
+versiyonu $\check R$ için Hecke skein bağıntısının doğrulanması;
+\textbf{(iii)} $q\to 1$ klasik limit, genel $q$ kuantum rejimi ve
+$q^N=1$ birim kök limitinin aynı temsil $V_n$ üzerinde karşılaştırmalı
+incelenmesi (klasik $\sl_2$'nin geri gelişi ve $V_n$'nin birim kökte
+indirgenebilir hâle gelmesinin sayısal teyidi). Tüm sonuçlar 97 birim
+test ile doğrulanmıştır. Çalışmanın kodu açık kaynaktır ve tezin
+ekinde sunulmuştur.
+\end{abstract}
+
+\tableofcontents
+
+\section{Giriş ve Motivasyon}
+
+Kuantum gruplar, 1980'li yılların ortalarında V.~Drinfeld ve M.~Jimbo
+tarafından, istatistik mekanikteki integrallenebilir modellerin ve özellikle
+\emph{kuantum Yang--Baxter denkleminin} cebirsel temellerini araştırma
+sürecinde, birbirinden bağımsız olarak ortaya konmuştur. Yapısal olarak
+kuantum gruplar bir Lie grubu \emph{değildirler}; bunlar, evrensel sarmalayıcı
+cebir $U(\gfrak)$'nin formal bir parametre $q$ üzerinden tek-parametreli
+deformasyonu olan, ne değişmeli ne de eş-değişmeli (cocommutative)
+\emph{Hopf cebirleridir}.
+
+Bu çalışmanın hedefi, kuantum grupların prototip örneği olan $\Uq$'yi
+sembolik bilgisayar cebir ortamında uygulamak ve dört yönlü bir analiz
+sunmaktır:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Cebirsel}: dört tanımlayıcı bağıntının ve dokuz Hopf
+        aksiyomunun (eş-birleşmelilik, eş-birim, antipot) matris düzeyinde
+        sembolik kanıtı.
+  \item \textbf{Temsil teorik}: $(n+1)$-boyutlu indirgenemez temsil $V_n$'in
+        açık inşası, $V_m \otimes V_n$ Clebsch--Gordan ayrışımının q-deforme
+        katsayılarıyla hesaplanması.
+  \item \textbf{Topolojik}: $V_1\otimes V_1$ üzerinde $R$-matrisinin
+        inşası, kuantum Yang--Baxter denkleminin ve örgü bağıntısının
+        bilgisayarla kanıtı; bu kanıtın düğüm değişmezleri (Jones polinomu)
+        ile bağlantısı.
+  \item \textbf{Asimptotik}: $q$ parametresinin üç farklı limitinde aynı
+        temsilin yapısının nasıl değiştiğinin somut karşılaştırılması.
+\end{enumerate}
+
+Tezin yazılım çıktısı \texttt{quantum\_group} adlı, 11 modülden ve 97 birim
+testten oluşan bir Python paketidir. Tüm hesaplamalar tekrarlanabilir,
+tüm doğrulamalar otomatiktir.
+
+\paragraph{Tezin yapısı.} Bölüm 2--6 klasik teorik altyapıyı (gruplar, Lie
+cebirleri, Hopf cebirleri, $\Uq$, temsiller) sunar. Bölüm 7 yazılım
+mimarisini özetler. Bölüm 8--10 üç \emph{orijinal hesaplamalı katkıyı}
+(Clebsch--Gordan, R-matris/YBE, üç limit) sunar. Bölüm 11 sonuçları
+özetler ve ileri çalışma yönlerini belirtir.
+
+\section{Gruplar ve Lie Cebirleri}
+
+\begin{definition}
+Bir \emph{grup} $G$, birleşmeli bir ikili işlem $\cdot : G \times G \to G$,
+iki yanlı bir birim eleman $e \in G$ ve her elemanın bir tersi olan bir
+küme yapısıdır.
+\end{definition}
+
+Sürekli simetri grupları üzerinde diferansiyel hesap yapabilmek için Lie
+gruplarına geçilir: $G$ aynı zamanda düzgün bir manifolddur ve grup
+işlemleri düzgündür. Klasik örnekler $\GL_n(\C)$, $\SL_n(\C)$,
+$\mathrm{SO}_n$, $\mathrm{SU}_n$'dur. Bir Lie grubunun \emph{infinitezimal}
+yapısı tanjant uzayında saklıdır.
+
+\begin{definition}
+Bir cisim $\K$ üzerinde bir \emph{Lie cebri} $\gfrak$, antisimetrik ve Jacobi
+özdeşliğini sağlayan iki-doğrusal $[\,\cdot\,,\,\cdot\,] : \gfrak \times \gfrak \to \gfrak$
+parantezi ile donatılmış vektör uzayıdır:
+\[
+  [x,y] = -[y,x], \qquad
+  [x,[y,z]] + [y,[z,x]] + [z,[x,y]] = 0.
+\]
+\end{definition}
+
+Matris Lie grupları için Lie parantezi komütatördür: $[x,y] = xy - yx$.
+Lie grup ile Lie cebir arasındaki köprü üstel dönüşüm $\exp : \gfrak \to G$ ile
+verilir. Lie cebrinin temsil teorisini lineerleştiren araç, bir sonraki
+adımdır.
+
+\begin{definition}
+$\gfrak$ bir Lie cebri olsun. \emph{Evrensel sarmalayıcı cebir} $U(\gfrak)$,
+$\gfrak$'yi içeren ve $xy - yx = [x,y]$ bağıntısı dışında hiçbir bağıntıya
+tabi olmayan birleşmeli birimli cebirdir.
+\end{definition}
+
+$\gfrak$'nin temsilleri ile $U(\gfrak)$'nin temsilleri kanonik olarak birebir
+karşılık gelir; ve kuantum gruba deformasyon hedefimiz tam olarak $U(\gfrak)$
+nesnesidir, $\gfrak$'nin kendisi değil.
+
+\subsection{$\sl_2$ Lie Cebri}
+
+İz sıfır $2 \times 2$ kompleks matrisleri vektör uzayı $\sl_2(\C)$ üç
+boyutludur ve standart bazı:
+\[
+  e = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix},\qquad
+  f = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix},\qquad
+  h = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.
+\]
+Bu eleman üçlüsü temel bağıntıları sağlar:
+\begin{equation}\label{eq:sl2-rels}
+  [h,e] = 2e, \qquad [h,f] = -2f, \qquad [e,f] = h.
+\end{equation}
+Küçük boyutuna karşın $\sl_2$, yarı-basit Lie cebirlerinin tüm yapı
+taşıdır: her böyle cebir basit kökler tarafından indekslenmiş $\sl_2$
+kopyalarından dokunmuş gibidir.
+
+\begin{theorem}[$\sl_2$'nin sonlu boyutlu temsilleri]
+$\sl_2(\C)$'nin sonlu boyutlu indirgenemez temsilleri, negatif olmayan
+tamsayı $n \in \Z_{\geq 0}$ ile birebir karşılık gelir. $V_n$ adlı temsil
+$(n+1)$-boyutludur, baz $\{v_0, v_1, \dots, v_n\}$ üzerinde
+\[
+  h \cdot v_k = (n - 2k) v_k, \quad
+  f \cdot v_k = v_{k+1}, \quad
+  e \cdot v_k = k(n-k+1)\, v_{k-1},
+\]
+ve sınır koşulları $f \cdot v_n = 0$, $e \cdot v_0 = 0$.
+\end{theorem}
+
+$h$'nin özdeğerleri olan $n - 2k$ tamsayılarına \emph{ağırlıklar} denir;
+bu, kuantum gruba geçişte $K$-özdeğerleri olarak yeniden ortaya çıkacaktır.
+
+\section{Hopf Cebirleri}
+
+Bir cebrin temsillerinin tensör çarpımını alabilmek, dual temsiller
+inşa edebilmek ve trivial temsili tanımlayabilmek için cebirsel yapıya
+ek dönüşümler gereklidir. Bu üç dönüşüm \emph{Hopf cebir} aksiyomlarını
+oluşturur.
+
+\begin{definition}
+$\K$ cismi üzerinde birleşmeli birimli bir cebir $H$, eğer eş-çarpım
+$\cop : H \to H \otimes H$, eş-birim $\eps : H \to \K$ ve antipot
+$S : H \to H$ dönüşümleriyle donatılmış ve aşağıdakileri sağlıyorsa
+\emph{Hopf cebri}'dir:
+\begin{enumerate}[leftmargin=*]
+  \item $(\cop \otimes \id) \circ \cop = (\id \otimes \cop) \circ \cop$ \quad (eş-birleşmelilik)
+  \item $(\eps \otimes \id) \circ \cop = \id = (\id \otimes \eps) \circ \cop$ \quad (eş-birim)
+  \item $\mu \circ (S \otimes \id) \circ \cop = \eps(\,\cdot\,)\,1 = \mu \circ (\id \otimes S) \circ \cop$ \quad (antipot)
+\end{enumerate}
+Burada $\mu$ cebir çarpımıdır; ayrıca $\cop$ ve $\eps$ cebir homomorfizmleri,
+$S$ cebir anti-homomorfizmi olmak zorundadır.
+\end{definition}
+
+Hopf yapısının temsil teorik anlamı kritiktir:
+\begin{itemize}[leftmargin=*]
+  \item İki temsil $V$, $W$ verildiğinde, $V \otimes W$ üzerinde $H$-etkisi
+        eş-çarpım aracılığıyla tanımlanır: $X \cdot (v \otimes w) := \cop(X) \cdot (v \otimes w)$.
+  \item Eş-birim $\eps$, trivial temsil $\K$'ya karşılık gelir.
+  \item Antipot $S$, dual temsil $V^*$'ı tanımlamak için kullanılır.
+\end{itemize}
+
+\begin{example}
+Her $U(\gfrak)$, eş-değişmeli (cocommutative) bir Hopf cebridir; üreteçler
+$x \in \gfrak$ üzerinde
+\[
+  \cop(x) = x \otimes 1 + 1 \otimes x, \quad \eps(x) = 0, \quad S(x) = -x.
+\]
+Eş-değişme, klasik tensör çarpımının değişmeli olmasının cebirsel
+karşılığıdır. Kuantum grupta tam olarak bu özellik bozulacaktır.
+\end{example}
+
+\section{Kuantum Grup $\Uq$'nin Tanımı}
+
+$q$ formal bir parametre olsun (veya $q \in \C^\times$, $q^2 \neq 1$).
+
+\begin{definition}\label{def:Uq}
+$\Uq$ kuantum grubu, $\Q(q)$ üzerinde dört üreteç $E$, $F$, $K$, $K^{-1}$
+ile aşağıdaki bağıntılara tabi birleşmeli cebirdir:
+\begin{align}
+  K K^{-1} &= K^{-1} K = 1, \tag{R1} \\
+  K E K^{-1} &= q^{2} E, \tag{R2} \\
+  K F K^{-1} &= q^{-2} F, \tag{R3} \\
+  [E, F] := EF - FE &= \frac{K - K^{-1}}{q - q^{-1}}. \tag{R4}
+\end{align}
+\end{definition}
+
+Bu cebir bir Hopf cebridir; üreteçler üzerinde:
+\begin{align}
+  \cop(E) &= E \otimes 1 + K \otimes E, \\
+  \cop(F) &= F \otimes K^{-1} + 1 \otimes F, \\
+  \cop(K) &= K \otimes K, \\
+  \eps(E) &= \eps(F) = 0, \quad \eps(K) = 1, \\
+  S(E) &= -K^{-1} E, \quad S(F) = -F K, \quad S(K) = K^{-1}.
+\end{align}
+Burada $\cop$ eş-\emph{değişmeli değildir}: $\tau \circ \cop \neq \cop$ (bunu
+örgülü R-matrisin varlığı tam olarak kuantize edecek).
+
+\subsection{$q$-Deformasyon Sezgisi}
+
+$q$-tamsayılar şu formülle tanımlanır:
+\begin{equation}\label{eq:qint}
+  \qint{n} := \frac{q^n - q^{-n}}{q - q^{-1}} = q^{n-1} + q^{n-3} + \dots + q^{-(n-1)}.
+\end{equation}
+$q \to 1$ limiti L'H{\^o}pital ile alındığında $\qint{n} \to n$.
+$q$-faktöriyel $\qfact{n} = \qint{n}\qint{n-1}\cdots\qint{1}$, ve $q \to 1$
+limitinde $\qfact{n} \to n!$.
+
+$K = q^h$ formal yazımıyla, (R4) bağıntısı tam olarak $\qint{h}$
+ifadesidir; klasik $[e,f] = h$ bağıntısının $q$-deformasyonudur.
+$q \to 1$ limitinde $\Uq \to U(\sl_2)$ geri gelir.
+
+\section{$\Uq$'nin Sonlu Boyutlu Temsil Teorisi}
+
+\begin{theorem}\label{thm:irreps}
+Genel $q$ (yani $q$ birim kökü değil) için, $\Uq$'nin sonlu boyutlu
+indirgenemez ``Tip 1'' temsilleri $n \in \Z_{\geq 0}$ ile parametrelenir.
+$V_n$ temsili $(n+1)$-boyutludur, baz $\{v_0, \dots, v_n\}$ üzerinde
+\begin{align}
+  K \cdot v_k &= q^{n - 2k}\, v_k, \\
+  F \cdot v_k &= v_{k+1}, \quad (F \cdot v_n = 0) \\
+  E \cdot v_k &= \qint{k} \qint{n - k + 1}\, v_{k-1}, \quad (E \cdot v_0 = 0).
+\end{align}
+\end{theorem}
+
+\begin{proof}[Kanıt taslağı]
+Bir vektör $v_0 \neq 0$, $E v_0 = 0$ ve $K v_0 = q^n v_0$ koşullarıyla
+varsayılır (\emph{en yüksek ağırlık vektörü}). $v_k := F^k v_0 / \qfact{k}$
+ile tanımlanır. (R2) ve (R3)'ten $K v_k$ formülü; (R4)'ün tekrarlı
+uygulanmasından $E v_k$ formülü çıkar. $V_n$'nin indirgenemezliği
+ağırlık ayrışımının her ağırlık altuzayının bir-boyutlu olmasından
+gelir.
+\end{proof}
+
+\textbf{Klasik limit kontrolü.} $q \to 1$ alındığında:
+$\qint{k} \to k$, $\qint{n-k+1} \to n-k+1$, dolayısıyla
+$E \cdot v_k \to k(n-k+1) v_{k-1}$. Klasik $\sl_2$ formülleri geri gelir.
+
+\section{Kristal Tabanlar (Genel Bakış)}
+
+$q \to 0$ limitinde matris katsayıları singüler hâle gelir, ancak
+\emph{Kashiwara'nın kristal taban} adlı kombinatoryal bir iskelet
+hayatta kalır. $\Uq$ için kristal $B(n)$, $n+1$ düğüm ve $n$ yönlü
+kenardan oluşan basit bir yoldur:
+\[
+  b_0 \xrightarrow{\tilde{f}} b_1 \xrightarrow{\tilde{f}} \cdots
+  \xrightarrow{\tilde{f}} b_n.
+\]
+Burada $\tilde{f}, \tilde{e}$ Kashiwara operatörleri, $F$ ve $E$'nin
+$q \to 0$ limitinde "kalıntılarıdır". Kristal yapısı, tensör çarpımı,
+karakter formülleri ve dallanma kurallarını kombinatoryal nesneler
+üzerinden hesaplamayı mümkün kılar; modern cebirsel kombinatoriğin
+büyük bir bölümünün motivasyonunu oluşturur.
+
+\section{Yazılım Mimarisi}
+
+\texttt{quantum\_group} paketi 11 modülden oluşur:
+
+\begin{center}
+\small
+\begin{tabular}{ll}
+\hline
+Modül & Sorumluluk \\
+\hline
+\texttt{utils.py} & $q$-tamsayı, $q$-faktöriyel, $q$-binom, klasik limit \\
+\texttt{generators.py} & Sembolik üreteçler $E, F, K, K^{-1}, q$ \\
+\texttt{relations.py} & Tanımlayıcı bağıntılar + matris doğrulama \\
+\texttt{representations.py} & $V_n$ temsilini açık matrislerle inşa \\
+\texttt{quantum\_group\_sl2.py} & \texttt{QuantumGroupSL2} cephe sınıfı \\
+\texttt{hopf.py} & $\cop, \eps, S$ + Hopf aksiyomlarının doğrulaması \\
+\texttt{tensor.py} & $V_m \otimes V_n$ + Clebsch--Gordan ayrışımı \\
+\texttt{r\_matrix.py} & R-matris, QYBE, örgü bağıntısı, Hecke skein \\
+\texttt{limits.py} & Klasik / genel $q$ / birim kök / kristal limitleri \\
+\texttt{crystal.py} & $B(n)$ kristal grafiği \\
+\texttt{visualization.py} & Ağırlık diyagramı + kristal grafiği çizimi \\
+\hline
+\end{tabular}
+\end{center}
+
+Test paketi (\texttt{tests/}, \texttt{pytest}) 97 birim test içerir;
+hepsi geçer.
+
+\paragraph{Bağıntıların doğrulanması.} Her bağıntı $X = Y$ için
+$Z := X - Y$ matrisi $V_n$ üzerinde inşa edilir ve
+\texttt{sympy.simplify} ile sıfır olduğu kanıtlanır. Bu yöntem,
+sembolik $q$ ile dahi tüm dört bağıntıyı $V_0, \dots, V_4$ üzerinde
+otomatik olarak kanıtlamıştır.
+
+\section{Orijinal Katkı I: Tensör Çarpımı ve Clebsch--Gordan Ayrışımı}
+
+Klasik $\sl_2$ teorisinde Clebsch--Gordan formülü:
+\[
+  V_m \otimes V_n \cong V_{m+n} \oplus V_{m+n-2} \oplus \dots \oplus V_{|m-n|}.
+\]
+Kuantum durumda \emph{aynı} ayrışım yapısı korunur, ancak en yüksek
+ağırlık vektörlerini ifade eden katsayılar artık $q$'nun rasyonel
+fonksiyonlarıdır. Bu, $\Uq$'nin Hopf yapısıyla taşınan tensör çarpımı
+sayesinde mümkündür.
+
+\subsection{Algoritma}
+
+Verilen $V_m, V_n$ için $V_m \otimes V_n$ üzerinde üreteçlerin etkisi,
+eş-çarpımdan Kronecker çarpımı ile hesaplanır:
+\begin{align*}
+  E \cdot (v \otimes w) &= E v \otimes w + K v \otimes E w, \\
+  F \cdot (v \otimes w) &= F v \otimes K^{-1} w + v \otimes F w, \\
+  K \cdot (v \otimes w) &= K v \otimes K w.
+\end{align*}
+$V_m \otimes V_n$'nin "$k$-ağırlık altuzayı" K-özdeğeri $q^k$ olan
+vektörler ailesidir; her $k = m+n, m+n-2, \dots, |m-n|$ için bu altuzay
+incelenir ve $E$'nin çekirdeği bulunur. Çekirdekteki vektör, $V_k$
+parçasının en yüksek ağırlık vektörüdür.
+
+\subsection{Hesaplama Sonuçları}
+
+Aşağıdaki ayrışımlar paket tarafından otomatik üretilmiştir.
+
+\paragraph{$V_1 \otimes V_1$.}
+\[
+  V_1 \otimes V_1 \cong V_2 \oplus V_0.
+\]
+En yüksek ağırlık vektörleri (baz: $v_0\!\otimes\! v_0,\ v_0\!\otimes\! v_1,\ v_1\!\otimes\! v_0,\ v_1\!\otimes\! v_1$):
+\[
+  \hwt^{(2)} = (1, 0, 0, 0)^\top, \qquad
+  \hwt^{(0)} = \big(0,\ -q^{-1},\ 1,\ 0\big)^\top.
+\]
+$V_0$ parçasının vektörü, klasik antisimetrik vektör
+$(0, -1, 1, 0)/\sqrt{2}$'nin $q$-deforme hâli olup, $-q^{-1}$ katsayısı
+$q$-deformasyonun cebirsel parmak izidir.
+
+\paragraph{$V_2 \otimes V_2$.}
+\[
+  V_2 \otimes V_2 \cong V_4 \oplus V_2 \oplus V_0.
+\]
+$V_0$ singleti (baz $v_i \otimes v_j$, $i,j \in \{0,1,2\}$ üzerinde):
+\[
+  \hwt^{(0)} = (0, 0, q^{-2}, 0, -1, 0, 1, 0, 0)^\top.
+\]
+Klasik limitte $q \to 1$: $(0,0,1,0,-1,0,1,0,0)^\top$, klasik
+Clebsch--Gordan ile uyumludur.
+
+\paragraph{$V_3 \otimes V_2$.}
+\[
+  V_3 \otimes V_2 \cong V_5 \oplus V_3 \oplus V_1.
+\]
+$V_3$ parçasının en yüksek ağırlık vektörü, sıfırdan farklı iki konumda
+\[
+  -\frac{q^4 + q^2 + 1}{q^6 + q^4} \quad\text{ve}\quad 1
+\]
+katsayılarına sahiptir. $q \to 1$ limitinde $-3/2$ ve $1$, yani
+$\binom{3}{1}/\binom{2}{0}$ tipi klasik Clebsch--Gordan oranını verir.
+
+\subsection{Doğrulama}
+
+Üretilen her vektör $v$ için
+\[
+  E \cdot v = 0, \qquad K \cdot v = q^k v
+\]
+sembolik olarak teyit edilmiştir (bkz.\ \path{tests/test_tensor.py},
+\path{test_highest_weight_vectors_killed_by_E}). Ayrıca
+$V_m \otimes V_n$ üzerinde dört tanımlayıcı bağıntı (R1)--(R4)
+$\cop$ ile bağışıklık altında otomatik sağlanmıştır
+(\path{test_tensor_satisfies_relations}).
+
+\section{Orijinal Katkı II: R-Matrisi ve Yang--Baxter Denklemi}
+
+Kuantum grupların \emph{var olma sebebi}, bir braided monoidal kategoride
+istatistik mekaniğin Yang--Baxter denklemini yerleştirebilen evrensel bir
+$R$ elemanının inşasıdır. $\Uq$ için bu eleman, $V_1 \otimes V_1$
+üzerinde aşağıdaki $4 \times 4$ matrise indirgenir:
+\begin{equation}\label{eq:R}
+  R = \begin{pmatrix}
+    q & 0 & 0 & 0 \\
+    0 & 1 & q - q^{-1} & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & q
+  \end{pmatrix},
+\end{equation}
+baz sıralaması $v_0\!\otimes\! v_0,\ v_0\!\otimes\! v_1,\ v_1\!\otimes\! v_0,\ v_1\!\otimes\! v_1$.
+
+\subsection{Kuantum Yang--Baxter Denklemi}
+
+$V_1^{\otimes 3}$ üzerinde $R$-matris denklemi şudur:
+\begin{equation}\label{eq:QYBE}
+  R_{12} R_{13} R_{23} = R_{23} R_{13} R_{12},
+\end{equation}
+burada $R_{ij}$, $V_1^{\otimes 3}$'nin $i$ ve $j$. faktörlerine etki eder
+ve diğerinde özdeşliktir. Bu, $8 \times 8$ matrisler arasındaki bir
+denklemdir.
+
+\begin{theorem}[Hesaplamalı kanıt]\label{thm:QYBE}
+\eqref{eq:R} ile verilen $R$-matrisi \eqref{eq:QYBE} kuantum
+Yang--Baxter denklemini sağlar. Kalıntı matris $R_{12} R_{13} R_{23} -
+R_{23} R_{13} R_{12}$, sembolik $q$ üzerinde tam olarak $8 \times 8$
+sıfır matristir.
+\end{theorem}
+
+\begin{proof}
+SymPy ile $R_{13}$ matrisini
+\[
+  R_{13} = (\id \otimes \tau)(R \otimes \id)(\id \otimes \tau)
+\]
+biçiminde inşa ederiz; $\tau$ tensör değiştirme matrisidir. Sonra
+$R_{12} R_{13} R_{23}$ ve $R_{23} R_{13} R_{12}$ ürünleri açık şekilde
+hesaplanır. \texttt{sympy.simplify} her 64 girişi sıfıra indirger.
+\\Kod konumu: \path{quantum_group/r_matrix.py}, fonksiyon
+\path{qybe_residual}; test \path{tests/test_r_matrix.py},
+\path{test_R_satisfies_qybe}.
+\end{proof}
+
+\subsection{Örgülü R-Matrisi ve Hecke Skein Bağıntısı}
+
+$\check R := \tau \circ R$ \emph{örgülü R-matrisi} olarak adlandırılır;
+$B_n$ örgü grubunun temsilini verir.
+
+\begin{theorem}[Örgü bağıntısı]\label{thm:braid}
+$\check R$ aşağıdakini sağlar:
+\[
+  \check R_{12} \check R_{23} \check R_{12} = \check R_{23} \check R_{12} \check R_{23}.
+\]
+\end{theorem}
+
+Bu bağıntı, $B_3$ üreteçleri $\sigma_1, \sigma_2$ arasındaki klasik
+örgü ilişkisinin matris karşılığıdır. Bunun cebirsel sonucu Hecke
+cebir tipi bir kuadratik özdeşliktir:
+
+\begin{theorem}[Hecke skein bağıntısı]\label{thm:hecke}
+$\check R$ aşağıdaki kuadratik bağıntıyı sağlar:
+\[
+  \check R - \check R^{-1} = (q - q^{-1})\, I_4.
+\]
+\end{theorem}
+
+\begin{proof}
+$\check R$'nin $4 \times 4$ açık matrisini ve $\check R^{-1}$'i SymPy
+ile hesaplayıp farkı sadeleştirdiğimizde tam olarak
+$(q - q^{-1}) I_4$ elde ederiz. Test
+\texttt{tests/test\_r\_matrix.py::test\_jones\_skein}.
+\end{proof}
+
+\subsection{Spektral Ayrışma ve Clebsch--Gordan ile Bağlantı}
+
+\begin{proposition}\label{prop:eigs}
+$\check R$'nin $V_1 \otimes V_1$ üzerindeki özdeğerleri ve çoklukları:
+\[
+  \mathrm{spec}(\check R) = \{q^{(3)},\ -q^{-1\,(1)}\}.
+\]
+\end{proposition}
+
+Bu spektrum, $V_1 \otimes V_1 = V_2 \oplus V_0$ Clebsch--Gordan
+ayrışımıyla doğrudan örtüşür: $V_2$ üç-boyutlu simetrik kanat ($q$
+özdeğeri ile), $V_0$ bir-boyutlu antisimetrik singlet ($-q^{-1}$
+özdeğeri ile). Bu, $q$ özdeğerini ``trivial örgü'' ile ve $-q^{-1}$'i
+``yarı-tur ile işaret değişimi'' ile ilişkilendiren topolojik bir
+yorumdur.
+
+\subsection{Düğüm Değişmezleriyle Bağlantı (İleri Görü)}
+
+Hecke skein bağıntısı, $\check R$'nin $B_n$ üzerindeki temsilinin Hecke
+cebri $H_n(q)$'dan faktör olduğunu gösterir. Markov izi alındığında, bu
+temsil \emph{Jones polinomunu} ($\sl_2$ versiyonu) üretir. Tezde Jones
+polinomunu hesaplamadık; ancak yapısal altyapı (Theorem~\ref{thm:braid},
+\ref{thm:hecke}) inşa edilmiştir.
+
+\section{Orijinal Katkı III: Üç Limit -- Klasik / Kuantum / Birim Kök}
+
+Kuantum gruplar üç farklı asimptotik rejimde yaşar. Bu bölüm aynı
+temsil $V_n$'i her üç rejimde inceleyerek kuantizasyonun anlamını
+somutlaştırır.
+
+\subsection{(L1) Klasik Limit $q \to 1$}
+
+Cartan elemanını şu limitle geri kazanırız:
+\[
+  h := \lim_{q \to 1} \frac{K - 1}{q - 1}.
+\]
+Köşegen olduğu için $h$'nin $k$. girişi
+$\lim_{q \to 1} (q^{n-2k} - 1)/(q - 1) = n - 2k$, yani klasik
+$\sl_2$ ağırlığıdır.
+
+\begin{theorem}[Sayısal teyit]\label{thm:classical}
+$V_n$ için, $h = \lim_{q\to 1} (K-1)/(q-1)$ ile tanımlanan operatörün
+köşegen girişleri $\{n, n-2, n-4, \dots, -n\}$'dir; ve aynı limit
+$\lim_{q\to 1} [E,F] = h$ olur.
+\end{theorem}
+
+Doğrulama, $V_1, V_2, V_3, V_4$ için \path{tests/test_limits.py}
+içindeki \path{test_classical_commutator_equals_h} testi ile
+yapılmıştır.
+
+\subsection{(L2) Genel $q$}
+
+Bu temel kuantum rejimdir. $K$-özdeğerleri $\{q^n, q^{n-2}, \dots, q^{-n}\}$,
+$E$-katsayıları $\qint{k}\qint{n-k+1}$. Tüm dört (R1)--(R4) ve dokuz Hopf
+aksiyomu sembolik $q$ üzerinde sağlanır.
+
+\subsection{(L3) Birim Kök $q^N = 1$}
+
+$q$'yu $N$. primitif birim kökü $\zeta = e^{2\pi i/N}$ ile değerlendirdiğimizde
+$\qint{N} = 0$ olur. Bu, $\Uq$ üzerinde dramatik etkiler yaratır: $E^N$,
+$F^N$ ve $K^{2N}$ merkezi elemanlar hâline gelir; bazı $V_n$ temsilleri
+indirgenebilir hâle gelir.
+
+\begin{example}[Sayısal gözlem]
+$N = 4$ alalım, yani $q = i$. $V_2$ üzerinde $E$-matris katsayıları
+$\qint{1}\qint{2}$ ve $\qint{2}\qint{1}$ formundadır. Burada
+\[
+  \qint{2} = q + q^{-1} = i + i^{-1} = 0
+\]
+olduğundan, hesaplama $E = 0_3$ verir:
+\[
+  E\big|_{q=i} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}.
+\]
+Yani $V_2$, $q = i$'de yapısal olarak \emph{çöker} ve genel $q$
+durumundakinden farklı, indirgenebilir bir $\Uq|_{q=i}$-modül hâline
+gelir. Bu olgu \path{tests/test_limits.py::test_root_of_unity_V2_at_q4_singular}
+ile sayısal olarak doğrulanmıştır.
+\end{example}
+
+Bunun teorik anlamı, ``küçük kuantum grup'' $u_q(\sl_2)$'nin (Lusztig)
+ortaya çıkışıdır: birim kökte $\Uq$'nin sonlu boyutlu indirgenemez
+temsilleri sınıflanması tamamen değişir, blok yapısı belirir, ve kuantum
+gruplar konformal alan teorisi ile bağlantı kurar.
+
+\subsection{(L4) Kristal Limit $q \to 0$}
+
+$q \to 0$ alındığında bireysel matris katsayıları singüler olur, ancak
+$V_n$'in "kristal taban iskeleti" sağ kalır:
+\[
+  B(n): \quad b_0 \xrightarrow{\tilde f} b_1 \xrightarrow{\tilde f} \dots
+   \xrightarrow{\tilde f} b_n,
+\]
+$\tilde f$ tek bir oka kısaltılan $F$-etkisi, $\tilde e$ ise tersidir.
+Tezimizde bu yapı \texttt{quantum\_group/crystal.py} modülünde grafik
+nesnesi olarak somutlaştırılmış ve görselleştirilmiştir.
+
+\subsection{Üç Limitin Karşılaştırması ($V_2$ örneği)}
+
+\begin{center}
+\small
+\begin{tabular}{l|l|l|l}
+\hline
+& Klasik ($q \to 1$) & Genel $q$ & Birim kök ($q^4 = 1$) \\
+\hline
+$K$-özdeğerleri & 1, 1, 1 & $q^2, 1, q^{-2}$ & $-1, 1, -1$ \\
+$h$-özdeğerleri & 2, 0, $-2$ & --- & --- \\
+$E$-girdileri & 2, 2 & $\qint{1}\qint{2}, \qint{2}\qint{1}$ & 0, 0 \\
+İndirgenemez mi? & Evet & Evet & \textbf{Hayır} \\
+Boyut & 3 & 3 & 3 \\
+\hline
+\end{tabular}
+\end{center}
+
+Bu tablo, kuantum grubun "$q$ parametresinin üç hayatı"nı tek bir
+temsil üzerinde özetler.
+
+\section{Sonuçlar ve Gelecek Çalışma}
+
+Bu çalışmada kuantum grup $\Uq$, sembolik bilgisayar cebir ortamında
+modüler bir Python paketi olarak inşa edilmiş ve dört yönlü bir analize
+tabi tutulmuştur:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{Cebirsel doğrulama}: Dört (R1)--(R4) bağıntısı ve dokuz
+        Hopf aksiyomu, $V_0, \dots, V_3$ üzerinde sembolik olarak
+        kanıtlanmıştır (97 birim test, hepsi geçer).
+  \item \textbf{Tensör teorisi}: $V_m \otimes V_n$ Clebsch--Gordan
+        ayrışımı, en yüksek ağırlık vektörlerinin q-deforme katsayılarıyla
+        açık formülü çıkarılmıştır.
+  \item \textbf{R-matris}: $V_1 \otimes V_1$ üzerinde QYBE'nin sıfır-kalıntı
+        kanıtı; örgü bağıntısı ve Hecke skein özdeşliği doğrulanmıştır.
+  \item \textbf{Üç limit}: klasik / genel $q$ / birim kök rejimleri
+        karşılaştırılmış; $V_2$'nin $q^4=1$'de yapısal çöküşü sayısal olarak
+        gözlemlenmiştir.
+\end{itemize}
+
+\paragraph{İleri çalışma yönleri.}
+\begin{enumerate}[leftmargin=*]
+  \item \emph{Jones polinomu hesaplaması}: tezdeki örgü temsilini Markov
+        izi ile birleştirerek küçük düğümlerin (trefoil, sekiz-düğüm) Jones
+        polinomunu hesaplama.
+  \item \emph{Yüksek rank}: $U_q(\sl_n)$ ve genel Cartan tipi için aynı
+        altyapının genelleştirilmesi.
+  \item \emph{Küçük kuantum grup}: $u_q(\sl_2)$'nin birim kökünde tam
+        temsil teorisinin ve blok yapısının inşası.
+  \item \emph{Crystal tensör çarpımı}: $B(m) \otimes B(n)$ kristal
+        kuralının uygulanması ve klasik Clebsch--Gordan ile karşılaştırılması.
+\end{enumerate}
+
+\appendix
+\section{Kod Erişimi ve Çalıştırma}
+
+Tüm kod GitHub deposunda bulunmaktadır.
+
+\paragraph{Kurulum.}
+\begin{lstlisting}[language=bash]
+pip install sympy networkx matplotlib pytest
+\end{lstlisting}
+
+\paragraph{Tüm testleri çalıştır.}
+\begin{lstlisting}[language=bash]
+python3 -m pytest tests/ -q
+# 97 passed
+\end{lstlisting}
+
+\paragraph{Demo.}
+\begin{lstlisting}[language=bash]
+python3 main.py
+\end{lstlisting}
+
+\paragraph{Tipik kullanım.}
+\begin{lstlisting}[language=Python]
+from quantum_group import (
+    QuantumGroupSL2, build_representation,
+    tensor_product, find_highest_weight_vectors,
+    R_matrix_V1, qybe_holds, jones_skein_relation_check,
+    classical_K_to_h, root_of_unity_substitution,
+)
+
+# Bağıntılar V_3 üzerinde sağlanır
+Uq = QuantumGroupSL2()
+assert all(c.holds for c in Uq.verify(n=3).values())
+
+# CG ayrışımı
+A, B = build_representation(2), build_representation(2)
+T = tensor_product(A, B)  # V_2 x V_2
+hws = find_highest_weight_vectors(T)
+# [(4, ...), (2, ...), (0, ...)]
+
+# QYBE
+assert qybe_holds(R_matrix_V1())
+
+# Hecke skein
+assert all(jones_skein_relation_check().values())
+
+# Birim kök analizi
+rep = build_representation(2)
+sub = root_of_unity_substitution(rep, N=4)
+# sub['E_q=zeta'] sifir matrisi -> indirgenebilir
+\end{lstlisting}
+
+\section{Bölüm Özetleri ve Test Eşlemesi}
+
+\begin{center}
+\small
+\begin{tabular}{lll}
+\hline
+Tez Bölümü & Kod Modülü & Test \\
+\hline
+§4 (Tanım) & \texttt{relations.py} & \texttt{test\_relations.py} \\
+§5 (Temsiller) & \texttt{representations.py} & \texttt{test\_representations.py} \\
+§3,§4 (Hopf) & \texttt{hopf.py} & \texttt{test\_hopf.py} \\
+§8 (CG) & \texttt{tensor.py} & \texttt{test\_tensor.py} \\
+§9 (R-matris) & \texttt{r\_matrix.py} & \texttt{test\_r\_matrix.py} \\
+§10 (Limitler) & \texttt{limits.py} & \texttt{test\_limits.py} \\
+§6 (Kristal) & \texttt{crystal.py} & \texttt{test\_representations.py} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{9}
+\bibitem{Drinfeld}
+V.~G.~Drinfeld, \emph{Quantum Groups}, Proceedings of the International Congress of Mathematicians, Berkeley, 1986.
+
+\bibitem{Jimbo}
+M.~Jimbo, \emph{A $q$-difference analogue of $U(\gfrak)$ and the Yang--Baxter equation}, Lett.\ Math.\ Phys.\ \textbf{10} (1985), 63--69.
+
+\bibitem{Kassel}
+C.~Kassel, \emph{Quantum Groups}, Graduate Texts in Mathematics 155, Springer, 1995.
+
+\bibitem{KS}
+A.~Klimyk, K.~Schm{\"u}dgen, \emph{Quantum Groups and Their Representations}, Springer, 1997.
+
+\bibitem{Lusztig}
+G.~Lusztig, \emph{Introduction to Quantum Groups}, Birkh{\"a}user, 1993.
+
+\bibitem{Kashiwara}
+M.~Kashiwara, \emph{On crystal bases of the $q$-analogue of universal enveloping algebras}, Duke Math.\ J.\ \textbf{63} (1991), 465--516.
+
+\bibitem{HK}
+J.~Hong, S.-J.~Kang, \emph{Introduction to Quantum Groups and Crystal Bases}, AMS, 2002.
+
+\bibitem{Jones}
+V.~F.~R.~Jones, \emph{A polynomial invariant for knots via von Neumann algebras}, Bull.\ Amer.\ Math.\ Soc.\ \textbf{12} (1985), 103--111.
+\end{thebibliography}
+
+\end{document}

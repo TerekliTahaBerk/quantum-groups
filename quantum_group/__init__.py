@@ -9,6 +9,10 @@ Paket içeriği
 * QuantumGroupSL2  — üst seviye cephe sınıfı
 * build_representation — V_n temsilini matris olarak inşa eder
 * verify_on_representation — bağıntıları matris düzeyinde doğrular
+* verify_all_hopf_axioms — Hopf cebir aksiyomlarını doğrular
+* tensor_product, find_highest_weight_vectors — tensör çarpımı ve CG hesapları
+* R_matrix_V1, qybe_holds — R-matrisi ve Yang-Baxter doğrulaması
+* classical_K_to_h, root_of_unity_substitution — klasik ve birim-kök limitleri
 * q_integer, q_factorial, q_binomial — q-aritmetik yardımcıları
 * plot_weight_diagram, plot_crystal_graph — görselleştirme
 
@@ -42,6 +46,25 @@ from .crystal import (
     build_crystal, crystal_nodes, crystal_string, f_tilde, e_tilde, CrystalNode,
 )
 from .visualization import plot_weight_diagram, plot_crystal_graph, plot_combined
+from .hopf import (
+    coproduct, counit, antipode,
+    verify_all_hopf_axioms, verify_antipode, verify_coassociativity,
+    HopfAxiomCheck,
+)
+from .tensor import (
+    TensorRepresentation, tensor_product,
+    cg_summands, find_highest_weight_vectors, cg_decomposition_summary,
+)
+from .r_matrix import (
+    R_matrix_V1, R_check_V1,
+    qybe_holds, braid_relation_holds,
+    qybe_residual, braid_relation_residual,
+    R_check_eigenvalues, jones_skein_relation_check,
+)
+from .limits import (
+    classical_K_to_h, classical_commutator_EF,
+    root_of_unity_substitution, three_limit_summary,
+)
 
 __all__ = [
     "QuantumGroupSL2",
@@ -55,4 +78,15 @@ __all__ = [
     "build_crystal", "crystal_nodes", "crystal_string",
     "f_tilde", "e_tilde", "CrystalNode",
     "plot_weight_diagram", "plot_crystal_graph", "plot_combined",
+    "coproduct", "counit", "antipode",
+    "verify_all_hopf_axioms", "verify_antipode", "verify_coassociativity",
+    "HopfAxiomCheck",
+    "TensorRepresentation", "tensor_product",
+    "cg_summands", "find_highest_weight_vectors", "cg_decomposition_summary",
+    "R_matrix_V1", "R_check_V1",
+    "qybe_holds", "braid_relation_holds",
+    "qybe_residual", "braid_relation_residual",
+    "R_check_eigenvalues", "jones_skein_relation_check",
+    "classical_K_to_h", "classical_commutator_EF",
+    "root_of_unity_substitution", "three_limit_summary",
 ]
