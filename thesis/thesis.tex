@@ -764,6 +764,106 @@ Tez Bölümü & Kod Modülü & Test \\
 \end{tabular}
 \end{center}
 
+\section{Bilgisayar Destekli Graded Yang--Baxter Doğrulaması: $\mathrm{GL}_q(2|1)$}
+
+Bu bölümde, Çelik ve Çelik \cite{CelikGL21} tarafından tanıtılan yeni
+kuantum süpergrubu $\mathrm{GL}_q(2|1)$ ele alınır ve bu süpergruba ilişkin
+\emph{graded} (yani $\mathbb{Z}_2$-dereceli) Yang--Baxter denkleminin
+bilgisayar destekli sembolik doğrulaması sunulur. Bu doğrulama, projenin
+$\Uq$ tarafına ek olarak getirdiği yeni bir metodolojik bileşendir.
+
+\subsection{Kuantum süpergrubu ve $R$-matrisi}
+
+$\mathrm{GL}_q(2|1)$, $V = \mathbb{C}^{2|1}$ süper vektör uzayı üzerinde
+tanımlıdır. $V$'nin baz vektörleri $e_1, e_2, e_3$ olup pariteleri
+(dereceleri)
+\[
+p(e_1) = 0, \qquad p(e_2) = 0, \qquad p(e_3) = 1
+\]
+şeklindedir; yani ilk iki baz vektörü \emph{even} (çift), üçüncüsü
+\emph{odd} (tek)tir. Makalede verilen $R$-matrisi $V \otimes V$ (dokuz
+boyutlu) uzayı üzerinde etki eden $9\times 9$ bir matristir:
+\[
+R =
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & q^2 & 0 & 1-q^2 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & q & 0 & 0 & 0 & 1-q^2 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & q & 0 & 1-q^2 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & q & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & q & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & q^2
+\end{pmatrix}.
+\]
+Burada $V \otimes V$ bazının sıralaması
+\[
+e_1\otimes e_1,\ e_1\otimes e_2,\ e_1\otimes e_3,\
+e_2\otimes e_1,\ \ldots,\ e_3\otimes e_3
+\]
+biçimindedir.
+
+\subsection{Süper permütasyon ve tensör yerleşimleri}
+
+$V \otimes V$ üzerinde \emph{süper permütasyon} (graded swap) operatörü
+\[
+P(e_i \otimes e_j) = (-1)^{p(i)p(j)}\, e_j \otimes e_i
+\]
+ile tanımlanır. Parite $[0,0,1]$ olduğundan $P$, klasik permütasyon
+matrisinden yalnızca odd--odd bileşeninde, yani $P^{33}_{33} = -1$
+işaretinde ayrılır. Üç faktörlü uzay $V \otimes V \otimes V$ üzerinde
+operatörler makaledeki tanımlarla
+\[
+R_{12} = R \otimes I_3, \qquad
+R_{23} = I_3 \otimes R, \qquad
+R_{13} = (P \otimes I_3)\, R_{23}\, (P \otimes I_3)
+\]
+biçiminde kurulur; burada $I_3$ üç boyutlu birim matristir.
+
+\subsection{Kalıntı matrisi ve doğrulama}
+
+Graded Yang--Baxter denklemi
+\[
+R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}
+\]
+biçimindedir. Kalıntı matrisi
+\[
+Y(q) = R_{12}R_{13}R_{23} - R_{23}R_{13}R_{12}
+\]
+olarak tanımlanır. Kodun amacı, bu $27 \times 27$ matrisin tüm girdilerinin
+sembolik olarak sıfır olduğunu, yani
+\[
+Y(q)_{ij}=0 \quad \text{for all } 1\leq i,j\leq 27,
+\]
+göstermektir. Verilen $R$-matrisi için tanımlı baz ve parite konvansiyonları
+altında, graded Yang--Baxter eşitliği tüm matris girdileri düzeyinde
+sembolik olarak doğrulanmıştır.
+
+\subsection{Genel çoklu tensör yerleşimi}
+
+Ana doğrulama $V \otimes V \otimes V$ üzerindeki $27 \times 27$ matrislerle
+yapılır. Buna ek olarak kod, aynı $R$-matrisinin daha yüksek tensör
+kuvvetlerine yerleştirilmesini de destekler. $V^{\otimes 4}$ üzerinde
+$R_{12}, R_{13}, R_{14}, R_{23}, R_{24}, R_{34}$ operatörleri $81 \times 81$
+matrisler olarak üretilebilir; komşu olmayan yerleşimler graded
+adjacent-swap operatörleriyle taşınır. Bu altyapı üzerinde uzak
+komütativite $R_{12}R_{34} = R_{34}R_{12}$ ve dört faktörlü uzaydaki tüm
+üçlü alt-blok Yang--Baxter kontrolleri otomatik olarak doğrulanır. Bu,
+yöntemin tek bir denklem doğrulamasının ötesinde, daha genel bir graded
+örgü/Yang--Baxter hesap altyapısı olduğunu gösterir.
+
+\subsection{Metodolojik Katkı}
+
+Bu çalışmadaki yeni katkı, $\mathrm{GL}_q(2|1)$ için verilen $R$-matrisinin
+graded Yang--Baxter denklemine ilişkin doğrudan hesaplamasını Python/SymPy
+üzerinde modellenebilir, test edilebilir ve tekrar üretilebilir bir
+doğrulama prosedürüne dönüştürmektir. Böylece klasik elle hesap yöntemi ile
+bilgisayar destekli sembolik cebir yöntemi birleştirilmiştir. İlgili
+işlevler \texttt{quantum\_group/supergroup\_gl21.py} modülünde toplanmış,
+doğrulamalar ise \texttt{tests/test\_supergroup\_gl21.py} altında pytest
+testleriyle güvence altına alınmıştır.
+
 \begin{thebibliography}{9}
 \bibitem{Drinfeld}
 V.~G.~Drinfeld, \emph{Quantum Groups}, Proceedings of the International Congress of Mathematicians, Berkeley, 1986.
@@ -788,6 +888,9 @@ J.~Hong, S.-J.~Kang, \emph{Introduction to Quantum Groups and Crystal Bases}, AM
 
 \bibitem{Jones}
 V.~F.~R.~Jones, \emph{A polynomial invariant for knots via von Neumann algebras}, Bull.\ Amer.\ Math.\ Soc.\ \textbf{12} (1985), 103--111.
+
+\bibitem{CelikGL21}
+S.~Celik, S.~A.~Celik, \emph{A new quantum supergroup and its Gauss decomposition}, Rep.\ Math.\ Phys.\ \textbf{88} (2021), no.~2, 259--272.
 \end{thebibliography}
 
 \end{document}

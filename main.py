@@ -32,6 +32,7 @@ from quantum_group import (
     classical_limit,
     plot_combined,
     crystal_string,
+    summarize_GLq21_ybe,
 )
 
 
@@ -73,6 +74,13 @@ def main() -> None:
     fig = plot_combined(4)
     fig.savefig(out_path, dpi=120)
     print(f"  Kaydedildi: {out_path}")
+
+    section("6. GL_q(2|1) graded Yang-Baxter doğrulaması")
+    summary = summarize_GLq21_ybe()
+    print("  R boyutu:", summary["R_shape"])
+    print("  Üçlü tensör uzayı boyutu:", summary["triple_tensor_shape"])
+    print("  R nonzero entry sayısı:", summary["nonzero_entries_R"])
+    print("  Graded YBE sağlanıyor mu:", summary["residual_is_zero"])
 
 
 if __name__ == "__main__":

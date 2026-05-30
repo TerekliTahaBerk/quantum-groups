@@ -65,6 +65,22 @@ from .limits import (
     classical_K_to_h, classical_commutator_EF,
     root_of_unity_substitution, three_limit_summary,
 )
+from .supergroup_gl21 import (
+    super_parity_gl21,
+    basis_pairs_gl21,
+    R_matrix_GLq21,
+    super_permutation_matrix,
+    R12_GLq21,
+    R13_GLq21,
+    R23_GLq21,
+    graded_yang_baxter_residual_GLq21,
+    graded_yang_baxter_holds_GLq21,
+    summarize_GLq21_ybe,
+    embed_R_in_tensor_power,
+    all_Rij_GLq21,
+    braid_far_commutativity_residual_GLq21,
+    local_ybe_on_four_tensor_GLq21,
+)
 
 __all__ = [
     "QuantumGroupSL2",
@@ -89,4 +105,9 @@ __all__ = [
     "R_check_eigenvalues", "jones_skein_relation_check",
     "classical_K_to_h", "classical_commutator_EF",
     "root_of_unity_substitution", "three_limit_summary",
+    "super_parity_gl21", "basis_pairs_gl21", "R_matrix_GLq21",
+    "super_permutation_matrix", "R12_GLq21", "R13_GLq21", "R23_GLq21",
+    "graded_yang_baxter_residual_GLq21", "graded_yang_baxter_holds_GLq21",
+    "summarize_GLq21_ybe", "embed_R_in_tensor_power", "all_Rij_GLq21",
+    "braid_far_commutativity_residual_GLq21", "local_ybe_on_four_tensor_GLq21",
 ]

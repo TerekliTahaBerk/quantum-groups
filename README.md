@@ -152,7 +152,66 @@ ve B(4) kristal grafiğini üretir.
 
 ---
 
-## 6. Genişletme Yönleri
+## 6. GL_q(2|1) ve Graded Yang–Baxter Doğrulaması
+
+Proje artık yalnızca **U_q(sl_2)** ile sınırlı değildir; Çelik & Çelik
+(*A New Quantum Supergroup and Its Gauss Decomposition*, Rep. Math. Phys.
+**88** (2021), 259) makalesinde tanıtılan yeni kuantum süpergrubu
+**GL_q(2|1)** için de bilgisayar destekli bir doğrulama içerir.
+
+- Makalede verilen **9×9 R-matrisi** kodlanmıştır (`R_matrix_GLq21`).
+- **Süper permütasyon matrisi** P, parite `[0, 0, 1]` ile inşa edilmiştir
+  (`super_permutation_matrix`). Bu matris klasik takas matrisinden yalnızca
+  odd–odd bileşeninde (P[8,8] = −1) ayrılır.
+- V ⊗ V ⊗ V üzerinde **R12, R13, R23** matrisleri 27×27 matrisler olarak
+  oluşturulur:
+  - `R12 = R ⊗ I3`
+  - `R23 = I3 ⊗ R`
+  - `R13 = (P ⊗ I3) R23 (P ⊗ I3)`
+- Kod, kalıntı matrisinin
+
+  ```
+  Y(q) = R12 R13 R23 − R23 R13 R12
+  ```
+
+  tüm girdilerinin sembolik olarak sıfır olduğunu doğrular. Böylece elle
+  yapıldığında çok uzun olan graded Yang–Baxter hesabı yeniden üretilebilir
+  hâle gelir.
+
+Örnek kullanım:
+
+```python
+from quantum_group import graded_yang_baxter_holds_GLq21
+assert graded_yang_baxter_holds_GLq21()
+```
+
+**Genel çoklu tensör yerleşimi.** Ana ispat V ⊗ V ⊗ V üzerindeki 27×27
+denklemdir. Buna ek olarak kod, aynı R-matrisinin V^{⊗4} üzerine
+yerleştirilmesini de destekler: R12, R13, R14, R23, R24, R34 operatörleri
+81×81 matrisler olarak üretilebilir (`all_Rij_GLq21(4)`); uzak komütativite
+`R12 R34 = R34 R12` (`braid_far_commutativity_residual_GLq21`) ve dört
+faktörlü uzaydaki tüm üçlü alt-YBE kontrolleri
+(`local_ybe_on_four_tensor_GLq21`) otomatik yapılır. Bu, yöntemin tek bir
+denklem doğrulaması değil, daha genel bir graded örgü/Yang–Baxter hesap
+altyapısı olduğunu gösterir.
+
+### Metodolojik Katkı
+
+Bu çalışmadaki yeni katkı, GL_q(2|1) için verilen R-matrisinin graded
+Yang–Baxter denklemine ilişkin doğrudan hesaplamasını Python/SymPy üzerinde
+modellenebilir, test edilebilir ve tekrar üretilebilir bir doğrulama
+prosedürüne dönüştürmektir. Böylece klasik elle hesap yöntemi ile bilgisayar
+destekli sembolik cebir yöntemi birleştirilmiştir.
+
+Testler hâlâ aşağıdaki komutla çalışır:
+
+```
+python3 -m pytest tests/ -q
+```
+
+---
+
+## 7. Genişletme Yönleri
 
 - Tip 1 dışındaki temsiller (işaret kıvrımları)
 - Birim kökünde kuantum grup (q^N = 1) ve sonlu boyutlu blok yapısı
@@ -162,7 +221,7 @@ ve B(4) kristal grafiğini üretir.
 
 ---
 
-## 7. Lisans ve Atıf
+## 8. Lisans ve Atıf
 
 Bu proje akademik bir tez ürünüdür. SymPy, NetworkX ve Matplotlib
 kütüphaneleri açık lisanslı olup kendi lisanslarına tabidir.
