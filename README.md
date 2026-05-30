@@ -142,6 +142,16 @@ python3 -m pytest tests/ -q
 
 Beklenen sonuç: tüm testlerin geçmesi.
 
+### Tez (PDF)
+
+Tezin kaynağı [`thesis/thesis.tex`](thesis/thesis.tex), üretilen PDF ise
+[`thesis/thesis.pdf`](thesis/thesis.pdf) dosyasındadır. PDF'i yeniden
+derlemek için (XeTeX tabanlı, Türkçe/Unicode destekli):
+
+```bash
+tectonic thesis/thesis.tex
+```
+
 ---
 
 ## 5. Örnek Çıktılar
