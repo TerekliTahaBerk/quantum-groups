@@ -111,7 +111,8 @@ python3 main.py
 ```
 
 Çıktı: q-aritmetik tabloları, dört bağıntı, V_0..V_4 doğrulamaları,
-kristal yolları ve `outputs/V4_combined.png` diyagramı.
+kristal yolları, `outputs/V4_combined.png` diyagramı ve GL_q(2|1) graded YBE
+doğrulama özeti.
 
 ### Etkileşimli kullanım
 
@@ -226,6 +227,7 @@ python3 -m pytest tests/ -q
 - Jones polinomu hesaplaması için örgü temsili ve Markov izi
 - Yüksek rank: U_q(sl_n), genel Cartan tipi
 - Kristal tensör çarpımı B(m) ⊗ B(n)
+- GL_q(2|1) için Gauss ayrışımı ve Hopf süpercebir eşlemelerinin kodla doğrulanması
 
 ---
 

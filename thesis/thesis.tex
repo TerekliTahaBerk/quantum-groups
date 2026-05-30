@@ -93,7 +93,7 @@
 % --- Title ---
 \title{
   \vspace{-1cm}
-  \textbf{Kuantum Grup ve Kuantum Süpergrupların Sembolik Modellenmesi:} \\[0.3em]
+  \textbf{Quantum Gruplarının Python Ortamında Modellenmesi} \\[0.3em]
   \large{$U_q(\mathfrak{sl}_2)$ Temsil Teorisi ve $GL_q(2|1)$ için Graded Yang--Baxter Doğrulaması}
 }
 \author{Taha Berk Terekli}
@@ -110,28 +110,27 @@ ve modüler bir Python paketi olarak modellenmesini, sonlu boyutlu
 indirgenemez en yüksek ağırlıklı temsillerinin açık matrislerle
 inşasını, tanımlayıcı bağıntıların ve tüm Hopf cebir aksiyomlarının
 matris düzeyinde otomatik doğrulanmasını içermektedir. Klasik teorik
-sunumun ötesine geçilerek üç orijinal hesaplama bölümü eklenmiştir:
-\textbf{(i)} tensör çarpımı $V_m \otimes V_n$ için Clebsch--Gordan
-ayrışımının en yüksek ağırlık vektörlerinin sembolik biçimde
-hesaplanması (q-deforme katsayılarla); \textbf{(ii)} $V_1 \otimes V_1$
-üzerinde $R$-matrisinin inşası, kuantum Yang--Baxter denkleminin
-$8\times 8$ matris düzeyinde sıfır-kalıntı kanıtı ve örgülü
+sunumun ötesine geçilerek \emph{dört orijinal hesaplamalı katkı}
+sunulmuştur: \textbf{(i)} tensör çarpımı $V_m \otimes V_n$ için
+Clebsch--Gordan ayrışımının en yüksek ağırlık vektörlerinin sembolik
+biçimde hesaplanması (q-deforme katsayılarla); \textbf{(ii)} $\Uq$ için,
+$V_1 \otimes V_1$ üzerinde $R$-matrisinin inşası, kuantum Yang--Baxter
+denkleminin $8\times 8$ matris düzeyinde sıfır-kalıntı kanıtı ve örgülü
 versiyonu $\check R$ için Hecke skein bağıntısının doğrulanması;
-\textbf{(iii)} $q\to 1$ klasik limit, genel $q$ kuantum rejimi ve
-$q^N=1$ birim kök limitinin aynı temsil $V_n$ üzerinde karşılaştırmalı
-incelenmesi (klasik $\sl_2$'nin geri gelişi ve $V_n$'nin birim kökte
-indirgenebilir hâle gelmesinin sayısal teyidi). Bunlara ek olarak çalışma,
-$\Uq$ yanında Çelik \& Çelik tarafından tanıtılan kuantum süpergrup
-$GL_q(2|1)$ için de hesaplamalı bir doğrulama içerir: makalede verilen
+\textbf{(iii)} Çelik \& Çelik tarafından tanıtılan kuantum süpergrup
+$GL_q(2|1)$ için graded Yang--Baxter doğrulaması: makalede verilen
 $9\times 9$ $R$-matrisi kodlanmış, $V=\mathbb{C}^{2|1}$ baz vektörlerinin
-pariteleri $p(e_1)=0,\ p(e_2)=0,\ p(e_3)=1$ alınmış ve süper permütasyon
-matrisi yardımıyla $R_{13}$ operatörü inşa edilmiştir. Böylece $27\times 27$
-kalıntı matrisi $Y(q)=R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}$ tüm girdiler
-düzeyinde sembolik olarak sıfır doğrulanmıştır. Ayrıca $V^{\otimes 4}$
-üzerinde $R_{12},R_{13},R_{14},R_{23},R_{24},R_{34}$ yerleşimleri, uzak
-komütativite ve lokal Yang--Baxter kontrolleri desteklenmiştir. Tüm sonuçlar
-\texttt{pytest} tabanlı birim testlerle doğrulanmıştır. Çalışmanın kodu açık
-kaynaktır ve tezin ekinde sunulmuştur.
+pariteleri $p(e_1)=0,\ p(e_2)=0,\ p(e_3)=1$ alınmış, süper permütasyon
+matrisi yardımıyla $R_{13}$ operatörü inşa edilmiş ve $27\times 27$ kalıntı
+matrisi $Y(q)=R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}$ tüm girdiler düzeyinde
+sembolik olarak sıfır doğrulanmıştır (ayrıca $V^{\otimes 4}$ üzerinde
+$R_{12},R_{13},R_{14},R_{23},R_{24},R_{34}$ yerleşimleri, uzak komütativite
+ve lokal Yang--Baxter kontrolleri desteklenmiştir); \textbf{(iv)} $q\to 1$
+klasik limit, genel $q$ kuantum rejimi ve $q^N=1$ birim kök limitinin aynı
+temsil $V_n$ üzerinde karşılaştırmalı incelenmesi (klasik $\sl_2$'nin geri
+gelişi ve $V_n$'nin birim kökte indirgenebilir hâle gelmesinin sayısal
+teyidi). Tüm sonuçlar \texttt{pytest} tabanlı birim testlerle
+doğrulanmıştır. Çalışmanın kodu açık kaynaktır ve tezin ekinde sunulmuştur.
 \end{abstract}
 
 \tableofcontents
@@ -331,6 +330,20 @@ $K = q^h$ formal yazımıyla, (R4) bağıntısı tam olarak $\qint{h}$
 ifadesidir; klasik $[e,f] = h$ bağıntısının $q$-deformasyonudur.
 $q \to 1$ limitinde $\Uq \to U(\sl_2)$ geri gelir.
 
+Bu deformasyon, kodda doğrudan~\eqref{eq:qint} formülü kullanılarak
+modellenir:
+
+\begin{lstlisting}[language=Python,caption={$q$-tamsayının SymPy ile modellenmesi}]
+def q_integer(n, q_sym=q):
+    if n == 0:
+        return sp.Integer(0)
+    return sp.simplify((q_sym**n - q_sym**(-n)) / (q_sym - q_sym**(-1)))
+\end{lstlisting}
+
+Bu fonksiyon klasik $n$ tamsayısının $q$-deforme karşılığı olan $\qint{n}$
+ifadesini sembolik olarak üretir; $q \to 1$ limitinde $\qint{n} \to n$ elde
+edilir.
+
 \section{$\Uq$'nin Sonlu Boyutlu Temsil Teorisi}
 
 \begin{theorem}\label{thm:irreps}
@@ -356,6 +369,32 @@ gelir.
 \textbf{Klasik limit kontrolü.} $q \to 1$ alındığında:
 $\qint{k} \to k$, $\qint{n-k+1} \to n-k+1$, dolayısıyla
 $E \cdot v_k \to k(n-k+1) v_{k-1}$. Klasik $\sl_2$ formülleri geri gelir.
+
+Teorem~\ref{thm:irreps}'deki formüller, kodda doğrudan matris girişlerine
+çevrilir:
+
+\begin{lstlisting}[language=Python,caption={$V_n$ temsilinde $E,F,K,K^{-1}$ matrislerinin inşası}]
+def build_representation_core(n, q_sym=q):
+    dim = n + 1
+    weights = [q_sym**(n - 2*k) for k in range(dim)]
+    K = sp.diag(*weights)
+    K_inv = sp.diag(*[w**(-1) for w in weights])
+
+    F = sp.zeros(dim, dim)
+    for k in range(n):
+        F[k + 1, k] = 1
+
+    E = sp.zeros(dim, dim)
+    for k in range(1, dim):
+        E[k - 1, k] = q_integer(k, q_sym) * \
+                      q_integer(n - k + 1, q_sym)
+
+    return E, F, K, K_inv
+\end{lstlisting}
+
+Bu kod, teorik formülleri doğrudan matris girişlerine dönüştürür. Böylece
+soyut $\Uq$ etkisi sonlu boyutlu bir temsil üzerinde hesaplanabilir hâle
+gelir.
 
 \section{Kristal Tabanlar (Genel Bakış)}
 
@@ -406,7 +445,25 @@ oluşur; hepsi geçer.
 $Z := X - Y$ matrisi $V_n$ üzerinde inşa edilir ve
 \texttt{sympy.simplify} ile sıfır olduğu kanıtlanır. Bu yöntem,
 sembolik $q$ ile dahi tüm dört bağıntıyı $V_0, \dots, V_4$ üzerinde
-otomatik olarak kanıtlamıştır.
+otomatik olarak kanıtlamıştır. Çekirdek mantık şu biçimdedir:
+
+\begin{lstlisting}[language=Python,caption={Tanımlayıcı bağıntıların sıfır-kalıntı yöntemiyle doğrulanması}]
+def verify_relations_core(E, F, K, K_inv, q_sym=q):
+    I = sp.eye(E.rows)
+    residuals = {
+        "R1": K*K_inv - I,
+        "R2": K*E*K_inv - q_sym**2 * E,
+        "R3": K*F*K_inv - q_sym**(-2) * F,
+        "R4": E*F - F*E - (K - K_inv)/(q_sym - q_sym**(-1)),
+    }
+    return {
+        name: all(sp.simplify(x) == 0 for x in M)
+        for name, M in residuals.items()
+    }
+\end{lstlisting}
+
+Her bağıntı $X = Y$ biçimindedir; kod $Z = X - Y$ kalıntı matrisini kurar ve
+tüm girdilerin sembolik olarak sıfır olduğunu denetler.
 
 \section{Orijinal Katkı I: Tensör Çarpımı ve Clebsch--Gordan Ayrışımı}
 
@@ -602,7 +659,24 @@ p(e_1)=0,\qquad p(e_2)=0,\qquad p(e_3)=1
 \[
 P(e_i\otimes e_j)=(-1)^{p(e_i)p(e_j)}e_j\otimes e_i
 \]
-ile tanımlanır. Bu nedenle $P$ klasik permütasyon matrisinden yalnızca tek--tek bileşende işaret değişimiyle ayrılır.
+ile tanımlanır. Bu nedenle $P$ klasik permütasyon matrisinden yalnızca tek--tek bileşende işaret değişimiyle ayrılır. Bu tanım, kodda genel boyutta şu biçimde uygulanır:
+
+\begin{lstlisting}[language=Python,caption={$V\otimes V$ üzerinde süper permütasyon matrisi}]
+def super_permutation_matrix(parity):
+    d = len(parity)
+    P = sp.zeros(d*d, d*d)
+
+    for i in range(d):
+        for j in range(d):
+            sign = -1 if parity[i] and parity[j] else 1
+            P[j*d + i, i*d + j] = sign
+
+    return P
+\end{lstlisting}
+
+Bu kod $P(e_i\otimes e_j)=(-1)^{p(e_i)p(e_j)}e_j\otimes e_i$ tanımını uygular.
+$GL_q(2|1)$ için $\texttt{parity}=[0,0,1]$ olduğundan yalnızca odd--odd
+bileşende eksi işareti oluşur.
 
 \subsection{R-Matrisinin Tensör Yerleşimleri}
 
@@ -631,9 +705,26 @@ kalıntı matrisi oluşturulmuştur. Bu matris $27\times 27$ boyutludur. SymPy i
 \[
 Y(q)_{ij}=0\qquad 1\leq i,j\leq 27
 \]
-olduğu tüm girdiler düzeyinde doğrulanmıştır.
+olduğu tüm girdiler düzeyinde doğrulanmıştır. İlgili çekirdek kod şu
+biçimdedir:
 
-Bu sonuç, verilen $R$-matrisi, seçilen baz sıralaması ve $p=(0,0,1)$ parite konvansiyonu altında graded Yang--Baxter eşitliğinin doğrudan sembolik matris hesabıyla sağlandığını gösterir.
+\begin{lstlisting}[language=Python,caption={$GL_q(2|1)$ için graded Yang--Baxter kalıntısı}]
+def graded_yang_baxter_residual_GLq21(q_sym=q):
+    R12 = R12_GLq21(q_sym)
+    R13 = R13_GLq21(q_sym)
+    R23 = R23_GLq21(q_sym)
+
+    return R12*R13*R23 - R23*R13*R12
+
+def graded_yang_baxter_holds_GLq21(q_sym=q):
+    Y = graded_yang_baxter_residual_GLq21(q_sym)
+    return all(sp.simplify(x) == 0 for x in Y)
+\end{lstlisting}
+
+Bu fonksiyon, $27\times 27$ boyutlu $Y(q)$ kalıntı matrisini kurar ve tüm
+girdileri sembolik olarak sıfıra indirger. Dolayısıyla seçilen baz sıralaması
+ve $p=(0,0,1)$ parite konvansiyonu altında graded Yang--Baxter eşitliği
+matris girdileri düzeyinde doğrulanır.
 
 \subsection{Dört Faktörlü Tensör Uzayına Genişleme}
 
@@ -750,9 +841,9 @@ temsil üzerinde özetler.
 
 \section{Sonuçlar ve Gelecek Çalışma}
 
-Bu çalışmada kuantum grup $\Uq$, sembolik bilgisayar cebir ortamında
-modüler bir Python paketi olarak inşa edilmiş ve dört yönlü bir analize
-tabi tutulmuştur:
+Bu çalışmada kuantum grup $\Uq$ ve kuantum süpergrup $GL_q(2|1)$, sembolik
+bilgisayar cebir ortamında modüler bir Python paketi olarak incelenmiştir.
+İnceleme beş ana doğrulama ekseni üzerinden yürütülmüştür:
 
 \begin{itemize}[leftmargin=*]
   \item \textbf{Cebirsel doğrulama}: Dört (R1)--(R4) bağıntısı ve dokuz
@@ -855,16 +946,15 @@ assert all(local_ybe_on_four_tensor_GLq21().values())
 \small
 \begin{tabular}{lll}
 \hline
-Tez Bölümü & Kod Modülü & Test \\
+Doğrulama & Kod Modülü & Test Dosyası \\
 \hline
-§4 (Tanım) & \texttt{relations.py} & \texttt{test\_relations.py} \\
-§5 (Temsiller) & \texttt{representations.py} & \texttt{test\_representations.py} \\
-§3,§4 (Hopf) & \texttt{hopf.py} & \texttt{test\_hopf.py} \\
-§8 (CG) & \texttt{tensor.py} & \texttt{test\_tensor.py} \\
-§9 (R-matris) & \texttt{r\_matrix.py} & \texttt{test\_r\_matrix.py} \\
-GL$_q$(2$|$1) (graded YBE) & \texttt{supergroup\_gl21.py} & \texttt{test\_supergroup\_gl21.py} \\
-§10 (Limitler) & \texttt{limits.py} & \texttt{test\_limits.py} \\
-§6 (Kristal) & \texttt{crystal.py} & \texttt{test\_representations.py} \\
+$U_q(\sl_2)$ bağıntıları & \texttt{relations.py} & \texttt{test\_relations.py} \\
+Hopf aksiyomları & \texttt{hopf.py} & \texttt{test\_hopf.py} \\
+Temsiller ve kristaller & \texttt{representations.py}, \texttt{crystal.py} & \texttt{test\_representations.py} \\
+Clebsch--Gordan & \texttt{tensor.py} & \texttt{test\_tensor.py} \\
+R-matrisi/QYBE & \texttt{r\_matrix.py} & \texttt{test\_r\_matrix.py} \\
+$GL_q(2|1)$ graded YBE & \texttt{supergroup\_gl21.py} & \texttt{test\_supergroup\_gl21.py} \\
+Limit analizleri & \texttt{limits.py} & \texttt{test\_limits.py} \\
 \hline
 \end{tabular}
 \end{center}
