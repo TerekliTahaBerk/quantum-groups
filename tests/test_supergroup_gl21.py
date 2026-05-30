@@ -90,6 +90,10 @@ def test_all_Rij_tensor_power_4_shapes():
         assert M.shape == (81, 81)
 
 
+# Not: V^{⊗4} testleri 81×81 matrislerle çalışır. Sembolik (genel q) doğrulama
+# bu boyutta makul sürede tamamlandığından numeric ikame yerine doğrudan
+# sembolik kontrol tercih edilmiştir; gerekirse q=2 ikamesiyle hızlandırılabilir.
+
 def test_far_commutativity_R12_R34():
     residual = braid_far_commutativity_residual_GLq21()
     assert all(sp.simplify(x) == 0 for x in residual)

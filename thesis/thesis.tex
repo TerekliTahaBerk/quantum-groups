@@ -93,8 +93,8 @@
 % --- Title ---
 \title{
   \vspace{-1cm}
-  \textbf{Kuantum Grup $\Uq$'nin Sembolik Modellenmesi:} \\[0.3em]
-  \large{Temsil Teorisi, Hopf Yapısı, R-Matrisi ve $q$-Limitlerin Hesaplamalı İncelemesi}
+  \textbf{Kuantum Grup ve Kuantum Süpergrupların Sembolik Modellenmesi:} \\[0.3em]
+  \large{$U_q(\mathfrak{sl}_2)$ Temsil Teorisi ve $GL_q(2|1)$ için Graded Yang--Baxter Doğrulaması}
 }
 \author{Taha Berk Terekli}
 \date{}
@@ -120,9 +120,18 @@ versiyonu $\check R$ için Hecke skein bağıntısının doğrulanması;
 \textbf{(iii)} $q\to 1$ klasik limit, genel $q$ kuantum rejimi ve
 $q^N=1$ birim kök limitinin aynı temsil $V_n$ üzerinde karşılaştırmalı
 incelenmesi (klasik $\sl_2$'nin geri gelişi ve $V_n$'nin birim kökte
-indirgenebilir hâle gelmesinin sayısal teyidi). Tüm sonuçlar 97 birim
-test ile doğrulanmıştır. Çalışmanın kodu açık kaynaktır ve tezin
-ekinde sunulmuştur.
+indirgenebilir hâle gelmesinin sayısal teyidi). Bunlara ek olarak çalışma,
+$\Uq$ yanında Çelik \& Çelik tarafından tanıtılan kuantum süpergrup
+$GL_q(2|1)$ için de hesaplamalı bir doğrulama içerir: makalede verilen
+$9\times 9$ $R$-matrisi kodlanmış, $V=\mathbb{C}^{2|1}$ baz vektörlerinin
+pariteleri $p(e_1)=0,\ p(e_2)=0,\ p(e_3)=1$ alınmış ve süper permütasyon
+matrisi yardımıyla $R_{13}$ operatörü inşa edilmiştir. Böylece $27\times 27$
+kalıntı matrisi $Y(q)=R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}$ tüm girdiler
+düzeyinde sembolik olarak sıfır doğrulanmıştır. Ayrıca $V^{\otimes 4}$
+üzerinde $R_{12},R_{13},R_{14},R_{23},R_{24},R_{34}$ yerleşimleri, uzak
+komütativite ve lokal Yang--Baxter kontrolleri desteklenmiştir. Tüm sonuçlar
+\texttt{pytest} tabanlı birim testlerle doğrulanmıştır. Çalışmanın kodu açık
+kaynaktır ve tezin ekinde sunulmuştur.
 \end{abstract}
 
 \tableofcontents
@@ -154,17 +163,23 @@ sunmaktır:
         ile bağlantısı.
   \item \textbf{Asimptotik}: $q$ parametresinin üç farklı limitinde aynı
         temsilin yapısının nasıl değiştiğinin somut karşılaştırılması.
+  \item \textbf{Süpergrup ve graded YBE}: Çelik--Çelik tarafından tanımlanan
+        $GL_q(2|1)$ kuantum süpergrubunun $9\times 9$ R-matrisi kodlanarak,
+        graded Yang--Baxter denklemi $27\times 27$ matris düzeyinde sembolik
+        olarak doğrulanmıştır.
 \end{enumerate}
 
-Tezin yazılım çıktısı \texttt{quantum\_group} adlı, 11 modülden ve 97 birim
-testten oluşan bir Python paketidir. Tüm hesaplamalar tekrarlanabilir,
-tüm doğrulamalar otomatiktir.
+Tezin yazılım çıktısı \texttt{quantum\_group} adlı, modüler bir Python
+paketidir; tüm doğrulamalar \texttt{pytest} tabanlı birim testlerle güvence
+altına alınmıştır. Tüm hesaplamalar tekrarlanabilir, tüm doğrulamalar
+otomatiktir.
 
-\paragraph{Tezin yapısı.} Bölüm 2--6 klasik teorik altyapıyı (gruplar, Lie
-cebirleri, Hopf cebirleri, $\Uq$, temsiller) sunar. Bölüm 7 yazılım
-mimarisini özetler. Bölüm 8--10 üç \emph{orijinal hesaplamalı katkıyı}
-(Clebsch--Gordan, R-matris/YBE, üç limit) sunar. Bölüm 11 sonuçları
-özetler ve ileri çalışma yönlerini belirtir.
+\paragraph{Tezin yapısı.} Önce klasik teorik altyapı (gruplar, Lie cebirleri,
+Hopf cebirleri, $\Uq$, temsiller) sunulur. Ardından yazılım mimarisi
+özetlenir. Sonra \emph{orijinal hesaplamalı katkılar} sırasıyla verilir:
+Clebsch--Gordan ayrışımı, $\Uq$ için R-matris/YBE, $GL_q(2|1)$ için graded
+Yang--Baxter doğrulaması ve üç limit. Son bölüm sonuçları özetler ve ileri
+çalışma yönlerini belirtir.
 
 \section{Gruplar ve Lie Cebirleri}
 
@@ -360,7 +375,7 @@ büyük bir bölümünün motivasyonunu oluşturur.
 
 \section{Yazılım Mimarisi}
 
-\texttt{quantum\_group} paketi 11 modülden oluşur:
+\texttt{quantum\_group} paketi aşağıdaki modüllerden oluşur:
 
 \begin{center}
 \small
@@ -376,6 +391,7 @@ Modül & Sorumluluk \\
 \texttt{hopf.py} & $\cop, \eps, S$ + Hopf aksiyomlarının doğrulaması \\
 \texttt{tensor.py} & $V_m \otimes V_n$ + Clebsch--Gordan ayrışımı \\
 \texttt{r\_matrix.py} & R-matris, QYBE, örgü bağıntısı, Hecke skein \\
+\texttt{supergroup\_gl21.py} & $GL_q(2|1)$ R-matrisi, süper permütasyon, graded YBE ve $V^{\otimes n}$ üzerinde $R_{ij}$ yerleşimleri \\
 \texttt{limits.py} & Klasik / genel $q$ / birim kök / kristal limitleri \\
 \texttt{crystal.py} & $B(n)$ kristal grafiği \\
 \texttt{visualization.py} & Ağırlık diyagramı + kristal grafiği çizimi \\
@@ -383,8 +399,8 @@ Modül & Sorumluluk \\
 \end{tabular}
 \end{center}
 
-Test paketi (\texttt{tests/}, \texttt{pytest}) 97 birim test içerir;
-hepsi geçer.
+Test paketi (\texttt{tests/}) \texttt{pytest} tabanlı birim testlerden
+oluşur; hepsi geçer.
 
 \paragraph{Bağıntıların doğrulanması.} Her bağıntı $X = Y$ için
 $Z := X - Y$ matrisi $V_n$ üzerinde inşa edilir ve
@@ -568,7 +584,79 @@ temsil \emph{Jones polinomunu} ($\sl_2$ versiyonu) üretir. Tezde Jones
 polinomunu hesaplamadık; ancak yapısal altyapı (Theorem~\ref{thm:braid},
 \ref{thm:hecke}) inşa edilmiştir.
 
-\section{Orijinal Katkı III: Üç Limit -- Klasik / Kuantum / Birim Kök}
+\section{Orijinal Katkı III: $GL_q(2|1)$ İçin Bilgisayar Destekli Graded Yang--Baxter Doğrulaması}
+
+\subsection{Motivasyon}
+
+Çelik ve Çelik \cite{CelikGL21} tarafından tanıtılan $GL_q(2|1)$ kuantum süpergrubu, $V=\mathbb{C}^{2|1}$ süper vektör uzayı üzerinde tanımlanan bir $R$-matrisi aracılığıyla RTT yöntemiyle elde edilir. Bu çalışmada, makalede verilen $9\times 9$ R-matrisinin graded Yang--Baxter denklemini sağladığı bilgisayar destekli sembolik cebir yöntemiyle doğrulanmıştır.
+
+Bu hesap elle yapıldığında $27\times 27$ matris çarpımlarına karşılık geldiğinden uzun, tekrarlı ve hataya açıktır. Bu nedenle hesap Python/SymPy üzerinde açık baz, açık parite ve açık süper permütasyon matrisi ile modellenmiştir.
+
+\subsection{Parite ve Süper Permütasyon}
+
+$V=\mathbb{C}^{2|1}$ için baz vektörlerinin pariteleri
+\[
+p(e_1)=0,\qquad p(e_2)=0,\qquad p(e_3)=1
+\]
+şeklindedir. Burada $e_1,e_2$ çift, $e_3$ tek vektördür. $V\otimes V$ üzerindeki süper permütasyon matrisi
+\[
+P(e_i\otimes e_j)=(-1)^{p(e_i)p(e_j)}e_j\otimes e_i
+\]
+ile tanımlanır. Bu nedenle $P$ klasik permütasyon matrisinden yalnızca tek--tek bileşende işaret değişimiyle ayrılır.
+
+\subsection{R-Matrisinin Tensör Yerleşimleri}
+
+Makalede verilen $R$-matrisi $V\otimes V$ üzerinde etki eden $9\times 9$ bir matristir. $V\otimes V\otimes V$ üzerinde
+\[
+R_{12}=R\otimes I_3,\qquad
+R_{23}=I_3\otimes R,
+\]
+ve süper permütasyon kullanılarak
+\[
+R_{13}=(P\otimes I_3)R_{23}(P\otimes I_3)
+\]
+şeklinde tanımlanır.
+
+\subsection{Sıfır-Kalıntı Doğrulaması}
+
+Graded Yang--Baxter denklemi
+\[
+R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}
+\]
+olduğundan, kodda
+\[
+Y(q)=R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}
+\]
+kalıntı matrisi oluşturulmuştur. Bu matris $27\times 27$ boyutludur. SymPy ile yapılan sembolik doğrulama sonucunda
+\[
+Y(q)_{ij}=0\qquad 1\leq i,j\leq 27
+\]
+olduğu tüm girdiler düzeyinde doğrulanmıştır.
+
+Bu sonuç, verilen $R$-matrisi, seçilen baz sıralaması ve $p=(0,0,1)$ parite konvansiyonu altında graded Yang--Baxter eşitliğinin doğrudan sembolik matris hesabıyla sağlandığını gösterir.
+
+\subsection{Dört Faktörlü Tensör Uzayına Genişleme}
+
+Metodolojinin tek bir denklemle sınırlı kalmaması için $R$-matrisinin $V^{\otimes n}$ üzerine genel yerleşimini üreten bir fonksiyon da eklenmiştir. Özellikle $V^{\otimes 4}$ üzerinde
+\[
+R_{12}, R_{13}, R_{14}, R_{23}, R_{24}, R_{34}
+\]
+operatörleri $81\times 81$ matrisler olarak oluşturulabilir.
+
+Bu altyapı ile uzak komütativite
+\[
+R_{12}R_{34}=R_{34}R_{12}
+\]
+ve dört farklı üçlü altblok için lokal graded Yang--Baxter kontrolleri otomatik olarak yapılır:
+\[
+R_{ab}R_{ac}R_{bc}=R_{bc}R_{ac}R_{ab}.
+\]
+
+\subsection{Metodolojik Katkı}
+
+Bu bölümün ana katkısı, literatürde verilen $GL_q(2|1)$ R-matrisinin graded Yang--Baxter denklemine ilişkin uzun doğrudan hesabını, açık kaynaklı, test edilebilir ve tekrar üretilebilir bir sembolik doğrulama prosedürüne dönüştürmesidir. Böylece klasik elle hesap yöntemi ile bilgisayar destekli sembolik cebir yöntemi birleştirilmiştir.
+
+\section{Orijinal Katkı IV: Üç Limit -- Klasik / Kuantum / Birim Kök}
 
 Kuantum gruplar üç farklı asimptotik rejimde yaşar. Bu bölüm aynı
 temsil $V_n$'i her üç rejimde inceleyerek kuantizasyonun anlamını
@@ -669,7 +757,7 @@ tabi tutulmuştur:
 \begin{itemize}[leftmargin=*]
   \item \textbf{Cebirsel doğrulama}: Dört (R1)--(R4) bağıntısı ve dokuz
         Hopf aksiyomu, $V_0, \dots, V_3$ üzerinde sembolik olarak
-        kanıtlanmıştır (97 birim test, hepsi geçer).
+        kanıtlanmıştır (\texttt{pytest} tabanlı birim testler, hepsi geçer).
   \item \textbf{Tensör teorisi}: $V_m \otimes V_n$ Clebsch--Gordan
         ayrışımı, en yüksek ağırlık vektörlerinin q-deforme katsayılarıyla
         açık formülü çıkarılmıştır.
@@ -678,6 +766,11 @@ tabi tutulmuştur:
   \item \textbf{Üç limit}: klasik / genel $q$ / birim kök rejimleri
         karşılaştırılmış; $V_2$'nin $q^4=1$'de yapısal çöküşü sayısal olarak
         gözlemlenmiştir.
+  \item \textbf{Kuantum süpergrup doğrulaması}: Çelik--Çelik $GL_q(2|1)$
+        R-matrisi için graded Yang--Baxter denklemi $27\times 27$ kalıntı
+        matrisi düzeyinde sembolik olarak doğrulanmış; ayrıca $V^{\otimes 4}$
+        üzerinde $R_{ij}$ yerleşimleri ve lokal YBE kontrolleri
+        modellenmiştir.
 \end{itemize}
 
 \paragraph{İleri çalışma yönleri.}
@@ -691,6 +784,9 @@ tabi tutulmuştur:
         temsil teorisinin ve blok yapısının inşası.
   \item \emph{Crystal tensör çarpımı}: $B(m) \otimes B(n)$ kristal
         kuralının uygulanması ve klasik Clebsch--Gordan ile karşılaştırılması.
+  \item \emph{Gauss ayrışımı ve Hopf süpercebir}: $GL_q(2|1)$ için
+        makaledeki Gauss ayrışımı, üst/alt üçgensel alt süpergruplar ve Hopf
+        süpercebir eşlemelerinin kodla doğrulanması.
 \end{enumerate}
 
 \appendix
@@ -700,13 +796,12 @@ Tüm kod GitHub deposunda bulunmaktadır.
 
 \paragraph{Kurulum.}
 \begin{lstlisting}[language=bash]
-pip install sympy networkx matplotlib pytest
+pip install -r requirements.txt
 \end{lstlisting}
 
 \paragraph{Tüm testleri çalıştır.}
 \begin{lstlisting}[language=bash]
 python3 -m pytest tests/ -q
-# 97 passed
 \end{lstlisting}
 
 \paragraph{Demo.}
@@ -743,6 +838,15 @@ assert all(jones_skein_relation_check().values())
 rep = build_representation(2)
 sub = root_of_unity_substitution(rep, N=4)
 # sub['E_q=zeta'] sifir matrisi -> indirgenebilir
+
+# GL_q(2|1) graded Yang-Baxter dogrulamasi
+from quantum_group import (
+    graded_yang_baxter_holds_GLq21,
+    local_ybe_on_four_tensor_GLq21,
+)
+
+assert graded_yang_baxter_holds_GLq21()
+assert all(local_ybe_on_four_tensor_GLq21().values())
 \end{lstlisting}
 
 \section{Bölüm Özetleri ve Test Eşlemesi}
@@ -758,111 +862,12 @@ Tez Bölümü & Kod Modülü & Test \\
 §3,§4 (Hopf) & \texttt{hopf.py} & \texttt{test\_hopf.py} \\
 §8 (CG) & \texttt{tensor.py} & \texttt{test\_tensor.py} \\
 §9 (R-matris) & \texttt{r\_matrix.py} & \texttt{test\_r\_matrix.py} \\
+GL$_q$(2$|$1) (graded YBE) & \texttt{supergroup\_gl21.py} & \texttt{test\_supergroup\_gl21.py} \\
 §10 (Limitler) & \texttt{limits.py} & \texttt{test\_limits.py} \\
 §6 (Kristal) & \texttt{crystal.py} & \texttt{test\_representations.py} \\
 \hline
 \end{tabular}
 \end{center}
-
-\section{Bilgisayar Destekli Graded Yang--Baxter Doğrulaması: $\mathrm{GL}_q(2|1)$}
-
-Bu bölümde, Çelik ve Çelik \cite{CelikGL21} tarafından tanıtılan yeni
-kuantum süpergrubu $\mathrm{GL}_q(2|1)$ ele alınır ve bu süpergruba ilişkin
-\emph{graded} (yani $\mathbb{Z}_2$-dereceli) Yang--Baxter denkleminin
-bilgisayar destekli sembolik doğrulaması sunulur. Bu doğrulama, projenin
-$\Uq$ tarafına ek olarak getirdiği yeni bir metodolojik bileşendir.
-
-\subsection{Kuantum süpergrubu ve $R$-matrisi}
-
-$\mathrm{GL}_q(2|1)$, $V = \mathbb{C}^{2|1}$ süper vektör uzayı üzerinde
-tanımlıdır. $V$'nin baz vektörleri $e_1, e_2, e_3$ olup pariteleri
-(dereceleri)
-\[
-p(e_1) = 0, \qquad p(e_2) = 0, \qquad p(e_3) = 1
-\]
-şeklindedir; yani ilk iki baz vektörü \emph{even} (çift), üçüncüsü
-\emph{odd} (tek)tir. Makalede verilen $R$-matrisi $V \otimes V$ (dokuz
-boyutlu) uzayı üzerinde etki eden $9\times 9$ bir matristir:
-\[
-R =
-\begin{pmatrix}
-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-0 & q^2 & 0 & 1-q^2 & 0 & 0 & 0 & 0 & 0\\
-0 & 0 & q & 0 & 0 & 0 & 1-q^2 & 0 & 0\\
-0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0\\
-0 & 0 & 0 & 0 & 0 & q & 0 & 1-q^2 & 0\\
-0 & 0 & 0 & 0 & 0 & 0 & q & 0 & 0\\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & q & 0\\
-0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & q^2
-\end{pmatrix}.
-\]
-Burada $V \otimes V$ bazının sıralaması
-\[
-e_1\otimes e_1,\ e_1\otimes e_2,\ e_1\otimes e_3,\
-e_2\otimes e_1,\ \ldots,\ e_3\otimes e_3
-\]
-biçimindedir.
-
-\subsection{Süper permütasyon ve tensör yerleşimleri}
-
-$V \otimes V$ üzerinde \emph{süper permütasyon} (graded swap) operatörü
-\[
-P(e_i \otimes e_j) = (-1)^{p(i)p(j)}\, e_j \otimes e_i
-\]
-ile tanımlanır. Parite $[0,0,1]$ olduğundan $P$, klasik permütasyon
-matrisinden yalnızca odd--odd bileşeninde, yani $P^{33}_{33} = -1$
-işaretinde ayrılır. Üç faktörlü uzay $V \otimes V \otimes V$ üzerinde
-operatörler makaledeki tanımlarla
-\[
-R_{12} = R \otimes I_3, \qquad
-R_{23} = I_3 \otimes R, \qquad
-R_{13} = (P \otimes I_3)\, R_{23}\, (P \otimes I_3)
-\]
-biçiminde kurulur; burada $I_3$ üç boyutlu birim matristir.
-
-\subsection{Kalıntı matrisi ve doğrulama}
-
-Graded Yang--Baxter denklemi
-\[
-R_{12}R_{13}R_{23} = R_{23}R_{13}R_{12}
-\]
-biçimindedir. Kalıntı matrisi
-\[
-Y(q) = R_{12}R_{13}R_{23} - R_{23}R_{13}R_{12}
-\]
-olarak tanımlanır. Kodun amacı, bu $27 \times 27$ matrisin tüm girdilerinin
-sembolik olarak sıfır olduğunu, yani
-\[
-Y(q)_{ij}=0 \quad \text{for all } 1\leq i,j\leq 27,
-\]
-göstermektir. Verilen $R$-matrisi için tanımlı baz ve parite konvansiyonları
-altında, graded Yang--Baxter eşitliği tüm matris girdileri düzeyinde
-sembolik olarak doğrulanmıştır.
-
-\subsection{Genel çoklu tensör yerleşimi}
-
-Ana doğrulama $V \otimes V \otimes V$ üzerindeki $27 \times 27$ matrislerle
-yapılır. Buna ek olarak kod, aynı $R$-matrisinin daha yüksek tensör
-kuvvetlerine yerleştirilmesini de destekler. $V^{\otimes 4}$ üzerinde
-$R_{12}, R_{13}, R_{14}, R_{23}, R_{24}, R_{34}$ operatörleri $81 \times 81$
-matrisler olarak üretilebilir; komşu olmayan yerleşimler graded
-adjacent-swap operatörleriyle taşınır. Bu altyapı üzerinde uzak
-komütativite $R_{12}R_{34} = R_{34}R_{12}$ ve dört faktörlü uzaydaki tüm
-üçlü alt-blok Yang--Baxter kontrolleri otomatik olarak doğrulanır. Bu,
-yöntemin tek bir denklem doğrulamasının ötesinde, daha genel bir graded
-örgü/Yang--Baxter hesap altyapısı olduğunu gösterir.
-
-\subsection{Metodolojik Katkı}
-
-Bu çalışmadaki yeni katkı, $\mathrm{GL}_q(2|1)$ için verilen $R$-matrisinin
-graded Yang--Baxter denklemine ilişkin doğrudan hesaplamasını Python/SymPy
-üzerinde modellenebilir, test edilebilir ve tekrar üretilebilir bir
-doğrulama prosedürüne dönüştürmektir. Böylece klasik elle hesap yöntemi ile
-bilgisayar destekli sembolik cebir yöntemi birleştirilmiştir. İlgili
-işlevler \texttt{quantum\_group/supergroup\_gl21.py} modülünde toplanmış,
-doğrulamalar ise \texttt{tests/test\_supergroup\_gl21.py} altında pytest
-testleriyle güvence altına alınmıştır.
 
 \begin{thebibliography}{9}
 \bibitem{Drinfeld}

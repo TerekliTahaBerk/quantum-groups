@@ -1,11 +1,16 @@
-# Quantum Groups: U_q(sl_2)'nin Python ile Modellenmesi
+# Quantum Groups and Supergroups: U_q(sl_2) ve GL_q(2|1)'nin Python ile Modellenmesi
 
-Bu depo, kuantum grup **U_q(sl_2)**'yi sembolik olarak modelleyen, sonlu
-boyutlu indirgenemez temsillerini açık matrislerle inşa eden, tanımlayıcı
-bağıntılarını ve Hopf cebir aksiyomlarını matris düzeyinde doğrulayan,
-tensör çarpımı/Clebsch-Gordan ayrışımı, R-matrisi, Yang-Baxter denklemi,
-Hecke bağıntısı ve klasik/birim-kök limitlerini hesaplamalı olarak inceleyen
-bir lisans tezi projesidir.
+Bu depo iki yapıyı bir arada sembolik ve hesaplamalı olarak modeller. Bir
+yandan kuantum grup **U_q(sl_2)**'yi inceler: sonlu boyutlu indirgenemez
+temsillerini açık matrislerle inşa eder, tanımlayıcı bağıntılarını ve Hopf
+cebir aksiyomlarını matris düzeyinde doğrular, tensör çarpımı/Clebsch-Gordan
+ayrışımı, R-matrisi, Yang-Baxter denklemi, Hecke bağıntısı ve klasik/birim-kök
+limitlerini hesaplar. Öte yandan Çelik & Çelik'in *A New Quantum Supergroup
+and Its Gauss Decomposition* makalesinde tanıtılan kuantum süpergrup
+**GL_q(2|1)** için **bilgisayar destekli graded Yang–Baxter doğrulaması**
+sunar: makaledeki 9×9 R-matrisi, süper permütasyon matrisi ve 27×27 kalıntı
+matrisi üzerinden graded YBE eşitliği tüm girdiler düzeyinde sembolik olarak
+doğrulanır. Proje bir lisans tezi ürünüdür.
 
 Proje hem **matematiksel bir tez bölümü** hem de **modüler bir Python
 paketi** olarak tasarlanmıştır.
@@ -58,6 +63,7 @@ quantum-groups/
 │   ├── hopf.py                # eş-çarpım, eş-birim, antipot ve Hopf aksiyomları
 │   ├── tensor.py              # tensör çarpımı ve Clebsch-Gordan hesapları
 │   ├── r_matrix.py            # V_1 ⊗ V_1 R-matrisi, QYBE ve Hecke doğrulamaları
+│   ├── supergroup_gl21.py     # GL_q(2|1), graded YBE ve V^{⊗n} R_ij yerleşimleri
 │   ├── limits.py              # q→1 ve birim kök analizleri
 │   ├── crystal.py             # B(n) kristal grafiği
 │   ├── visualization.py       # ağırlık & kristal diyagramları
@@ -68,6 +74,7 @@ quantum-groups/
 │   ├── test_r_matrix.py
 │   ├── test_relations.py
 │   ├── test_representations.py
+│   ├── test_supergroup_gl21.py
 │   └── test_tensor.py
 ├── thesis/
 │   ├── thesis.tex             # kapsamlı LaTeX tez metni
@@ -75,6 +82,7 @@ quantum-groups/
 ├── notebooks/
 │   └── exploration.ipynb      # adım adım gösterim
 ├── main.py                    # uçtan uca demo
+├── requirements.txt           # Python bağımlılıkları
 └── README.md
 ```
 
@@ -85,7 +93,7 @@ quantum-groups/
 Python 3.10+ önerilir.
 
 ```bash
-pip install sympy networkx matplotlib pytest
+pip install -r requirements.txt
 ```
 
 (Opsiyonel: SageMath kullanmak isterseniz `quantum_group` paketi yalnızca
@@ -131,7 +139,7 @@ jupyter notebook notebooks/exploration.ipynb
 python3 -m pytest tests/ -q
 ```
 
-Beklenen sonuç: **97 passed**.
+Beklenen sonuç: tüm testlerin geçmesi.
 
 ---
 

@@ -10,9 +10,11 @@ U_q(sl_2) paketinin uçtan uca demo betiği.
 
 Adımlar:
 1. q-aritmetik örnekleri
-2. Tanımlayıcı bağıntıları yazdır
-3. n = 0, 1, 2, 3, 4 için V_n inşa et ve doğrula
-4. n = 4 için ağırlık + kristal diyagramını PNG olarak kaydet
+2. U_q(sl_2) tanımlayıcı bağıntıları
+3. V_0..V_4 temsillerinin inşası ve bağıntı doğrulaması
+4. kristal yolları
+5. V_4 ağırlık + kristal diyagramının PNG olarak kaydedilmesi
+6. GL_q(2|1) için graded Yang–Baxter doğrulaması
 """
 
 from __future__ import annotations
