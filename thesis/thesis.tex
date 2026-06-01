@@ -1,35 +1,16 @@
-\documentclass[11pt,a4paper]{article}
-
-% --- Fonts / Unicode ---
-\usepackage{fontspec}
-\defaultfontfeatures{Ligatures=TeX}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Menlo}
+% Turkish Journal of Mathematics sinifi (math.cls); icerik degismeden bu sablona uyarlanmistir.
+\documentclass[10pt]{math}
 
 % --- Math ---
-\usepackage{amsmath,amssymb,amsthm,mathtools}
-\usepackage{mathrsfs}
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs,mathtools}
+\numberwithin{equation}{section}
 \allowdisplaybreaks
 \setlength{\jot}{4pt}
 
-% --- Graphics + color (loaded BEFORE babel-turkish to avoid catcode clash) ---
+% --- Graphics + color ---
 \usepackage{graphicx}
 \graphicspath{{figures/}{thesis/figures/}}
-\usepackage{xcolor}
-
-% --- TikZ (diyagramlar) ---
-\usepackage{tikz}
-\usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
-                decorations.markings,matrix,fit,backgrounds,shapes.misc}
-
-% --- Layout ---
-\usepackage[a4paper,margin=2.6cm]{geometry}
-\usepackage{microtype}
-\usepackage{parskip}
-\usepackage{enumitem}
-\setlength{\parskip}{0.6em}
-\emergencystretch=3em
+\usepackage[dvipsnames]{xcolor}
 
 % --- Tables ---
 \usepackage{booktabs}
@@ -38,17 +19,23 @@
 \usepackage{float}
 \usepackage{placeins}
 
-% --- Captions ---
-\usepackage{caption}
-\captionsetup{font=small,labelfont=bf,labelsep=period,skip=6pt}
-\captionsetup[lstlisting]{font=small,labelfont=bf,labelsep=period}
-
-% --- Code listings ---
+% --- Lists, microtype, code, TikZ ---
+\usepackage{enumitem}
+\usepackage{microtype}
 \usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
+                decorations.markings,matrix,fit,backgrounds,shapes.misc}
+\emergencystretch=3em
 
-% --- Turkish (last among textual packages) ---
-% Turkish babel shorthands make "=" active, which breaks package internals
-% under Tectonic/XeTeX when graphicx is loaded lazily.
+% --- Theorems via amsthm (sinifin \proof tanimini etkisizlestir) ---
+\makeatletter
+\let\proof\@undefined
+\let\endproof\@undefined
+\makeatother
+\usepackage{amsthm}
+
+% --- Turkish (shorthands=off: "=" aktiflesmesini engeller) ---
 \usepackage[shorthands=off,turkish]{babel}
 
 % --- Listing renk paleti ---
@@ -114,43 +101,26 @@
 
 \lstset{style=pyblock}
 
-% --- Accent rengi (ince, temiz tasarim icin tek vurgu rengi) ---
+% --- Accent renkleri (yalnizca TikZ diyagramlarinda kullanilir) ---
 \definecolor{accent}{RGB}{59,91,146}
 \definecolor{accentsoft}{RGB}{155,180,216}
 \definecolor{oddsign}{RGB}{138,40,132}
 
-% --- Hyperref ---
-\usepackage[colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent]{hyperref}
+% --- Hyperref (TJM sablonu: cite mavi, url siyah) ---
+\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
 
-% --- Temiz bolum basliklari ---
-\usepackage{titlesec}
-\titleformat{\section}
-  {\normalfont\large\bfseries\color{accent!85!black}}{\thesection}{0.7em}{}[{\color{accent!30!white}\titlerule[0.8pt]}]
-\titleformat{\subsection}
-  {\normalfont\normalsize\bfseries\color{accent!75!black}}{\thesubsection}{0.6em}{}
-\titlespacing*{\section}{0pt}{1.4em}{0.6em}
-\titlespacing*{\subsection}{0pt}{1.0em}{0.4em}
-
-% --- Theorems (rafine, kutu yok) ---
-\newtheoremstyle{accentplain}% ad
-  {0.8em}{0.8em}% yukari/asagi bosluk
-  {\itshape}% govde fontu
-  {}% girinti
-  {\bfseries\color{accent!85!black}}% baslik fontu
-  {.}% baslik sonu noktalama
-  {0.5em}% baslik-govde arasi
-  {}% ozel baslik bicimi
-\newtheoremstyle{accentdef}%
-  {0.8em}{0.8em}{\normalfont}{}{\bfseries\color{accent!85!black}}{.}{0.5em}{}
-\theoremstyle{accentplain}
+% --- Theorems (amsthm, Turkce etiketler, sade journal stili) ---
+\theoremstyle{plain}
 \newtheorem{theorem}{Teorem}[section]
 \newtheorem{proposition}[theorem]{Önerme}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Sonuç}
-\theoremstyle{accentdef}
+\theoremstyle{definition}
 \newtheorem{definition}[theorem]{Tanım}
 \newtheorem{example}[theorem]{Örnek}
 \newtheorem{remark}[theorem]{Not}
+\renewcommand{\proofname}{Kanıt}
+\renewcommand{\lstlistingname}{Kod}
 
 % --- Macros ---
 \renewcommand{\sl}{\mathfrak{sl}}
@@ -188,20 +158,54 @@
   glabel/.style={font=\footnotesize, accent!60!black},
 }
 
-% --- Title ---
-\title{
-  {\LARGE\bfseries Quantum Gruplarının Python Ortamında Modellenmesi}\\[0.7em]
-  {\large\mdseries $U_q(\mathfrak{sl}_2)$ Temsil Teorisi ve\\[0.2em]
-   $GL_q(2|1)$ için Graded Yang--Baxter Doğrulaması}
+% --- TJM ust-verisi ---
+\yil{2026}
+\vol{}
+\fpage{}
+\lpage{}
+\doi{}
+
+\title{Quantum gruplarının Python ortamında modellenmesi: $U_q(\mathfrak{sl}_2)$ temsil teorisi ve $GL_q(2|1)$ için graded Yang--Baxter doğrulaması}
+
+\author[ÇELİK and TEREKLİ]{%
+\textbf{Prof. Dr. Salih ÇELİK$^{1}$, Taha Berk TEREKLİ$^{1}$}\\[0.35em]
+$^{1}$Matematik Bölümü, Yıldız Teknik Üniversitesi, İstanbul, Türkiye%
 }
-\author{\normalsize Taha Berk Terekli}
-\date{\normalsize\today}
+
+\amssayisi{%
+  2020 {\itshape AMS Mathematics Subject Classification:} 17B37, 16T20, 81R50%
+}
+
+% Ilk sayfa altbilgisi: dergi logosu (EPS) yerine temiz metin CC notu
+\makeatletter
+\def\ps@myheadings{%
+  \def\@oddhead{}%
+  \let\@evenhead\@oddhead
+  \def\@oddfoot{\normalfont
+    \vbox{%
+      \hbox to \textwidth{\hfil \thepage}%
+      \ifnum\c@page=1
+        \vskip 6pt
+        \hbox to \textwidth{\hfil
+          \begin{minipage}[b]{0.92\textwidth}\centering
+            {\fontsize{6pt}{7.5pt}\selectfont
+              \copyright\ Yazarlar eserlerinin telif hakkını korur. Kabul üzerine makale,
+              Creative Commons Attribution 4.0 International (CC BY 4.0) lisansı altında
+              dağıtılabilir.%
+            }%
+          \end{minipage}\hfil}%
+      \fi}%
+  }%
+  \def\@evenfoot{\normalfont\vbox{\hbox to \textwidth{\thepage \hfil}}}%
+  \let\@mkboth\@gobbletwo \let\sectionmark\@gobble \let\subsectionmark\@gobble
+}
+\makeatother
 
 \begin{document}
 \maketitle
+\pagestyle{myheadings}
 
 \begin{abstract}
-\noindent
 Bu makale, Drinfeld--Jimbo kuantum grubu $\Uq$ ile Çelik ve Çelik'in tanıttığı
 kuantum süpergrup $GL_q(2|1)$ yapılarını, sembolik bilgisayar cebiri (SymPy)
 üzerinde kurulu modüler bir Python paketiyle ele alır. Yöntemin çekirdeği
@@ -230,11 +234,9 @@ karşılaştırmalı biçimde incelenmiştir. Tüm sonuçlar \texttt{pytest} tab
 birim testlere bağlanmıştır; çalışmanın asıl katkısı, elle yürütüldüğünde hataya
 açık olan yüksek boyutlu hesapları yeniden üretilebilir ve test edilebilir
 sembolik doğrulama prosedürlerine dönüştürmesidir.
+
+\keywords{kuantum gruplar, $U_q(\mathfrak{sl}_2)$, kuantum süpergruplar, $GL_q(2|1)$, Yang--Baxter denklemi, sembolik hesaplama}
 \end{abstract}
-
-\noindent\textbf{Anahtar Kelimeler:} kuantum gruplar, $U_q(\mathfrak{sl}_2)$, kuantum süpergruplar, $GL_q(2|1)$, Yang--Baxter denklemi, sembolik hesaplama, Python, SymPy.
-
-\bigskip
 
 \section{Giriş ve Motivasyon}
 

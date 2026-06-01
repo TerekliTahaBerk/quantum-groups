@@ -79,7 +79,8 @@ quantum-groups/
 │   ├── test_supergroup_gl21.py
 │   └── test_tensor.py
 ├── thesis/
-│   ├── thesis.tex             # yayın formatında LaTeX makale kaynağı
+│   ├── thesis.tex             # makale kaynağı (Turkish J. Math. şablonu)
+│   ├── math.cls               # TÜBİTAK / Turkish Journal of Mathematics sınıfı
 │   ├── thesis.pdf             # Tectonic ile üretilen PDF
 │   ├── Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf  # yayın adıyla PDF
 │   └── figures/               # makale figürleri
