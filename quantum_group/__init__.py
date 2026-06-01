@@ -31,12 +31,15 @@ from .relations import (
     symbolic_relations,
     pretty_print_relations,
     verify_on_representation,
+    verify_relations_core,
     all_relations_hold,
+    is_zero_matrix,
     RelationCheck,
 )
 from .representations import (
     Representation,
     build_representation,
+    build_representation_core,
     highest_weight_vector,
     lowest_weight_vector,
     weight_of,
@@ -47,7 +50,7 @@ from .crystal import (
 )
 from .visualization import plot_weight_diagram, plot_crystal_graph, plot_combined
 from .hopf import (
-    coproduct, counit, antipode,
+    coproduct, counit, antipode, kron_list,
     verify_all_hopf_axioms, verify_antipode, verify_coassociativity,
     HopfAxiomCheck,
 )
@@ -56,7 +59,7 @@ from .tensor import (
     cg_summands, find_highest_weight_vectors, cg_decomposition_summary,
 )
 from .r_matrix import (
-    R_matrix_V1, R_check_V1,
+    R_matrix_V1, R_check_V1, swap_matrix,
     qybe_holds, braid_relation_holds,
     qybe_residual, braid_relation_residual,
     R_check_eigenvalues, jones_skein_relation_check,
@@ -87,19 +90,20 @@ __all__ = [
     "E", "F", "K", "K_inv", "q",
     "all_generators", "commutator",
     "symbolic_relations", "pretty_print_relations",
-    "verify_on_representation", "all_relations_hold", "RelationCheck",
-    "Representation", "build_representation",
+    "verify_on_representation", "verify_relations_core",
+    "all_relations_hold", "is_zero_matrix", "RelationCheck",
+    "Representation", "build_representation", "build_representation_core",
     "highest_weight_vector", "lowest_weight_vector", "weight_of",
     "q_integer", "q_factorial", "q_binomial", "classical_limit",
     "build_crystal", "crystal_nodes", "crystal_string",
     "f_tilde", "e_tilde", "CrystalNode",
     "plot_weight_diagram", "plot_crystal_graph", "plot_combined",
-    "coproduct", "counit", "antipode",
+    "coproduct", "counit", "antipode", "kron_list",
     "verify_all_hopf_axioms", "verify_antipode", "verify_coassociativity",
     "HopfAxiomCheck",
     "TensorRepresentation", "tensor_product",
     "cg_summands", "find_highest_weight_vectors", "cg_decomposition_summary",
-    "R_matrix_V1", "R_check_V1",
+    "R_matrix_V1", "R_check_V1", "swap_matrix",
     "qybe_holds", "braid_relation_holds",
     "qybe_residual", "braid_relation_residual",
     "R_check_eigenvalues", "jones_skein_relation_check",

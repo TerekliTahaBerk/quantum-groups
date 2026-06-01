@@ -69,10 +69,20 @@ class RelationCheck:
         return f"<{self.name}: {status}>"
 
 
-def _is_zero_matrix(M: sp.Matrix) -> bool:
-    """Bir SymPy matrisinin (sembolik olarak) sıfır olup olmadığını test eder."""
+def is_zero_matrix(M: sp.Matrix) -> bool:
+    """Bir SymPy matrisinin sembolik olarak sıfır olup olmadığını test eder.
+
+    Kontrol, ``sympy.simplify`` çağrısını hem matris hem de girdi düzeyinde
+    uygular. Bu yardımcı, makaledeki sıfır-kalıntı doğrulama deseninin ortak
+    public API karşılığıdır.
+    """
     M_simplified = sp.simplify(M)
     return all(sp.simplify(entry) == 0 for entry in M_simplified)
+
+
+def _is_zero_matrix(M: sp.Matrix) -> bool:
+    """Geriye uyumlu private ad; public kullanım için ``is_zero_matrix``."""
+    return is_zero_matrix(M)
 
 
 def verify_on_representation(
@@ -104,25 +114,42 @@ def verify_on_representation(
 
     # R1: K K^{-1} = I
     res = K_mat * Kinv_mat - I
-    checks["R1"] = RelationCheck("R1: KK^{-1} = 1", _is_zero_matrix(res), res)
+    checks["R1"] = RelationCheck("R1: KK^{-1} = 1", is_zero_matrix(res), res)
 
     # R2: K E K^{-1} = q^2 E
     res = K_mat * E_mat * Kinv_mat - q_sym**2 * E_mat
-    checks["R2"] = RelationCheck("R2: KEK^{-1} = q^2 E", _is_zero_matrix(res), res)
+    checks["R2"] = RelationCheck("R2: KEK^{-1} = q^2 E", is_zero_matrix(res), res)
 
     # R3: K F K^{-1} = q^{-2} F
     res = K_mat * F_mat * Kinv_mat - q_sym**(-2) * F_mat
-    checks["R3"] = RelationCheck("R3: KFK^{-1} = q^{-2} F", _is_zero_matrix(res), res)
+    checks["R3"] = RelationCheck("R3: KFK^{-1} = q^{-2} F", is_zero_matrix(res), res)
 
     # R4: [E, F] = (K - K^{-1}) / (q - q^{-1})
     res = (E_mat * F_mat - F_mat * E_mat) - (K_mat - Kinv_mat) / (q_sym - q_sym**(-1))
     checks["R4"] = RelationCheck(
         "R4: [E,F] = (K - K^{-1})/(q - q^{-1})",
-        _is_zero_matrix(res),
+        is_zero_matrix(res),
         res,
     )
 
     return checks
+
+
+def verify_relations_core(
+    E: sp.Matrix,
+    F: sp.Matrix,
+    K: sp.Matrix,
+    K_inv: sp.Matrix,
+    q_sym: sp.Expr = q,
+) -> Dict[str, RelationCheck]:
+    """Manuscript-compatible wrapper for ``verify_on_representation``.
+
+    The repository's stable API is ``verify_on_representation``. The manuscript
+    and older notes sometimes use ``verify_relations_core`` for the same
+    matrix-level relation check, so this wrapper preserves that name without
+    duplicating logic.
+    """
+    return verify_on_representation(E, F, K, K_inv, q_sym=q_sym)
 
 
 def all_relations_hold(checks: Dict[str, RelationCheck]) -> bool:

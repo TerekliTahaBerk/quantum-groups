@@ -12,6 +12,7 @@ from quantum_group import (
     R_matrix_GLq21,
     super_parity_gl21,
     super_permutation_matrix,
+    swap_matrix,
     R12_GLq21,
     R13_GLq21,
     R23_GLq21,
@@ -31,6 +32,20 @@ from quantum_group.utils import q
 
 def test_R_matrix_shape():
     assert R_matrix_GLq21().shape == (9, 9)
+
+
+def test_R_matrix_nonzero_pattern():
+    R = R_matrix_GLq21()
+    nonzero_positions = {
+        (i, j) for i in range(9) for j in range(9)
+        if sp.simplify(R[i, j]) != 0
+    }
+    expected = {
+        (0, 0), (1, 1), (1, 3), (2, 2), (2, 6),
+        (3, 3), (4, 4), (5, 5), (5, 7),
+        (6, 6), (7, 7), (8, 8),
+    }
+    assert nonzero_positions == expected
 
 
 def test_super_permutation_shape():
@@ -53,6 +68,16 @@ def test_R12_R13_R23_shapes():
     assert R12_GLq21().shape == (27, 27)
     assert R13_GLq21().shape == (27, 27)
     assert R23_GLq21().shape == (27, 27)
+
+
+def test_graded_R13_differs_from_ordinary_R13():
+    R23 = R23_GLq21()
+    P_super = super_permutation_matrix(super_parity_gl21())
+    P_plain = swap_matrix(3)
+    I = sp.eye(3)
+    R13_super = sp.kronecker_product(P_super, I) * R23 * sp.kronecker_product(P_super, I)
+    R13_plain = sp.kronecker_product(P_plain, I) * R23 * sp.kronecker_product(P_plain, I)
+    assert sp.simplify(R13_super - R13_plain) != sp.zeros(27, 27)
 
 
 # ---------------------------------------------------------------------------

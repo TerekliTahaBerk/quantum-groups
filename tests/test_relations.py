@@ -11,8 +11,11 @@ import pytest
 from quantum_group import (
     QuantumGroupSL2,
     build_representation,
+    build_representation_core,
     verify_on_representation,
+    verify_relations_core,
     all_relations_hold,
+    is_zero_matrix,
     q_integer,
     q_factorial,
     q_binomial,
@@ -33,6 +36,11 @@ def test_q_integer_classical_limit(n):
 
 def test_q_integer_zero():
     assert q_integer(0) == 0
+
+
+def test_q_integer_first_values():
+    assert q_integer(1) == 1
+    assert sp.simplify(q_integer(2) - (q + q**(-1))) == 0
 
 
 @pytest.mark.parametrize("n", [0, 1, 2, 3, 4])
@@ -62,6 +70,19 @@ def test_relations_symbolic_q(n):
     rep = build_representation(n)
     checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv)
     assert all_relations_hold(checks), {k: v.holds for k, v in checks.items()}
+
+
+@pytest.mark.parametrize("n", [0, 1, 2, 3, 4])
+def test_K_inverse_identity(n):
+    rep = build_representation(n)
+    assert is_zero_matrix(rep.K * rep.K_inv - sp.eye(rep.dim))
+
+
+def test_manuscript_compatibility_wrappers():
+    rep = build_representation_core(2)
+    checks = verify_relations_core(rep.E, rep.F, rep.K, rep.K_inv)
+    assert rep.n == 2
+    assert all_relations_hold(checks)
 
 
 @pytest.mark.parametrize("n", [1, 2, 3])

@@ -92,6 +92,16 @@ def build_representation(n: int, q_sym: sp.Expr = q) -> Representation:
     )
 
 
+def build_representation_core(n: int, q_sym: sp.Expr = q) -> Representation:
+    """Manuscript-compatible wrapper for ``build_representation``.
+
+    The implementation returns the repository's ``Representation`` data class
+    rather than a bare tuple, so downstream code can access ``E``, ``F``,
+    ``K`` and ``K_inv`` by name.
+    """
+    return build_representation(n, q_sym=q_sym)
+
+
 def highest_weight_vector(rep: Representation) -> sp.Matrix:
     """v_0: en yüksek ağırlık vektörü; E tarafından sıfırlanır."""
     v = sp.zeros(rep.dim, 1)

@@ -7,12 +7,23 @@ from quantum_group import (
     R_matrix_V1, R_check_V1,
     qybe_holds, braid_relation_holds,
     R_check_eigenvalues, jones_skein_relation_check,
+    q,
 )
 
 
 def test_R_satisfies_qybe():
     R = R_matrix_V1()
     assert qybe_holds(R)
+
+
+def test_R_matrix_V1_exact_entries():
+    expected = sp.Matrix([
+        [q, 0, 0, 0],
+        [0, 1, q - q**(-1), 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, q],
+    ])
+    assert sp.simplify(R_matrix_V1() - expected) == sp.zeros(4, 4)
 
 
 def test_R_check_satisfies_braid():

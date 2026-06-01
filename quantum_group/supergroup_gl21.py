@@ -52,6 +52,7 @@ from typing import Dict, List, Tuple
 
 import sympy as sp
 
+from .hopf import kron_list
 from .utils import q as default_q
 
 
@@ -121,11 +122,8 @@ def super_permutation_matrix(parity: List[int]) -> sp.Matrix:
 
 
 def _kron_list(mats: List[sp.Matrix]) -> sp.Matrix:
-    """Verilen matrislerin soldan sağa Kronecker (tensör) çarpımı."""
-    result = mats[0]
-    for M in mats[1:]:
-        result = sp.Matrix(sp.kronecker_product(result, M))
-    return result
+    """Geriye uyumlu private ad; public kullanım için ``kron_list``."""
+    return kron_list(mats)
 
 
 def _eye_pow(d: int, n: int) -> sp.Matrix:

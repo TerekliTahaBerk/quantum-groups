@@ -94,6 +94,16 @@ def _kron(A: sp.Matrix, B: sp.Matrix) -> sp.Matrix:
     return out
 
 
+def kron_list(mats: Tuple[sp.Matrix, ...] | list[sp.Matrix]) -> sp.Matrix:
+    """Verilen matrislerin soldan sağa Kronecker çarpımını döndürür."""
+    if not mats:
+        raise ValueError("kron_list en az bir matris gerektirir.")
+    result = mats[0]
+    for M in mats[1:]:
+        result = _kron(result, M)
+    return result
+
+
 # ---------------------------------------------------------------------------
 # Hopf aksiyomlarının doğrulanması
 # ---------------------------------------------------------------------------
