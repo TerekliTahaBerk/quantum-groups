@@ -23,6 +23,7 @@
 \usepackage{enumitem}
 \usepackage{microtype}
 \usepackage{listings}
+\usepackage{needspace}
 \usepackage{tikz}
 \usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
                 decorations.markings,matrix,fit,backgrounds,shapes.misc}
@@ -693,19 +694,9 @@ Modül & Sorumluluk \\
 \end{table}
 
 Test paketi (\texttt{tests/}), her modüle karşılık gelen \texttt{pytest} birim
-testlerinden oluşur ve tüm testler başarıyla tamamlanır.
-
-\subsection{Yeniden üretilebilirlik}
-
-Depo yapısı üç ana parçadan oluşur: \texttt{quantum\_group/} paket kodunu,
-\texttt{tests/} sembolik doğrulama testlerini, \texttt{thesis/} ise LaTeX
-kaynağı ile şekil üretim betiklerini içerir. Python 3.10+ ortamında bağımlılıklar
-\texttt{python3 -m pip install -r requirements.txt} komutuyla kurulabilir. Tüm matematiksel
-kontroller \texttt{python3 -m pytest tests/ -q} ile yeniden çalıştırılır.
-Şekiller \texttt{python3 thesis/figures/generate\_figures.py} komutuyla
-yeniden üretilebilir; PDF çıktısı \texttt{tectonic thesis/thesis.tex} veya
-\texttt{make pdf} hedefiyle derlenir. Depo bağlantısı:
-\url{https://github.com/TerekliTahaBerk/quantum-groups}.
+testlerinden oluşur ve tüm testler başarıyla tamamlanır. Kurulum, testlerin
+çalıştırılması, şekillerin yeniden üretilmesi ve PDF derleme adımları
+Ek~A'da ayrıntılı olarak verilmiştir.
 
 \paragraph{Bağıntıların doğrulanması.} Yukarıda anlatılan desenin en yalın
 örneği, dört tanımlayıcı bağıntının denetimidir. Her bağıntı $X = Y$ biçiminde
@@ -1539,62 +1530,165 @@ doğrulama prosedürlerine taşınabileceğini göstermektedir.
 \end{enumerate}
 
 \appendix
-\section{Kod ve Tekrar Üretilebilirlik}
+\section{Kurulum, Çalıştırma ve Yeniden Kullanım Kılavuzu}
 
-Tüm kaynak kod GitHub deposunda açık olarak bulunmaktadır:
-\url{https://github.com/TerekliTahaBerk/quantum-groups}.
+Bu ek, makaleye eşlik eden kod deposunun kurulumu, test edilmesi, şekillerinin
+yeniden üretilmesi ve ileride genişletilmesi için temel adımları özetler. Depo
+adresi \url{https://github.com/TerekliTahaBerk/quantum-groups} şeklindedir.
 
-\paragraph{Kurulum.} Python 3.10+ önerilir; paket SymPy, NetworkX, Matplotlib,
-pytest ve Jupyter bağımlılıklarını \texttt{requirements.txt} üzerinden kurar.
+\subsection{Depo Yapısı}
+
+Depo, makaledeki sembolik hesaplamaları ve belge üretim sürecini ayrı
+dizinlerde tutacak biçimde düzenlenmiştir:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{quantum\_group/}: sembolik hesaplamaları uygulayan Python
+        paketi.
+  \item \texttt{tests/}: \texttt{pytest} tabanlı test takımı.
+  \item \texttt{thesis/}: LaTeX kaynağı, üretilen PDF dosyası ve şekil
+        dosyaları.
+  \item \texttt{thesis/figures/}: şekil üretim betiği ve çıktı şekilleri.
+  \item \texttt{notebooks/}: keşif amaçlı Jupyter defteri.
+  \item \texttt{main.py}: kısa kullanım gösterimi.
+  \item \texttt{Makefile}: test, şekil üretimi, PDF derleme ve demo için
+        kolaylık komutları.
+  \item \texttt{requirements.txt}: Python bağımlılıkları.
+  \item \texttt{MANUSCRIPT\_CODE\_MAPPING.md}: makaledeki başlıklar ile
+        depo uygulaması arasındaki eşleme.
+\end{itemize}
+
+\Needspace{10\baselineskip}
+\subsection{Ortamın Hazırlanması}
+
+\Needspace{9\baselineskip}
+Python ortamı aşağıdaki komutlarla hazırlanabilir:
 \begin{lstlisting}[style=bashblock]
+git clone https://github.com/TerekliTahaBerk/quantum-groups.git
+cd quantum-groups
 python3 -m venv .venv
 source .venv/bin/activate
+python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements.txt
 \end{lstlisting}
 
-\paragraph{Testler.} Tüm doğrulamalar \texttt{pytest} ile çalıştırılır.
+\Needspace{5\baselineskip}
+Windows üzerinde sanal ortam etkinleştirme komutu şöyledir:
+\begin{lstlisting}[style=bashblock]
+.venv\Scripts\activate
+\end{lstlisting}
+
+Bağımlılıkların rolleri kısaca şöyledir: SymPy sembolik cebir ve matris
+sadeleştirme için, NetworkX kristal grafiği ve grafik yardımcıları için,
+Matplotlib şekil üretimi için, pytest test takımı için, Jupyter ise defter
+tabanlı keşif çalışmaları için kullanılır.
+
+\Needspace{10\baselineskip}
+\subsection{Testlerin Çalıştırılması}
+
+\Needspace{5\baselineskip}
+Tüm test takımı aşağıdaki komutla çalıştırılır:
 \begin{lstlisting}[style=bashblock]
 python3 -m pytest tests/ -q
 \end{lstlisting}
 
-\paragraph{Demo.} Uçtan uca gösterim betiği çalıştırılır.
+\Needspace{5\baselineskip}
+Aynı işlem \texttt{Makefile} üzerinden de çağrılabilir:
+\begin{lstlisting}[style=bashblock]
+make test
+\end{lstlisting}
+
+\Needspace{7\baselineskip}
+Belirli test dosyaları ayrı ayrı çalıştırılabilir:
+\begin{lstlisting}[style=bashblock]
+python3 -m pytest tests/test_r_matrix.py -q
+python3 -m pytest tests/test_supergroup_gl21.py -q
+python3 -m pytest tests/test_tensor.py -q
+\end{lstlisting}
+
+\texttt{test\_r\_matrix.py}, $R$-matrisini, kuantum Yang--Baxter denklemini,
+örgü bağıntısını ve Hecke bağıntısını kontrol eder.
+\texttt{test\_supergroup\_gl21.py}, $GL_q(2|1)$ $R$-matrisini, süper
+permütasyonu, graded Yang--Baxter denklemini ve seçili tensör-kuvvet
+yerleşimlerini kontrol eder. \texttt{test\_tensor.py} ise tensör çarpımı
+eylemini ve Clebsch--Gordan örneklerini denetler. Bu testler, makaledeki açık
+matris modelleri üzerinde kullanılan sembolik kontrolleri tekrar çalıştırmak
+için verilmiştir.
+
+\Needspace{9\baselineskip}
+\subsection{Demo Çalıştırma}
+
+\Needspace{5\baselineskip}
+Kısa kullanım gösterimi şu komutla çalıştırılır:
 \begin{lstlisting}[style=bashblock]
 python3 main.py
 \end{lstlisting}
 
-\paragraph{Şekiller.} Makaledeki PDF şekilleri aynı betikle yeniden üretilebilir.
+\Needspace{5\baselineskip}
+\texttt{Makefile} eşdeğeri:
+\begin{lstlisting}[style=bashblock]
+make demo
+\end{lstlisting}
+
+Bu demo, paketin temel kullanımını göstermek içindir; ayrıntılı sembolik
+kontroller \texttt{tests/} dizinindeki testlerde yer alır.
+
+\Needspace{9\baselineskip}
+\subsection{Şekillerin Yeniden Üretilmesi}
+
+\Needspace{5\baselineskip}
+Makaledeki şekiller aşağıdaki betikle yeniden üretilebilir:
 \begin{lstlisting}[style=bashblock]
 python3 thesis/figures/generate_figures.py
 \end{lstlisting}
 
-\paragraph{PDF derleme.} Tectonic (XeTeX tabanlı) Türkçe/Unicode metni doğrudan
-derler.
+\Needspace{5\baselineskip}
+\texttt{Makefile} eşdeğeri:
 \begin{lstlisting}[style=bashblock]
-tectonic thesis/thesis.tex
-cp thesis/thesis.pdf thesis/Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf
+make figures
 \end{lstlisting}
 
-\paragraph{Kolaylık hedefleri.} Aynı işlemler \texttt{make} ile de yapılabilir.
+Betik, çıktı dosyalarını \texttt{thesis/figures/} dizinine yazar. Depodaki
+üretilen başlıca şekil dosyaları şunlardır:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{R\_sl2\_V1.pdf}
+  \item \texttt{R\_gl21\_structure.pdf}
+  \item \texttt{ybe\_products\_27.pdf}
+\end{itemize}
+
+Figürlerde matematiksel semboller mümkün olduğunca Matplotlib mathtext ile
+üretilmiştir; Türkçe açıklamalar ise çoğunlukla LaTeX başlıklarında ve şekil
+açıklamalarında tutulmuştur.
+
+\Needspace{8\baselineskip}
+\subsection{PDF'in Derlenmesi}
+
+\Needspace{5\baselineskip}
+PDF derleme için önerilen hedef şudur:
 \begin{lstlisting}[style=bashblock]
-make test    # pytest ile tum testler
-make pdf     # tectonic ile PDF + yayin adiyla kopya
-make demo    # uctan uca demo
+make pdf
 \end{lstlisting}
 
-\paragraph{Temel doğrulama çağrıları.} Üç ana eşitlik, paket içe aktarıldıktan
-sonra üç satırda denetlenebilir.
-\begin{lstlisting}[style=pyblock,caption={Temel doğrulama çağrıları}]
-assert qybe_holds(R_matrix_V1())
-assert graded_yang_baxter_holds_GLq21()
-assert all(local_ybe_on_four_tensor_GLq21().values())
-\end{lstlisting}
+Mevcut \texttt{Makefile} tanımına göre \texttt{make pdf}, önce şekilleri yeniden
+üretir, ardından \texttt{thesis/thesis.tex} dosyasını derler. Derleme sonunda
+kalıcı olarak yalnızca makalenin ana PDF dosyası tutulur:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{thesis/Quantum Grup Yapılarının Python Ortamında Modellenmesi.pdf}
+\end{itemize}
 
-\paragraph{Ad uyumluluğu.} Makale taslaklarında kullanılan
-\texttt{build\_representation\_core} ve \texttt{verify\_relations\_core}
-adları, depoda geriye uyumlu public sarmalayıcılar olarak korunur; kararlı API
-adları sırasıyla \texttt{build\_representation} ve
-\texttt{verify\_on\_representation} fonksiyonlarıdır.
+\Needspace{8\baselineskip}
+\subsection{Gelecek Genişletmeler İçin Notlar}
 
+Yeni bir hesaplama başlığı eklenirken, ilgili uygulama kodunun
+\texttt{quantum\_group/} altında ayrı bir modülde veya mevcut uygun modülde
+tutulması; buna karşılık gelen testlerin \texttt{tests/} altında açık ve hedefli
+test dosyalarıyla verilmesi önerilir. Yeni şekiller için üretim mantığı
+\texttt{thesis/figures/generate\_figures.py} içinde tutulabilir veya aynı dizinde
+ayrı betiklere ayrılabilir; çıktı dosyalarının adları LaTeX kaynağındaki
+\texttt{\textbackslash includegraphics} çağrılarıyla tutarlı olmalıdır. Makaleye
+eklenen yeni hesaplama iddiaları için \texttt{MANUSCRIPT\_CODE\_MAPPING.md}
+dosyasındaki eşlemenin güncellenmesi, ileride bakım ve yeniden kullanım
+açısından yararlıdır.
+
+\Needspace{16\baselineskip}
 \section{Test Eşlemesi}
 
 Her doğrulama ekseni, ilgili kod modülü ve birim test dosyasıyla

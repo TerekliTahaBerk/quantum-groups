@@ -8,7 +8,7 @@ figures:
 
 pdf: figures
 	tectonic thesis/thesis.tex
-	cp thesis/thesis.pdf thesis/Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf
+	mv thesis/thesis.pdf "thesis/Quantum Grup Yapılarının Python Ortamında Modellenmesi.pdf"
 
 demo:
 	python3 main.py
