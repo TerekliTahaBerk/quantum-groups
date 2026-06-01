@@ -1,19 +1,21 @@
 # Quantum Groups and Supergroups: U_q(sl_2) ve GL_q(2|1)'nin Python ile Modellenmesi
 
-Bu depo iki yapıyı bir arada sembolik ve hesaplamalı olarak modeller. Bir
-yandan kuantum grup **U_q(sl_2)**'yi inceler: sonlu boyutlu indirgenemez
-temsillerini açık matrislerle inşa eder, tanımlayıcı bağıntılarını ve Hopf
-cebir aksiyomlarını matris düzeyinde doğrular, tensör çarpımı/Clebsch-Gordan
-ayrışımı, R-matrisi, Yang-Baxter denklemi, Hecke bağıntısı ve klasik/birim-kök
-limitlerini hesaplar. Öte yandan Çelik & Çelik'in *A New Quantum Supergroup
-and Its Gauss Decomposition* makalesinde tanıtılan kuantum süpergrup
-**GL_q(2|1)** için **bilgisayar destekli graded Yang–Baxter doğrulaması**
-sunar: makaledeki 9×9 R-matrisi, süper permütasyon matrisi ve 27×27 kalıntı
-matrisi üzerinden graded YBE eşitliği tüm girdiler düzeyinde sembolik olarak
-doğrulanır. Proje bir lisans tezi ürünüdür.
+Bu depo iki yapıyı tek bir sembolik çerçevede ele alır. İlki kuantum grup
+**U_q(sl_2)**'dir: sonlu boyutlu indirgenemez temsilleri açık matrislerle
+kurulur; tanımlayıcı bağıntılar ve Hopf cebir aksiyomları matris düzeyinde
+denetlenir; tensör çarpımı/Clebsch-Gordan ayrışımı, R-matrisi, Yang-Baxter
+denklemi, Hecke bağıntısı ve klasik/birim-kök limitleri hesaplanır. İkincisi,
+Çelik & Çelik'in *A New Quantum Supergroup and Its Gauss Decomposition*
+makalesinde tanıtılan kuantum süpergrup **GL_q(2|1)**'dir; bunun için
+**bilgisayar destekli bir graded Yang–Baxter doğrulaması** sunulur: makaledeki
+9×9 R-matrisi, süper permütasyon matrisi ve 27×27 kalıntı matrisi üzerinden
+graded YBE eşitliğinin tüm girdiler düzeyinde sıfıra indiği gösterilir.
 
-Proje hem **matematiksel bir tez bölümü** hem de **modüler bir Python
-paketi** olarak tasarlanmıştır.
+Çalışmanın çekirdek deseni sabittir: her cebirsel eşitlik sonlu boyutlu bir
+temsil üzerinde bir kalıntı matrisine çevrilir ve `sympy.simplify` ile girdi
+girdi sıfır olup olmadığı denetlenir. Proje bir lisans tezi ürünüdür ve hem
+**matematiksel bir makale** hem de **modüler bir Python paketi** olarak
+tasarlanmıştır.
 
 ---
 
@@ -77,8 +79,14 @@ quantum-groups/
 │   ├── test_supergroup_gl21.py
 │   └── test_tensor.py
 ├── thesis/
-│   ├── thesis.tex             # kapsamlı LaTeX tez metni
-│   └── thesis.pdf             # Tectonic ile üretilen PDF
+│   ├── thesis.tex             # yayın formatında LaTeX makale kaynağı
+│   ├── thesis.pdf             # Tectonic ile üretilen PDF
+│   ├── Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf  # yayın adıyla PDF
+│   └── figures/               # makale figürleri
+│       ├── generate_figures.py  # gerçek hesaplardan PDF figür üretir
+│       ├── R_gl21_structure.pdf # 9×9 R-matrisinin girdi-tipi haritası
+│       ├── ybe_products_27.pdf  # 27×27 YBE ürünleri + sıfır kalıntı
+│       └── R_sl2_V1.pdf         # 4×4 R ve Ř yapısı
 ├── notebooks/
 │   └── exploration.ipynb      # adım adım gösterim
 ├── main.py                    # uçtan uca demo
@@ -142,15 +150,47 @@ python3 -m pytest tests/ -q
 
 Beklenen sonuç: tüm testlerin geçmesi.
 
-### Tez (PDF)
+### Makefile ile kısa kullanım
 
-Tezin kaynağı [`thesis/thesis.tex`](thesis/thesis.tex), üretilen PDF ise
-[`thesis/thesis.pdf`](thesis/thesis.pdf) dosyasındadır. PDF'i yeniden
-derlemek için (XeTeX tabanlı, Türkçe/Unicode destekli):
+```bash
+make test    # pytest ile tüm testler
+make figures # gerçek hesaplardan makale figürlerini üret (thesis/figures/*.pdf)
+make pdf     # figürleri üret + tectonic ile PDF + yayın adıyla kopya
+make demo    # uçtan uca demo
+```
+
+### Makale figürleri
+
+Makaledeki veri-temelli figürler, paketin **gerçek çıktısından** üretilir
+(`thesis/figures/generate_figures.py`); paket kodu değiştirilmez. Üretilen
+figürler `9×9` `GL_q(2|1)` R-matrisinin girdi-tipi haritasını, `27×27` graded
+Yang–Baxter ürünlerinin özdeş örüntüsünü ve tamamen sıfır olan kalıntıyı, ve
+`U_q(sl_2)` için `4×4` R / Ř yapısını gösterir. Bunlara ek olarak makale,
+elle hesaplanması zor olan `R_12, R_13, R_23` yerleşimlerini, `R_13`
+konjugasyonunu, Yang–Baxter eşitliğini ve `V^{⊗4}` üzerindeki yerleşim
+kombinatoriğini (`K_4` grafiği) TikZ diyagramlarıyla görselleştirir.
+
+```bash
+python3 thesis/figures/generate_figures.py
+```
+
+### Makale (PDF)
+
+Makalenin kaynağı [`thesis/thesis.tex`](thesis/thesis.tex), yayın adıyla
+üretilen PDF ise
+[`Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf`](thesis/Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf)
+dosyasındadır. PDF'i yeniden derlemek için (XeTeX tabanlı, Türkçe/Unicode
+destekli):
 
 ```bash
 tectonic thesis/thesis.tex
+cp thesis/thesis.pdf thesis/Quantum_Gruplarinin_Python_Ortaminda_Modellenmesi.pdf
 ```
+
+Makale akışı: giriş ve motivasyon → teorik arka plan (gruplar, Lie cebirleri,
+Hopf cebirleri, $U_q(sl_2)$, temsiller) → yazılım mimarisi → Clebsch--Gordan
+ayrışımı → R-matrisi ve Yang--Baxter → $GL_q(2|1)$ graded YBE doğrulaması →
+klasik/kuantum/birim-kök limitleri → sonuçlar → kod eki ve test eşlemesi.
 
 ---
 
