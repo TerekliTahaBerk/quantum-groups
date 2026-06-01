@@ -165,38 +165,22 @@
 \lpage{}
 \doi{}
 
-\title{Quantum gruplarının Python ortamında modellenmesi: $U_q(\mathfrak{sl}_2)$ temsil teorisi ve $GL_q(2|1)$ için graded Yang--Baxter doğrulaması}
+\title{Quantum Grup Yapılarının Python Ortamında Modellenmesi}
 
+\newcommand{\orcidicon}[1]{\href{#1}{\protect\raisebox{-0.15ex}{\includegraphics[height=1.7ex]{orcid.png}}}}
 \author[ÇELİK and TEREKLİ]{%
-\textbf{Prof. Dr. Salih ÇELİK$^{1}$, Taha Berk TEREKLİ$^{1}$}\\[0.35em]
+\textbf{Prof. Dr. Salih ÇELİK$^{1}$\,\orcidicon{https://orcid.org/0000-0002-6590-1032},
+Taha Berk TEREKLİ$^{1}$\,\orcidicon{https://orcid.org/0009-0004-8266-1116}}\\[0.35em]
 $^{1}$Matematik Bölümü, Yıldız Teknik Üniversitesi, İstanbul, Türkiye%
 }
 
-\amssayisi{%
-  2020 {\itshape AMS Mathematics Subject Classification:} 17B37, 16T20, 81R50%
-}
-
-% Ilk sayfa altbilgisi: dergi logosu (EPS) yerine temiz metin CC notu
+% Ilk sayfa altbilgisi: dergi logosu/lisans notu yok, yalnizca sayfa numarasi
 \makeatletter
 \def\ps@myheadings{%
   \def\@oddhead{}%
   \let\@evenhead\@oddhead
-  \def\@oddfoot{\normalfont
-    \vbox{%
-      \hbox to \textwidth{\hfil \thepage}%
-      \ifnum\c@page=1
-        \vskip 6pt
-        \hbox to \textwidth{\hfil
-          \begin{minipage}[b]{0.92\textwidth}\centering
-            {\fontsize{6pt}{7.5pt}\selectfont
-              \copyright\ Yazarlar eserlerinin telif hakkını korur. Kabul üzerine makale,
-              Creative Commons Attribution 4.0 International (CC BY 4.0) lisansı altında
-              dağıtılabilir.%
-            }%
-          \end{minipage}\hfil}%
-      \fi}%
-  }%
-  \def\@evenfoot{\normalfont\vbox{\hbox to \textwidth{\thepage \hfil}}}%
+  \def\@oddfoot{\normalfont\hbox to \textwidth{\hfil \thepage}}%
+  \def\@evenfoot{\normalfont\hbox to \textwidth{\thepage \hfil}}%
   \let\@mkboth\@gobbletwo \let\sectionmark\@gobble \let\subsectionmark\@gobble
 }
 \makeatother
@@ -206,7 +190,7 @@ $^{1}$Matematik Bölümü, Yıldız Teknik Üniversitesi, İstanbul, Türkiye%
 \pagestyle{myheadings}
 
 \begin{abstract}
-Bu makale, Drinfeld--Jimbo kuantum grubu $\Uq$ ile Çelik ve Çelik'in tanıttığı
+Bu makale, Drinfeld--Jimbo kuantum grubu $\Uq$ ile Salih Çelik ve Sultan A.\ Çelik'in tanıttığı
 kuantum süpergrup $GL_q(2|1)$ yapılarını, sembolik bilgisayar cebiri (SymPy)
 üzerinde kurulu modüler bir Python paketiyle ele alır. Yöntemin çekirdeği
 sabittir: her cebirsel eşitlik, sonlu boyutlu bir temsil üzerinde bir kalıntı
@@ -261,7 +245,7 @@ otomatik birim testlere bağlamaktır. Anlatı iki eksende ilerler: \textbf{(i)}
 $\Uq$ için temsil teorisi ve $R$-matrisi altyapısı; \textbf{(ii)} $GL_q(2|1)$
 kuantum süpergrubu için graded Yang--Baxter doğrulaması.
 
-Bu iki eksen, kuantum grupların prototipi $\Uq$ ile Çelik ve Çelik'in tanıttığı
+Bu iki eksen, kuantum grupların prototipi $\Uq$ ile Salih Çelik ve Sultan A.\ Çelik'in tanıttığı
 $GL_q(2|1)$ kuantum süpergrubunu beş doğrulama başlığı altında ele alan ortak bir
 hedefte buluşur:
 \begin{enumerate}[leftmargin=*]
@@ -277,7 +261,7 @@ hedefte buluşur:
         polinomu) ile bağlantısı.
   \item \textbf{Asimptotik}: $q$ parametresinin üç farklı limitinde aynı
         temsilin yapısının nasıl değiştiğinin somut karşılaştırılması.
-  \item \textbf{Süpergrup ve graded YBE}: Çelik--Çelik tarafından tanımlanan
+  \item \textbf{Süpergrup ve graded YBE}: Salih Çelik ve Sultan A.\ Çelik tarafından tanımlanan
         $GL_q(2|1)$ kuantum süpergrubunun $9\times 9$ R-matrisi kodlanarak,
         graded Yang--Baxter denklemi $27\times 27$ matris düzeyinde sembolik
         olarak doğrulanmıştır.
@@ -1009,7 +993,7 @@ düzeyinde ortaya konur.
 
 \subsection{Motivasyon}
 
-Çelik ve Çelik \cite{CelikGL21}, $GL_q(2|1)$ kuantum süpergrubunu
+Salih Çelik ve Sultan A.\ Çelik \cite{CelikGL21}, $GL_q(2|1)$ kuantum süpergrubunu
 $V=\mathbb{C}^{2|1}$ süper vektör uzayı üzerindeki bir $R$-matrisinden RTT
 yöntemiyle inşa eder. Burada amaç, o makalede verilen $9\times 9$ $R$-matrisini
 kodlayıp graded Yang--Baxter denkleminin matris girdileri düzeyinde sağlandığını
@@ -1479,7 +1463,7 @@ başlık altında elde edilen sonuçlar şöyle özetlenebilir:
   \item \textbf{Üç limit}: klasik, genel $q$ ve birim kök rejimleri
         karşılaştırıldı; $V_2$'nin $q^4=1$'de yapısal çöküşü sayısal olarak
         gözlemlendi.
-  \item \textbf{Kuantum süpergrup}: Çelik--Çelik $GL_q(2|1)$ $R$-matrisi için
+  \item \textbf{Kuantum süpergrup}: Salih Çelik ve Sultan A.\ Çelik $GL_q(2|1)$ $R$-matrisi için
         graded Yang--Baxter denklemi $27\times 27$ kalıntı düzeyinde matris
         girdilerine kadar sağlandı; ayrıca $V^{\otimes 4}$ üzerinde $R_{ij}$
         yerleşimleri ve lokal YBE kontrolleri modellendi.
