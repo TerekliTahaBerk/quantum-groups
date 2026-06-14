@@ -1,0 +1,57 @@
+\documentclass[border=6pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
+                decorations.markings,matrix,fit,backgrounds,shapes.misc}
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\Uq}{U_q(\sl_2)}
+\newcommand{\qint}[1]{[#1]_q}
+\newcommand{\Rcheck}{\check{R}}
+\definecolor{accent}{RGB}{59,91,146}
+\definecolor{accentsoft}{RGB}{155,180,216}
+\definecolor{oddsign}{RGB}{138,40,132}
+\tikzset{
+  strand/.style={line width=1pt, accent!80!black},
+  rbox/.style={draw=accent!70!black, fill=accentsoft!55, rounded corners=2pt,
+               line width=0.8pt, minimum height=6mm},
+  rdot/.style={circle, fill=accent, inner sep=1.6pt},
+  knode/.style={circle, draw=accent!70!black, fill=accentsoft!45,
+                line width=0.8pt, minimum size=7mm, font=\small},
+  kedge/.style={accent!70!black, line width=0.9pt},
+  faredge/.style={oddsign!75!black, line width=0.9pt, densely dashed},
+  glabel/.style={font=\footnotesize, accent!60!black},
+}
+\begin{document}
+\begin{tikzpicture}[scale=1.0,line cap=round]
+  % ====== SOL: ikinci dogru solda ======
+  \begin{scope}
+    \draw[strand] (0,0) -- (2.4,3);          % dogru 1
+    \draw[strand] (0.7,0) -- (0.7,3);         % dogru 2 (solda)
+    \draw[strand] (2.4,0) -- (0,3);           % dogru 3
+    \node[rdot] at (0.7,0.875) {}; \node[glabel,right=1pt] at (0.78,0.7) {$R_{12}$};
+    \node[rdot] at (1.2,1.5)   {}; \node[glabel,right=1pt] at (1.28,1.5) {$R_{13}$};
+    \node[rdot] at (0.7,2.125) {}; \node[glabel,right=1pt] at (0.78,2.32) {$R_{23}$};
+    \node[font=\scriptsize] at (0,-0.3){1}; \node[font=\scriptsize] at (0.7,-0.3){2};
+    \node[font=\scriptsize] at (2.4,-0.3){3};
+    \node[font=\footnotesize] at (1.2,-0.95) {$R_{12}R_{13}R_{23}$};
+  \end{scope}
+  % ====== Esittir ======
+  \node[font=\Large] at (3.5,1.5) {$=$};
+  % ====== SAG: ikinci dogru sagda (ayna) ======
+  \begin{scope}[xshift=4.6cm]
+    \draw[strand] (0,0) -- (2.4,3);
+    \draw[strand] (1.7,0) -- (1.7,3);         % dogru 2 (sagda)
+    \draw[strand] (2.4,0) -- (0,3);
+    \node[rdot] at (1.7,2.125) {}; \node[glabel,left=1pt] at (1.62,2.32) {$R_{12}$};
+    \node[rdot] at (1.2,1.5)   {}; \node[glabel,left=1pt] at (1.12,1.5) {$R_{13}$};
+    \node[rdot] at (1.7,0.875) {}; \node[glabel,left=1pt] at (1.62,0.7) {$R_{23}$};
+    \node[font=\scriptsize] at (0,-0.3){1}; \node[font=\scriptsize] at (1.7,-0.3){2};
+    \node[font=\scriptsize] at (2.4,-0.3){3};
+    \node[font=\footnotesize] at (1.2,-0.95) {$R_{23}R_{13}R_{12}$};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,2065 @@
+% =====================================================================
+%  YILDIZ TEKNİK ÜNİVERSİTESİ - FEN-EDEBİYAT FAKÜLTESİ
+%  LİSANS BİTİRME TEZİ (KL-058 / FR-1925 yazım kılavuzuna uyarlanmıştır)
+%  Bu dosya otomatik olarak makale kaynağından üretilmiştir.
+% =====================================================================
+\documentclass[12pt,a4paper,fleqn]{report}
+
+% --- Motor, karakter kodlaması, Türkçe ve yazı tipi ---
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \IfFileExists{glyphtounicode.tex}{\input{glyphtounicode}\pdfgentounicode=1}{}
+  \IfFileExists{cmap.sty}{\usepackage{cmap}}{}
+  \usepackage[shorthands=off,turkish]{babel}
+  \usepackage{mathptmx}
+  \newcommand{\normalsemi}{;}
+\else
+  \usepackage{fontspec}
+  \setmainfont{Times New Roman}
+  \newfontfamily\semicolonfont{lmroman10-regular.otf}
+  \newcommand{\normalsemi}{\begingroup\semicolonfont;\endgroup}
+  \usepackage[shorthands=off,turkish]{babel}
+\fi
+
+% --- Sayfa düzeni: sol 3,5 cm; diğer kenarlar 2,5 cm ---
+\usepackage[a4paper,left=3.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+% --- 1,5 satır aralığı ---
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+% --- Matematik ---
+\usepackage{amsmath,amssymb,amsfonts,mathrsfs,mathtools}
+\numberwithin{equation}{chapter}
+\setlength{\mathindent}{0pt}
+\allowdisplaybreaks
+\setlength{\jot}{4pt}
+
+% --- Grafik + renk ---
+\usepackage{graphicx}
+\graphicspath{{figures/}{thesis/figures/}}
+\usepackage[dvipsnames]{xcolor}
+
+% --- Tablolar ---
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{placeins}
+
+% --- Listeler, kod, TikZ ---
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{listings}
+\usepackage{needspace}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,decorations.pathreplacing,
+                decorations.markings,matrix,fit,backgrounds,shapes.misc}
+\emergencystretch=3em
+
+% --- Teoremler ---
+\usepackage{amsthm}
+
+% --- Başlık biçimlendirme: baslıksablon.tex ile uyumlu üst başlıklar ---
+\usepackage{titlesec}
+\newcommand{\headingrule}{\vspace{0.1cm}\titlerule[0.4pt]}
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries\raggedleft}{\thechapter}{1em}{}[\headingrule]
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont\Large\bfseries\raggedleft}{}{0pt}{}[\headingrule]
+\titlespacing*{\chapter}{0pt}{0pt}{18pt}
+\titleformat{\section}
+  {\normalfont\fontsize{14}{17}\bfseries}{\thesection}{10pt}{}
+\titlespacing*{\section}{0pt}{14pt}{8pt}
+\titleformat{\subsection}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesubsection}{8pt}{}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+% \paragraph run-in başlıkları içindekiler'i kirletmesin: numarasız + toc'a yazılmaz
+\titleformat{\paragraph}[runin]{\normalfont\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\paragraph}{0pt}{6pt}{1em}
+\AtBeginDocument{\setcounter{tocdepth}{2}}
+\makeatletter
+\renewcommand{\l@paragraph}[2]{}% paragraf düzeyini içindekiler'den tamamen çıkar
+\newcommand{\ytuListOfFigures}{%
+  \chapter*{\listfigurename}%
+  \addcontentsline{toc}{chapter}{\listfigurename}%
+  \@starttoc{lof}%
+}
+\newcommand{\ytuListOfTables}{%
+  \chapter*{\listtablename}%
+  \addcontentsline{toc}{chapter}{\listtablename}%
+  \@starttoc{lot}%
+}
+\makeatother
+
+% --- Şekil / tablo başlıkları: numaradan sonra nokta yerine boşluk ---
+\usepackage{caption}
+\captionsetup{labelsep=space,font=small,justification=centering,
+              singlelinecheck=true,labelfont=bf}
+\captionsetup[table]{skip=6pt,position=top}
+% Numaralandırmada son rakamdan sonra nokta yok
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+
+% --- FR-1925 terminolojisi ---
+\addto\captionsturkish{%
+  \renewcommand{\tablename}{Tablo}%
+  \renewcommand{\figurename}{Şekil}%
+  \renewcommand{\contentsname}{İÇİNDEKİLER}%
+  \renewcommand{\listfigurename}{ŞEKİL LİSTESİ}%
+  \renewcommand{\listtablename}{TABLO LİSTESİ}%
+  \renewcommand{\bibname}{KAYNAKLAR}%
+  \renewcommand{\appendixname}{EK}%
+}
+
+% --- Sayfa numarası alt-ortada ---
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+  \fancyhf{}\renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[C]{\thepage}%
+}
+\pagestyle{plain}
+
+% --- Listing renk paleti ---
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codeframe}{RGB}{210,210,210}
+\definecolor{codekeyword}{RGB}{120,40,140}
+\definecolor{codestring}{RGB}{40,110,40}
+\definecolor{codecomment}{RGB}{90,90,90}
+
+\lstdefinestyle{pyblock}{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\bfseries\color{codekeyword},
+    stringstyle=\color{codestring},
+    commentstyle=\itshape\color{codecomment},
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    framerule=0.4pt,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakindent=0pt,
+    postbreak=\mbox{\textcolor{codeframe}{$\hookrightarrow$}\space},
+    columns=fullflexible,
+    keepspaces=true,
+    tabsize=4,
+    literate={-}{{\char`\-}}1,
+    xleftmargin=1.5em,
+    xrightmargin=0.5em,
+    framexleftmargin=1em,
+    aboveskip=0.9em,
+    belowskip=0.9em,
+    captionpos=b,
+}
+\lstdefinestyle{bashblock}{
+    language=bash,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    framerule=0.4pt,
+    numbers=none,
+    showstringspaces=false,
+    breaklines=true,
+    columns=fullflexible,
+    keepspaces=true,
+    literate={-}{{\char`\-}}1,
+    xleftmargin=1.5em,
+    xrightmargin=0.5em,
+    framexleftmargin=1em,
+    aboveskip=1.4em,
+    belowskip=0.9em,
+    captionpos=b,
+}
+\lstset{style=pyblock}
+\renewcommand{\lstlistingname}{Kod}
+
+% --- Accent renkleri (TikZ) ---
+\definecolor{accent}{RGB}{59,91,146}
+\definecolor{accentsoft}{RGB}{155,180,216}
+\definecolor{oddsign}{RGB}{138,40,132}
+
+% --- Hyperref ---
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+% --- Teorem ortamları (Türkçe) ---
+\theoremstyle{plain}
+\newtheorem{theorem}{Teorem}[chapter]
+\newtheorem{proposition}[theorem]{Önerme}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Sonuç}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Tanım}
+\newtheorem{example}[theorem]{Örnek}
+\newtheorem{remark}[theorem]{Not}
+\renewcommand{\proofname}{Kanıt}
+
+% --- Matematik makroları ---
+\renewcommand{\sl}{\mathfrak{sl}}
+\newcommand{\gfrak}{\mathfrak{g}}
+\newcommand{\Uq}{U_q(\sl_2)}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\SL}{\mathrm{SL}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\cop}{\Delta}
+\newcommand{\Dop}{\Delta^{\mathrm{op}}}
+\newcommand{\qint}[1]{[#1]_q}
+\newcommand{\qfact}[1]{[#1]_q!}
+\newcommand{\qbin}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}_q}
+\newcommand{\Vn}[1]{V_{#1}}
+\newcommand{\hwt}{v_0}
+\newcommand{\Rcheck}{\check{R}}
+
+% --- TikZ ortak stilleri ---
+\tikzset{
+  strand/.style={line width=1pt, accent!80!black},
+  rbox/.style={draw=accent!70!black, fill=accentsoft!55, rounded corners=2pt,
+               line width=0.8pt, minimum height=6mm},
+  rdot/.style={circle, fill=accent, inner sep=1.6pt},
+  knode/.style={circle, draw=accent!70!black, fill=accentsoft!45,
+                line width=0.8pt, minimum size=7mm, font=\small},
+  kedge/.style={accent!70!black, line width=0.9pt},
+  faredge/.style={oddsign!75!black, line width=0.9pt, densely dashed},
+  glabel/.style={font=\footnotesize, accent!60!black},
+}
+
+% Kapakta kullanılacak başlık bilgileri
+\newcommand{\TezBaslik}{Quantum Grup Yapılarının Python Ortamında Modellenmesi}
+\newcommand{\TezBaslikEn}{Modeling Quantum Group Structures in Python}
+\newcommand{\TezBaslikKapak}{QUANTUM GRUP YAPILARININ\\[2pt]PYTHON ORTAMINDA MODELLENMESİ}
+\newcommand{\Ogrenci}{Taha Berk TEREKLİ}
+\newcommand{\OgrenciNo}{22025083}
+\newcommand{\Danisman}{Prof.\ Dr.\ Salih ÇELİK}
+\newcommand{\Bolum}{Matematik Bölümü}
+\newcommand{\TarihAy}{Haziran}
+\newcommand{\TarihYil}{2026}
+
+\begin{document}
+
+% ======================= DIŞ KAPAK =======================
+\begin{titlepage}
+\begin{spacing}{1.5}
+\begin{center}
+\includegraphics[width=12.6cm]{figures/ytu_logo.png}\\[1.15cm]
+{\fontsize{16}{19}\selectfont\bfseries MATEMATİK BÖLÜMÜ}\\[1.85cm]
+
+{\fontsize{15}{19}\selectfont\bfseries \TezBaslikKapak}\\[1.9cm]
+
+{\fontsize{14}{17}\selectfont \Ogrenci}\\[8pt]
+{\fontsize{14}{17}\selectfont \OgrenciNo}\\[1.65cm]
+
+{\large\bfseries LİSANS BİTİRME TEZİ}\\[2.2cm]
+
+{\large Danışman}\\[2pt]
+{\large \Danisman}\\[2.6cm]
+
+{\large \TarihAy, \TarihYil}
+\end{center}
+\end{spacing}
+\end{titlepage}
+
+% ======================= İÇ KAPAK =======================
+\pagenumbering{roman}
+\setcounter{page}{1} % i (numara basılmaz)
+\thispagestyle{empty}
+\begin{spacing}{1.5}
+\begin{center}
+\includegraphics[width=12.6cm]{figures/ytu_logo.png}\\[1.15cm]
+{\fontsize{16}{19}\selectfont\bfseries MATEMATİK BÖLÜMÜ}\\[1.85cm]
+
+{\fontsize{15}{19}\selectfont\bfseries \TezBaslikKapak}\\[1.9cm]
+
+{\fontsize{14}{17}\selectfont \Ogrenci}\\[8pt]
+{\fontsize{14}{17}\selectfont \OgrenciNo}\\[1.65cm]
+
+{\large\bfseries LİSANS BİTİRME TEZİ}\\[2.2cm]
+
+{\large Danışman}\\[2pt]
+{\large \Danisman}\\[2.6cm]
+
+{\large \TarihAy, \TarihYil}
+\end{center}
+\end{spacing}
+\clearpage
+
+% ======================= ÖNSÖZ =======================
+\thispagestyle{empty} % ii (numara basılmaz)
+\chapter*{ÖNSÖZ}
+\addcontentsline{toc}{chapter}{ÖNSÖZ}
+
+Bu çalışma, modern matematiksel fiziğin ve cebirsel yapıların kesişiminde yer alan
+kuantum gruplarını, bilgisayar destekli sembolik hesaplama yaklaşımıyla bir araya
+getirme düşüncesinin bir ürünüdür. Tezin amacı\normalsemi{} kuantum grup $\Uq$ ve kuantum
+süpergrup $GL_q(2|1)$ için temel temsil-teorik yapıları ve Yang--Baxter tipi
+bağıntıları, açık kaynaklı, test edilebilir ve yeniden üretilebilir bir Python
+altyapısı üzerinde incelemektir.
+
+Tez konusunun belirlenmesinde ve çalışmanın her aşamasında bilgi, tecrübe ve
+yönlendirmeleriyle bana yol gösteren değerli danışmanım Sayın \Danisman'e en içten
+teşekkürlerimi sunarım. $GL_q(2|1)$ kuantum süpergrubunun kurucularından biri olarak
+sahip olduğu engin birikimi benimle paylaşması, bu çalışmanın olgunlaşmasında büyük
+katkı sağlamıştır. Kendisiyle çalışma imkânı bulmuş olmak benim için büyük bir
+onurdur.
+
+Hayatım boyunca sevgilerini, emeklerini ve desteklerini benden esirgemeyen aileme
+sonsuz teşekkür ederim. Bu süreçte sabırları, fedakârlıkları ve bana duydukları
+güven, en büyük güç kaynaklarımdan biri olmuştur. Ayrıca bu yolculukta yanımda olan,
+desteği ve dostluğuyla bana moral veren tüm dostlarıma içtenlikle teşekkür ederim.
+
+Bu çalışmanın, kuantum grupları, kuantum süpergruplar ve bilgisayar destekli sembolik
+hesaplama alanlarında yapılacak ileriki çalışmalara katkı sunmasını temenni ederim.
+
+\vspace{1.5cm}
+\begin{flushright}
+\Ogrenci\\
+\TarihAy, \TarihYil
+\end{flushright}
+\clearpage
+
+% ======================= İÇİNDEKİLER =======================
+\renewcommand{\contentsname}{İÇİNDEKİLER}
+\tableofcontents
+\clearpage
+
+% ======================= SİMGE LİSTESİ =======================
+\chapter*{SİMGE LİSTESİ}
+\addcontentsline{toc}{chapter}{SİMGE LİSTESİ}
+\begin{spacing}{1.3}
+\noindent
+\begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
+$\Uq$ & Drinfeld--Jimbo kuantum grubu \\
+$\sl_2$ & İz sıfır $2\times2$ matrislerin Lie cebri \\
+$U(\gfrak)$ & Evrensel sarmalayıcı cebir \\
+$E,\,F,\,K,\,K^{-1}$ & $\Uq$'nin üreteçleri \\
+$q$ & Deformasyon parametresi \\
+$\qint{n}$ & $q$-tamsayı, $(q^n-q^{-n})/(q-q^{-1})$ \\
+$V_n$ & $(n{+}1)$-boyutlu indirgenemez temsil \\
+$\hwt$ & En yüksek ağırlık vektörü \\
+$\cop$ & Eş-çarpım (comultiplication) \\
+$\eps$ & Eş-birim (counit) \\
+$S$ & Antipot \\
+$R$ & $R$-matrisi \\
+$\Rcheck$ & Örgülü $R$-matrisi, $\Rcheck=\tau R$ \\
+$\tau$ & Takas (permütasyon) operatörü \\
+$\otimes$ & Tensör çarpımı \\
+$GL_q(2|1)$ & Kuantum süpergrup \\
+$p(e_i)$ & $e_i$ baz vektörünün paritesi (derecesi) \\
+$P$ & Süper permütasyon matrisi \\
+$R_{ij}$ & Tensör kuvvetinde $i,j$ faktörlerine yerleşen $R$ \\
+$B(n)$ & $V_n$'nin kristal tabanı \\
+$\zeta$ & İlkel birim kök \\
+\end{tabularx}
+\end{spacing}
+\clearpage
+
+% ======================= KISALTMA LİSTESİ =======================
+\chapter*{KISALTMA LİSTESİ}
+\addcontentsline{toc}{chapter}{KISALTMA LİSTESİ}
+\begin{spacing}{1.3}
+\noindent
+\begin{tabularx}{\textwidth}{@{}p{3.2cm}X@{}}
+CG    & Clebsch--Gordan \\
+QYBE  & Kuantum Yang--Baxter Denklemi (Quantum Yang--Baxter Equation) \\
+RTT   & $R T_1 T_2 = T_2 T_1 R$ inşa yöntemi \\
+SI    & Uluslararası Birim Sistemi \\
+YBE   & Yang--Baxter Denklemi (Yang--Baxter Equation) \\
+YTÜ   & Yıldız Teknik Üniversitesi \\
+\end{tabularx}
+\end{spacing}
+\clearpage
+
+% ======================= ŞEKİL LİSTESİ =======================
+\ytuListOfFigures
+\clearpage
+
+% ======================= ÇİZELGE LİSTESİ =======================
+\chapter*{ÇİZELGE LİSTESİ}
+\addcontentsline{toc}{chapter}{ÇİZELGE LİSTESİ}
+Bu tez kapsamında ayrı bir çizelge bulunmamaktadır.
+\clearpage
+
+% ======================= TABLO LİSTESİ =======================
+\ytuListOfTables
+\clearpage
+
+% ======================= ÖZET =======================
+\chapter*{ÖZET}
+\addcontentsline{toc}{chapter}{ÖZET}
+\begin{center}
+{\bfseries \TezBaslik}\\[4pt]
+\Ogrenci\\[8pt]
+\Bolum\ Lisans Bitirme Tezi\\[6pt]
+Danışman: \Danisman\\[10pt]
+\end{center}
+
+Bu tez, Drinfeld--Jimbo kuantum grubu $\Uq$ ve $GL_q(2|1)$ kuantum süpergrubu için
+temel temsil-teorik ve Yang--Baxter tipi bağıntıları Python/SymPy ortamında yeniden
+üretilebilir biçimde modellemektedir. Yöntemin çekirdeği, her cebirsel eşitliği açık
+sonlu boyutlu temsiller üzerinde bir kalıntı matrisine indirgemek ve bu matrisin tüm
+girdilerini sembolik olarak sadeleştirerek sıfır olup olmadığını denetlemektir.
+
+$\Uq$ için sonlu boyutlu en yüksek ağırlıklı $V_n$ temsilleri açık matrislerle
+kurulmuş\normalsemi{} tanımlayıcı bağıntılar, Hopf yapısı, tensör çarpımı eylemi ve
+Clebsch--Gordan en yüksek ağırlık vektörleri seçilen temsiller üzerinde sembolik
+olarak doğrulanmıştır. $V_1\otimes V_1$ üzerinde $R$-matrisi, kuantum Yang--Baxter
+denklemi, örgü bağıntısı ve Hecke skein özdeşliği sıfır-kalıntı yöntemiyle kontrol
+edilmiştir. $GL_q(2|1)$ tarafında ise literatürde verilen $9\times 9$ $R$-matrisi
+bağımsız olarak kodlanmış, $p(e_1)=p(e_2)=0$, $p(e_3)=1$ parite konvansiyonu ile
+süper permütasyon kullanılarak $R_{13}$ yerleşimi kurulmuş ve graded Yang--Baxter
+kalıntısının tüm $27\times 27$ girdilerinin sıfır olduğu sembolik olarak
+doğrulanmıştır. Sonuçların her biri \texttt{pytest} tabanlı testlere bağlanmıştır.
+Çalışmanın temel katkısı yeni bir kuantum grup tanımı vermek değil, bilinen kuantum
+grup ve kuantum süpergrup yapılarını modüler, test edilebilir ve yeniden
+üretilebilir bir sembolik doğrulama altyapısına dönüştürmektir.
+
+\vspace{0.6cm}
+\noindent\textbf{Anahtar Kelimeler:} kuantum gruplar, $U_q(\mathfrak{sl}_2)$,
+kuantum süpergruplar, $GL_q(2|1)$, Yang--Baxter denklemi, sembolik hesaplama.
+\clearpage
+
+% ======================= ABSTRACT =======================
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+\begin{center}
+{\bfseries \TezBaslikEn}\\[4pt]
+\Ogrenci\\[8pt]
+Mathematics Department Undergraduate Thesis\\[6pt]
+Advisor: \Danisman\\[10pt]
+\end{center}
+
+This thesis models the basic representation-theoretic structures and
+Yang--Baxter type identities for the Drinfeld--Jimbo quantum group $\Uq$ and the
+quantum supergroup $GL_q(2|1)$ in a reproducible Python/SymPy environment. The
+central method is to reduce each algebraic identity to a residual matrix on
+explicit finite-dimensional representations and then verify symbolically that
+all entries of this matrix simplify to zero.
+
+For $\Uq$, finite-dimensional highest-weight representations $V_n$ are
+constructed by explicit matrices. The defining relations, Hopf structure,
+tensor-product action, and Clebsch--Gordan highest-weight vectors are verified
+symbolically on selected representations. On $V_1\otimes V_1$, the $R$-matrix,
+the quantum Yang--Baxter equation, the braid relation, and the Hecke skein
+identity are checked by the zero-residual method. For $GL_q(2|1)$, the
+$9\times9$ $R$-matrix given in the literature is implemented independently\normalsemi{}
+using the parity convention $p(e_1)=p(e_2)=0$, $p(e_3)=1$, the $R_{13}$
+placement is built through the super-permutation operator and all entries of the
+$27\times27$ graded Yang--Baxter residual are verified to be zero. Each result is
+connected to reproducible \texttt{pytest}-based tests. The contribution of the
+study is not to introduce a new quantum group definition, but to transform known
+quantum group and quantum supergroup structures into a modular, testable, and
+reproducible symbolic verification framework.
+
+\vspace{0.6cm}
+\noindent\textbf{Keywords:} quantum groups, $U_q(\mathfrak{sl}_2)$, quantum
+supergroups, $GL_q(2|1)$, Yang--Baxter equation, symbolic computation.
+\clearpage
+
+% ======================= ANA METİN =======================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Giriş}
+
+Kuantum gruplar, 1980'lerin ortasında V.~Drinfeld ve M.~Jimbo'nun~\cite{Drinfeld,Jimbo,KS} --- istatistik
+mekaniğin integrallenebilir modellerini ve bunların temelinde yatan
+\emph{kuantum Yang--Baxter denklemini} cebirsel bir dile oturtma çabası içinde ---
+birbirinden bağımsız olarak vardığı yapılardır. Adlarındaki ``grup'' sözcüğü
+yanıltıcıdır: kuantum gruplar birer Lie grubu değildir. Daha çok, evrensel
+sarmalayıcı cebir $U(\gfrak)$'nin bir $q$ parametresi boyunca tek-parametreli
+deformasyonu olan ve ne değişmeli ne de eş-değişmeli (cocommutative) olan
+\emph{Hopf cebirleridir}. Bu deformasyonun kalbinde, örgülü monoidal
+kategorilerde iki nesnenin tutarlı biçimde yer değiştirmesini kodlayan, böylece
+integrallenebilir sistemlerle düğüm değişmezlerini aynı çatı altında buluşturan
+Yang--Baxter denklemi ve onun çözümü olan $R$-matrisi durur.
+
+Bu denklemlerin somut temsiller üzerinde sağlandığını göstermek, $q$'ya bağlı
+yüksek boyutlu matris çarpımlarını gerektirir\normalsemi{} el ile yürütüldüğünde işlem hem
+uzar hem de hataya açık hâle gelir. Burada izlenen yol, söz konusu cebirsel
+manipülasyonları sembolik bilgisayar cebiriyle (Python/SymPy) modellemek, her
+bağıntıyı bir sıfır-kalıntı matris testine indirgemek ve elde edilen sonuçları
+otomatik birim testlere bağlamaktır. Anlatı iki eksende ilerler: \textbf{(i)}
+$\Uq$ için temsil teorisi ve $R$-matrisi altyapısı\normalsemi{} \textbf{(ii)} $GL_q(2|1)$
+kuantum süpergrubu için graded Yang--Baxter doğrulaması.
+
+Bu iki eksen, kuantum grupların prototipi $\Uq$ ile Salih Çelik ve Sultan A.\ Çelik'in tanıttığı
+$GL_q(2|1)$ kuantum süpergrubunu beş doğrulama başlığı altında ele alan ortak bir
+hedefte buluşur:
+\begin{enumerate}[leftmargin=*]
+  \item \textbf{Cebirsel}: dört tanımlayıcı bağıntının ve dokuz Hopf
+        aksiyomunun (eş-birleşmelilik, eş-birim, antipot) matris düzeyinde
+        sembolik doğrulanması.
+  \item \textbf{Temsil teorik}: $(n+1)$-boyutlu indirgenemez temsil $V_n$'in
+        açık inşası, $V_m \otimes V_n$ Clebsch--Gordan ayrışımının $q$-deforme
+        katsayılarıyla hesaplanması.
+  \item \textbf{Topolojik}: $V_1\otimes V_1$ üzerinde $R$-matrisinin
+        inşası, kuantum Yang--Baxter denkleminin ve örgü bağıntısının
+        sembolik matris doğrulaması\normalsemi{} bu doğrulamanın düğüm değişmezleri (Jones
+        polinomu) ile bağlantısı.
+  \item \textbf{Asimptotik}: $q$ parametresinin üç farklı limitinde aynı
+        temsilin yapısının nasıl değiştiğinin somut karşılaştırılması.
+  \item \textbf{Süpergrup ve graded YBE}: Salih Çelik ve Sultan A.\ Çelik tarafından tanımlanan
+        $GL_q(2|1)$ kuantum süpergrubunun $9\times 9$ R-matrisi kodlanarak,
+        graded Yang--Baxter denklemi $27\times 27$ matris düzeyinde sembolik
+        olarak doğrulanır.
+\end{enumerate}
+
+Bu çalışmanın özgün katkısı, yeni bir kuantum grup tanımlamak değildir.
+Katkı, literatürde bilinen $\Uq$ ve $GL_q(2|1)$ yapılarını sonlu boyutlu
+temsiller üzerinde yeniden üretilebilir, test edilebilir ve sembolik bir
+doğrulama altyapısına dönüştürmektir. Bu kapsamda $\Uq$ temsilleri, tanımlayıcı
+bağıntılar, Hopf aksiyomları, tensör çarpımları, Clebsch--Gordan en yüksek
+ağırlık vektörleri, $R$-matrisi kontrolleri ve limit karşılaştırmaları aynı
+paket içinde ele alınır. Ayrıca Salih Çelik ve Sultan A.\ Çelik'in
+$GL_q(2|1)$ için verdiği $R$-matrisi bağımsız olarak kodlanır ve graded
+Yang--Baxter denklemi, parite uyumlu $R_{13}$ yerleşimiyle $27\times 27$
+matris girdileri düzeyinde doğrulanır. Raporlanan her sembolik eşitlik,
+\texttt{pytest} tabanlı yeniden çalıştırılabilir bir teste bağlanır.
+
+Çalışmanın yazılım ayağı, yalnızca SymPy'ye bağımlı ve modüler olarak
+tasarlanmış \texttt{quantum\_group} adlı Python paketidir\normalsemi{} her doğrulama
+\texttt{pytest} testleriyle otomatik biçimde yeniden çalıştırılabilir. Böylece raporlanan her eşitlik, ilgili
+testi koşturan herkes tarafından bağımsızca yeniden üretilebilir.
+
+\paragraph{Tezin akışı.} İlkin gerekli teorik zemin --- gruplar, Lie
+cebirleri, Hopf cebirleri, $\Uq$ ve temsiller --- yoğun ama eksiksiz biçimde
+verilir. Ardından yazılım mimarisi tanıtılır. Sonraki bölümler hesaplamalı
+katkıları sırayla sunar: Clebsch--Gordan ayrışımı, $\Uq$ için $R$-matrisi ve
+YBE, $GL_q(2|1)$ için graded Yang--Baxter doğrulaması ve üç asimptotik limit.
+Kapanış bölümü bulguları toparlayıp ileri çalışma yönlerini sıralar.
+
+\chapter{Teorik Arka Plan}
+
+Aşağıda, kuantum grupların üzerine kurulduğu klasik cebirsel zemin --- gruplar,
+Lie cebirleri, evrensel sarmalayıcı cebir ve Hopf yapısı --- ele alınır.
+Anlatım bilinçli olarak sıkıştırılmıştır\normalsemi{} ancak ilerideki bölümler için gereken
+hiçbir kavram atlanmamış, vurgu $\sl_2 \to \Uq \to V_n$ hattını izleyen bir
+çizgide tutulmuştur.
+
+\section{Gruplar, Lie Cebirleri Ve Evrensel Sarmalayıcı Cebir}
+
+\begin{definition}
+Bir \emph{grup} $G$, birleşmeli bir ikili işlem $\cdot : G \times G \to G$,
+iki yanlı bir birim eleman $e \in G$ ve her elemanın bir tersi olan bir
+küme yapısıdır.
+\end{definition}
+
+Sürekli simetri grupları üzerinde diferansiyel hesap yapabilmek için Lie
+gruplarına geçilir: $G$ aynı zamanda düzgün bir manifolddur ve grup
+işlemleri düzgündür. Klasik örnekler $\GL_n(\C)$, $\SL_n(\C)$,
+$\mathrm{SO}_n$, $\mathrm{SU}_n$'dur. Bir Lie grubunun \emph{infinitezimal}
+yapısı tanjant uzayında saklıdır.
+
+\begin{definition}
+Bir cisim $\K$ üzerinde bir \emph{Lie cebri} $\gfrak$, antisimetrik ve Jacobi
+özdeşliğini sağlayan iki-doğrusal $[\,\cdot\,,\,\cdot\,] : \gfrak \times \gfrak \to \gfrak$
+parantezi ile donatılmış vektör uzayıdır:
+\begin{equation}
+  [x,y] = -[y,x], \qquad
+  [x,[y,z]] + [y,[z,x]] + [z,[x,y]] = 0.
+\end{equation}
+\end{definition}
+
+Matris Lie grupları için Lie parantezi komütatördür: $[x,y] = xy - yx$.
+Lie grup ile Lie cebir arasındaki köprü üstel dönüşüm $\exp : \gfrak \to G$ ile
+verilir. Lie cebrinin temsil teorisini lineerleştiren araç, bir sonraki
+adımdır.
+
+\begin{definition}
+$\gfrak$ bir Lie cebri olsun. \emph{Evrensel sarmalayıcı cebir} $U(\gfrak)$,
+$\gfrak$'yi içeren ve $xy - yx = [x,y]$ bağıntısı dışında hiçbir bağıntıya
+tabi olmayan birleşmeli birimli cebirdir.
+\end{definition}
+
+$\gfrak$'nin temsilleri ile $U(\gfrak)$'nin temsilleri kanonik olarak birebir
+karşılık gelir\normalsemi{} ve kuantum gruba deformasyon hedefimiz tam olarak $U(\gfrak)$
+nesnesidir, $\gfrak$'nin kendisi değil.
+
+\section{$\sl_2$ Lie Cebri}
+
+İz sıfır $2 \times 2$ kompleks matrisleri vektör uzayı $\sl_2(\C)$ üç
+boyutludur ve standart bazı:
+\begin{equation}
+  e = \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix},\qquad
+  f = \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix},\qquad
+  h = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}.
+\end{equation}
+Bu eleman üçlüsü temel bağıntıları sağlar:
+\begin{equation}\label{eq:sl2-rels}
+  [h,e] = 2e, \qquad [h,f] = -2f, \qquad [e,f] = h.
+\end{equation}
+Küçük boyutuna karşın $\sl_2$, yarı-basit Lie cebirlerinin tüm yapı
+taşıdır: her böyle cebir basit kökler tarafından indekslenmiş $\sl_2$
+kopyalarından dokunmuş gibidir.
+
+\begin{theorem}[$\sl_2$'nin sonlu boyutlu temsilleri]
+$\sl_2(\C)$'nin sonlu boyutlu indirgenemez temsilleri, negatif olmayan
+tamsayı $n \in \Z_{\geq 0}$ ile birebir karşılık gelir. $V_n$ adlı temsil
+$(n+1)$-boyutludur, baz $\{v_0, v_1, \dots, v_n\}$ üzerinde
+\begin{equation}
+  h \cdot v_k = (n - 2k) v_k, \quad
+  f \cdot v_k = v_{k+1}, \quad
+  e \cdot v_k = k(n-k+1)\, v_{k-1},
+\end{equation}
+ve sınır koşulları $f \cdot v_n = 0$, $e \cdot v_0 = 0$.
+\end{theorem}
+
+$h$'nin özdeğerleri olan $n - 2k$ tamsayılarına \emph{ağırlıklar} denir\normalsemi{}
+bu, kuantum gruba geçişte $K$-özdeğerleri olarak yeniden ortaya çıkacaktır.
+
+\section{Hopf Cebirleri}
+
+Bir cebir verildiğinde, onun temsilleriyle ne yapabileceğimiz tek başına çarpım
+yapısıyla belirlenmez. İki temsilin tensör çarpımının yine bir temsil olması,
+trivial (skaler) bir temsilin tanımlanabilmesi ve her temsile bir dual
+eşlik edebilmesi --- bunların hiçbiri birleşmeli çarpımdan kendiliğinden çıkmaz.
+Eksik olan, cebire eklenen üç ek dönüşümdür: bir elemanı iki kopyaya ``dağıtan''
+eş-çarpım, skalere indirgeyen eş-birim ve tersleme rolünü üstlenen antipot. Bu
+üçlü \emph{Hopf cebir} aksiyomlarını oluşturur ve aslında temsil teorisinin
+tensör/dual işlemlerini cebirin içine gömme aracıdır.
+
+\begin{definition}
+$\K$ cismi üzerinde birleşmeli birimli bir cebir $H$, eğer eş-çarpım
+$\cop : H \to H \otimes H$, eş-birim $\eps : H \to \K$ ve antipot
+$S : H \to H$ dönüşümleriyle donatılmış ve aşağıdakileri sağlıyorsa
+\emph{Hopf cebri}'dir:
+\begin{enumerate}[leftmargin=*]
+  \item $(\cop \otimes \id) \circ \cop = (\id \otimes \cop) \circ \cop$ \quad (eş-birleşmelilik)
+  \item $(\eps \otimes \id) \circ \cop = \id = (\id \otimes \eps) \circ \cop$ \quad (eş-birim)
+  \item $\mu \circ (S \otimes \id) \circ \cop = \eps(\,\cdot\,)\,1 = \mu \circ (\id \otimes S) \circ \cop$ \quad (antipot)
+\end{enumerate}
+Burada $\mu$ cebir çarpımıdır\normalsemi{} ayrıca $\cop$ ve $\eps$ cebir homomorfizmleri,
+$S$ cebir anti-homomorfizmi olmak zorundadır.
+\end{definition}
+
+Hopf yapısının temsil teorik anlamı kritiktir:
+\begin{itemize}[leftmargin=*]
+  \item İki temsil $V$, $W$ verildiğinde, $V \otimes W$ üzerinde $H$-etkisi
+        eş-çarpım aracılığıyla tanımlanır: $X \cdot (v \otimes w) := \cop(X) \cdot (v \otimes w)$.
+  \item Eş-birim $\eps$, trivial temsil $\K$'ya karşılık gelir.
+  \item Antipot $S$, dual temsil $V^*$'ı tanımlamak için kullanılır.
+\end{itemize}
+
+\begin{example}
+Her $U(\gfrak)$, eş-değişmeli (cocommutative) bir Hopf cebridir\normalsemi{} üreteçler
+$x \in \gfrak$ üzerinde
+\begin{equation}
+  \cop(x) = x \otimes 1 + 1 \otimes x, \quad \eps(x) = 0, \quad S(x) = -x.
+\end{equation}
+Eş-değişme, klasik tensör çarpımının değişmeli olmasının cebirsel
+karşılığıdır. Kuantum grupta tam olarak bu özellik bozulacaktır.
+\end{example}
+
+\chapter{Kuantum Grup $\Uq$'nin Tanımı}
+
+Drinfeld--Jimbo fikrinin özü, $U(\sl_2)$'nin Serre tipi bağıntılarını ayakta
+tutarken Cartan üretecini bir grup-benzeri öğeye dönüştürmektir. Klasik
+$h$ yerine tersinir bir $K = q^h$ değişkeni konur\normalsemi{} bu sayede Cartan eylemi
+``$q$ üssü'' biçiminde köşegenleşir ve $[e,f]=h$ bağıntısı, $\qint{h}$
+ifadesiyle yumuşatılmış bir versiyona geçer. Deformasyon parametresi $q$, ayrı
+bir cebirsel nicelik eklemez\normalsemi{} var olan tüm yapı sabitlerini $q$'nun rasyonel
+fonksiyonlarına taşır ve $q\to 1$ limitinde her şeyi klasik $U(\sl_2)$'ye geri
+indirir.
+
+Bu çalışmada $q$ çoğunlukla formel bir parametre olarak ele alınır ve sembolik
+hesaplamalar $\Q(q)$ üzerinde yürütülür. Bir karmaşık değere özelleştirme
+yapıldığında $q\in\C^\times$ ve tanımda görünen paydalar için $q\neq \pm 1$
+varsayılır\normalsemi{} birim köklerde ise temsil teorisinin değiştiği ayrıca
+Bölüm~\ref{sec:limits} içinde belirtilir.
+
+\begin{definition}\label{def:Uq}
+$\Uq$ kuantum grubu, $\Q(q)$ üzerinde dört üreteç $E$, $F$, $K$, $K^{-1}$
+ile aşağıdaki bağıntılara tabi birleşmeli cebirdir:
+\begin{align}
+  K K^{-1} &= K^{-1} K = 1, \tag{R1} \\
+  K E K^{-1} &= q^{2} E, \tag{R2} \\
+  K F K^{-1} &= q^{-2} F, \tag{R3} \\
+  [E, F] := EF - FE &= \frac{K - K^{-1}}{q - q^{-1}}. \tag{R4}
+\end{align}
+\end{definition}
+
+Bu cebir bir Hopf cebridir\normalsemi{} üreteçler üzerinde:
+\begin{align}
+  \cop(E) &= E \otimes 1 + K \otimes E, \\
+  \cop(F) &= F \otimes K^{-1} + 1 \otimes F, \\
+  \cop(K) &= K \otimes K, \\
+  \eps(E) &= \eps(F) = 0, \quad \eps(K) = 1, \\
+  S(E) &= -K^{-1} E, \quad S(F) = -F K, \quad S(K) = K^{-1}.
+\end{align}
+Burada $\cop$ eş-\emph{değişmeli değildir}: $\tau \circ \cop \neq \cop$ (bunu
+örgülü R-matrisin varlığı tam olarak kuantize edecek).
+
+\section{$q$-Deformasyon Sezgisi}
+
+$q$-tamsayılar şu formülle tanımlanır:
+\begin{equation}\label{eq:qint}
+  \qint{n} := \frac{q^n - q^{-n}}{q - q^{-1}} = q^{n-1} + q^{n-3} + \dots + q^{-(n-1)}.
+\end{equation}
+L'H{\^o}pital kuralıyla bakıldığında $q\to 1$ için $\qint{n}\to n$ olur\normalsemi{} benzer
+biçimde $q$-faktöriyel $\qfact{n} = \qint{n}\qint{n-1}\cdots\qint{1}$ klasik
+$n!$'e yaklaşır. Burada kritik olan nokta şudur: $\qint{n}$ yalnızca süslü bir
+sayı değil, deformasyonun \emph{işleyiş mekanizmasıdır}. Birazdan görüleceği
+gibi, $V_n$ temsilinde $E$'nin matris katsayıları doğrudan
+$\qint{k}\qint{n-k+1}$ çarpımlarıyla verilir\normalsemi{} dolayısıyla klasik tamsayı
+katsayıları bu $q$-sayılarıyla değiştirildiğinde, tüm temsil tek bir hamlede
+kuantize olmuş olur.
+
+$K = q^h$ formal yazımı altında (R4)'ün sağ tarafı tam olarak $\qint{h}$
+ifadesine karşılık gelir\normalsemi{} yani klasik $[e,f] = h$ bağıntısının deforme hâlidir
+ve $q\to 1$ limitinde $\Uq$ yeniden $U(\sl_2)$'ye iner.
+
+Bu sayıların üretimi, kodda doğrudan~\eqref{eq:qint} formülünü kullanan kısa bir
+fonksiyonla sağlanır:
+
+\begin{lstlisting}[style=pyblock,caption={$q$-Tamsayının SymPy İle Modellenmesi}]
+def q_integer(n, q_sym=q):
+    # [n]_q = (q^n - q^{-n}) / (q - q^{-1})
+    if n == 0:
+        return sp.Integer(0)
+    return sp.simplify((q_sym**n - q_sym**(-n)) / (q_sym - q_sym**(-1)))
+\end{lstlisting}
+
+Çıktı, $n$ tamsayısının $q$-deforme karşılığı $\qint{n}$'in sembolik ifadesidir.
+İlk birkaç değer ve klasik limitleri Tablo~\ref{tab:qint}'de derlenmiştir\normalsemi{}
+simetrik Laurent açılımı ($q^{n-1}+\cdots+q^{-(n-1)}$) her satırda açıkça
+görülür. Sembolik dönüş tipi sayesinde aynı fonksiyon hem genel $q$ ile hem de
+$q=i$ gibi bir birim kökünde değerlendirilebilir --- bu esneklik, ileride birim
+kök rejimini incelerken doğrudan kullanılacaktır.
+
+\begin{table}[h]
+\centering
+\small
+\caption{$q$-tamsayıların ilk değerleri ve klasik limitleri (paketin
+\texttt{q\_integer} çıktısı).}
+\label{tab:qint}
+\begin{tabularx}{0.92\textwidth}{@{}c >{$}X<{$} c@{}}
+\toprule
+$n$ & \multicolumn{1}{c}{$\qint{n}=\dfrac{q^n-q^{-n}}{q-q^{-1}}$} & $q\to 1$ \\
+\addlinespace[2pt]
+\midrule
+0 & 0 & 0 \\
+1 & 1 & 1 \\
+2 & q + q^{-1} & 2 \\
+3 & q^{2} + 1 + q^{-2} & 3 \\
+4 & q^{3} + q + q^{-1} + q^{-3} & 4 \\
+5 & q^{4} + q^{2} + 1 + q^{-2} + q^{-4} & 5 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\chapter{$\Uq$'nin Sonlu Boyutlu Temsil Teorisi}
+
+\begin{theorem}\label{thm:irreps}
+Genel $q$ (yani $q$ birim kökü değil) için, $\Uq$'nin sonlu boyutlu
+indirgenemez ``Tip 1'' temsilleri $n \in \Z_{\geq 0}$ ile parametrelenir.
+$V_n$ temsili $(n+1)$-boyutludur, baz $\{v_0, \dots, v_n\}$ üzerinde
+\begin{align}
+  K \cdot v_k &= q^{n - 2k}\, v_k, \\
+  F \cdot v_k &= v_{k+1}, \quad (F \cdot v_n = 0) \\
+  E \cdot v_k &= \qint{k} \qint{n - k + 1}\, v_{k-1}, \quad (E \cdot v_0 = 0).
+\end{align}
+\end{theorem}
+
+Bu standart sınıflandırma için bkz.\ \cite{Kassel,ChariPressley,Lusztig}\normalsemi{}
+buradaki katkı, teoremin açık matris modelini yazılımda kullanıp sonraki
+bağıntı kontrollerine temel yapmaktır.
+
+\begin{proof}[Kanıt taslağı]
+Bir vektör $v_0 \neq 0$, $E v_0 = 0$ ve $K v_0 = q^n v_0$ koşullarıyla
+varsayılır (\emph{en yüksek ağırlık vektörü}). $v_k := F^k v_0 / \qfact{k}$
+ile tanımlanır. (R2) ve (R3)'ten $K v_k$ formülü\normalsemi{} (R4)'ün tekrarlı
+uygulanmasından $E v_k$ formülü çıkar. $V_n$'nin indirgenemezliği
+ağırlık ayrışımının her ağırlık altuzayının bir-boyutlu olmasından
+gelir.
+\end{proof}
+
+Bu formüllerin klasik $\sl_2$ temsilinden nasıl ``deforme'' olduğu doğrudan
+okunabilir. Köşegen $K$, klasik ağırlık $n-2k$'nin yerine $q^{n-2k}$ üssel
+özdeğerini koyar\normalsemi{} $F$ tarafı değişmeden bir aşağı-kaydırma operatörü kalır\normalsemi{}
+asıl deformasyon $E$'de yoğunlaşır: klasik $k(n-k+1)$ tamsayı katsayısı,
+$\qint{k}\qint{n-k+1}$ $q$-sayısı çarpımıyla değişir. $q\to 1$ alındığında
+$\qint{k}\to k$ ve $\qint{n-k+1}\to n-k+1$ olduğundan $E\cdot v_k \to
+k(n-k+1)\,v_{k-1}$ elde edilir ve klasik formüller eksiksiz geri gelir. Yani
+$V_n$, klasik temsilin ağırlık örgüsünü korur\normalsemi{} değişen tek şey katsayıların
+$q$-sayılarıyla yeniden ölçeklenmesidir.
+
+Teorem~\ref{thm:irreps}'deki üç formül, kodda birebir matris girişlerine
+dönüşür:
+
+\begin{lstlisting}[style=pyblock,caption={$V_n$ Temsilinde $E,F,K,K^{-1}$ Matrislerinin İnşası}]
+def build_representation(n, q_sym=q):
+    dim = n + 1
+    # K . v_k = q^{n-2k} v_k  (kosegen agirliklar)
+    weights = [q_sym**(n - 2*k) for k in range(dim)]
+    K = sp.diag(*weights)
+    K_inv = sp.diag(*[w**(-1) for w in weights])
+
+    # F . v_k = v_{k+1}  (asagi kaydirma)
+    F = sp.zeros(dim, dim)
+    for k in range(n):
+        F[k + 1, k] = 1
+
+    # E . v_k = [k]_q [n-k+1]_q v_{k-1}  (yukari kaydirma, q-deforme)
+    E = sp.zeros(dim, dim)
+    for k in range(1, dim):
+        E[k - 1, k] = q_integer(k, q_sym) * \
+                      q_integer(n - k + 1, q_sym)
+
+    return Representation(n=n, dim=dim, E=E, F=F, K=K,
+                          K_inv=K_inv, weights=weights)
+\end{lstlisting}
+
+Böylece soyut $\Uq$ eylemi, açık matrislere sahip sonlu boyutlu bir nesne
+hâline gelir\normalsemi{} bundan sonraki tüm temsil düzeyinde sembolik doğrulamalar bu
+matrisler üzerinde yürütülür. Operatörlerin ağırlık örgüsü üzerindeki etkisi
+Şekil~\ref{fig:weight}'de $V_4$ örneğinde görselleştirilmiştir: $F$ ağırlığı iki
+basamak düşürür, $E$ ise $\qint{k}\qint{n-k+1}$ katsayısıyla geri yükseltir.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=1.45cm,y=1cm]
+  % --- Agirlik diyagrami V_4 ---
+  \node[glabel, accent!70!black] at (-1.2,0) {$V_4:$};
+  \foreach \k/\w in {0/4,1/2,2/0,3/-2,4/-4}{
+    \node[rdot] (v\k) at (\k,0) {};
+    \node[font=\footnotesize] at (\k,0.34) {$v_{\k}$};
+    \node[font=\scriptsize, accent!60!black] at (\k,-0.36) {$\w$};
+  }
+  \draw[accent!25!white, line width=0.6pt] (-0.3,0) -- (4.3,0);
+  % F oklari (ustte)
+  \foreach \a/\b in {0/1,1/2,2/3,3/4}{
+    \draw[->, accent!80!black, line width=0.8pt]
+      (v\a) to[bend left=42] node[above, font=\scriptsize] {$F$} (v\b);
+  }
+  % E oklari (altta), katsayilar [k][n-k+1]
+  \foreach \a/\b/\c in {1/0/{[1][4]},2/1/{[2][3]},3/2/{[3][2]},4/3/{[4][1]}}{
+    \draw[->, oddsign!75!black, line width=0.8pt]
+      (v\a) to[bend left=42] node[below, font=\scriptsize] {$\c_q$} (v\b);
+  }
+  \node[font=\scriptsize, oddsign!70!black] at (2,-1.15)
+    {\emph{alt sıra}: $E\cdot v_k=\qint{k}\qint{n-k+1}\,v_{k-1}$};
+
+  % --- Kristal B(4) ---
+  \begin{scope}[yshift=-2.6cm]
+    \node[glabel, accent!70!black] at (-1.2,0) {$B(4):$};
+    \foreach \k in {0,1,2,3,4}{
+      \node[knode] (b\k) at (\k,0) {$b_{\k}$};
+    }
+    \foreach \a/\b in {0/1,1/2,2/3,3/4}{
+      \draw[->, kedge] (b\a) -- node[above, font=\scriptsize] {$\tilde f$} (b\b);
+    }
+  \end{scope}
+\end{tikzpicture}
+\caption{\emph{Üstte} $V_4$ temsilinin ağırlık diyagramı: $F$ (mavi) indeksleri
+yükseltir, $E$ (mor) $q$-tamsayı katsayılarıyla geri taşır. \emph{Altta} aynı
+temsilin $q\to 0$ kristal gölgesi $B(4)$, tek tip $\tilde f$ oklarıyla.}
+\label{fig:weight}
+\end{figure}
+
+\chapter{Kristal Tabanlar (Genel Bakış)}
+
+$q \to 0$ limitinde tek tek matris katsayıları ıraksar\normalsemi{} ne var ki temsilin
+\emph{tamamı} kaybolmaz. Kashiwara'nın gözlemi~\cite{Kashiwara,HK}, bu limitte temsile ait bir
+\emph{kristal tabanın} --- saf cebirsel verinin kombinatoryal bir iskeletinin ---
+hayatta kaldığıdır. Bu yüzden kristal tabanı $V_n$'in ``kombinatoryal gölgesi''
+olarak düşünmek doğaldır: ağırlık örgüsünün ve operatör eylemlerinin sürekli
+katsayıları silinmiş, geriye yalnızca hangi vektörün hangisine bağlandığını
+söyleyen yön bilgisi kalmıştır. $\Uq$ için bu gölge $B(n)$, $n+1$ düğüm ve $n$
+yönlü kenardan oluşan bir yoldur:
+\[
+  b_0 \xrightarrow{\tilde{f}} b_1 \xrightarrow{\tilde{f}} \cdots
+  \xrightarrow{\tilde{f}} b_n.
+\]
+Buradaki $\tilde{f}, \tilde{e}$ Kashiwara operatörleri, $F$ ve $E$'nin
+$q \to 0$ limitindeki ``kalıntılarıdır''. Bu kombinatoryal yapı sayesinde tensör
+çarpımları, karakter formülleri ve dallanma kuralları sürekli hesap yerine
+sonlu grafikler üzerinden okunabilir\normalsemi{} modern cebirsel kombinatoriğin önemli bir
+bölümü bu fikirden beslenir.
+
+\chapter{Yazılım Mimarisi}
+
+Paketin temel doğrulama deseni, soyut cebirsel eşitlikleri sonlu boyutlu
+temsiller üzerinde matris eşitliklerine çevirmektir. Her eşitlik için bir kalıntı
+matrisi oluşturulur ve bu matrisin tüm girdileri sembolik olarak sadeleştirilir.
+Böylece matematiksel iddia, çalıştırılabilir ve test edilebilir bir prosedürle
+ilişkilendirilmiş olur. Bu desen tek tip olduğu için $\Uq$ bağıntılarından Hopf
+aksiyomlarına, $R$-matrisi denklemlerinden $GL_q(2|1)$ graded Yang--Baxter
+hesabına kadar her doğrulama aynı çekirdek üzerinden yürür\normalsemi{} değişen tek şey,
+kalıntıyı kuran matrislerin boyutu ve içeriğidir.
+
+Bu yaklaşımın iki pratik dayanağı vardır. Birincisi, temsiller kodda açık bir
+veri modeliyle taşınır: her $V_n$ için $E$, $F$, $K$, $K^{-1}$ matrisleri,
+$K$-özdeğerleri (\emph{weights}) ve boyut bilgisi tek bir \texttt{Representation}
+yapısında toplanır. İkincisi, sıfır kontrolü sayısal değil semboliktir\normalsemi{}
+\texttt{sympy.simplify} her girdiyi girdi-bazında sadeleştirip $0$'a inip
+inmediğine bakar, böylece sonuç belirli bir $q$ değerine değil genel $q$'ya
+ilişkin olur. Son olarak her matematiksel iddia, ona karşılık gelen bir
+\texttt{pytest} testine bağlanır\normalsemi{} dolayısıyla bu tezde hesaplamalı olarak
+doğrulandığı belirtilen her eşitlik, depo klonlandığında yeniden koşturulabilen
+somut bir teste karşılık gelir.
+
+\texttt{quantum\_group} paketinin modülleri ve sorumlulukları
+Tablo~\ref{tab:modules}'de özetlenmiştir.
+
+\begin{table}[h]
+\centering
+\small
+\caption{\texttt{quantum\_group} paketinin modülleri ve sorumlulukları.}
+\label{tab:modules}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.30\textwidth}X@{}}
+\toprule
+Modül & Sorumluluk \\
+\midrule
+\texttt{utils.py} & $q$-tamsayı, $q$-faktöriyel, $q$-binom, klasik limit. \\
+\texttt{generators.py} & Sembolik üreteçler $E, F, K, K^{-1}, q$. \\
+\texttt{relations.py} & Tanımlayıcı bağıntılar ve matris doğrulaması. \\
+\texttt{representations.py} & $V_n$ temsilinin açık matrislerle inşası. \\
+\texttt{quantum\_group\_sl2.py} & \texttt{QuantumGroupSL2} cephe sınıfı. \\
+\texttt{hopf.py} & $\cop, \eps, S$ ve Hopf aksiyomlarının doğrulaması. \\
+\texttt{tensor.py} & $V_m \otimes V_n$ ve Clebsch--Gordan ayrışımı. \\
+\texttt{r\_matrix.py} & $R$-matris, QYBE, örgü bağıntısı, Hecke skein. \\
+\texttt{supergroup\_gl21.py} & $GL_q(2|1)$ $R$-matrisi, süper permütasyon, graded YBE ve $V^{\otimes n}$ üzerinde $R_{ij}$ yerleşimleri. \\
+\texttt{limits.py} & Klasik / genel $q$ / birim kök / kristal limitleri. \\
+\texttt{crystal.py} & $B(n)$ kristal grafiği. \\
+\texttt{visualization.py} & Ağırlık diyagramı ve kristal grafiği çizimi. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Test paketi (\texttt{tests/}), her modüle karşılık gelen \texttt{pytest} birim
+testlerinden oluşur ve tüm testler başarıyla tamamlanır. Kurulum, testlerin
+çalıştırılması, şekillerin yeniden üretilmesi ve PDF derleme adımları
+Ek~A'da ayrıntılı olarak verilmiştir.
+
+\paragraph{Bağıntıların doğrulanması.} Yukarıda anlatılan desenin en yalın
+örneği, dört tanımlayıcı bağıntının denetimidir. Her bağıntı $X = Y$ biçiminde
+yazılır\normalsemi{} kod $V_n$ üzerinde $Z := X - Y$ kalıntı matrisini kurar ve girdilerinin
+\texttt{sympy.simplify} altında sıfıra indiğini denetler. Aynı prosedür sembolik
+$q$ ile çalıştığından, dört bağıntının da $V_0,\dots,V_4$ üzerinde sağlandığı
+tek seferde doğrulanır. Çekirdek mantık şöyledir:
+
+\begin{lstlisting}[style=pyblock,caption={Tanımlayıcı Bağıntıların Sıfır-Kalıntı Yöntemiyle Doğrulanması}]
+def verify_on_representation(E, F, K, K_inv, q_sym=q):
+    I = sp.eye(E.rows)
+    # Her bagintiyi X - Y kalinti matrisi olarak yaz
+    residuals = {
+        "R1": K*K_inv - I,
+        "R2": K*E*K_inv - q_sym**2 * E,
+        "R3": K*F*K_inv - q_sym**(-2) * F,
+        "R4": E*F - F*E - (K - K_inv)/(q_sym - q_sym**(-1)),
+    }
+    # Girdi bazinda sadelestirme: tum girdiler sembolik olarak 0 mi?
+    return {
+        name: all(sp.simplify(x) == 0 for x in M)
+        for name, M in residuals.items()
+    }
+\end{lstlisting}
+
+Fonksiyonun döndürdüğü sözlük, her bağıntı için bir doğru/yanlış değeri taşır\normalsemi{}
+böylece ``hangi bağıntı hangi temsilde sağlandı'' sorusu makine tarafından
+yanıtlanabilir bir biçime kavuşur. Hopf aksiyomları, $R$-matrisi denklemleri ve
+graded YBE de aynı şablonun farklı boyutlardaki uygulamalarıdır.
+
+\paragraph{Boyuttan bağımsızlık.} Bu desenin gücü, kalıntı-matris boyutuna
+duyarsız olmasıdır: aynı ``kur ve girdi-bazlı sıfırla'' mantığı $\Uq$
+bağıntılarındaki $(n{+}1)\times(n{+}1)$ matrislerden, $GL_q(2|1)$'in
+$9\to 27\to 81$ boyutlu tensör kuvvetlerine kadar değişmeden uygulanır. Yüksek
+boyutlu yerleşimlerde ($R_{13}$ ve $V^{\otimes 4}$ operatörleri) doğru graded
+işaretler, Önerme~\ref{prop:embed}'teki süper-permütasyon konjugasyonuyla
+otomatik taşınır\normalsemi{} böylece elle hesapta en sık hata yapılan adım --- işaret ve
+faktör sıralaması --- kodda yapıya gömülür. Bu, çalışmanın $GL_q(2|1)$
+tarafındaki asıl kolaylığının kaynağıdır.
+
+\chapter{Tensör Çarpımı Ve Clebsch--Gordan Ayrışımı}
+
+İlk hesaplamalı katkı, $V_m \otimes V_n$ ayrışımının en yüksek ağırlık
+vektörlerini $q$-deforme katsayılarıyla sembolik olarak elde etmektir. Klasik
+$\sl_2$ kuramında Clebsch--Gordan formülü
+\begin{equation}
+  V_m \otimes V_n \cong V_{m+n} \oplus V_{m+n-2} \oplus \dots \oplus V_{|m-n|}
+\end{equation}
+biçimindedir. Kuantum durumda ayrışımın \emph{kombinatoryal iskeleti} aynen
+korunur\normalsemi{} değişen, en yüksek ağırlık vektörlerini veren katsayıların artık
+$q$'nun rasyonel fonksiyonlarına dönüşmesidir. Bunun mümkün olmasının nedeni,
+tensör çarpımı üzerindeki eylemin --- yukarıda vurgulandığı gibi --- $\Uq$'nin
+Hopf yapısı, yani eş-çarpımı tarafından belirlenmesidir.
+
+\section{Algoritma}
+
+Verilen $V_m, V_n$ için $V_m \otimes V_n$ üzerinde üreteçlerin etkisi,
+eş-çarpımdan Kronecker çarpımı ile hesaplanır:
+\begin{equation}
+\begin{aligned}
+  E \cdot (v \otimes w) &= E v \otimes w + K v \otimes E w, \\
+  F \cdot (v \otimes w) &= F v \otimes K^{-1} w + v \otimes F w, \\
+  K \cdot (v \otimes w) &= K v \otimes K w.
+\end{aligned}
+\end{equation}
+$V_m \otimes V_n$'nin "$k$-ağırlık altuzayı" K-özdeğeri $q^k$ olan
+vektörler ailesidir\normalsemi{} her $k = m+n, m+n-2, \dots, |m-n|$ için bu altuzay
+incelenir ve $E$'nin çekirdeği bulunur. Çekirdekteki vektör, $V_k$
+parçasının en yüksek ağırlık vektörüdür.
+
+\section{Hesaplama Sonuçları}
+
+Aşağıdaki ayrışımlar paket tarafından otomatik üretilmiştir.
+
+\paragraph{$V_1 \otimes V_1$.}
+\[
+  V_1 \otimes V_1 \cong V_2 \oplus V_0.
+\]
+En yüksek ağırlık vektörleri (baz: $v_0\!\otimes\! v_0,\ v_0\!\otimes\! v_1,\ v_1\!\otimes\! v_0,\ v_1\!\otimes\! v_1$):
+\[
+  \hwt^{(2)} = (1, 0, 0, 0)^\top, \qquad
+  \hwt^{(0)} = \big(0,\ -q^{-1},\ 1,\ 0\big)^\top.
+\]
+$V_0$ parçasının vektörü, klasik antisimetrik vektör
+$(0, -1, 1, 0)/\sqrt{2}$'nin $q$-deforme hâli olup, $-q^{-1}$ katsayısı
+$q$-deformasyonun cebirsel parmak izidir.
+
+\paragraph{$V_2 \otimes V_2$.}
+\[
+  V_2 \otimes V_2 \cong V_4 \oplus V_2 \oplus V_0.
+\]
+$V_0$ singleti (baz $v_i \otimes v_j$, $i,j \in \{0,1,2\}$ üzerinde):
+\[
+  \hwt^{(0)} = (0, 0, q^{-2}, 0, -1, 0, 1, 0, 0)^\top.
+\]
+Klasik limitte $q \to 1$: $(0,0,1,0,-1,0,1,0,0)^\top$, klasik
+Clebsch--Gordan ile uyumludur.
+
+\paragraph{$V_3 \otimes V_2$.}
+\[
+  V_3 \otimes V_2 \cong V_5 \oplus V_3 \oplus V_1.
+\]
+$V_3$ parçasının en yüksek ağırlık vektörü, sıfırdan farklı iki konumda
+\[
+  -\frac{q^4 + q^2 + 1}{q^6 + q^4} \quad\text{ve}\quad 1
+\]
+katsayılarına sahiptir. $q \to 1$ limitinde $-3/2$ ve $1$, yani
+$\binom{3}{1}/\binom{2}{0}$ tipi klasik Clebsch--Gordan oranını verir.
+
+\section{Doğrulama}
+
+Üretilen her aday vektör $v$'nin gerçekten bir en yüksek ağırlık vektörü olduğu
+iki koşulla denetlenir:
+\begin{equation}
+  E \cdot v = 0, \qquad K \cdot v = q^k v.
+\end{equation}
+Bu iki eşitlik seçilen temsiller üzerinde sembolik olarak doğrulanmıştır
+(bkz.\ \path{tests/test_tensor.py}, \path{test_highest_weight_vectors_killed_by_E}).
+Buna ek olarak, $\cop$ üzerinden taşınan eylemle $V_m \otimes V_n$'in dört
+tanımlayıcı bağıntıyı (R1)--(R4) sağladığı da temsil düzeyinde doğrulanmıştır
+(\path{test_tensor_satisfies_relations})\normalsemi{} yani tensör çarpımı yalnızca bir
+vektör uzayı değil, gerçek bir $\Uq$-modülüdür.
+
+\chapter{R-Matrisi Ve Yang--Baxter Denklemi}
+
+İkinci hesaplamalı katkı, $\Uq$ için $R$-matrisini kurup kuantum Yang--Baxter
+denklemini ve buna eşlik eden örgü/Hecke bağıntılarını sembolik matris düzeyinde
+ele almaktır. Kuantum grupların asıl varlık nedeni biraz da budur: örgülü
+monoidal bir kategoride istatistik mekaniğin Yang--Baxter denklemini barındıran
+evrensel bir $R$ elemanı kurmak. $\Uq$ söz konusu olduğunda bu eleman,
+$V_1 \otimes V_1$ üzerinde şu $4 \times 4$ matrise iner:
+\begin{equation}\label{eq:R}
+  R = \begin{pmatrix}
+    q & 0 & 0 & 0 \\
+    0 & 1 & q - q^{-1} & 0 \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & q
+  \end{pmatrix},
+\end{equation}
+baz sıralaması $v_0\!\otimes\! v_0,\ v_0\!\otimes\! v_1,\ v_1\!\otimes\! v_0,\ v_1\!\otimes\! v_1$.
+Bu matrisin ve örgülü eşi $\Rcheck=\tau R$'nin yapısı, paket tarafından üretilen
+Şekil~\ref{fig:rsl2}'de verilmiştir\normalsemi{} tek köşegen-dışı terim $q-q^{-1}$,
+deformasyonun izini taşır.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.82\textwidth]{R_sl2_V1.pdf}
+\caption{$V_1\otimes V_1$ üzerinde Drinfeld $R$-matrisi ve örgülü $\Rcheck=\tau R$.
+Renkli hücreler sıfırdan farklı girdileri, içlerindeki ifadeler ise girdinin
+değerini gösterir (doğrudan \texttt{R\_matrix\_V1} / \texttt{R\_check\_V1}
+çıktısı).}
+\label{fig:rsl2}
+\end{figure}
+
+\section{Kuantum Yang--Baxter Denklemi}
+
+$V_1^{\otimes 3}$ üzerinde $R$-matris denklemi şudur:
+\begin{equation}\label{eq:QYBE}
+  R_{12} R_{13} R_{23} = R_{23} R_{13} R_{12},
+\end{equation}
+burada $R_{ij}$, üçlü çarpımın $i$ ve $j$. faktörlerine $R$ olarak etki edip
+kalan faktörde özdeşlik gibi davranan $8\times 8$ operatördür. Bu indislerin
+önemi yüzeysel değildir: $R_{12}$ ile $R_{23}$ komşu faktörlere ($\otimes I$
+ya da $I\otimes$ biçiminde) doğrudan yerleştirilebilirken, $R_{13}$ \emph{komşu
+olmayan} birinci ve üçüncü faktörlere etki eder ve ancak araya bir takas
+operatörü sokularak kurulabilir. Yang--Baxter denklemi, bu üç yerleşimin
+çarpım sırasının (``önce 12 sonra 23'' ile tersi) aynı operatörü vermesini ister\normalsemi{}
+geometrik olarak bu, Şekil~\ref{fig:ybe}'deki üç doğrunun ortasındaki kesişimden
+ikinci doğrunun hangi yönden geçtiğinin --- yani örülme sırasının --- sonucu
+değiştirmemesi koşuludur.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0,line cap=round]
+  % ====== SOL: ikinci dogru solda ======
+  \begin{scope}
+    \draw[strand] (0,0) -- (2.4,3);          % dogru 1
+    \draw[strand] (0.7,0) -- (0.7,3);         % dogru 2 (solda)
+    \draw[strand] (2.4,0) -- (0,3);           % dogru 3
+    \node[rdot] at (0.7,0.875) {}; \node[glabel,right=1pt] at (0.78,0.7) {$R_{12}$};
+    \node[rdot] at (1.2,1.5)   {}; \node[glabel,right=1pt] at (1.28,1.5) {$R_{13}$};
+    \node[rdot] at (0.7,2.125) {}; \node[glabel,right=1pt] at (0.78,2.32) {$R_{23}$};
+    \node[font=\scriptsize] at (0,-0.3){1}; \node[font=\scriptsize] at (0.7,-0.3){2};
+    \node[font=\scriptsize] at (2.4,-0.3){3};
+    \node[font=\footnotesize] at (1.2,-0.95) {$R_{12}R_{13}R_{23}$};
+  \end{scope}
+  % ====== Esittir ======
+  \node[font=\Large] at (3.5,1.5) {$=$};
+  % ====== SAG: ikinci dogru sagda (ayna) ======
+  \begin{scope}[xshift=4.6cm]
+    \draw[strand] (0,0) -- (2.4,3);
+    \draw[strand] (1.7,0) -- (1.7,3);         % dogru 2 (sagda)
+    \draw[strand] (2.4,0) -- (0,3);
+    \node[rdot] at (1.7,2.125) {}; \node[glabel,left=1pt] at (1.62,2.32) {$R_{12}$};
+    \node[rdot] at (1.2,1.5)   {}; \node[glabel,left=1pt] at (1.12,1.5) {$R_{13}$};
+    \node[rdot] at (1.7,0.875) {}; \node[glabel,left=1pt] at (1.62,0.7) {$R_{23}$};
+    \node[font=\scriptsize] at (0,-0.3){1}; \node[font=\scriptsize] at (1.7,-0.3){2};
+    \node[font=\scriptsize] at (2.4,-0.3){3};
+    \node[font=\footnotesize] at (1.2,-0.95) {$R_{23}R_{13}R_{12}$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Kuantum Yang--Baxter denkleminin doğru-diyagramı. Üç doğru ikişerli
+kesişir\normalsemi{} her kesişim bir $R_{ij}$ operatörüdür. İkinci doğruyu $R_{13}$
+kesişiminin soluna ya da sağına kaydırmak operatörü değiştirmez:
+$R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}$.}
+\label{fig:ybe}
+\end{figure}
+
+\begin{theorem}[Hesaplamalı doğrulama]\label{thm:QYBE}
+\eqref{eq:R} ile verilen $R$-matrisi \eqref{eq:QYBE} kuantum
+Yang--Baxter denklemini sağlar. Kalıntı matris $R_{12} R_{13} R_{23} -
+R_{23} R_{13} R_{12}$, sembolik $q$ üzerinde tam olarak $8 \times 8$
+sıfır matristir.
+\end{theorem}
+
+\begin{proof}[Doğrulama]
+Burada $R_{12}=R\otimes\id$ ve $R_{23}=\id\otimes R$ doğrudandır\normalsemi{} uzak yerleşim
+$R_{13}$ ise takas matrisi $\tau$ ile konjuge edilerek kurulur. Çekirdek
+hesap şudur:
+\begin{lstlisting}[style=pyblock,caption={QYBE Kalıntısı Ve $R_{13}$'un Takasla İnşası}]
+def qybe_residual(R):
+    d = int(sp.sqrt(R.rows))
+    I = sp.eye(d)
+    R12 = _kron(R, I)
+    R23 = _kron(I, R)
+    # R13 = (id (x) tau) (R (x) id) (id (x) tau)
+    P23 = _kron(I, swap_matrix(d))
+    R13 = sp.simplify(P23 * R12 * P23)
+    return sp.simplify(R12 * R13 * R23 - R23 * R13 * R12)
+\end{lstlisting}
+\texttt{sympy.simplify} sonucun $64$ girdisini de sıfıra indirir\normalsemi{} dolayısıyla
+kalıntı tam olarak $8\times 8$ sıfır matristir. (Kod: \path{quantum_group/r_matrix.py},
+\path{qybe_residual}\normalsemi{} test \path{tests/test_r_matrix.py}, \path{test_R_satisfies_qybe}.)
+\end{proof}
+
+\section{Örgülü R-Matrisi Ve Hecke Skein Bağıntısı}
+
+$R$'nin önüne takas operatörü $\tau$ eklenerek tanımlanan
+$\check R := \tau \circ R$, \emph{örgülü $R$-matrisi} adını alır. Bu küçük
+değişiklik kavramsal olarak önemlidir: $R$ Yang--Baxter denklemini ``düz''
+biçimde sağlarken, $\check R$ örgü grubu $B_n$'in bir temsilini doğrudan üretir\normalsemi{}
+yani her tensör çarpanı bir ipliğe, $\check R$ ise iki komşu ipliğin
+çaprazlamasına karşılık gelir.
+
+\begin{proposition}[Örgü bağıntısının hesaplamalı doğrulaması]\label{thm:braid}
+$\check R$ aşağıdakini sağlar:
+\begin{equation}
+  \check R_{12} \check R_{23} \check R_{12} = \check R_{23} \check R_{12} \check R_{23}.
+\end{equation}
+\end{proposition}
+
+Bu, $B_3$ örgü grubunun $\sigma_1\sigma_2\sigma_1 = \sigma_2\sigma_1\sigma_2$
+üreteç ilişkisinin matris karşılığıdır. Üstelik $\check R$ keyfi bir örgü
+temsili değildir\normalsemi{} sağladığı ikinci dereceden bir özdeşlik, onu Hecke cebrine
+bağlar:
+
+\begin{proposition}[Hecke skein bağıntısının hesaplamalı doğrulaması]\label{thm:hecke}
+$\check R$ aşağıdaki kuadratik bağıntıyı sağlar:
+\begin{equation}
+  \check R - \check R^{-1} = (q - q^{-1})\, I_4.
+\end{equation}
+\end{proposition}
+
+\begin{proof}[Doğrulama]
+$\check R$'nin $4 \times 4$ açık matrisini ve $\check R^{-1}$'i SymPy
+ile hesaplayıp farkı sadeleştirdiğimizde tam olarak
+$(q - q^{-1}) I_4$ elde ederiz. Test
+\path{tests/test_r_matrix.py::test_jones_skein}.
+\end{proof}
+
+\section{Spektral Ayrışma Ve Clebsch--Gordan İle Bağlantı}
+
+\begin{proposition}\label{prop:eigs}
+$\check R$'nin $V_1 \otimes V_1$ üzerindeki özdeğerleri ve çoklukları:
+\begin{equation}
+  \mathrm{spec}(\check R) = \{q^{(3)},\ -q^{-1\,(1)}\}.
+\end{equation}
+\end{proposition}
+
+Bu spektrum, $V_1 \otimes V_1 = V_2 \oplus V_0$ Clebsch--Gordan ayrışımıyla
+birebir örtüşür (Şekil~\ref{fig:spec}): $q$ özdeğerinin üç-katlı özuzayı simetrik
+parça $V_2$'ye, $-q^{-1}$ özdeğerinin tek-katlı özuzayı ise antisimetrik singlet
+$V_0$'a karşılık gelir. Topolojik okuması da nettir: $q$ ``ışınımsız geçiş'',
+$-q^{-1}$ ise ``işaret değiştiren yarım-tur'' ile ilişkilenir.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[node distance=8mm]
+  \node[rbox, minimum width=30mm] (vv) {$V_1\otimes V_1$\;\; (boyut 4)};
+  \node[rbox, fill=accentsoft!70, minimum width=26mm, below left=10mm and 2mm of vv] (v2)
+    {$V_2$\;\; (boyut 3)};
+  \node[rbox, fill=oddsign!20, minimum width=26mm, below right=10mm and 2mm of vv] (v0)
+    {$V_0$\;\; (boyut 1)};
+  \draw[kedge,->] (vv) -- (v2);
+  \draw[kedge,->] (vv) -- (v0);
+  \node[glabel, below=1mm of v2] {özdeğer $q$, çokluk 3 \;(simetrik)};
+  \node[glabel, below=1mm of v0] {özdeğer $-q^{-1}$, çokluk 1 \;(antisimetrik)};
+  \node[glabel, accent!60!black, right=6mm of vv, align=left]
+    {$\mathrm{spec}(\Rcheck)=\{\,q^{(3)},\,-q^{-1\,(1)}\}$};
+\end{tikzpicture}
+\caption{Örgülü $\Rcheck$'nin spektral ayrışması, $V_1\otimes V_1=V_2\oplus V_0$
+Clebsch--Gordan ayrışımıyla aynıdır. Özdeğer çoklukları doğrudan alt-temsil
+boyutlarını verir (\texttt{R\_check\_eigenvalues}).}
+\label{fig:spec}
+\end{figure}
+
+\section{Düğüm Değişmezleriyle Bağlantı (İleri Görü)}
+
+Hecke skein bağıntısı, $\check R$ ile üretilen $B_n$ temsilinin aslında Hecke
+cebri $H_n(q)$ üzerinden çarpanlandığını söyler. Bu temsile bir Markov izi
+uygulandığında ortaya çıkan değişmez, tam olarak $\sl_2$ tipindeki
+\emph{Jones polinomudur}~\cite{Jones}. Jones polinomunun somut hesabı bu tezin kapsamı
+dışında tutulmuştur\normalsemi{} ancak ona giden yapısal basamaklar --- örgü bağıntısı ve
+Hecke özdeşliği (Önerme~\ref{thm:braid} ve~\ref{thm:hecke}) --- burada kurulmuş
+ve seçilen matris modeli üzerinde doğrulanmıştır. Jones polinomunun tam
+hesaplanması ve Markov izi bu çalışmanın kapsamı dışındadır.
+
+\chapter{$GL_q(2|1)$ İçin Graded Yang--Baxter Doğrulaması}
+
+Tezin ayırt edici hesaplamalı katkısı bu bölümdedir: kuantum süpergrup
+$GL_q(2|1)$ için literatürde verilen $R$-matrisinin graded Yang--Baxter
+denklemini gerçekten sağladığı, sembolik matris doğrulamasıyla bütün girdiler
+düzeyinde ortaya konur.
+
+\section{Motivasyon}
+
+Salih Çelik ve Sultan A.\ Çelik \cite{CelikGL21}, $GL_q(2|1)$ kuantum süpergrubunu
+$V=\mathbb{C}^{2|1}$ süper vektör uzayı üzerindeki bir $R$-matrisinden RTT
+yöntemiyle inşa eder. Burada amaç, Çelik ve Çelik'in çalışmasında~\cite{CelikGL21} verilen $9\times 9$ $R$-matrisini
+kodlayıp graded Yang--Baxter denkleminin matris girdileri düzeyinde sağlandığını
+bağımsız biçimde doğrulamaktır.
+
+Bu doğrulamanın el ile yapılması zahmetlidir: denklem $27\times 27$ matrislerin
+çarpımına dayanır ve uzun, tekrarlı yapısı nedeniyle işaret/sıralama hatalarına
+açıktır. Dahası --- birazdan görüleceği gibi --- graded yapı, sıradan bir
+matris hesabının ötesinde parite bilgisinin doğru taşınmasını da gerektirir. Bu
+iki neden, hesabı açık baz, açık parite ve açık süper permütasyon matrisiyle
+Python/SymPy üzerinde modellemeyi doğal kılar.
+
+Baz sıralaması $e_1e_1,\,e_1e_2,\,e_1e_3,\,e_2e_1,\,e_2e_2,\,e_2e_3,\,
+e_3e_1,\,e_3e_2,\,e_3e_3$ (kısaca $e_ie_j:=e_i\otimes e_j$) alındığında, kodlanan
+$9\times 9$ $R$-matrisi şudur:
+\begin{equation}\label{eq:Rgl21}
+\setlength{\arraycolsep}{3.2pt}
+R=\begin{pmatrix}
+1 & 0    & 0 & 0      & 0 & 0    & 0      & 0      & 0\\
+0 & q^2  & 0 & 1-q^2  & 0 & 0    & 0      & 0      & 0\\
+0 & 0    & q & 0      & 0 & 0    & 1-q^2  & 0      & 0\\
+0 & 0    & 0 & 1      & 0 & 0    & 0      & 0      & 0\\
+0 & 0    & 0 & 0      & 1 & 0    & 0      & 0      & 0\\
+0 & 0    & 0 & 0      & 0 & q    & 0      & 1-q^2  & 0\\
+0 & 0    & 0 & 0      & 0 & 0    & q      & 0      & 0\\
+0 & 0    & 0 & 0      & 0 & 0    & 0      & q      & 0\\
+0 & 0    & 0 & 0      & 0 & 0    & 0      & 0      & q^2
+\end{pmatrix}.
+\end{equation}
+Girdilerin yalnızca dört farklı türü ($1,\,q,\,q^2,\,1-q^2$) ve seyrek yerleşimi,
+paketin ürettiği Şekil~\ref{fig:rgl21}'de renk kodlu olarak görülebilir.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.74\textwidth]{R_gl21_structure.pdf}
+\caption{\eqref{eq:Rgl21} R-matrisinin girdi-tipi haritası (\texttt{R\_matrix\_GLq21}
+çıktısı). Köşegen $q$/$q^2$ terimleri ile köşegen-dışı $1-q^2$ ``karışım''
+terimleri açıkça ayrışır\normalsemi{} bu seyreklik, $27\times 27$ ve $81\times 81$
+yerleşimlerin neden hâlâ hesaplanabilir kaldığını da açıklar.}
+\label{fig:rgl21}
+\end{figure}
+
+\section{Graded Yapı Ve Süper Permütasyon}
+
+Süper vektör uzayı $V=\mathbb{C}^{2|1}$'in baz vektörleri parite (derece)
+taşır:
+\[
+p(e_1)=0,\qquad p(e_2)=0,\qquad p(e_3)=1,
+\]
+yani $e_1,e_2$ çift, $e_3$ tektir. Graded ortamda iki faktörün yer değiştirmesi,
+klasik takasla aynı olamaz: süper cebirde iki tek (odd) nesne yer değiştirirken
+Koszul işaret kuralı gereği bir eksi işareti ortaya çıkar. Bu, $V\otimes V$
+üzerindeki \emph{süper permütasyon} matrisiyle kodlanır:
+\begin{equation}
+P(e_i\otimes e_j)=(-1)^{p(e_i)p(e_j)}\,e_j\otimes e_i.
+\end{equation}
+Dolayısıyla $P$, klasik permütasyon matrisinden yalnızca tek--tek (odd--odd)
+bileşendeki işaret değişimiyle ayrılır. Bu küçük görünen ayrıntı belirleyicidir:
+$R_{13}$ operatörü süper permütasyon yardımıyla kurulduğundan, işaret yanlış
+modellenirse $R_{13}$ ve onunla birlikte tüm graded Yang--Baxter hesabı
+matematiksel olarak anlamını yitirir. Kod, bu parite bilgisini doğrudan matris
+düzeyine taşır:
+
+\begin{lstlisting}[style=pyblock,caption={$V \otimes V$ Üzerinde Süper Permütasyon Matrisi}]
+def super_permutation_matrix(parity):
+    d = len(parity)
+    P = sp.zeros(d*d, d*d)
+    for i in range(d):
+        for j in range(d):
+            # Koszul isareti: yalniz tek--tek bilesende -1
+            sign = -1 if parity[i] and parity[j] else 1
+            P[j*d + i, i*d + j] = sign
+    return P
+\end{lstlisting}
+
+$GL_q(2|1)$ için \texttt{parity}$=[0,0,1]$ verildiğinden eksi işareti yalnızca
+$e_3\otimes e_3$ bileşeninde, yani $P[8,8]=-1$ girdisinde belirir\normalsemi{} kalan tüm
+girdiler klasik takasla aynıdır (Şekil~\ref{fig:superperm}).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=1.7cm,y=1.7cm]
+  % 3x3 baz izgarasi: hucre (i,j) -> e_i e_j
+  \foreach \i in {1,2,3}{
+    \foreach \j in {1,2,3}{
+      \coordinate (c\i\j) at (\j, -\i);
+    }
+  }
+  % odd-odd hucresi (3,3) vurgulu
+  \fill[oddsign!18, rounded corners=2pt] (3-0.32,-3-0.28) rectangle (3+0.32,-3+0.28);
+  \foreach \i in {1,2,3}{
+    \foreach \j in {1,2,3}{
+      \node[font=\footnotesize] at (c\i\j) {$e_{\i}e_{\j}$};
+    }
+  }
+  % kosegen-disi takas oklari (+1)
+  \foreach \i/\j in {1/2,1/3,2/3}{
+    \draw[<->, accent!70!black, line width=0.7pt]
+      (c\i\j) to[bend left=18] node[font=\scriptsize, fill=white, inner sep=0.6pt] {$+$} (c\j\i);
+  }
+  % kosegen sabit (isaret)
+  \node[font=\scriptsize, accent!60!black] at (1+0.0,-1-0.32) {$+$};
+  \node[font=\scriptsize, accent!60!black] at (2+0.0,-2-0.32) {$+$};
+  \node[font=\scriptsize, oddsign!80!black, fill=white, inner sep=0.6pt] at (3,-3-0.34) {$-1$};
+  \node[glabel, accent!60!black, anchor=west] at (3.6,-2)
+    {$P(e_ie_j)=(-1)^{p_ip_j}e_je_i$};
+\end{tikzpicture}
+\caption{Süper permütasyon $P$, $V\otimes V$ bazı üzerinde bir takas: köşegen-dışı
+çiftler işaretsiz ($+$) yer değiştirir, köşegen sabit kalır\normalsemi{} tek istisna
+odd--odd köşesi $e_3e_3$'tür ($-1$, vurgulu). Klasik takastan tek fark budur.}
+\label{fig:superperm}
+\end{figure}
+
+\section{$R_{12}, R_{13}, R_{23}$ Yerleşimleri}
+
+Çelik ve Çelik'in makalesindeki~\cite{CelikGL21} $R$-matrisi $V\otimes V$ üzerinde etki eden $9\times 9$ bir
+operatördür. Üçlü çarpım $V\otimes V\otimes V$ üzerinde komşu faktör
+yerleşimleri doğrudandır:
+\begin{equation}
+R_{12}=R\otimes I_3,\qquad R_{23}=I_3\otimes R.
+\end{equation}
+Komşu olmayan birinci ve üçüncü faktöre etki eden $R_{13}$ ise ancak süper
+permütasyonla eşlenerek kurulabilir:
+\begin{equation}
+R_{13}=(P\otimes I_3)\,R_{23}\,(P\otimes I_3).
+\end{equation}
+İşte parite bilgisinin hesaba sızdığı yer tam da budur: $R_{13}$, $R_{23}$'ün
+süper permütasyonla ``iki kez döndürülmüş'' hâlidir ve $P$'deki tek eksi işaret
+doğrudan bu operatöre geçer. Şekil~\ref{fig:place} bu üç yerleşimi iplik
+diyagramı olarak karşılaştırır: $R_{12}$ ve $R_{23}$ komşu ipliklere doğrudan
+oturur, $R_{13}$ ise 1.\ ve 3.\ iplikleri süper permütasyonla komşulaştırıp
+$R$'yi uygulayıp tekrar açan bir konjugasyonla kurulur.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,line cap=round]
+  % ---- R12 ----
+  \begin{scope}
+    \draw[strand] (0,0)--(0,3); \draw[strand] (1,0)--(1,3); \draw[strand] (2,0)--(2,3);
+    \node[rbox, minimum width=15mm] at (0.5,1.5) {$R$};
+    \foreach \k/\x in {1/0,2/1,3/2}{\node[font=\scriptsize] at (\x,-0.35){\k};}
+    \node[font=\footnotesize] at (1,-0.95) {$R_{12}=R\otimes I_3$};
+  \end{scope}
+  % ---- R23 ----
+  \begin{scope}[xshift=4cm]
+    \draw[strand] (0,0)--(0,3); \draw[strand] (1,0)--(1,3); \draw[strand] (2,0)--(2,3);
+    \node[rbox, minimum width=15mm] at (1.5,1.5) {$R$};
+    \foreach \k/\x in {1/0,2/1,3/2}{\node[font=\scriptsize] at (\x,-0.35){\k};}
+    \node[font=\footnotesize] at (1,-0.95) {$R_{23}=I_3\otimes R$};
+  \end{scope}
+  % ---- R13 (konjugasyon) ----
+  \begin{scope}[xshift=8cm]
+    % strand A: 0 -> swap -> pos1 -> swap back -> 0
+    \draw[strand] (0,0) to[out=90,in=-90] (1,1) -- (1,2) to[out=90,in=-90] (0,3);
+    % strand B: 1 -> 0 -> 1
+    \draw[strand] (1,0) to[out=90,in=-90] (0,1) -- (0,2) to[out=90,in=-90] (1,3);
+    % strand C: 2 duz
+    \draw[strand] (2,0) -- (2,3);
+    % P kesisimleri
+    \node[rdot] at (0.5,0.5){}; \node[rdot] at (0.5,2.5){};
+    \node[glabel] at (-0.25,0.5){$P$}; \node[glabel] at (-0.25,2.5){$P$};
+    % R kutusu orta bolgede pos2(=x1) ve pos3(=x2) uzerinde
+    \node[rbox, minimum width=15mm] at (1.5,1.5) {$R$};
+    \foreach \k/\x in {1/0,2/1,3/2}{\node[font=\scriptsize] at (\x,-0.35){\k};}
+    \node[font=\footnotesize] at (1,-0.95) {$R_{13}=(P\!\otimes\! I)R_{23}(P\!\otimes\! I)$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Üç faktörlü uzayda $R_{ij}$ yerleşimleri. Komşu yerleşimler ($R_{12},R_{23}$)
+basit Kronecker gömmeleridir\normalsemi{} uzak yerleşim $R_{13}$ ise süper permütasyon $P$
+ile konjugasyon gerektirir --- elle takibi en zor olan, bu çalışmada
+otomatikleştirilen adım.}
+\label{fig:place}
+\end{figure}
+
+Bu fikir tek bir yerleşime özgü değildir. Pakette, $R$'yi herhangi bir
+$V^{\otimes n}$ uzayında istenen $(i,j)$ faktör çiftine taşıyan genel bir gömme
+fonksiyonu tanımlıdır.
+
+\begin{proposition}[Konjugasyonla genel yerleşim]\label{prop:embed}
+$d=\dim V$ ve $S_k$, $k$ ile $k{+}1$ faktörlerini değiş-tokuş eden komşu graded
+takas operatörü olsun ($S_k=I^{\otimes k}\otimes P\otimes I^{\otimes(n-k-2)}$).
+$i<j$ için $V^{\otimes n}$ üzerindeki $R_{i,j}$ operatörü, komşu yerleşim
+$R_{i,i+1}=I^{\otimes i}\otimes R\otimes I^{\otimes(n-i-2)}$'in ardışık
+konjugasyonuyla elde edilir:
+\begin{equation}
+R_{i,j}=S_{j-1}\cdots S_{i+1}\,R_{i,i+1}\,S_{i+1}\cdots S_{j-1}.
+\end{equation}
+Bu konjugasyon graded işaretleri doğru taşır\normalsemi{} $j=i+1$ için ifade basit Kronecker
+gömmesine indirgenir.
+\end{proposition}
+
+Bu önermenin kod karşılığı doğrudan ve test edilebilirdir:
+
+\begin{lstlisting}[style=pyblock,caption={$R$-Matrisini $V^{\otimes n}$ İçinde $(i,j)$ Faktörlerine Gömme}]
+def embed_R_in_tensor_power(R, positions, tensor_power, parity):
+    i, j = positions                       # sifirdan baslayan indisler, i < j
+    d, n = len(parity), tensor_power
+    # Komsu yerlesim R_{i, i+1}
+    op = _kron_list([_eye_pow(d, i), R, _eye_pow(d, n - i - 2)])
+    # Ikinci indisi konjugasyonla i+1'den j'ye tasi (graded takas)
+    for k in range(i + 1, j):
+        S_k = _adjacent_swap(parity, n, k)
+        op = S_k * op * S_k
+    return op
+\end{lstlisting}
+
+$V\otimes V\otimes V$ için $(i,j)=(0,2)$ seçilince bu fonksiyon yukarıdaki
+$R_{13}$ formülünü birebir yeniden üretir\normalsemi{} $V^{\otimes 4}$'te ise altı
+yerleşimin hepsi aynı çağrıyla otomatik kurulur.
+
+\section{Sıfır-Kalıntı Yöntemi}
+
+Graded Yang--Baxter denklemi yine
+\begin{equation}
+R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}
+\end{equation}
+biçimindedir. Önceki bölümlerle aynı şablon izlenerek kalıntı matrisi
+\begin{equation}
+Y(q)=R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}
+\end{equation}
+kurulur\normalsemi{} bu $27\times 27$ boyutlu bir matristir. SymPy ile yapılan girdi-bazlı
+sadeleştirme,
+\begin{equation}
+Y(q)_{ij}=0,\qquad 1\leq i,j\leq 27,
+\end{equation}
+yani matrisin tamamının sıfır olduğunu verir. Hesabın çekirdeği şudur:
+
+\begin{lstlisting}[style=pyblock,caption={$GL_q(2|1)$ İçin Graded Yang--Baxter Kalıntısı}]
+def graded_yang_baxter_residual_GLq21(q_sym=q):
+    # GL_q(2|1) graded Yang--Baxter kalinti matrisi (27x27)
+    R12 = R12_GLq21(q_sym)
+    R13 = R13_GLq21(q_sym)   # super permutasyonla kurulur
+    R23 = R23_GLq21(q_sym)
+    return R12*R13*R23 - R23*R13*R12
+
+def graded_yang_baxter_holds_GLq21(q_sym=q):
+    Y = graded_yang_baxter_residual_GLq21(q_sym)
+    # All 27x27 entries symbolically zero?
+    return all(sp.simplify(x) == 0 for x in Y)
+\end{lstlisting}
+
+Bu fonksiyon $27\times 27$ kalıntıyı oluşturur ve her girdiyi sembolik olarak
+sıfıra indirger. Sonuç Şekil~\ref{fig:ybe27}'de görselleştirilmiştir: eşitliğin
+iki tarafı --- $R_{12}R_{13}R_{23}$ ve $R_{23}R_{13}R_{12}$ --- tıpatıp aynı
+sıfır-olmayan örüntüye sahiptir (her birinde $729$ girdiden $58$'i sıfırdan
+farklı), farkları $Y(q)$ ise tümüyle boştur. Böylece seçilen baz sıralaması ve
+$p=(0,0,1)$ parite konvansiyonu altında graded Yang--Baxter eşitliğinin matris
+girdileri düzeyinde sağlandığı hem sembolik hem görsel olarak doğrulanır.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{ybe_products_27.pdf}
+\caption{Graded Yang--Baxter denkleminin iki tarafının $27\times 27$
+sıfır-olmayan örüntüleri özdeştir\normalsemi{} kalıntı $Y(q)=R_{12}R_{13}R_{23}-
+R_{23}R_{13}R_{12}$ tüm $729$ girdide sıfırdır
+(\texttt{graded\_yang\_baxter\_residual\_GLq21}).}
+\label{fig:ybe27}
+\end{figure}
+
+\section{Dört Faktörlü Genişleme}
+
+Yöntemin tek bir denkleme bağlı kalmadığını göstermek için, $R$-matrisinin
+$V^{\otimes n}$ üzerine genel yerleşimini üreten bir fonksiyon da yazılmıştır.
+Örneğin $V^{\otimes 4}$ üzerinde
+\[
+R_{12}, R_{13}, R_{14}, R_{23}, R_{24}, R_{34}
+\]
+operatörleri $81\times 81$ matrisler olarak elde edilebilir. Bu boyut tesadüfi
+değildir: süpergrup hesapları hızla büyür ($3^3=27$, $3^4=81$) ve elle takibi
+neredeyse olanaksız hâle gelir\normalsemi{} sembolik altyapı ise Önerme~\ref{prop:embed}'in
+şablonunu boyuttan bağımsız biçimde uygular. $V^{\otimes 4}$'ün altı yerleşimi
+ve aralarındaki ilişkiler, $K_4$ tam grafiği üzerinden okunabilir
+(Şekil~\ref{fig:k4}): grafiğin altı kenarı altı $R_{ij}$ operatörüne, dört
+üçgeni dört lokal Yang--Baxter kontrolüne, ayrık kenar çifti ise uzak
+komütativiteye karşılık gelir. Bu sayede hem uzak komütativite
+\begin{equation}
+R_{12}R_{34}=R_{34}R_{12}
+\end{equation}
+hem de dört ayrı üçlü altblok için lokal graded Yang--Baxter kontrolleri
+\begin{equation}
+R_{ab}R_{ac}R_{bc}=R_{bc}R_{ac}R_{ab}
+\end{equation}
+otomatik olarak yürütülür (Tablo~\ref{tab:vtensor4}).
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[x=1.4cm,y=1.4cm]
+  \node[knode] (n1) at (0,2) {1};
+  \node[knode] (n2) at (2,2) {2};
+  \node[knode] (n3) at (2,0) {3};
+  \node[knode] (n4) at (0,0) {4};
+  % 6 kenar = 6 R_{ij}
+  \draw[kedge] (n1)--(n2) node[midway,above,font=\scriptsize]{$R_{12}$};
+  \draw[kedge] (n2)--(n3) node[midway,right,font=\scriptsize]{$R_{23}$};
+  \draw[kedge] (n3)--(n4) node[midway,below,font=\scriptsize]{$R_{34}$};
+  \draw[kedge] (n1)--(n4) node[midway,left,font=\scriptsize]{$R_{14}$};
+  \draw[kedge] (n1)--(n3) node[pos=0.32,above,font=\scriptsize,fill=white,inner sep=0.5pt]{$R_{13}$};
+  \draw[kedge] (n2)--(n4) node[pos=0.32,above,font=\scriptsize,fill=white,inner sep=0.5pt]{$R_{24}$};
+  % uzak komutativite vurgusu (12)-(34)
+  \draw[faredge] ($(n1)!0.5!(n2)$) to[bend left=22] node[above,font=\scriptsize,oddsign!70!black]{uzak komüt.} ($(n3)!0.5!(n4)$);
+\end{tikzpicture}
+\caption{$V^{\otimes 4}$ yerleşimlerinin $K_4$ grafiği: altı kenar altı $R_{ij}$,
+dört üçgen ($\{1,2,3\},\{1,2,4\},\{1,3,4\},\{2,3,4\}$) dört lokal Yang--Baxter
+kontrolü, ayrık kenar çifti $(12)\,$--$\,(34)$ ise uzak komütativitedir.}
+\label{fig:k4}
+\end{figure}
+
+Dört üçlü altblok kontrolü tek bir fonksiyonda toplanır:
+
+\begin{lstlisting}[style=pyblock,caption={$V^{\otimes 4}$ İçindeki Dört Üçlü İçin Lokal YBE Kontrolü}]
+def local_ybe_on_four_tensor_GLq21(q_sym=q):
+    Rij = all_Rij_GLq21(4, q_sym)          # six 81x81 placements
+    result = {}
+    for a, b, c in combinations(range(4), 3):   # (0,1,2),(0,1,3),(0,2,3),(1,2,3)
+        Rab, Rac, Rbc = Rij[(a, b)], Rij[(a, c)], Rij[(b, c)]
+        residual = Rab*Rac*Rbc - Rbc*Rac*Rab
+        result[(a, b, c)] = _is_zero_matrix_symbolic(residual)
+    return result
+\end{lstlisting}
+
+\begin{table}[h]
+\centering
+\small
+\caption[$V^{\otimes 4}$ üzerindeki yerleşimler ve otomatik kontroller.]{$V^{\otimes 4}$ üzerindeki yerleşimler ve otomatik kontroller (tümü
+$81\times 81$\normalsemi{} \texttt{all\_Rij\_GLq21}, \texttt{local\_ybe\_on\_four\_tensor\_GLq21},
+\texttt{braid\_far\_commutativity\_residual\_GLq21}).}
+\label{tab:vtensor4}
+\begin{tabularx}{\textwidth}{@{}l l X@{}}
+\toprule
+Kontrol & İlgili operatörler & Anlamı \\
+\midrule
+Yerleşimler & $R_{12},R_{13},R_{14},R_{23},R_{24},R_{34}$ & $K_4$'ün altı kenarı \\
+\addlinespace[1pt]
+Lokal YBE $\times 4$ & üçlüler $(a,b,c)$ & $R_{ab}R_{ac}R_{bc}=R_{bc}R_{ac}R_{ab}$ \\
+\addlinespace[1pt]
+Uzak komütativite & $R_{12},R_{34}$ & ayrık kenarlar komüte eder \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Metodolojik Katkı}
+
+Bu bölümün asıl kazanımı yöntemseldir. Literatürde verilen $GL_q(2|1)$
+$R$-matrisinin graded Yang--Baxter denklemine ilişkin uzun ve elle yürütülen
+hesabı, burada açık kaynaklı, test edilebilir ve yeniden üretilebilir bir
+sembolik doğrulama prosedürüne dönüşmüştür. Klasik kâğıt-kalem hesabının
+güvenilirliği ile bilgisayar destekli sembolik cebrin ölçeklenebilirliği,
+parite bilgisini matris düzeyine taşıyan tek bir çerçevede birleşir.
+
+\chapter{Klasik, Kuantum Ve Birim Kök Limitleri}\label{sec:limits}
+
+Son hesaplamalı katkı, aynı $V_n$ temsilini üç farklı asimptotik rejimde yan
+yana koyarak ``kuantize etmenin'' somut anlamını göstermektir. Kuantum gruplar
+bu üç rejimde nitel olarak farklı davranır\normalsemi{} bunu tek bir temsil üzerinde
+izlemek, deformasyonun nereye dokunduğunu açıkça ortaya koyar.
+
+\section{(L1) Klasik Limit $q \to 1$}
+
+Cartan elemanını şu limitle geri kazanırız:
+\begin{equation}
+  h := \lim_{q \to 1} \frac{K - 1}{q - 1}.
+\end{equation}
+Köşegen olduğu için $h$'nin $k$. girişi
+$\lim_{q \to 1} (q^{n-2k} - 1)/(q - 1) = n - 2k$, yani klasik
+$\sl_2$ ağırlığıdır.
+
+\begin{proposition}[Seçilen temsillerde sayısal doğrulama]\label{thm:classical}
+$V_n$ için, $h = \lim_{q\to 1} (K-1)/(q-1)$ ile tanımlanan operatörün
+köşegen girişleri $\{n, n-2, n-4, \dots, -n\}$'dir\normalsemi{} ve aynı limit
+$\lim_{q\to 1} [E,F] = h$ olur.
+\end{proposition}
+
+Doğrulama, $V_1, V_2, V_3, V_4$ için \path{tests/test_limits.py}
+içindeki \path{test_classical_commutator_equals_h} testi ile
+yapılmıştır.
+
+\section{(L2) Genel $q$}
+
+Çalışmanın büyük kısmının yürüdüğü asıl kuantum rejim budur. $K$-özdeğerleri
+$\{q^n, q^{n-2}, \dots, q^{-n}\}$, $E$-katsayıları ise $\qint{k}\qint{n-k+1}$
+biçimindedir. Burada $q$ birim kökü olmadığından temsil teorisi klasik durumun
+``düzgün'' bir deformasyonudur: $V_n$ indirgenemez kalır, dört bağıntı ve dokuz
+Hopf aksiyomu sembolik $q$ üzerinde sağlanır.
+
+\section{(L3) Birim Kök $q^N = 1$}
+
+$q$ bir $N$. primitif birim kökü $\zeta = e^{2\pi i/N}$ ile değerlendirildiğinde
+$\qint{N}=0$ olur ve genel-$q$ resmi köklü biçimde değişir. $E^N$, $F^N$ ve
+$K^{2N}$ merkezîleşir\normalsemi{} bazı $\qint{k}\qint{n-k+1}$ katsayıları sıfırlandığından
+daha önce indirgenemez olan kimi $V_n$ temsilleri parçalanabilir hâle gelir.
+Yani deformasyonun ``zararsız'' göründüğü genel rejimden, temsil teorisinin
+yeniden kurulmasını gerektiren bir rejime geçilir.
+
+\begin{example}[Sayısal gözlem]
+$N = 4$ alalım, yani $q = i$. $V_2$ üzerinde $E$-matris katsayıları
+$\qint{1}\qint{2}$ ve $\qint{2}\qint{1}$ formundadır. Burada
+\begin{equation}
+  \qint{2} = q + q^{-1} = i + i^{-1} = 0
+\end{equation}
+olduğundan, hesaplama $E = 0_3$ verir:
+\begin{equation}
+  E\big|_{q=i} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix}.
+\end{equation}
+Yani $V_2$, $q = i$'de yapısal olarak \emph{çöker} ve genel $q$
+durumundakinden farklı, indirgenebilir bir $\Uq|_{q=i}$-modül hâline
+gelir. Bu olgu \path{tests/test_limits.py::test_root_of_unity_V2_at_q4_singular}
+ile sayısal olarak doğrulanmıştır.
+\end{example}
+
+Bunun teorik anlamı, ``küçük kuantum grup'' $u_q(\sl_2)$'nin (Lusztig)
+ortaya çıkışıdır: birim kökte $\Uq$'nin sonlu boyutlu indirgenemez
+temsilleri sınıflanması tamamen değişir, blok yapısı belirir, ve kuantum
+gruplar konformal alan teorisi ile bağlantı kurar.
+
+\section{(L4) Kristal Limit $q \to 0$}
+
+Üçüncü teorik bölümde tartışılan kristal taban, aslında $q\to 0$ limitine
+karşılık gelir. Bu rejimde tekil matris katsayıları ıraksasa da $V_n$'in
+kombinatoryal gölgesi --- kristal $B(n)$ ---
+\[
+  b_0 \xrightarrow{\tilde f} b_1 \xrightarrow{\tilde f} \dots
+   \xrightarrow{\tilde f} b_n
+\]
+yolu olarak ayakta kalır\normalsemi{} $\tilde f$, $F$-eyleminin tek bir oka indirgenmiş
+hâli, $\tilde e$ ise tersidir. Pakette bu yapı \texttt{quantum\_group/crystal.py}
+modülünde bir grafik nesnesi olarak kurulur ve görselleştirilir.
+
+\section{Üç Limitin Karşılaştırması ($V_2$ Örneği)}
+
+\begin{table}[h]
+\centering
+\small
+\caption{$V_2$ temsilinin üç limit rejimindeki karşılaştırması.}
+\label{tab:limits}
+\begin{tabularx}{\textwidth}{@{}lXXX@{}}
+\toprule
+& Klasik ($q \to 1$) & Genel $q$ & Birim kök ($q^4 = 1$) \\
+\midrule
+$K$-özdeğerleri & 1, 1, 1 & $q^2, 1, q^{-2}$ & $-1, 1, -1$ \\
+$h$-özdeğerleri & 2, 0, $-2$ & --- & --- \\
+$E$-girdileri & 2, 2 & $\qint{1}\qint{2}, \qint{2}\qint{1}$ & 0, 0 \\
+İndirgenemez mi? & Evet & Evet & \textbf{Hayır} \\
+Boyut & 3 & 3 & 3 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Böylece tek bir temsil, kuantum grubun ``$q$ parametresinin üç ayrı hayatını''
+aynı çerçevede gözler önüne serer.
+
+\chapter{Sonuç Ve Öneriler}
+
+Bu çalışmada $\Uq$ kuantum grubu ile $GL_q(2|1)$ kuantum süpergrubu, aynı
+sembolik sıfır-kalıntı doğrulama çekirdeği üzerinden ele alındı. Elde edilen
+sonuçlar şöyle özetlenebilir:
+
+\begin{itemize}[leftmargin=*]
+  \item \textbf{$\Uq$ temsilleri}: Sonlu boyutlu $V_n$ temsilleri açık
+        matrislerle uygulandı\normalsemi{} $E,F,K,K^{-1}$ operatörleri ve ağırlık verileri
+        tek bir temsil nesnesinde toplandı.
+  \item \textbf{Bağıntılar ve Hopf yapısı}: Dört (R1)--(R4) bağıntısı ve Hopf
+        yapısı, seçilen sonlu boyutlu temsiller üzerinde sembolik
+        sıfır-kalıntı testleriyle doğrulandı.
+  \item \textbf{Tensör teorisi}: $V_m \otimes V_n$ üzerinde eş-çarpımdan gelen
+        eylem kuruldu\normalsemi{} Clebsch--Gordan ayrışımının en yüksek ağırlık vektörleri
+        $q$-deforme katsayılarıyla elde edildi.
+  \item \textbf{$R$-matrisi ve örgü bağıntıları}: $V_1 \otimes V_1$ üzerinde
+        $R$-matrisi, kuantum Yang--Baxter denklemi, örgü bağıntısı ve Hecke
+        bağıntısı hesaplamalı olarak kontrol edildi.
+  \item \textbf{Graded durum}: Salih Çelik ve Sultan A.\ Çelik'in
+        $GL_q(2|1)$ $R$-matrisi için graded Yang--Baxter denklemi, parite
+        uyumlu süper permütasyonla kurulan $R_{13}$ yerleşimi kullanılarak
+        $27\times 27$ kalıntı matrisinin tüm girdileri düzeyinde doğrulandı.
+  \item \textbf{Yeniden üretilebilirlik}: Raporlanan kontroller
+        \texttt{pytest} testlerine bağlandı\normalsemi{} şekiller ve PDF çıktısı depo
+        içindeki betikler ve \texttt{Makefile} hedefleriyle yeniden üretilebilir
+        hâle getirildi.
+\end{itemize}
+
+$\Uq$ tarafındaki kazanç, klasik temsil teorisini $R$-matrisi/örgü altyapısıyla
+tek bir test edilebilir pakette buluşturmaktır. $GL_q(2|1)$ tarafında ise asıl
+katkı yöntemseldir: literatürdeki uzun graded Yang--Baxter hesabı, açık baz,
+açık parite ve açık süper permütasyon üzerinden yeniden üretilebilir bir sembolik
+prosedüre dönüşür. Sonuçların tamamı --- \texttt{tests/} birim testleri,
+\texttt{requirements.txt} bağımlılıkları, LaTeX kaynağı ve üretilen PDF --- depo
+klonlanarak yeniden elde edilebilir.
+
+Bu yaklaşım, yüksek boyutlu Yang--Baxter tipi hesapların elle yürütülen
+cebirsel manipülasyonlardan, test edilebilir ve yeniden üretilebilir sembolik
+doğrulama prosedürlerine taşınabileceğini göstermektedir.
+
+\paragraph{İleri çalışma yönleri.}
+\begin{enumerate}[leftmargin=*]
+  \item \emph{Jones polinomu hesaplaması}: bu çalışmadaki örgü temsilini Markov
+        izi ile birleştirerek küçük düğümlerin (trefoil, sekiz-düğüm) Jones
+        polinomunu hesaplama.
+  \item \emph{Yüksek rank}: $U_q(\sl_n)$ ve genel Cartan tipi için aynı
+        altyapının genelleştirilmesi.
+  \item \emph{Küçük kuantum grup}: $u_q(\sl_2)$'nin birim kökünde tam
+        temsil teorisinin ve blok yapısının inşası.
+  \item \emph{Crystal tensör çarpımı}: $B(m) \otimes B(n)$ kristal
+        kuralının uygulanması ve klasik Clebsch--Gordan ile karşılaştırılması.
+  \item \emph{Gauss ayrışımı ve Hopf süpercebir}: $GL_q(2|1)$ için
+        ilgili makaledeki~\cite{CelikGL21} Gauss ayrışımı, üst/alt üçgensel alt süpergruplar, RTT
+        bağıntıları ve Hopf süpercebir eşlemelerinin kodla doğrulanması.
+\end{enumerate}
+
+% ======================= KAYNAKLAR (APA, alfabetik) =======================
+\FloatBarrier
+\begin{spacing}{1}
+\begin{thebibliography}{99}
+\setlength{\itemsep}{6pt}
+
+\bibitem{ChariPressley}
+Chari, V., Pressley, A., (1994). \emph{A Guide to Quantum Groups}, Cambridge University Press, Cambridge.
+
+\bibitem{CelikGL21}
+Çelik, S., Çelik, S.~A., (2021). ``A New Quantum Supergroup and its Gauss Decomposition'', \emph{Reports on Mathematical Physics}, 88(2), 259--272.
+
+\bibitem{Drinfeld}
+Drinfeld, V.~G., (1986). ``Quantum Groups'', \emph{Proceedings of the International Congress of Mathematicians}, Berkeley, ABD.
+
+\bibitem{HK}
+Hong, J., Kang, S.-J., (2002). \emph{Introduction to Quantum Groups and Crystal Bases}, American Mathematical Society, Providence.
+
+\bibitem{Jimbo}
+Jimbo, M., (1985). ``A $q$-difference Analogue of $U(\mathfrak{g})$ and the Yang--Baxter Equation'', \emph{Letters in Mathematical Physics}, 10, 63--69.
+
+\bibitem{Jones}
+Jones, V.~F.~R., (1985). ``A Polynomial Invariant for Knots via von Neumann Algebras'', \emph{Bulletin of the American Mathematical Society}, 12, 103--111.
+
+\bibitem{Kashiwara}
+Kashiwara, M., (1991). ``On Crystal Bases of the $q$-analogue of Universal Enveloping Algebras'', \emph{Duke Mathematical Journal}, 63, 465--516.
+
+\bibitem{Kassel}
+Kassel, C., (1995). \emph{Quantum Groups}, Graduate Texts in Mathematics 155, Springer, New York.
+
+\bibitem{KS}
+Klimyk, A., Schmüdgen, K., (1997). \emph{Quantum Groups and Their Representations}, Springer, Berlin.
+
+\bibitem{pytest}
+Krekel, H. vd., (2004). \emph{pytest documentation}, \url{https://docs.pytest.org/}, 3 Haziran 2026.
+
+\bibitem{Lusztig}
+Lusztig, G., (1993). \emph{Introduction to Quantum Groups}, Birkhäuser, Boston.
+
+\bibitem{SymPy}
+Meurer, A. vd., (2017). ``SymPy: Symbolic Computing in Python'', \emph{PeerJ Computer Science}, 3, e103.
+
+\end{thebibliography}
+\end{spacing}
+\addcontentsline{toc}{chapter}{KAYNAKLAR}
+
+
+\clearpage
+\phantomsection
+\chapter*{EKLER}
+\addcontentsline{toc}{chapter}{EKLER}
+\appendix
+\renewcommand{\thechapter}{\Alph{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\titleformat{\chapter}[hang]
+  {\normalfont\Large\bfseries\raggedleft}{EK~\thechapter}{1em}{}[\headingrule]
+
+\chapter{Kod Deposunun Kurulumu Ve Kullanımı}
+
+Bu ekte, tez kapsamında kullanılan Python kodunun hangi dosyalarda toplandığı
+ve aynı hesapların nasıl yeniden çalıştırılabileceği özetlenmiştir. Amaç,
+metindeki sembolik doğrulamaların yalnızca sonuç olarak verilmesi değil,
+gerektiğinde aynı adımların depo üzerinden tekrar edilebilmesidir. Kod deposu
+\url{https://github.com/TerekliTahaBerk/quantum-groups} adresindedir.
+
+\section{Depo Yapısı}
+
+Depoda tez metni, şekil üretimi ve sembolik hesaplama kodu ayrı dizinlerde
+tutulmuştur:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{quantum\_group/}: $U_q(\sl_2)$, tensör çarpımları, $R$-matrisi
+        ve $GL_q(2|1)$ hesapları için yazılan Python modülleri.
+  \item \texttt{tests/}: tezde kullanılan sembolik kontrolleri tekrar eden
+        \texttt{pytest}~\cite{pytest} testleri.
+  \item \texttt{thesis/}: tez kaynağı, şekil dosyaları ve PDF üretim dosyaları.
+  \item \texttt{thesis/figures/}: tezde kullanılan şekillerin üretildiği betik
+        ve çıktı dosyaları.
+  \item \texttt{notebooks/}: hesapları denerken kullanılan keşif defteri.
+  \item \texttt{main.py}: paketin kısa bir örnek çalıştırması.
+  \item \texttt{Makefile}: sık kullanılan komutları kısaltmak için kullanılan
+        hedefler.
+  \item \texttt{requirements.txt}: gerekli Python paketleri.
+  \item \texttt{MANUSCRIPT\_CODE\_MAPPING.md}: tezdeki hesaplama başlıklarıyla
+        ilgili kod/test dosyalarını eşleyen not dosyası.
+\end{itemize}
+
+\Needspace{10\baselineskip}
+\section{Ortamın Hazırlanması}
+
+\Needspace{9\baselineskip}
+Depo yeni bir makinede çalıştırılacaksa önce sanal ortam kurulup bağımlılıklar
+yüklenir:
+\begin{lstlisting}[style=bashblock]
+git clone https://github.com/TerekliTahaBerk/quantum-groups.git
+cd quantum-groups
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
+\end{lstlisting}
+
+\Needspace{5\baselineskip}
+Windows'ta sanal ortam etkinleştirme komutu farklıdır:
+\begin{lstlisting}[style=bashblock]
+.venv\Scripts\activate
+\end{lstlisting}
+
+Bu çalışmada SymPy~\cite{SymPy} sembolik matris işlemleri ve sadeleştirmeler için, NetworkX
+kristal grafikleri için, Matplotlib şekil üretimi için, pytest testleri
+çalıştırmak için, Jupyter ise ara hesapları incelemek için kullanılmıştır.
+
+\Needspace{10\baselineskip}
+\section{Testlerin Çalıştırılması}
+
+\Needspace{5\baselineskip}
+Tüm testler aşağıdaki komutla çalıştırılabilir:
+\begin{lstlisting}[style=bashblock]
+python3 -m pytest tests/ -q
+\end{lstlisting}
+
+\Needspace{5\baselineskip}
+Aynı işlem için kısa komut da tanımlanmıştır:
+\begin{lstlisting}[style=bashblock]
+make test
+\end{lstlisting}
+
+\Needspace{7\baselineskip}
+Yalnızca belirli bir hesap ailesini kontrol etmek istenirse test dosyaları ayrı
+ayrı çalıştırılabilir:
+\begin{lstlisting}[style=bashblock]
+python3 -m pytest tests/test_r_matrix.py -q
+python3 -m pytest tests/test_supergroup_gl21.py -q
+python3 -m pytest tests/test_tensor.py -q
+\end{lstlisting}
+
+\texttt{test\_r\_matrix.py} dosyası $R$-matrisi, kuantum Yang--Baxter denklemi,
+örgü bağıntısı ve Hecke bağıntısı için yazılan kontrolleri içerir.
+\texttt{test\_supergroup\_gl21.py} dosyasında $GL_q(2|1)$ $R$-matrisi, süper
+permütasyon, graded Yang--Baxter denklemi ve seçili tensör-kuvvet yerleşimleri
+denetlenir. \texttt{test\_tensor.py} ise tensör çarpımı eylemi ve
+Clebsch--Gordan örnekleri için kullanılır.
+
+\Needspace{9\baselineskip}
+\section{Demo Çalıştırma}
+
+\Needspace{5\baselineskip}
+Paketin temel kullanımı \texttt{main.py} dosyasında kısa bir örnekle
+gösterilmiştir:
+\begin{lstlisting}[style=bashblock]
+python3 main.py
+\end{lstlisting}
+
+\Needspace{5\baselineskip}
+\texttt{Makefile} eşdeğeri:
+\begin{lstlisting}[style=bashblock]
+make demo
+\end{lstlisting}
+
+Bu dosya yalnızca hızlı bir kontrol sağlar. Tezde kullanılan asıl sembolik
+doğrulamalar test dosyalarında tutulmuştur.
+
+\Needspace{9\baselineskip}
+\section{Şekillerin Yeniden Üretilmesi}
+
+\Needspace{5\baselineskip}
+Tezdeki şekiller aşağıdaki betikle yeniden üretilebilir:
+\begin{lstlisting}[style=bashblock]
+python3 thesis/figures/generate_figures.py
+\end{lstlisting}
+
+\Needspace{5\baselineskip}
+\texttt{Makefile} eşdeğeri:
+\begin{lstlisting}[style=bashblock]
+make figures
+\end{lstlisting}
+
+Betik çıktı dosyalarını \texttt{thesis/figures/} dizinine yazar. Bu tezde
+kullanılan başlıca şekil dosyaları şunlardır:
+\begin{itemize}[leftmargin=*]
+  \item \texttt{R\_sl2\_V1.pdf}
+  \item \texttt{R\_gl21\_structure.pdf}
+  \item \texttt{ybe\_products\_27.pdf}
+\end{itemize}
+
+Şekillerdeki matematiksel semboller Matplotlib'in mathtext desteğiyle
+üretilmiş, uzun açıklamalar ise tez metnindeki şekil başlıklarında verilmiştir.
+
+\Needspace{8\baselineskip}
+\section{Koda Yeni Hesap Eklemek}
+
+Depoya yeni bir hesap eklenecekse, uygulama kodunun
+\texttt{quantum\_group/} altında tutulması ve aynı hesap için \texttt{tests/}
+dizininde küçük, açık bir test yazılması yeterlidir. Yeni bir şekil gerekiyorsa
+üretim adımı \texttt{thesis/figures/generate\_figures.py} dosyasına eklenebilir.
+Şekil dosyası adlarının LaTeX kaynağındaki
+\texttt{\textbackslash includegraphics} çağrılarıyla aynı kalmasına dikkat
+edilmelidir. Tez metnine yeni bir hesaplama iddiası eklenirse, ilgili kod ve
+test dosyasını \texttt{MANUSCRIPT\_CODE\_MAPPING.md} içinde belirtmek yeniden
+kontrolü kolaylaştırır.
+
+\Needspace{16\baselineskip}
+\chapter{Test Eşlemesi}
+
+Her doğrulama ekseni, ilgili kod modülü ve birim test dosyasıyla
+Tablo~\ref{tab:tests}'de eşlenmiştir.
+
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Doğrulama eksenleri, kod modülleri ve test dosyaları.}
+\label{tab:tests}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}X>{\raggedright\arraybackslash}p{0.30\textwidth}@{}}
+\toprule
+Doğrulama & Kod Modülü & Test Dosyası \\
+\midrule
+$U_q(\sl_2)$ bağıntıları & \texttt{relations.py} & \texttt{test\_relations.py} \\
+Hopf aksiyomları & \texttt{hopf.py} & \texttt{test\_hopf.py} \\
+Temsiller ve kristaller & \texttt{representations.py}, \texttt{crystal.py} & \texttt{test\_representations.py} \\
+Clebsch--Gordan & \texttt{tensor.py} & \texttt{test\_tensor.py} \\
+R-matrisi/QYBE & \texttt{r\_matrix.py} & \texttt{test\_r\_matrix.py} \\
+$GL_q(2|1)$ graded YBE & \texttt{supergroup\_gl21.py} & \texttt{test\_supergroup\_gl21.py} \\
+Limit analizleri & \texttt{limits.py} & \texttt{test\_limits.py} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\FloatBarrier
+
+% ======================= ÖZGEÇMİŞ =======================
+\clearpage
+\chapter*{ÖZGEÇMİŞ}
+\addcontentsline{toc}{chapter}{ÖZGEÇMİŞ}
+
+\noindent
+\textbf{Kişisel Bilgiler}\\[4pt]
+\begin{tabularx}{\textwidth}{@{}p{4cm}X@{}}
+Adı Soyadı      & : Taha Berk TEREKLİ \\
+Bölümü          & : Matematik Bölümü \\
+Üniversite      & : Yıldız Teknik Üniversitesi, Fen-Edebiyat Fakültesi \\
+\end{tabularx}
+
+\vspace{0.6cm}
+\noindent
+\textbf{Eğitim}\\[4pt]
+\begin{tabularx}{\textwidth}{@{}p{4cm}X@{}}
+Lisans & : Yıldız Teknik Üniversitesi, Matematik Bölümü (2022--2026) \\
+Sertifika & : Stanford University, Code in Place -- Computer Science (2023) \\
+\end{tabularx}
+
+\vspace{0.6cm}
+\noindent
+\textbf{Kısa Özgeçmiş}\\[4pt]
+Taha Berk TEREKLİ, Yıldız Teknik Üniversitesi Matematik Bölümü lisans
+öğrencisidir. Matematik eğitimi boyunca analitik düşünme, soyut cebirsel yapılar
+ve bilgisayar destekli hesaplama konularına ilgi duymuş\normalsemi{} bu ilgisini Python,
+SQL ve veri analitiği alanlarındaki uygulamalı çalışmalarla desteklemiştir.
+
+Profesyonel deneyimlerinde veri analizi, otomasyon ve iş süreçlerinin yazılımla
+iyileştirilmesi üzerine çalışmıştır. Getir'de veri stajyeri olarak SQL ve Python
+tabanlı veri çıkarımı, analiz ve raporlama süreçlerinde\normalsemi{} Papara ve Latro'da ise
+RPA ve otomasyon projelerinde görev almıştır. Ayrıca TÜBİTAK 2209-A kapsamında
+derin öğrenme tabanlı tıbbi görüntü işleme üzerine bir araştırma projesinde yer
+almaktadır.
+
+\vspace{0.6cm}
+\noindent
+\textbf{Bitirme Tezi ile İlişkisi}\\[4pt]
+Bu bitirme çalışması, yazarın matematiksel altyapısı ile Python ve sembolik
+hesaplama deneyimini bir araya getirmektedir. Tez kapsamında kuantum gruplar,
+temsil teorisi ve Yang--Baxter tipi bağıntılar Python/SymPy ortamında
+modellenmiş\normalsemi{} geliştirilen \texttt{quantum\_group} paketi ve test takımı açık
+kaynak olarak \url{https://github.com/TerekliTahaBerk/quantum-groups}
+adresinde yayımlanmıştır.
+
+\end{document}

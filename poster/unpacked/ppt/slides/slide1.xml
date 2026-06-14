@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+  <p:cSld>
+    <p:spTree>
+      <p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>
+      <p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>
+      <p:sp><p:nvSpPr><p:cNvPr id="11" name="Baslik"/><p:cNvSpPr/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="875174" y="2820000"/><a:ext cx="23610696" cy="2700000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr>
+<p:txBody><a:bodyPr wrap="square"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" altLang="tr-TR" sz="4000" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill><a:latin typeface="Calibri"/><a:cs typeface="Calibri"/></a:rPr><a:t>2025–2026 Bahar Yarıyılı        MATEMATİK BÖLÜMÜ</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" altLang="tr-TR" sz="3600" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill><a:latin typeface="Calibri"/><a:cs typeface="Calibri"/></a:rPr><a:t>Quantum Grup Yapılarının Python Ortamında Modellenmesi</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" altLang="tr-TR" sz="2400" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill><a:latin typeface="Calibri"/><a:cs typeface="Calibri"/></a:rPr><a:t>Taha Berk TEREKLİ        ……………</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" altLang="tr-TR" sz="2400" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill><a:latin typeface="Calibri"/><a:cs typeface="Calibri"/></a:rPr><a:t>Danışman: Prof. Dr. Salih ÇELİK</a:t></a:r></a:p></p:txBody></p:sp>
+<p:sp><p:nvSpPr><p:cNvPr id="12" name="Ozet"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="875174" y="5865106"/><a:ext cx="23610696" cy="2052000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:solidFill><a:schemeClr val="tx1"/></a:solidFill></a:ln></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" sz="3000" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>ÖZET</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Bu çalışma, Drinfeld–Jimbo kuantum grubu Uq(sl₂) ve GLq(2|1) kuantum süpergrubu için temel temsil-teorik ve Yang–Baxter tipi bağıntıları Python/SymPy ortamında yeniden üretilebilir biçimde modeller. Yöntemin çekirdeği, her cebirsel eşitliği açık sonlu boyutlu temsiller üzerinde bir kalıntı matrisine indirgemek ve matrisin tüm girdilerini sembolik olarak sadeleştirip sıfır olup olmadığını denetlemektir. Raporlanan her eşitlik pytest tabanlı bir teste bağlıdır.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:sp><p:nvSpPr><p:cNvPr id="13" name="SolSutun"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="875173" y="8287432"/><a:ext cx="11343813" cy="23863831"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:solidFill><a:schemeClr val="tx1"/></a:solidFill></a:ln></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>GİRİŞ</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Kuantum gruplar, evrensel sarmalayıcı cebir U(g)’nin tek-parametreli (q) deformasyonu olan; ne değişmeli ne de eş-değişmeli Hopf cebirleridir. Kalbinde, integrallenebilir sistemler ile düğüm değişmezlerini aynı çatıda buluşturan Yang–Baxter denklemi ve onun çözümü R-matrisi yatar.</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>AMAÇ ve KAPSAM</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Amaç yeni bir kuantum grup tanımlamak değil; bilinen Uq(sl₂) kuantum grubu ile GLq(2|1) kuantum süpergrubunun temel yapılarını sonlu boyutlu temsiller üzerinde modüler, test edilebilir ve yeniden üretilebilir bir sembolik doğrulama altyapısına dönüştürmektir.</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>KURAMSAL TEMEL</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Uq(sl₂); E, F, K, K⁻¹ üreteçleri ve dört tanımlayıcı bağıntı ile verilen bir Hopf cebridir:</a:t></a:r></a:p><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="tr-TR" sz="2000" b="1" dirty="0"/><a:t>KEK⁻¹ = q²E, KFK⁻¹ = q⁻²F, [E,F] = (K−K⁻¹)/(q−q⁻¹)</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>(n+1)-boyutlu indirgenemez temsil Vn açık matrislerle kurulur; E katsayıları q-tamsayı çarpımları [k]q·[n−k+1]q ile q-deforme olur ve q→1 limitinde klasik sl₂ temsili geri gelir.</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>YÖNTEM</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Her cebirsel eşitlik, açık temsiller üzerinde bir kalıntı matrisine indirgenir; matrisin tüm girdileri SymPy ile sembolik olarak sadeleştirilip sıfıra inip inmediği denetlenir. Yalnızca SymPy’ye bağlı modüler quantum_group paketi geliştirilmiş; her doğrulama bir pytest testine bağlanmıştır.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:sp><p:nvSpPr><p:cNvPr id="17" name="SagSutun"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="12885245" y="8287432"/><a:ext cx="11600625" cy="18600000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:solidFill><a:schemeClr val="tx1"/></a:solidFill></a:ln></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:normAutofit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>BULGULAR</a:t></a:r></a:p><a:p><a:pPr marL="285750" indent="-285750" algn="just"><a:buFont typeface="Arial"/><a:buChar char="•"/></a:pPr><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Uq(sl₂) için dört tanımlayıcı bağıntı ve dokuz Hopf aksiyomu seçilen temsillerde sembolik olarak doğrulandı.</a:t></a:r></a:p><a:p><a:pPr marL="285750" indent="-285750" algn="just"><a:buFont typeface="Arial"/><a:buChar char="•"/></a:pPr><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Tensör çarpımı Vm⊗Vn üzerinde eş-çarpımdan gelen eylem kuruldu; Clebsch–Gordan en yüksek ağırlık vektörleri q-deforme katsayılarla elde edildi.</a:t></a:r></a:p><a:p><a:pPr marL="285750" indent="-285750" algn="just"><a:buFont typeface="Arial"/><a:buChar char="•"/></a:pPr><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>V₁⊗V₁ üzerinde R-matrisi, kuantum Yang–Baxter denklemi (R₁₂R₁₃R₂₃ = R₂₃R₁₃R₁₂), örgü bağıntısı ve Hecke skein özdeşliği doğrulandı.</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>GLq(2|1) GRADED YANG–BAXTER</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Salih Çelik ve Sultan A. Çelik’in tanıttığı GLq(2|1) süpergrubunun 9×9 R-matrisi bağımsız kodlandı. p(e₁)=p(e₂)=0, p(e₃)=1 parite konvansiyonu ve süper permütasyonla R₁₃ yerleşimi kuruldu; graded Yang–Baxter kalıntısının tüm 27×27 girdisinin sıfır olduğu sembolik olarak doğrulandı.</a:t></a:r></a:p><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc><a:spcBef><a:spcPts val="600"/></a:spcBef></a:pPr><a:r><a:rPr lang="tr-TR" sz="2800" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>SONUÇ</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="2000" dirty="0"/><a:t>Yüksek boyutlu Yang–Baxter tipi hesaplar, elle yürütülen cebirsel manipülasyonlardan test edilebilir ve yeniden üretilebilir sembolik doğrulama prosedürlerine taşınabilir. Parite bilgisi matris düzeyine gömülerek en hata-açık adım otomatikleştirilmiştir.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:sp><p:nvSpPr><p:cNvPr id="22" name="Kaynakca"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="12885245" y="29621420"/><a:ext cx="11586246" cy="2160000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/><a:ln><a:solidFill><a:schemeClr val="tx1"/></a:solidFill></a:ln></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"><a:lnSpc><a:spcPct val="120000"/></a:lnSpc></a:pPr><a:r><a:rPr lang="tr-TR" sz="3000" b="1" dirty="0"><a:solidFill><a:schemeClr val="accent1"><a:lumMod val="50000"/></a:schemeClr></a:solidFill></a:rPr><a:t>KAYNAKÇA</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="1800" b="1" dirty="0"/><a:t>[1] </a:t></a:r><a:r><a:rPr lang="tr-TR" sz="1800" dirty="0"/><a:t>Çelik, S., Çelik, S. A., (2021). “A New Quantum Supergroup and its Gauss Decomposition”, Reports on Mathematical Physics, 88(2), 259–272.</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="1800" b="1" dirty="0"/><a:t>[2] </a:t></a:r><a:r><a:rPr lang="tr-TR" sz="1800" dirty="0"/><a:t>Kassel, C., (1995). Quantum Groups, Springer, New York.</a:t></a:r></a:p><a:p><a:pPr algn="just"/><a:r><a:rPr lang="tr-TR" sz="1800" b="1" dirty="0"/><a:t>[3] </a:t></a:r><a:r><a:rPr lang="tr-TR" sz="1800" dirty="0"/><a:t>Chari, V., Pressley, A., (1994). A Guide to Quantum Groups, Cambridge University Press, Cambridge.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:pic><p:nvPicPr><p:cNvPr id="3" name="Logo"/>
+<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>
+<p:blipFill><a:blip r:embed="rId4"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+<p:spPr><a:xfrm><a:off x="6126984" y="591573"/><a:ext cx="14981279" cy="2137815"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
+<p:pic><p:nvPicPr><p:cNvPr id="40" name="figA"/>
+<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>
+<p:blipFill><a:blip r:embed="rId7"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+<p:spPr><a:xfrm><a:off x="1847079" y="18450000"/><a:ext cx="9400000" cy="5286839"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
+<p:sp><p:nvSpPr><p:cNvPr id="41" name="cap41"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="1847079" y="23796839"/><a:ext cx="9400000" cy="700000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="tr-TR" sz="1800" i="1" dirty="0"/><a:t>Şekil 1. V₁⊗V₁ üzerinde Drinfeld R-matrisi ve örgülü Ř = τR.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:pic><p:nvPicPr><p:cNvPr id="42" name="figB"/>
+<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>
+<p:blipFill><a:blip r:embed="rId8"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+<p:spPr><a:xfrm><a:off x="1847079" y="25250000"/><a:ext cx="9400000" cy="4390471"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
+<p:sp><p:nvSpPr><p:cNvPr id="43" name="cap43"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="1847079" y="29700471"/><a:ext cx="9400000" cy="700000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="tr-TR" sz="1800" i="1" dirty="0"/><a:t>Şekil 2. V₄ temsilinin ağırlık diyagramı; F yükseltir, E q-katsayılarla taşır.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:pic><p:nvPicPr><p:cNvPr id="44" name="figC"/>
+<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>
+<p:blipFill><a:blip r:embed="rId5"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+<p:spPr><a:xfrm><a:off x="13985557" y="19000000"/><a:ext cx="9400000" cy="3596021"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
+<p:sp><p:nvSpPr><p:cNvPr id="45" name="cap45"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="13985557" y="22656021"/><a:ext cx="9400000" cy="700000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="tr-TR" sz="1800" i="1" dirty="0"/><a:t>Şekil 3. Graded Yang–Baxter’in iki tarafı (27×27) özdeş; kalıntı sıfırdır.</a:t></a:r></a:p></p:txBody></p:sp>
+<p:pic><p:nvPicPr><p:cNvPr id="46" name="figD"/>
+<p:cNvPicPr><a:picLocks noChangeAspect="1"/></p:cNvPicPr><p:nvPr/></p:nvPicPr>
+<p:blipFill><a:blip r:embed="rId6"/><a:stretch><a:fillRect/></a:stretch></p:blipFill>
+<p:spPr><a:xfrm><a:off x="16085557" y="23450000"/><a:ext cx="5200000" cy="4573438"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom></p:spPr></p:pic>
+<p:sp><p:nvSpPr><p:cNvPr id="47" name="cap47"/>
+<p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>
+<p:spPr><a:xfrm><a:off x="12885245" y="28083438"/><a:ext cx="11600625" cy="700000"/></a:xfrm>
+<a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>
+<p:txBody><a:bodyPr wrap="square" lIns="180000" tIns="72000" rIns="180000" bIns="72000" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="ctr"/><a:r><a:rPr lang="tr-TR" sz="1800" i="1" dirty="0"/><a:t>Şekil 4. GLq(2|1) için 9×9 R-matrisinin girdi-tipi haritası.</a:t></a:r></a:p></p:txBody></p:sp>
+    </p:spTree>
+  </p:cSld>
+  <p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>
+</p:sld>

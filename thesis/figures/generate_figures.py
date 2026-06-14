@@ -34,6 +34,13 @@ from matplotlib.patches import Patch
 import numpy as np
 import sympy as sp
 
+plt.rcParams.update({
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+    "font.family": "DejaVu Sans",
+    "mathtext.fontset": "dejavusans",
+})
+
 # Repo kokunu import yoluna ekle (script alt dizinde calissa bile)
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -179,7 +186,7 @@ def figure_ybe_products() -> Path:
             s.set_edgecolor(COL_GRID)
 
     fig.suptitle(
-        r"Graded Yang--Baxter: iki urun ozdes oruntu, kalinti $Y(q)\equiv 0$",
+        r"Graded Yang--Baxter: iki ürün özdeş örüntü, kalıntı $Y(q)\equiv 0$",
         fontsize=11)
     fig.tight_layout(rect=(0, 0, 1, 0.96))
     out = OUT_DIR / "ybe_products_27.pdf"

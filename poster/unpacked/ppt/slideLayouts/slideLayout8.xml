@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<p:sldLayout xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main" type="objTx" preserve="1">
+  <p:cSld name="Başlıklı İçerik">
+    <p:spTree>
+      <p:nvGrpSpPr>
+        <p:cNvPr id="1" name=""/>
+        <p:cNvGrpSpPr/>
+        <p:nvPr/>
+      </p:nvGrpSpPr>
+      <p:grpSpPr>
+        <a:xfrm>
+          <a:off x="0" y="0"/>
+          <a:ext cx="0" cy="0"/>
+          <a:chOff x="0" y="0"/>
+          <a:chExt cx="0" cy="0"/>
+        </a:xfrm>
+      </p:grpSpPr>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="2" name="Başlık 1">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{4C582082-77F9-D458-530A-2C8EAE519D6D}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph type="title"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1735782" y="2159952"/>
+            <a:ext cx="8127647" cy="7559834"/>
+          </a:xfrm>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr anchor="b"/>
+          <a:lstStyle>
+            <a:lvl1pPr>
+              <a:defRPr sz="6614"/>
+            </a:lvl1pPr>
+          </a:lstStyle>
+          <a:p>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Asıl başlık stilini düzenlemek için tıklayın</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="3" name="İçerik Yer Tutucusu 2">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{348E346C-35CE-28DD-B378-6407847D1D13}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph idx="1"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="10713272" y="4664900"/>
+            <a:ext cx="12757487" cy="23024494"/>
+          </a:xfrm>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle>
+            <a:lvl1pPr>
+              <a:defRPr sz="6614"/>
+            </a:lvl1pPr>
+            <a:lvl2pPr>
+              <a:defRPr sz="5787"/>
+            </a:lvl2pPr>
+            <a:lvl3pPr>
+              <a:defRPr sz="4961"/>
+            </a:lvl3pPr>
+            <a:lvl4pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl4pPr>
+            <a:lvl5pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl5pPr>
+            <a:lvl6pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl6pPr>
+            <a:lvl7pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl7pPr>
+            <a:lvl8pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl8pPr>
+            <a:lvl9pPr>
+              <a:defRPr sz="4134"/>
+            </a:lvl9pPr>
+          </a:lstStyle>
+          <a:p>
+            <a:pPr lvl="0"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Asıl metin stillerini düzenlemek için tıklayın</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:pPr lvl="1"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>İkinci düzey</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:pPr lvl="2"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Üçüncü düzey</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:pPr lvl="3"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Dördüncü düzey</a:t>
+            </a:r>
+          </a:p>
+          <a:p>
+            <a:pPr lvl="4"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Beşinci düzey</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="4" name="Metin Yer Tutucusu 3">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{36140CB0-3A43-B8EE-43AB-F9857E8A8725}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph type="body" sz="half" idx="2"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr>
+          <a:xfrm>
+            <a:off x="1735782" y="9719786"/>
+            <a:ext cx="8127647" cy="18007107"/>
+          </a:xfrm>
+        </p:spPr>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle>
+            <a:lvl1pPr marL="0" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="3307"/>
+            </a:lvl1pPr>
+            <a:lvl2pPr marL="944987" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2894"/>
+            </a:lvl2pPr>
+            <a:lvl3pPr marL="1889973" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2480"/>
+            </a:lvl3pPr>
+            <a:lvl4pPr marL="2834960" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl4pPr>
+            <a:lvl5pPr marL="3779947" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl5pPr>
+            <a:lvl6pPr marL="4724933" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl6pPr>
+            <a:lvl7pPr marL="5669920" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl7pPr>
+            <a:lvl8pPr marL="6614907" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl8pPr>
+            <a:lvl9pPr marL="7559893" indent="0">
+              <a:buNone/>
+              <a:defRPr sz="2067"/>
+            </a:lvl9pPr>
+          </a:lstStyle>
+          <a:p>
+            <a:pPr lvl="0"/>
+            <a:r>
+              <a:rPr lang="tr-TR"/>
+              <a:t>Asıl metin stillerini düzenlemek için tıklayın</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="5" name="Veri Yer Tutucusu 4">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{0A77B7CD-489F-C419-D36F-83B44E4502C0}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph type="dt" sz="half" idx="10"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr/>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr>
+              <a:defRPr/>
+            </a:pPr>
+            <a:endParaRPr lang="tr-TR"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="6" name="Alt Bilgi Yer Tutucusu 5">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{521A2D1C-23E2-D385-2F77-38A066C48348}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph type="ftr" sz="quarter" idx="11"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr/>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr>
+              <a:defRPr/>
+            </a:pPr>
+            <a:r>
+              <a:rPr lang="tr-TR" altLang="tr-TR"/>
+              <a:t>Xplore</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr lang="tr-TR" altLang="en-US"/>
+              <a:t>&#x2019;</a:t>
+            </a:r>
+            <a:r>
+              <a:rPr lang="tr-TR" altLang="tr-TR"/>
+              <a:t>08 March 14, Phoenix Contact, Blomberg</a:t>
+            </a:r>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+      <p:sp>
+        <p:nvSpPr>
+          <p:cNvPr id="7" name="Slayt Numarası Yer Tutucusu 6">
+            <a:extLst>
+              <a:ext uri="{FF2B5EF4-FFF2-40B4-BE49-F238E27FC236}">
+                <a16:creationId xmlns:a16="http://schemas.microsoft.com/office/drawing/2014/main" id="{3A5EC61B-93AB-A20D-2814-31473F4057FD}"/>
+              </a:ext>
+            </a:extLst>
+          </p:cNvPr>
+          <p:cNvSpPr>
+            <a:spLocks noGrp="1"/>
+          </p:cNvSpPr>
+          <p:nvPr>
+            <p:ph type="sldNum" sz="quarter" idx="12"/>
+          </p:nvPr>
+        </p:nvSpPr>
+        <p:spPr/>
+        <p:txBody>
+          <a:bodyPr/>
+          <a:lstStyle/>
+          <a:p>
+            <a:pPr>
+              <a:defRPr/>
+            </a:pPr>
+            <a:fld id="{50812B67-C7F9-4EE8-BDC0-25A7FB165ADF}" type="slidenum">
+              <a:rPr lang="en-US" altLang="tr-TR" smtClean="0"/>
+              <a:pPr>
+                <a:defRPr/>
+              </a:pPr>
+              <a:t>‹#›</a:t>
+            </a:fld>
+            <a:endParaRPr lang="en-US" altLang="tr-TR"/>
+          </a:p>
+        </p:txBody>
+      </p:sp>
+    </p:spTree>
+    <p:extLst>
+      <p:ext uri="{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}">
+        <p14:creationId xmlns:p14="http://schemas.microsoft.com/office/powerpoint/2010/main" val="3280657787"/>
+      </p:ext>
+    </p:extLst>
+  </p:cSld>
+  <p:clrMapOvr>
+    <a:masterClrMapping/>
+  </p:clrMapOvr>
+</p:sldLayout>

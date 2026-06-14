@@ -1,0 +1,23 @@
+\babel@toc {turkish}{}\relax 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \emph {Üstte} $V_4$ temsilinin ağırlık diyagramı: $F$ (mavi) indeksleri yükseltir, $E$ (mor) $q$-tamsayı katsayılarıyla geri taşır. \emph {Altta} aynı temsilin $q\to 0$ kristal gölgesi $B(4)$, tek tip $\tilde f$ oklarıyla.\relax }}{9}{figure.caption.20}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces $V_1\otimes V_1$ üzerinde Drinfeld $R$-matrisi ve örgülü $\check {R}=\tau R$. Renkli hücreler sıfırdan farklı girdileri, içlerindeki ifadeler ise girdinin değerini gösterir (doğrudan \texttt {R\_matrix\_V1} / \texttt {R\_check\_V1} çıktısı).\relax }}{15}{figure.caption.27}%
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Kuantum Yang--Baxter denkleminin doğru-diyagramı. Üç doğru ikişerli kesişir\begingroup \semicolonfont ;\endgroup {} her kesişim bir $R_{ij}$ operatörüdür. İkinci doğruyu $R_{13}$ kesişiminin soluna ya da sağına kaydırmak operatörü değiştirmez: $R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}$.\relax }}{16}{figure.caption.28}%
+\contentsline {figure}{\numberline {8.3}{\ignorespaces Örgülü $\check {R}$'nin spektral ayrışması, $V_1\otimes V_1=V_2\oplus V_0$ Clebsch--Gordan ayrışımıyla aynıdır. Özdeğer çoklukları doğrudan alt-temsil boyutlarını verir (\texttt {R\_check\_eigenvalues}).\relax }}{18}{figure.caption.29}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces \textup {\hbox {\mathsurround \z@ \normalfont (\ignorespaces \ref {eq:Rgl21}\unskip \@@italiccorr )}} R-matrisinin girdi-tipi haritası (\texttt {R\_matrix\_GLq21} çıktısı). Köşegen $q$/$q^2$ terimleri ile köşegen-dışı $1-q^2$ ``karışım'' terimleri açıkça ayrışır\begingroup \semicolonfont ;\endgroup {} bu seyreklik, $27\times 27$ ve $81\times 81$ yerleşimlerin neden hâlâ hesaplanabilir kaldığını da açıklar.\relax }}{20}{figure.caption.30}%
+\contentsline {figure}{\numberline {9.2}{\ignorespaces Süper permütasyon $P$, $V\otimes V$ bazı üzerinde bir takas: köşegen-dışı çiftler işaretsiz ($+$) yer değiştirir, köşegen sabit kalır\begingroup \semicolonfont ;\endgroup {} tek istisna odd--odd köşesi $e_3e_3$'tür ($-1$, vurgulu). Klasik takastan tek fark budur.\relax }}{21}{figure.caption.31}%
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Üç faktörlü uzayda $R_{ij}$ yerleşimleri. Komşu yerleşimler ($R_{12},R_{23}$) basit Kronecker gömmeleridir\begingroup \semicolonfont ;\endgroup {} uzak yerleşim $R_{13}$ ise süper permütasyon $P$ ile konjugasyon gerektirir --- elle takibi en zor olan, bu çalışmada otomatikleştirilen adım.\relax }}{22}{figure.caption.32}%
+\contentsline {figure}{\numberline {9.4}{\ignorespaces Graded Yang--Baxter denkleminin iki tarafının $27\times 27$ sıfır-olmayan örüntüleri özdeştir\begingroup \semicolonfont ;\endgroup {} kalıntı $Y(q)=R_{12}R_{13}R_{23}- R_{23}R_{13}R_{12}$ tüm $729$ girdide sıfırdır (\texttt {graded\_yang\_baxter\_residual\_GLq21}).\relax }}{24}{figure.caption.33}%
+\contentsline {figure}{\numberline {9.5}{\ignorespaces $V^{\otimes 4}$ yerleşimlerinin $K_4$ grafiği: altı kenar altı $R_{ij}$, dört üçgen ($\{1,2,3\},\{1,2,4\},\{1,3,4\},\{2,3,4\}$) dört lokal Yang--Baxter kontrolü, ayrık kenar çifti $(12)\,$--$\,(34)$ ise uzak komütativitedir.\relax }}{24}{figure.caption.34}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

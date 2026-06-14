@@ -487,7 +487,7 @@ def q_integer(n, q_sym=q):
 \end{lstlisting}
 
 Çıktı, $n$ tamsayısının $q$-deforme karşılığı $\qint{n}$'in sembolik ifadesidir.
-İlk birkaç değer ve klasik limitleri Tablo~\ref{tab:qint}'te derlenmiştir;
+İlk birkaç değer ve klasik limitleri Tablo~\ref{tab:qint}'de derlenmiştir;
 simetrik Laurent açılımı ($q^{n-1}+\cdots+q^{-(n-1)}$) her satırda açıkça
 görülür. Sembolik dönüş tipi sayesinde aynı fonksiyon hem genel $q$ ile hem de
 $q=i$ gibi bir birim kökünde değerlendirilebilir --- bu esneklik, ileride birim
@@ -579,7 +579,7 @@ def build_representation(n, q_sym=q):
 Böylece soyut $\Uq$ eylemi, açık matrislere sahip sonlu boyutlu bir nesne
 hâline gelir; bundan sonraki tüm temsil düzeyinde sembolik doğrulamalar bu
 matrisler üzerinde yürütülür. Operatörlerin ağırlık örgüsü üzerindeki etkisi
-Şekil~\ref{fig:weight}'te $V_4$ örneğinde görselleştirilmiştir: $F$ ağırlığı iki
+Şekil~\ref{fig:weight}'de $V_4$ örneğinde görselleştirilmiştir: $F$ ağırlığı iki
 basamak düşürür, $E$ ise $\qint{k}\qint{n-k+1}$ katsayısıyla geri yükseltir.
 
 \begin{figure}[h]
@@ -666,7 +666,7 @@ doğrulandığı belirtilen her eşitlik, depo klonlandığında yeniden koştur
 somut bir teste karşılık gelir.
 
 \texttt{quantum\_group} paketinin modülleri ve sorumlulukları
-Tablo~\ref{tab:modules}'te özetlenmiştir.
+Tablo~\ref{tab:modules}'de özetlenmiştir.
 
 \begin{table}[h]
 \centering
@@ -962,7 +962,7 @@ $\check R$ aşağıdaki kuadratik bağıntıyı sağlar:
 $\check R$'nin $4 \times 4$ açık matrisini ve $\check R^{-1}$'i SymPy
 ile hesaplayıp farkı sadeleştirdiğimizde tam olarak
 $(q - q^{-1}) I_4$ elde ederiz. Test
-\texttt{tests/test\_r\_matrix.py::test\_jones\_skein}.
+\path{tests/test_r_matrix.py::test_jones_skein}.
 \end{proof}
 
 \subsection{Spektral Ayrışma ve Clebsch--Gordan ile Bağlantı}
@@ -1259,7 +1259,7 @@ def graded_yang_baxter_residual_GLq21(q_sym=q):
 
 def graded_yang_baxter_holds_GLq21(q_sym=q):
     Y = graded_yang_baxter_residual_GLq21(q_sym)
-    # Tüm 27x27 girdi sembolik olarak sıfır mı?
+    # All 27x27 entries symbolically zero?
     return all(sp.simplify(x) == 0 for x in Y)
 \end{lstlisting}
 
@@ -1333,7 +1333,7 @@ Dört üçlü altblok kontrolü tek bir fonksiyonda toplanır:
 
 \begin{lstlisting}[style=pyblock,caption={$V^{\otimes 4}$ içindeki dört üçlü için lokal YBE kontrolü}]
 def local_ybe_on_four_tensor_GLq21(q_sym=q):
-    Rij = all_Rij_GLq21(4, q_sym)          # altı 81x81 yerleşim
+    Rij = all_Rij_GLq21(4, q_sym)          # six 81x81 placements
     result = {}
     for a, b, c in combinations(range(4), 3):   # (0,1,2),(0,1,3),(0,2,3),(1,2,3)
         Rab, Rac, Rbc = Rij[(a, b)], Rij[(a, c)], Rij[(b, c)]
@@ -1345,7 +1345,7 @@ def local_ybe_on_four_tensor_GLq21(q_sym=q):
 \begin{table}[h]
 \centering
 \small
-\caption{$V^{\otimes 4}$ üzerindeki yerleşimler ve otomatik kontroller (tümü
+\caption[$V^{\otimes 4}$ üzerindeki yerleşimler ve otomatik kontroller.]{$V^{\otimes 4}$ üzerindeki yerleşimler ve otomatik kontroller (tümü
 $81\times 81$; \texttt{all\_Rij\_GLq21}, \texttt{local\_ybe\_on\_four\_tensor\_GLq21},
 \texttt{braid\_far\_commutativity\_residual\_GLq21}).}
 \label{tab:vtensor4}
@@ -1530,37 +1530,41 @@ doğrulama prosedürlerine taşınabileceğini göstermektedir.
 \end{enumerate}
 
 \appendix
-\section{Kurulum, Çalıştırma ve Yeniden Kullanım Kılavuzu}
+\section{Kod Deposunun Kurulumu ve Kullanımı}
 
-Bu ek, makaleye eşlik eden kod deposunun kurulumu, test edilmesi, şekillerinin
-yeniden üretilmesi ve ileride genişletilmesi için temel adımları özetler. Depo
-adresi \url{https://github.com/TerekliTahaBerk/quantum-groups} şeklindedir.
+Bu ekte, tez kapsamında kullanılan Python kodunun hangi dosyalarda toplandığı
+ve aynı hesapların nasıl yeniden çalıştırılabileceği özetlenmiştir. Amaç,
+metindeki sembolik doğrulamaların yalnızca sonuç olarak verilmesi değil,
+gerektiğinde aynı adımların depo üzerinden tekrar edilebilmesidir. Kod deposu
+\url{https://github.com/TerekliTahaBerk/quantum-groups} adresindedir.
 
 \subsection{Depo Yapısı}
 
-Depo, makaledeki sembolik hesaplamaları ve belge üretim sürecini ayrı
-dizinlerde tutacak biçimde düzenlenmiştir:
+Depoda tez metni, şekil üretimi ve sembolik hesaplama kodu ayrı dizinlerde
+tutulmuştur:
 \begin{itemize}[leftmargin=*]
-  \item \texttt{quantum\_group/}: sembolik hesaplamaları uygulayan Python
-        paketi.
-  \item \texttt{tests/}: \texttt{pytest} tabanlı test takımı.
-  \item \texttt{thesis/}: LaTeX kaynağı, üretilen PDF dosyası ve şekil
-        dosyaları.
-  \item \texttt{thesis/figures/}: şekil üretim betiği ve çıktı şekilleri.
-  \item \texttt{notebooks/}: keşif amaçlı Jupyter defteri.
-  \item \texttt{main.py}: kısa kullanım gösterimi.
-  \item \texttt{Makefile}: test, şekil üretimi, PDF derleme ve demo için
-        kolaylık komutları.
-  \item \texttt{requirements.txt}: Python bağımlılıkları.
-  \item \texttt{MANUSCRIPT\_CODE\_MAPPING.md}: makaledeki başlıklar ile
-        depo uygulaması arasındaki eşleme.
+  \item \texttt{quantum\_group/}: $U_q(\sl_2)$, tensör çarpımları, $R$-matrisi
+        ve $GL_q(2|1)$ hesapları için yazılan Python modülleri.
+  \item \texttt{tests/}: tezde kullanılan sembolik kontrolleri tekrar eden
+        \texttt{pytest}~\cite{pytest} testleri.
+  \item \texttt{thesis/}: tez kaynağı, şekil dosyaları ve PDF üretim dosyaları.
+  \item \texttt{thesis/figures/}: tezde kullanılan şekillerin üretildiği betik
+        ve çıktı dosyaları.
+  \item \texttt{notebooks/}: hesapları denerken kullanılan keşif defteri.
+  \item \texttt{main.py}: paketin kısa bir örnek çalıştırması.
+  \item \texttt{Makefile}: sık kullanılan komutları kısaltmak için kullanılan
+        hedefler.
+  \item \texttt{requirements.txt}: gerekli Python paketleri.
+  \item \texttt{MANUSCRIPT\_CODE\_MAPPING.md}: tezdeki hesaplama başlıklarıyla
+        ilgili kod/test dosyalarını eşleyen not dosyası.
 \end{itemize}
 
 \Needspace{10\baselineskip}
 \subsection{Ortamın Hazırlanması}
 
 \Needspace{9\baselineskip}
-Python ortamı aşağıdaki komutlarla hazırlanabilir:
+Depo yeni bir makinede çalıştırılacaksa önce sanal ortam kurulup bağımlılıklar
+yüklenir:
 \begin{lstlisting}[style=bashblock]
 git clone https://github.com/TerekliTahaBerk/quantum-groups.git
 cd quantum-groups
@@ -1571,53 +1575,52 @@ python3 -m pip install -r requirements.txt
 \end{lstlisting}
 
 \Needspace{5\baselineskip}
-Windows üzerinde sanal ortam etkinleştirme komutu şöyledir:
+Windows'ta sanal ortam etkinleştirme komutu farklıdır:
 \begin{lstlisting}[style=bashblock]
 .venv\Scripts\activate
 \end{lstlisting}
 
-Bağımlılıkların rolleri kısaca şöyledir: SymPy sembolik cebir ve matris
-sadeleştirme için, NetworkX kristal grafiği ve grafik yardımcıları için,
-Matplotlib şekil üretimi için, pytest test takımı için, Jupyter ise defter
-tabanlı keşif çalışmaları için kullanılır.
+Bu çalışmada SymPy~\cite{SymPy} sembolik matris işlemleri ve sadeleştirmeler için, NetworkX
+kristal grafikleri için, Matplotlib şekil üretimi için, pytest testleri
+çalıştırmak için, Jupyter ise ara hesapları incelemek için kullanılmıştır.
 
 \Needspace{10\baselineskip}
 \subsection{Testlerin Çalıştırılması}
 
 \Needspace{5\baselineskip}
-Tüm test takımı aşağıdaki komutla çalıştırılır:
+Tüm testler aşağıdaki komutla çalıştırılabilir:
 \begin{lstlisting}[style=bashblock]
 python3 -m pytest tests/ -q
 \end{lstlisting}
 
 \Needspace{5\baselineskip}
-Aynı işlem \texttt{Makefile} üzerinden de çağrılabilir:
+Aynı işlem için kısa komut da tanımlanmıştır:
 \begin{lstlisting}[style=bashblock]
 make test
 \end{lstlisting}
 
 \Needspace{7\baselineskip}
-Belirli test dosyaları ayrı ayrı çalıştırılabilir:
+Yalnızca belirli bir hesap ailesini kontrol etmek istenirse test dosyaları ayrı
+ayrı çalıştırılabilir:
 \begin{lstlisting}[style=bashblock]
 python3 -m pytest tests/test_r_matrix.py -q
 python3 -m pytest tests/test_supergroup_gl21.py -q
 python3 -m pytest tests/test_tensor.py -q
 \end{lstlisting}
 
-\texttt{test\_r\_matrix.py}, $R$-matrisini, kuantum Yang--Baxter denklemini,
-örgü bağıntısını ve Hecke bağıntısını kontrol eder.
-\texttt{test\_supergroup\_gl21.py}, $GL_q(2|1)$ $R$-matrisini, süper
-permütasyonu, graded Yang--Baxter denklemini ve seçili tensör-kuvvet
-yerleşimlerini kontrol eder. \texttt{test\_tensor.py} ise tensör çarpımı
-eylemini ve Clebsch--Gordan örneklerini denetler. Bu testler, makaledeki açık
-matris modelleri üzerinde kullanılan sembolik kontrolleri tekrar çalıştırmak
-için verilmiştir.
+\texttt{test\_r\_matrix.py} dosyası $R$-matrisi, kuantum Yang--Baxter denklemi,
+örgü bağıntısı ve Hecke bağıntısı için yazılan kontrolleri içerir.
+\texttt{test\_supergroup\_gl21.py} dosyasında $GL_q(2|1)$ $R$-matrisi, süper
+permütasyon, graded Yang--Baxter denklemi ve seçili tensör-kuvvet yerleşimleri
+denetlenir. \texttt{test\_tensor.py} ise tensör çarpımı eylemi ve
+Clebsch--Gordan örnekleri için kullanılır.
 
 \Needspace{9\baselineskip}
 \subsection{Demo Çalıştırma}
 
 \Needspace{5\baselineskip}
-Kısa kullanım gösterimi şu komutla çalıştırılır:
+Paketin temel kullanımı \texttt{main.py} dosyasında kısa bir örnekle
+gösterilmiştir:
 \begin{lstlisting}[style=bashblock]
 python3 main.py
 \end{lstlisting}
@@ -1628,14 +1631,14 @@ python3 main.py
 make demo
 \end{lstlisting}
 
-Bu demo, paketin temel kullanımını göstermek içindir; ayrıntılı sembolik
-kontroller \texttt{tests/} dizinindeki testlerde yer alır.
+Bu dosya yalnızca hızlı bir kontrol sağlar. Tezde kullanılan asıl sembolik
+doğrulamalar test dosyalarında tutulmuştur.
 
 \Needspace{9\baselineskip}
 \subsection{Şekillerin Yeniden Üretilmesi}
 
 \Needspace{5\baselineskip}
-Makaledeki şekiller aşağıdaki betikle yeniden üretilebilir:
+Tezdeki şekiller aşağıdaki betikle yeniden üretilebilir:
 \begin{lstlisting}[style=bashblock]
 python3 thesis/figures/generate_figures.py
 \end{lstlisting}
@@ -1646,53 +1649,35 @@ python3 thesis/figures/generate_figures.py
 make figures
 \end{lstlisting}
 
-Betik, çıktı dosyalarını \texttt{thesis/figures/} dizinine yazar. Depodaki
-üretilen başlıca şekil dosyaları şunlardır:
+Betik çıktı dosyalarını \texttt{thesis/figures/} dizinine yazar. Bu tezde
+kullanılan başlıca şekil dosyaları şunlardır:
 \begin{itemize}[leftmargin=*]
   \item \texttt{R\_sl2\_V1.pdf}
   \item \texttt{R\_gl21\_structure.pdf}
   \item \texttt{ybe\_products\_27.pdf}
 \end{itemize}
 
-Figürlerde matematiksel semboller mümkün olduğunca Matplotlib mathtext ile
-üretilmiştir; Türkçe açıklamalar ise çoğunlukla LaTeX başlıklarında ve şekil
-açıklamalarında tutulmuştur.
+Şekillerdeki matematiksel semboller Matplotlib'in mathtext desteğiyle
+üretilmiş, uzun açıklamalar ise tez metnindeki şekil başlıklarında verilmiştir.
 
 \Needspace{8\baselineskip}
-\subsection{PDF'in Derlenmesi}
+\subsection{Koda Yeni Hesap Eklemek}
 
-\Needspace{5\baselineskip}
-PDF derleme için önerilen hedef şudur:
-\begin{lstlisting}[style=bashblock]
-make pdf
-\end{lstlisting}
-
-Mevcut \texttt{Makefile} tanımına göre \texttt{make pdf}, önce şekilleri yeniden
-üretir, ardından \texttt{thesis/thesis.tex} dosyasını derler. Derleme sonunda
-kalıcı olarak yalnızca makalenin ana PDF dosyası tutulur:
-\begin{itemize}[leftmargin=*]
-  \item \texttt{thesis/Quantum Grup Yapılarının Python Ortamında Modellenmesi.pdf}
-\end{itemize}
-
-\Needspace{8\baselineskip}
-\subsection{Gelecek Genişletmeler İçin Notlar}
-
-Yeni bir hesaplama başlığı eklenirken, ilgili uygulama kodunun
-\texttt{quantum\_group/} altında ayrı bir modülde veya mevcut uygun modülde
-tutulması; buna karşılık gelen testlerin \texttt{tests/} altında açık ve hedefli
-test dosyalarıyla verilmesi önerilir. Yeni şekiller için üretim mantığı
-\texttt{thesis/figures/generate\_figures.py} içinde tutulabilir veya aynı dizinde
-ayrı betiklere ayrılabilir; çıktı dosyalarının adları LaTeX kaynağındaki
-\texttt{\textbackslash includegraphics} çağrılarıyla tutarlı olmalıdır. Makaleye
-eklenen yeni hesaplama iddiaları için \texttt{MANUSCRIPT\_CODE\_MAPPING.md}
-dosyasındaki eşlemenin güncellenmesi, ileride bakım ve yeniden kullanım
-açısından yararlıdır.
+Depoya yeni bir hesap eklenecekse, uygulama kodunun
+\texttt{quantum\_group/} altında tutulması ve aynı hesap için \texttt{tests/}
+dizininde küçük, açık bir test yazılması yeterlidir. Yeni bir şekil gerekiyorsa
+üretim adımı \texttt{thesis/figures/generate\_figures.py} dosyasına eklenebilir.
+Şekil dosyası adlarının LaTeX kaynağındaki
+\texttt{\textbackslash includegraphics} çağrılarıyla aynı kalmasına dikkat
+edilmelidir. Tez metnine yeni bir hesaplama iddiası eklenirse, ilgili kod ve
+test dosyasını \texttt{MANUSCRIPT\_CODE\_MAPPING.md} içinde belirtmek yeniden
+kontrolü kolaylaştırır.
 
 \Needspace{16\baselineskip}
 \section{Test Eşlemesi}
 
 Her doğrulama ekseni, ilgili kod modülü ve birim test dosyasıyla
-Tablo~\ref{tab:tests}'te eşlenmiştir.
+Tablo~\ref{tab:tests}'de eşlenmiştir.
 
 \begin{table}[H]
 \centering
