@@ -21,6 +21,18 @@ Package source identity: `quantum_group/` tree `804d66f83a1d`, `tests/` tree
 later snapshot commit must keep these hashes unless the change is deliberate
 and re-validated (`git rev-parse <SHA>:quantum_group`).
 
+## 1a. JORS submission software snapshot
+
+`892dfaee23644ede78d940051eb3a20c9e6a5918` (`892dfae`), committed
+2026-09-27T17:48:22Z; version 1.1.0; package source trees identical to those
+listed above; 202 tests passed locally on it; CI run 33 (§7). No tag and no
+GitHub Release. PyPI and Zenodo must be built from this commit; later
+commits on the branch change only `jors/` (excluded from `git archive`).
+Archive reference: `git archive --format=zip --prefix=quantum-group-1.1.0/
+892dfae…` = 236 files, 13,011,184 bytes, SHA-256
+`2e2621916eb5c9d85b72e7f9a3be9a0c6f1df7d1f714f307a39a24a5a7c40984`
+(git 2.43.0; deterministic on repeat).
+
 ## 2. JORS rules: sources and retrieval (27 Sep 2026)
 
 The JORS site, the Ubiquity Press site, Zenodo, doi.org, Crossref,
@@ -111,6 +123,7 @@ arXiv id (JAMS DOI not verified, so not given).
 | `96e50e4` | 29 | all 9 jobs passed (pytest 3.10/3.11/3.12/3.13, minimum dependencies, wheel + examples, Linux/macOS/Windows) |
 | `0c36fb2` | 30 | passed |
 | `86f794b` | [31](https://github.com/TerekliTahaBerk/quantum-groups/actions/runs/36337629367) | passed (all 9 jobs, incl. macOS and Windows) |
+| `892dfae` (snapshot) | [33](https://github.com/TerekliTahaBerk/quantum-groups/actions/runs/36338318144) | **passed, all 9 jobs** (pytest 3.10–3.13, minimum dependencies, wheel + examples, Linux, macOS, Windows) |
 
 The final snapshot commit must itself show green CI before PyPI/Zenodo.
 
@@ -124,7 +137,7 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 | Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
 | Merge to `main` | AUTHOR ACTION REQUIRED | `workflow_dispatch` is only offered for workflows on the default branch |
-| Snapshot SHA/date in the paper | follows the two items above | the snapshot is frozen after the DOI is inserted |
+| Snapshot SHA/date in the paper | READY | filled (`892dfae`, 27 September 2026) |
 | Venue exclusivity re-check on the submission day | AUTHOR ACTION REQUIRED | time-dependent |
 
 ## 9. Reviewer simulation (from the manuscript alone)

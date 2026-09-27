@@ -18,11 +18,11 @@ provides).
 | 2 | Public repository, open issue tracker | READY | https://github.com/TerekliTahaBerk/quantum-groups |
 | 3 | OSI licence | READY | MIT (`LICENSE`, `License-Expression: MIT`) |
 | 4 | Easy installation, documented | READY | Two install commands in the paper; wheel install tested on Linux/macOS/Windows in CI |
-| 5 | Package-registry installation (PyPI) | CREDENTIAL/AUTHORIZATION REQUIRED | Name `quantum-group` unclaimed (404). Build, `twine check`, clean install and the manual Trusted-Publishing workflow are ready. Author: pending publisher, `pypi` environment, dispatch with the snapshot SHA (`DISTRIBUTION.md` §A, C). READY only after `pip install quantum-group==1.1.0` works publicly |
-| 6 | Versioning; exact version identifiable | BLOCKED (by 9) | Version 1.1.0 is consistent in `pyproject.toml`, `CITATION.cff`, `CHANGELOG.md`, `__version__`, paper. The identifying snapshot commit is frozen after the reserved DOI is inserted |
-| 7 | Repository with persistent identifier for the described version (archive) | CREDENTIAL/AUTHORIZATION REQUIRED | Required by the repository criteria (`PREFLIGHT.md` §2, §4). Manual Zenodo deposit of `git archive` of the snapshot, no GitHub Release (`DISTRIBUTION.md` §A3, D) |
+| 5 | Package-registry installation (PyPI) | CREDENTIAL/AUTHORIZATION REQUIRED | Author approved publication (27 Sep 2026). Name still unclaimed. Needs: pending publisher on the author's PyPI account, `pypi` environment, merge to `main`, then *Run workflow* with `ref=892dfaee23644ede78d940051eb3a20c9e6a5918`, `expected_version=1.1.0` (`DISTRIBUTION.md` §A, C). READY only after a public `pip install quantum-group==1.1.0` succeeds |
+| 6 | Versioning; exact version identifiable | READY | 1.1.0 = snapshot commit `892dfaee23644ede78d940051eb3a20c9e6a5918`, named in the paper; consistent in `pyproject.toml`, `CITATION.cff`, `CHANGELOG.md`, `__version__`; no tag/Release by design |
+| 7 | Repository with persistent identifier for the described version (archive) | CREDENTIAL/AUTHORIZATION REQUIRED | Author approved the deposit (27 Sep 2026). Needs the author's Zenodo login (zenodo.org is unreachable from the preparation environment): upload the snapshot zip, metadata from `zenodo-metadata.json`, publish (`DISTRIBUTION.md` §A3, D) |
 | 8 | Archive content equals the described code | BLOCKED (by 7) | Download-and-diff procedure in `DISTRIBUTION.md` step 12 |
-| 9 | Snapshot commit frozen with green CI | BLOCKED (by 7: reserved DOI) | Package source already frozen (`PREFLIGHT.md` §1 tree hashes) |
+| 9 | Snapshot commit frozen with green CI | READY | CI run 33: all 9 jobs passed on `892dfae`; `892dfae`; archive reference file and SHA-256 in `DISTRIBUTION.md` |
 | 10 | Template sections and fields | READY | `PREFLIGHT.md` §3 (official template file unobtainable; headings as in current articles) |
 | 11 | Title | READY | Title case, no novelty claim |
 | 12 | Abstract | READY | 138 words, within the range of current JORS articles |
@@ -43,7 +43,7 @@ provides).
 | 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED | Five chosen; author confirmed no conflicts (27 Sep 2026). Each address must still be copied from the official page (pages unreachable here) |
 | 28 | Cover letter | BLOCKED (by 26, 27, APC, snapshot/DOI) | `COVER_LETTER.md`, bracketed fields only |
 | 29 | APC | AUTHOR ACTION REQUIRED | See below |
-| 30 | PDF without [PENDING] markers | BLOCKED (by 5–9, 26) | `make -C jors check` must print `OK` |
+| 30 | PDF without [PENDING] markers | BLOCKED (by 5, 7, 26) | `make -C jors check` must print `OK` |
 
 ## APC
 

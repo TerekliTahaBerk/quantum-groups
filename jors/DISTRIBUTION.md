@@ -13,6 +13,23 @@ software snapshot**, and distributed from that exact commit through:
 
 Nothing below has been executed. Each numbered step says who does it.
 
+## Frozen snapshot
+
+| Field | Value |
+|---|---|
+| Snapshot commit | `892dfaee23644ede78d940051eb3a20c9e6a5918` (short `892dfae`), 2026-09-27T17:48:22Z, branch `claude/sleepy-darwin-o4mr5p` |
+| Package version | 1.1.0 |
+| Package source trees | `quantum_group/` `804d66f83a1d`, `tests/` `a2a4fdc80bf4`, `examples/` `0e9c0c5c3469`, `pyproject.toml` `b17aa2bbc012` |
+| Tests | 202 passed (198 + 4 doctests) |
+| Python | 3.10, 3.11, 3.12, 3.13 |
+| Tested OS | Linux, macOS, Windows (CI) |
+| Dependencies | SymPy ≥ 1.10, NetworkX ≥ 2.6, Matplotlib ≥ 3.5 |
+| Archive file | `git archive --format=zip --prefix=quantum-group-1.1.0/ 892dfae…` → `quantum-group-1.1.0.zip`, 236 files, 13,011,184 bytes, SHA-256 `2e2621916eb5c9d85b72e7f9a3be9a0c6f1df7d1f714f307a39a24a5a7c40984` (git 2.43.0; other git versions may produce a different zip checksum but identical contents — verify contents with step 12) |
+
+Steps 5–6 below are therefore done: the reserved DOI does **not** need to be
+inside the snapshot (the Zenodo record carries it); after publication it is
+added to `CITATION.cff` on `main` in a documentation-only commit.
+
 ## A. Author, once (can be done in parallel)
 
 1. **PyPI pending publisher** — <https://pypi.org> → *Account → Publishing →
@@ -34,8 +51,9 @@ Nothing below has been executed. Each numbered step says who does it.
 
 ## B. Freeze the snapshot (Claude or author)
 
-5. Put the reserved DOI into `CITATION.cff` (`identifiers`) and the README
-   citation section; commit on `main`. The package source
+5. *(Done differently: snapshot frozen as above without the DOI.)* Put
+   the DOI into `CITATION.cff` (`identifiers`) and the README citation
+   section after publication; commit on `main`. The package source
    (`quantum_group/`, `pyproject.toml`) must be unchanged from the reviewed
    state. Wait for CI to pass on this commit on all jobs (Python 3.10–3.13,
    minimum dependencies, wheel, Linux/macOS/Windows).
