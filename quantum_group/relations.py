@@ -25,6 +25,8 @@ from typing import Dict, List, Tuple
 import sympy as sp
 
 from .generators import E, F, K, K_inv, commutator
+from ._validation import check_square
+from .linalg import is_zero_matrix
 from .utils import q
 
 
@@ -71,19 +73,9 @@ class RelationCheck:
         return f"<{self.name}: {status}>"
 
 
-def is_zero_matrix(M: sp.Matrix) -> bool:
-    """Test whether a SymPy matrix is symbolically zero.
-
-    The check applies ``sympy.simplify`` both to the matrix and to each entry.
-    This public helper implements the paper's zero-residual verification pattern.
-    """
-    M_simplified = sp.simplify(M)
-    return all(sp.simplify(entry) == 0 for entry in M_simplified)
-
-
-def _is_zero_matrix(M: sp.Matrix) -> bool:
-    """Backward-compatible private alias; use ``is_zero_matrix`` publicly."""
-    return is_zero_matrix(M)
+# ``is_zero_matrix`` is defined in ``linalg`` and re-exported here, where it
+# was originally public. ``_is_zero_matrix`` is a backward-compatible alias.
+_is_zero_matrix = is_zero_matrix
 
 
 def verify_on_representation(
@@ -106,7 +98,20 @@ def verify_on_representation(
     Returns
     -------
     A dictionary mapping relation names to RelationCheck objects.
+
+    Raises
+    ------
+    TypeError, ValueError
+        If a generator is not a square SymPy matrix, if the four shapes
+        differ, or if q is 0 or ±1.
     """
+    shapes = {
+        name: check_square(M, name)
+        for name, M in (("E_mat", E_mat), ("F_mat", F_mat),
+                        ("K_mat", K_mat), ("Kinv_mat", Kinv_mat))
+    }
+    if len(set(shapes.values())) != 1:
+        raise ValueError(f"E, F, K and K^-1 must have the same shape; got {shapes}.")
     q_sym = sp.sympify(q_sym)
     if q_sym in (0, 1, -1):
         raise ValueError("The defining commutator quotient requires q != 0, 1, -1; use classical limits separately.")

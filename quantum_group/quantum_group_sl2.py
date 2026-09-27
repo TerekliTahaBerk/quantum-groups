@@ -41,6 +41,8 @@ class QuantumGroupSL2:
 
     def __init__(self, q: sp.Expr = default_q):
         self.q = sp.sympify(q)
+        if self.q == 0:
+            raise ValueError("q must be nonzero.")
         self.E = gens.E
         self.F = gens.F
         self.K = gens.K

@@ -33,10 +33,11 @@ generator using Kronecker products (matrix tensor products).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Dict
 
 import sympy as sp
 
+from .linalg import kron, kron_list  # noqa: F401  (kron_list re-exported)
 from .representations import Representation
 from .utils import q as default_q
 
@@ -55,10 +56,10 @@ def coproduct(rep: Representation) -> Dict[str, sp.Matrix]:
     I = sp.eye(rep.dim)
 
     return {
-        "E": _kron(rep.E, I) + _kron(rep.K, rep.E),
-        "F": _kron(rep.F, rep.K_inv) + _kron(I, rep.F),
-        "K": _kron(rep.K, rep.K),
-        "K_inv": _kron(rep.K_inv, rep.K_inv),
+        "E": kron(rep.E, I) + kron(rep.K, rep.E),
+        "F": kron(rep.F, rep.K_inv) + kron(I, rep.F),
+        "K": kron(rep.K, rep.K),
+        "K_inv": kron(rep.K_inv, rep.K_inv),
     }
 
 
@@ -82,26 +83,8 @@ def antipode(rep: Representation) -> Dict[str, sp.Matrix]:
     }
 
 
-def _kron(A: sp.Matrix, B: sp.Matrix) -> sp.Matrix:
-    """Kronecker (tensor) product of SymPy matrices."""
-    m, n = A.shape
-    p, qd = B.shape
-    out = sp.zeros(m * p, n * qd)
-    for i in range(m):
-        for j in range(n):
-            block = A[i, j] * B
-            out[i * p:(i + 1) * p, j * qd:(j + 1) * qd] = block
-    return out
-
-
-def kron_list(mats: Tuple[sp.Matrix, ...] | list[sp.Matrix]) -> sp.Matrix:
-    """Return the left-to-right Kronecker product of the given matrices."""
-    if not mats:
-        raise ValueError("kron_list requires at least one matrix.")
-    result = mats[0]
-    for M in mats[1:]:
-        result = _kron(result, M)
-    return result
+# Backward-compatible private alias; the helper now lives in ``linalg``.
+_kron = kron
 
 
 # ---------------------------------------------------------------------------
@@ -232,16 +215,16 @@ def verify_coassociativity(rep: Representation) -> Dict[str, HopfAxiomCheck]:
         "F": Delta["F"],
         "K": Delta["K"],
         "K_inv": Delta["K_inv"],
-        "1": _kron(I, I),
+        "1": kron(I, I),
     }
 
     results: Dict[str, HopfAxiomCheck] = {}
     for X, terms in decompositions.items():
         # Left: Σ Δ(A_i) ⊗ B_i  (n^3 x n^3)
-        left = sum((_kron(label_to_Delta[a], label_to_mat[b])
+        left = sum((kron(label_to_Delta[a], label_to_mat[b])
                     for (a, b) in terms), sp.zeros(n**3, n**3))
         # Right: Σ A_i ⊗ Δ(B_i)
-        right = sum((_kron(label_to_mat[a], label_to_Delta[b])
+        right = sum((kron(label_to_mat[a], label_to_Delta[b])
                      for (a, b) in terms), sp.zeros(n**3, n**3))
         diff = sp.simplify(left - right)
         ok = diff == sp.zeros(n**3, n**3)

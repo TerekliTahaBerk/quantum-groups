@@ -23,6 +23,8 @@ from typing import List, Optional, Tuple
 
 import networkx as nx
 
+from ._validation import as_int
+
 
 @dataclass
 class CrystalNode:
@@ -46,6 +48,7 @@ def build_crystal(n: int) -> nx.DiGraph:
         Each node "b_k" (str) has 'index', 'weight' and 'label' attributes.
         Edges are tilde_f arrows (b_k -> b_{k+1}).
     """
+    n = as_int(n, "n")
     if n < 0:
         raise ValueError("n must be nonnegative.")
 
@@ -63,6 +66,7 @@ def build_crystal(n: int) -> nx.DiGraph:
 
 def crystal_nodes(n: int) -> List[CrystalNode]:
     """Return the nodes of B(n) as a list of CrystalNode objects."""
+    n = as_int(n, "n", minimum=0)
     return [CrystalNode(index=k, weight=n - 2 * k, label=f"b_{k}")
             for k in range(n + 1)]
 
@@ -85,4 +89,5 @@ def e_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
 
 def crystal_string(n: int) -> str:
     """Return B(n) as text: b_0 -f-> b_1 -f-> ... -f-> b_n."""
+    n = as_int(n, "n", minimum=0)
     return " -f-> ".join(f"b_{k}" for k in range(n + 1))

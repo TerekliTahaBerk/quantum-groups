@@ -26,6 +26,13 @@ Typical use
 True
 """
 
+from importlib.metadata import PackageNotFoundError, version as _version
+
+try:
+    __version__ = _version("quantum-group")
+except PackageNotFoundError:  # pragma: no cover - running from an uninstalled tree
+    __version__ = "unknown"
+
 from .quantum_group_sl2 import QuantumGroupSL2
 from .generators import E, F, K, K_inv, all_generators, commutator
 from .relations import (
@@ -90,6 +97,7 @@ from .supergroup_gl21 import (
 )
 
 __all__ = [
+    "__version__",
     "QuantumGroupSL2",
     "E", "F", "K", "K_inv", "q",
     "all_generators", "commutator",

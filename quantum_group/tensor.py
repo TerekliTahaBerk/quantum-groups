@@ -30,7 +30,8 @@ from typing import List, Tuple
 import sympy as sp
 
 from .representations import Representation, build_representation
-from .hopf import _kron
+from ._validation import as_int
+from .linalg import kron
 from .utils import q as default_q
 
 
@@ -55,10 +56,10 @@ def tensor_product(repA: Representation, repB: Representation) -> TensorRepresen
     IA = sp.eye(nA)
     IB = sp.eye(nB)
 
-    E = _kron(repA.E, IB) + _kron(repA.K, repB.E)
-    F = _kron(repA.F, repB.K_inv) + _kron(IA, repB.F)
-    K = _kron(repA.K, repB.K)
-    K_inv = _kron(repA.K_inv, repB.K_inv)
+    E = kron(repA.E, IB) + kron(repA.K, repB.E)
+    F = kron(repA.F, repB.K_inv) + kron(IA, repB.F)
+    K = kron(repA.K, repB.K)
+    K_inv = kron(repA.K_inv, repB.K_inv)
 
     return TensorRepresentation(
         m=repA.n, n=repB.n, dim=nA * nB,
@@ -76,6 +77,8 @@ def cg_summands(m: int, n: int) -> List[int]:
 
     k = |m-n|, |m-n|+2, ..., m+n  (all have the parity of m+n).
     """
+    m = as_int(m, "m", minimum=0)
+    n = as_int(n, "n", minimum=0)
     lo = abs(m - n)
     hi = m + n
     return list(range(lo, hi + 1, 2))

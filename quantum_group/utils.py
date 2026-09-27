@@ -24,6 +24,8 @@ from __future__ import annotations
 
 import sympy as sp
 
+from ._validation import as_int
+
 # Standard module-level symbolic q, available to every module.
 q = sp.Symbol("q", nonzero=True)
 
@@ -47,6 +49,7 @@ def q_integer(n: int, q_sym: sp.Expr = q) -> sp.Expr:
     >>> q_integer(3)
     q**2 + 1 + q**(-2)
     """
+    n = as_int(n, "n")
     if n == 0:
         return sp.Integer(0)
     q_sym = sp.sympify(q_sym)
@@ -58,6 +61,7 @@ def q_integer(n: int, q_sym: sp.Expr = q) -> sp.Expr:
 
 def q_factorial(n: int, q_sym: sp.Expr = q) -> sp.Expr:
     """Return the q-factorial [n]_q! = [n]_q [n-1]_q ... [1]_q."""
+    n = as_int(n, "n")
     if n < 0:
         raise ValueError("The q-factorial is defined only for n >= 0.")
     result = sp.Integer(1)
@@ -67,7 +71,9 @@ def q_factorial(n: int, q_sym: sp.Expr = q) -> sp.Expr:
 
 
 def q_binomial(n: int, k: int, q_sym: sp.Expr = q) -> sp.Expr:
-    """Return the q-binomial coefficient [n choose k]_q."""
+    """Return the q-binomial coefficient [n choose k]_q (zero unless 0 <= k <= n)."""
+    n = as_int(n, "n")
+    k = as_int(k, "k")
     if k < 0 or k > n:
         return sp.Integer(0)
     q_sym = sp.sympify(q_sym)

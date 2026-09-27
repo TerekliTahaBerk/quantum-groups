@@ -35,6 +35,7 @@ Basis order: v_0⊗v_0, v_0⊗v_1, v_1⊗v_0, v_1⊗v_1.
 
 from __future__ import annotations
 
+import math
 import warnings
 from dataclasses import dataclass
 from typing import Dict
@@ -42,7 +43,8 @@ from typing import Dict
 import sympy as sp
 
 from .representations import Representation
-from .hopf import _kron
+from ._validation import as_int, check_square
+from .linalg import is_zero_matrix, kron
 from .utils import q as default_q
 
 
@@ -107,6 +109,7 @@ def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
 
 def swap_matrix(d: int) -> sp.Matrix:
     """τ: V ⊗ V -> V ⊗ V, e_{ij} -> e_{ji}, where V has dimension d."""
+    d = as_int(d, "d", minimum=1)
     P = sp.zeros(d * d, d * d)
     for i in range(d):
         for j in range(d):
@@ -154,7 +157,7 @@ def intertwining_residual_V1(
 
 def intertwining_holds_V1(generator: str, q_sym: sp.Expr = default_q) -> bool:
     """Whether the fundamental coproduct-intertwining residual is zero."""
-    return _is_zero(intertwining_residual_V1(generator, q_sym))
+    return is_zero_matrix(intertwining_residual_V1(generator, q_sym))
 
 
 # ---------------------------------------------------------------------------
@@ -167,8 +170,17 @@ class RelationStatus:
     holds: bool
 
 
-def _is_zero(M: sp.Matrix) -> bool:
-    return all(sp.simplify(e) == 0 for e in sp.simplify(M))
+# Backward-compatible private alias; the helper now lives in ``linalg``.
+_is_zero = is_zero_matrix
+
+
+def _tensor_square_dim(R: sp.Matrix) -> int:
+    """Return d for a square d²×d² matrix R, or raise ValueError."""
+    rows, _ = check_square(R, "R")
+    d = math.isqrt(rows)
+    if d == 0 or d * d != rows:
+        raise ValueError(f"R must be square with dimension d²; got shape {R.shape}.")
+    return d
 
 
 def braid_relation_residual(R: sp.Matrix) -> sp.Matrix:
@@ -177,12 +189,10 @@ def braid_relation_residual(R: sp.Matrix) -> sp.Matrix:
     For 4×4 R, the result is 8×8. The residual is zero if R satisfies
     the relation.
     """
-    d = int(sp.sqrt(R.rows))
-    if R.rows != R.cols or d * d != R.rows:
-        raise ValueError("R must be square with dimension d².")
+    d = _tensor_square_dim(R)
     I = sp.eye(d)
-    R12 = _kron(R, I)
-    R23 = _kron(I, R)
+    R12 = kron(R, I)
+    R23 = kron(I, R)
     return sp.simplify(R12 * R23 * R12 - R23 * R12 * R23)
 
 
@@ -193,24 +203,22 @@ def qybe_residual(R: sp.Matrix) -> sp.Matrix:
 
     R_{13} acts on factors 1 and 3, with identity on factor 2.
     """
-    d = int(sp.sqrt(R.rows))
-    if R.rows != R.cols or d * d != R.rows:
-        raise ValueError("R must be square with dimension d².")
+    d = _tensor_square_dim(R)
     I = sp.eye(d)
-    R12 = _kron(R, I)
-    R23 = _kron(I, R)
+    R12 = kron(R, I)
+    R23 = kron(I, R)
     # R13 = (id ⊗ τ) (R ⊗ id) (id ⊗ τ)
-    P23 = _kron(I, swap_matrix(d))
+    P23 = kron(I, swap_matrix(d))
     R13 = sp.simplify(P23 * R12 * P23)
     return sp.simplify(R12 * R13 * R23 - R23 * R13 * R12)
 
 
 def braid_relation_holds(R: sp.Matrix) -> bool:
-    return _is_zero(braid_relation_residual(R))
+    return is_zero_matrix(braid_relation_residual(R))
 
 
 def qybe_holds(R: sp.Matrix) -> bool:
-    return _is_zero(qybe_residual(R))
+    return is_zero_matrix(qybe_residual(R))
 
 
 # ---------------------------------------------------------------------------
@@ -246,7 +254,7 @@ def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
     Rv_inv = sp.simplify(Rv.inv())
     diff = sp.simplify(Rv - Rv_inv - (q_sym - q_sym**(-1)) * sp.eye(4))
     return {
-        "Ř - Ř^{-1} = (q - q^{-1}) I": _is_zero(diff),
+        "Ř - Ř^{-1} = (q - q^{-1}) I": is_zero_matrix(diff),
     }
 
 

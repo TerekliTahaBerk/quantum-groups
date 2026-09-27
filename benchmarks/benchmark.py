@@ -38,10 +38,9 @@ import sympy as sp
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT.parent))
 
-from quantum_group import R_matrix_V1, qybe_holds  # noqa: E402
+from quantum_group import R_matrix_V1, is_zero_matrix, qybe_holds  # noqa: E402
 from quantum_group.supergroup_gl21 import (  # noqa: E402
     R_matrix_GLq21,
-    _is_zero_matrix_symbolic,
     all_Rij_GLq21,
     braid_far_commutativity_residual_GLq21,
     graded_yang_baxter_holds_GLq21,
@@ -61,7 +60,7 @@ def _ybe_triple_holds(n: int) -> bool:
     """Check graded YBE on the (0, 1, 2) triple in V^{⊗n}, including embedding."""
     Rij = all_Rij_GLq21(n)
     R01, R02, R12 = Rij[(0, 1)], Rij[(0, 2)], Rij[(1, 2)]
-    return _is_zero_matrix_symbolic(R01 * R02 * R12 - R12 * R02 * R01)
+    return is_zero_matrix(R01 * R02 * R12 - R12 * R02 * R01)
 
 
 def build_tasks(max_n: int) -> List[Task]:
