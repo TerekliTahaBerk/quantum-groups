@@ -2,8 +2,8 @@
 test_supergroup_gl21.py
 =======================
 
-GL_q(2|1) süpergrubu için R-matrisi, süper permütasyon ve graded
-Yang–Baxter doğrulamasının pytest testleri.
+Pytest tests of the R-matrix, super-permutation and graded
+Yang–Baxter verification for the GL_q(2|1) supergroup.
 """
 
 import sympy as sp
@@ -27,7 +27,7 @@ from quantum_group.utils import q
 
 
 # ---------------------------------------------------------------------------
-# R-matrisi ve süper permütasyon
+# R-matrix and super-permutation
 # ---------------------------------------------------------------------------
 
 def test_R_matrix_shape():
@@ -59,7 +59,7 @@ def test_super_permutation_involution():
 
 
 def test_super_permutation_odd_odd_sign():
-    # e_3 ⊗ e_3 -> internal 0-index (2,2), düz index 8.
+    # e_3 ⊗ e_3 -> internal zero-based pair (2,2), flat index 8.
     P = super_permutation_matrix(super_parity_gl21())
     assert P[8, 8] == -1
 
@@ -89,13 +89,13 @@ def test_GLq21_graded_yang_baxter_symbolic():
 
 
 def test_GLq21_graded_yang_baxter_numeric_substitution():
-    # Hızlı güvenlik testi: q = 2 için kalıntı sayısal olarak sıfır.
+    # Quick check: the residual is numerically zero for q = 2.
     residual = graded_yang_baxter_residual_GLq21(sp.Integer(2))
     assert residual == sp.zeros(27, 27)
 
 
 # ---------------------------------------------------------------------------
-# Genel çoklu tensör yerleşimi
+# General tensor-power embedding
 # ---------------------------------------------------------------------------
 
 def test_embed_R_tensor_power_3_matches_named_R12_R13_R23():
@@ -115,9 +115,9 @@ def test_all_Rij_tensor_power_4_shapes():
         assert M.shape == (81, 81)
 
 
-# Not: V^{⊗4} testleri 81×81 matrislerle çalışır. Sembolik (genel q) doğrulama
-# bu boyutta makul sürede tamamlandığından numeric ikame yerine doğrudan
-# sembolik kontrol tercih edilmiştir; gerekirse q=2 ikamesiyle hızlandırılabilir.
+# Note: V^{⊗4} tests use 81×81 matrices. Symbolic verification with generic q
+# completes in reasonable time at this size, so it is used instead of numeric
+# substitution. Substituting q=2 could speed it up if needed.
 
 def test_far_commutativity_R12_R34():
     residual = braid_far_commutativity_residual_GLq21()

@@ -2,7 +2,7 @@
 test_relations.py
 =================
 
-q-aritmetik ve U_q(sl_2) bağıntılarının matris düzeyindeki testleri.
+Matrix-level tests of q-arithmetic and U_q(sl_2) relations.
 """
 
 import sympy as sp
@@ -25,12 +25,12 @@ from quantum_group import (
 
 
 # ---------------------------------------------------------------------------
-# q-aritmetik
+# q-arithmetic
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("n", [1, 2, 3, 4, 5, 7])
 def test_q_integer_classical_limit(n):
-    """[n]_q -> n iken q -> 1."""
+    """Check [n]_q -> n as q -> 1."""
     assert classical_limit(q_integer(n)) == n
 
 
@@ -54,19 +54,19 @@ def test_q_binomial_classical_limit(n, k):
 
 
 def test_q_integer_symmetry():
-    """[n]_q = q^{n-1} + q^{n-3} + ... + q^{-(n-1)} simetrisi."""
+    """Check the symmetry [n]_q = q^{n-1} + q^{n-3} + ... + q^{-(n-1)}."""
     n = 4
     expected = sum(q**(n - 1 - 2 * i) for i in range(n))
     assert sp.simplify(q_integer(n) - expected) == 0
 
 
 # ---------------------------------------------------------------------------
-# Bağıntılar (sembolik q ile matris doğrulaması)
+# Relations (matrix verification with symbolic q)
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("n", [0, 1, 2, 3, 4, 5])
 def test_relations_symbolic_q(n):
-    """V_n üzerinde dört bağıntı (sembolik q) sağlanır."""
+    """The four relations hold on V_n with symbolic q."""
     rep = build_representation(n)
     checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv)
     assert all_relations_hold(checks), {k: v.holds for k, v in checks.items()}
@@ -87,7 +87,7 @@ def test_manuscript_compatibility_wrappers():
 
 @pytest.mark.parametrize("n", [1, 2, 3])
 def test_relations_numeric_q(n):
-    """Sayısal q (örn. q = 2) altında da bağıntılar sağlanır."""
+    """The relations also hold for numerical q (e.g. q = 2)."""
     q_num = sp.Rational(2)
     rep = build_representation(n, q_sym=q_num)
     checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv,
@@ -96,14 +96,14 @@ def test_relations_numeric_q(n):
 
 
 def test_facade_verify():
-    """QuantumGroupSL2.verify(n=...) yolu çalışır."""
+    """The QuantumGroupSL2.verify(n=...) path works."""
     Uq = QuantumGroupSL2()
     checks = Uq.verify(n=3)
     assert all_relations_hold(checks)
 
 
 def test_relation_residual_is_matrix():
-    """RelationCheck.residual bir SymPy Matrix nesnesidir."""
+    """RelationCheck.residual is a SymPy Matrix object."""
     rep = build_representation(2)
     checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv)
     for c in checks.values():

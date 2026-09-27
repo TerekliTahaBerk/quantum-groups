@@ -2,19 +2,19 @@
 relations.py
 ============
 
-U_q(sl_2)'nin tanımlayıcı bağıntıları ve bunların doğrulanması.
+Defining relations of U_q(sl_2) and their verification.
 
-Tanımlayıcı bağıntılar
-----------------------
+Defining relations
+------------------
     (R1)  K K^{-1} = K^{-1} K = 1
     (R2)  K E K^{-1} = q^{ 2} E
     (R3)  K F K^{-1} = q^{-2} F
     (R4)  [E, F] = (K - K^{-1}) / (q - q^{-1})
 
-Sembolik düzeyde bu bağıntılar yalnızca "tanım" olarak yazılabilir; cebrin
-tutarlılığı somut bir temsille (matrislerle) doğrulanır.
-`verify_on_representation` fonksiyonu, bir temsilin bu dört bağıntıyı
-sağlayıp sağlamadığını sıfır-eşitliği matris testleriyle denetler.
+At the symbolic level these relations can only be stated as definitions; a
+concrete matrix representation is used to check them. The
+`verify_on_representation` function tests whether a representation satisfies
+all four relations by checking that their residual matrices are zero.
 """
 
 from __future__ import annotations
@@ -29,12 +29,14 @@ from .utils import q
 
 
 # ---------------------------------------------------------------------------
-# Sembolik bağıntı listesi (referans dokümantasyon olarak)
+# Symbolic relation list (for reference documentation)
 # ---------------------------------------------------------------------------
 
 def symbolic_relations() -> List[Tuple[str, sp.Expr, sp.Expr]]:
-    """U_q(sl_2)'nin dört tanımlayıcı bağıntısını (LHS, RHS) çiftleri olarak
-    döndürür. Sembolik olarak yalnızca isimlendirme amaçlıdır."""
+    """Return the four defining U_q(sl_2) relations as (LHS, RHS) pairs.
+
+    At the symbolic level, these pairs only name the relations.
+    """
     return [
         ("R1: KK^{-1} = 1", K * K_inv, sp.Integer(1)),
         ("R2: KEK^{-1} = q^2 E", K * E * K_inv, q**2 * E),
@@ -46,42 +48,41 @@ def symbolic_relations() -> List[Tuple[str, sp.Expr, sp.Expr]]:
 
 
 def pretty_print_relations() -> str:
-    """Bağıntıları okunabilir biçimde yazdırır."""
-    out = ["U_q(sl_2) tanımlayıcı bağıntıları:"]
+    """Return a readable rendering of the relations."""
+    out = ["Defining relations of U_q(sl_2):"]
     for name, lhs, rhs in symbolic_relations():
         out.append(f"  {name}:  {lhs}  =  {rhs}")
     return "\n".join(out)
 
 
 # ---------------------------------------------------------------------------
-# Matrissel doğrulama
+# Matrix verification
 # ---------------------------------------------------------------------------
 
 @dataclass
 class RelationCheck:
-    """Tek bir bağıntının matris doğrulamasının sonucu."""
+    """Result of checking one relation with matrices."""
     name: str
     holds: bool
-    residual: sp.Matrix  # LHS - RHS; bağıntı sağlanırsa sıfır matrisi
+    residual: sp.Matrix  # LHS - RHS; zero matrix if the relation holds
 
-    def __repr__(self) -> str:  # pragma: no cover - kozmetik
-        status = "OK" if self.holds else "BAŞARISIZ"
+    def __repr__(self) -> str:  # pragma: no cover - cosmetic
+        status = "OK" if self.holds else "FAILED"
         return f"<{self.name}: {status}>"
 
 
 def is_zero_matrix(M: sp.Matrix) -> bool:
-    """Bir SymPy matrisinin sembolik olarak sıfır olup olmadığını test eder.
+    """Test whether a SymPy matrix is symbolically zero.
 
-    Kontrol, ``sympy.simplify`` çağrısını hem matris hem de girdi düzeyinde
-    uygular. Bu yardımcı, makaledeki sıfır-kalıntı doğrulama deseninin ortak
-    public API karşılığıdır.
+    The check applies ``sympy.simplify`` both to the matrix and to each entry.
+    This public helper implements the paper's zero-residual verification pattern.
     """
     M_simplified = sp.simplify(M)
     return all(sp.simplify(entry) == 0 for entry in M_simplified)
 
 
 def _is_zero_matrix(M: sp.Matrix) -> bool:
-    """Geriye uyumlu private ad; public kullanım için ``is_zero_matrix``."""
+    """Backward-compatible private alias; use ``is_zero_matrix`` publicly."""
     return is_zero_matrix(M)
 
 
@@ -92,20 +93,19 @@ def verify_on_representation(
     Kinv_mat: sp.Matrix,
     q_sym: sp.Expr = q,
 ) -> Dict[str, RelationCheck]:
-    """E, F, K, K^{-1} matrislerinin U_q(sl_2) bağıntılarını sağlayıp
-    sağlamadığını matris düzeyinde doğrular.
+    """Check the U_q(sl_2) relations for matrices E, F, K, K^{-1}.
 
-    Parametreler
-    ------------
+    Parameters
+    ----------
     E_mat, F_mat, K_mat, Kinv_mat : sympy.Matrix
-        Üreteçlerin somut matris temsilleri. Tümü aynı (n+1) x (n+1)
-        boyutunda olmalıdır.
-    q_sym : sympy ifadesi
-        Bağıntılarda kullanılacak q parametresi.
+        Concrete matrix representations of the generators. All must have
+        the same (n+1) x (n+1) shape.
+    q_sym : sympy expression
+        The q parameter used in the relations.
 
-    Dönüş
-    -----
-    Bağıntı adı -> RelationCheck sözlüğü.
+    Returns
+    -------
+    A dictionary mapping relation names to RelationCheck objects.
     """
     n = E_mat.rows
     I = sp.eye(n)
@@ -153,5 +153,5 @@ def verify_relations_core(
 
 
 def all_relations_hold(checks: Dict[str, RelationCheck]) -> bool:
-    """Tüm bağıntıların sağlanıp sağlanmadığını döndürür (kolaylık fonksiyonu)."""
+    """Return whether all relations hold (convenience function)."""
     return all(c.holds for c in checks.values())

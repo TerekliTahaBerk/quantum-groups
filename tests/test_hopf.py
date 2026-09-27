@@ -1,4 +1,4 @@
-"""Hopf yapısı ve aksiyomlarının testleri."""
+"""Tests of the Hopf structure and its axioms."""
 
 import sympy as sp
 import pytest
@@ -16,7 +16,7 @@ def test_hopf_axioms_on_Vn(n):
     res = verify_all_hopf_axioms(rep)
     for group, checks in res.items():
         for X, c in checks.items():
-            assert c.holds, f"V_{n}, {group}/{X} sağlanmadı"
+            assert c.holds, f"V_{n}, {group}/{X} did not hold"
 
 
 def test_coproduct_dimensions():
@@ -35,7 +35,7 @@ def test_counit_values():
 
 
 def test_antipode_K_relation():
-    """S(K) S(K^{-1}) = 1 olmalı."""
+    """S(K) S(K^{-1}) must equal 1."""
     rep = build_representation(3)
     S = antipode(rep)
     prod = sp.simplify(S["K"] * S["K_inv"])

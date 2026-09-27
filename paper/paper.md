@@ -149,11 +149,19 @@ doing so it checked the R-matrix convention symbolically, read the QuaGroup
 and SageMath sources for the comparison, and looked up bibliographic records.
 All of this was reviewed by the author, and the test suite was run after
 every change.
+
+Codex (OpenAI, GPT-6) was used in September 2026 to translate the
+repository-facing documentation, source and test docstrings, comments, and
+user-visible messages into English, and to review this paper's JOSS formatting
+and AI usage disclosure. The author reviewed, edited and validated these
+AI-assisted changes, including their mathematical notation and API behavior;
+the 126-case test suite and three doctests passed after the translation.
 The mathematical content, the undergraduate thesis and the research
 questions are the author's own work. The core implementation in
 `quantum_group/` and its test suite predate the use of Claude Code (git
 history from April to June 2026); apart from the rename above they were
-written by the author.
+written by the author. Codex's later changes to those files were limited to
+explanatory text and user-visible messages.
 
 # Acknowledgements
 

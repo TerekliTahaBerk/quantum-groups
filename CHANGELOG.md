@@ -43,7 +43,8 @@ First release, prepared for submission to the Journal of Open Source Software.
 ## Pre-1.0 development (April-June 2026)
 
 Initial implementation developed for the undergraduate thesis *Quantum Grup
-Yapılarının Python Ortamında Modellenmesi*:
+Yapılarının Python Ortamında Modellenmesi* ("Modelling Quantum Group Structures
+in Python"; thesis in Turkish):
 - `U_q(sl_2)` representations, relations, Hopf structure, tensor products
   and R-matrix checks;
 - `GL_q(2|1)` graded Yang-Baxter verification;

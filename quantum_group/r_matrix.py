@@ -2,36 +2,35 @@
 r_matrix.py
 ===========
 
-U_q(sl_2) için R-matris ve Yang–Baxter / örgü ilişkilerinin sembolik
-doğrulanması.
+Symbolic verification of the R-matrix and Yang–Baxter / braid relations
+for U_q(sl_2).
 
-Konvansiyon
------------
-İki ilgili matris vardır:
+Convention
+----------
+There are two related matrices:
 
     R   :  V ⊗ V -> V ⊗ V    (Drinfeld universal R)
-    Ř   :  V ⊗ V -> V ⊗ V    (örgülü R; Ř = τ ∘ R, τ tensör değiştirme)
+    Ř   :  V ⊗ V -> V ⊗ V    (braided R; Ř = τ ∘ R, τ swaps tensor factors)
 
-Drinfeld R kuantum Yang–Baxter denklemini sağlar:
+Drinfeld's R satisfies the quantum Yang–Baxter equation:
 
         R_{12} R_{13} R_{23} = R_{23} R_{13} R_{12}              (QYBE)
 
-Ř ise örgü grup B_n'nin temsilini verir; **örgü bağıntısı**:
+Ř gives a representation of the braid group B_n; its **braid relation** is:
 
         Ř_{12} Ř_{23} Ř_{12} = Ř_{23} Ř_{12} Ř_{23}              (BRAID)
 
-Bu modül her iki yapıyı da V_1 ⊗ V_1 üzerinde inşa eder ve doğrular.
-Örgü bağıntısı düğüm değişmezleriyle (Jones polinomu) doğrudan ilişkili
-olduğu için fiziksel olarak ana sonuçtur.
+This module constructs and checks both structures on V_1 ⊗ V_1. The braid
+relation is directly related to knot invariants such as the Jones polynomial.
 
-V_1 ⊗ V_1 üzerinde R-matrisi (renormalize, fraksiyonel q-üssü yok):
+R-matrix on V_1 ⊗ V_1 (rescaled, without fractional powers of q):
 
                 | q   0      0       0 |
         R  =    | 0   1      q-q^-1  0 |
                 | 0   0      1       0 |
                 | 0   0      0       q |
 
-Baz sıralaması: v_0⊗v_0, v_0⊗v_1, v_1⊗v_0, v_1⊗v_1.
+Basis order: v_0⊗v_0, v_0⊗v_1, v_1⊗v_0, v_1⊗v_1.
 """
 
 from __future__ import annotations
@@ -48,40 +47,41 @@ from .utils import q as default_q
 
 
 # ---------------------------------------------------------------------------
-# R-matris ve örgülü versiyonu
+# R-matrix and its braided version
 # ---------------------------------------------------------------------------
 
 def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
-    """V_1 ⊗ V_1 üzerinde Drinfeld–Jimbo R-matrisi (4×4).
+    """Drinfeld–Jimbo R-matrix on V_1 ⊗ V_1 (4×4).
 
-    Türetme
-    -------
-    U_q(sl_2)'nin evrensel R-matrisi (Drinfeld 1987)
+    Derivation
+    ----------
+    The universal R-matrix of U_q(sl_2) (Drinfeld 1987) has the form
 
         𝓡 = q^{H⊗H/2} · (1 + (q - q^{-1}) E⊗F + ...)
 
-    biçimindedir; burada K = q^H ve "..." E^n ⊗ F^n (n ≥ 2) terimleridir
-    (tam seri için bkz. Kassel 1995). V_1 üzerinde E² = F² = 0 olduğundan
-    seri ilk iki terimde kesilir ve H = diag(1, -1) ile
+    where K = q^H and "..." denotes terms E^n ⊗ F^n (n ≥ 2)
+    (see Kassel 1995 for the full series). On V_1, E² = F² = 0, so the
+    series truncates after two terms. With H = diag(1, -1),
 
         R = q^{1/2} · (ρ_1 ⊗ ρ_1)(𝓡)
 
-    tam olarak bu fonksiyonun döndürdüğü matrise eşittir; q^{1/2} çarpanı
-    q^{±1/2} kesirli üslerini kaldıran bir normalizasyondur. Bu 4×4 matris,
-    Jimbo'nun U_q(gl(N+1)) vektör temsili R-matrisinin N = 1 halidir
+    is exactly the matrix returned by this function. The factor q^{1/2}
+    normalizes away fractional powers q^{±1/2}. This 4×4 matrix is the
+    N = 1 case of Jimbo's vector-representation R-matrix for U_q(gl(N+1))
     (Jimbo 1985, 1986).
 
-    Konvansiyon notu
-    ----------------
-    Yukarıdaki 𝓡, Δ(E) = E⊗K + 1⊗E, Δ(F) = F⊗1 + K^{-1}⊗F koproduktuna
-    göre Δ^op(x) 𝓡 = 𝓡 Δ(x) sağlar. Bu paketin ``hopf.coproduct``
-    fonksiyonu ise Δ(E) = E⊗1 + K⊗E, Δ(F) = F⊗K^{-1} + 1⊗F kullanır; bu
-    koproduktla aynı ara bağlama (intertwining) bağıntısını sağlayan matris
-    R değil R_21 = τ R τ = R^T'dir. R ve R_21'in ikisi de QYBE'yi sağlar;
-    bu modüldeki QYBE, örgü ve Hecke kontrolleri bu farktan etkilenmez.
+    Convention note
+    ---------------
+    The 𝓡 above satisfies Δ^op(x) 𝓡 = 𝓡 Δ(x) for the coproduct
+    Δ(E) = E⊗K + 1⊗E, Δ(F) = F⊗1 + K^{-1}⊗F. This package's
+    ``hopf.coproduct`` instead uses Δ(E) = E⊗1 + K⊗E,
+    Δ(F) = F⊗K^{-1} + 1⊗F. For this coproduct, R_21 = τ R τ = R^T,
+    rather than R, satisfies the same intertwining relation. Both R and
+    R_21 satisfy the QYBE; this difference does not affect the QYBE,
+    braid or Hecke checks in this module.
 
-    Kaynaklar
-    ---------
+    References
+    ----------
     * M. Jimbo, "A q-difference analogue of U(g) and the Yang–Baxter
       equation", Lett. Math. Phys. 10 (1985) 63–69,
       doi:10.1007/BF00704588.
@@ -103,7 +103,7 @@ def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
 
 
 def swap_matrix(d: int) -> sp.Matrix:
-    """τ: V ⊗ V -> V ⊗ V, e_{ij} -> e_{ji}, V boyutu d."""
+    """τ: V ⊗ V -> V ⊗ V, e_{ij} -> e_{ji}, where V has dimension d."""
     P = sp.zeros(d * d, d * d)
     for i in range(d):
         for j in range(d):
@@ -112,12 +112,12 @@ def swap_matrix(d: int) -> sp.Matrix:
 
 
 def R_check_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
-    """Örgülü R-matris Ř = τ ∘ R."""
+    """Return the braided R-matrix Ř = τ ∘ R."""
     return sp.simplify(swap_matrix(2) * R_matrix_V1(q_sym))
 
 
 # ---------------------------------------------------------------------------
-# QYBE ve örgü bağıntısının doğrulanması
+# Verification of the QYBE and braid relation
 # ---------------------------------------------------------------------------
 
 @dataclass
@@ -131,13 +131,14 @@ def _is_zero(M: sp.Matrix) -> bool:
 
 
 def braid_relation_residual(R: sp.Matrix) -> sp.Matrix:
-    """V ⊗ V ⊗ V üzerinde örgü bağıntısının kalıntısı.
+    """Residual of the braid relation on V ⊗ V ⊗ V.
 
-    R 4×4 ise sonuç 8×8 olur. Eşitlik R sağlıyorsa kalıntı sıfırdır.
+    For 4×4 R, the result is 8×8. The residual is zero if R satisfies
+    the relation.
     """
     d = int(sp.sqrt(R.rows))
     if d * d != R.rows:
-        raise ValueError("R kare olmalı ve boyutu d² olmalı.")
+        raise ValueError("R must be square with dimension d².")
     I = sp.eye(d)
     R12 = _kron(R, I)
     R23 = _kron(I, R)
@@ -145,15 +146,15 @@ def braid_relation_residual(R: sp.Matrix) -> sp.Matrix:
 
 
 def qybe_residual(R: sp.Matrix) -> sp.Matrix:
-    """Kuantum Yang–Baxter denkleminin V ⊗ V ⊗ V üzerindeki kalıntısı:
+    """Residual of the quantum Yang–Baxter equation on V ⊗ V ⊗ V:
 
         R_{12} R_{13} R_{23} - R_{23} R_{13} R_{12}.
 
-    R_{13}: 1. ve 3. faktörlere etki, 2. faktörde özdeşlik.
+    R_{13} acts on factors 1 and 3, with identity on factor 2.
     """
     d = int(sp.sqrt(R.rows))
     if d * d != R.rows:
-        raise ValueError("R kare olmalı ve boyutu d² olmalı.")
+        raise ValueError("R must be square with dimension d².")
     I = sp.eye(d)
     R12 = _kron(R, I)
     R23 = _kron(I, R)
@@ -172,15 +173,15 @@ def qybe_holds(R: sp.Matrix) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Spektral ayrışma
+# Spectral decomposition
 # ---------------------------------------------------------------------------
 
 def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
-    """Ř'nin V_1 ⊗ V_1 üzerindeki özdeğerlerini ve çokluklarını döndürür.
+    """Return eigenvalues and multiplicities of Ř on V_1 ⊗ V_1.
 
-    Beklenen: q (3-katlı, V_2 simetrik kanat) ve −q^{-1} (1-katlı, V_0).
-    Bu spektrum, V_1 ⊗ V_1 = V_2 ⊕ V_0 Clebsch–Gordan ayrışımının
-    örgülü versiyonudur ve Jones polinomu için temel girdidir.
+    Expected: q (multiplicity 3, symmetric V_2 sector) and −q^{-1}
+    (multiplicity 1, V_0). This spectrum is the braided counterpart of
+    V_1 ⊗ V_1 = V_2 ⊕ V_0 and is an input to the Jones polynomial.
     """
     Rv = R_check_V1(q_sym)
     raw = Rv.eigenvals()
@@ -188,15 +189,15 @@ def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
 
 
 def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
-    """Hecke (skein) bağıntısının kontrolü.
+    """Check the Hecke (skein) relation.
 
-    Ř ve Ř^{-1} arasında Hecke kuadratik bağıntısı:
+    The quadratic Hecke relation between Ř and Ř^{-1} is:
         Ř - Ř^{-1} = (q - q^{-1}) · I
-    Bu bağıntı, U_q(sl_2)'nin V_1 üzerindeki örgü temsilinin Hecke
-    cebirinin H_n(q) niceliği üzerinden faktör olduğunu gösterir.
+    This shows that the braid representation of U_q(sl_2) on V_1
+    factors through the Hecke algebra H_n(q).
 
-    Not: Yalnızca Hecke bağıntısı doğrulanır; Jones polinomu ve Markov
-    izi hesaplanmaz.
+    Only the Hecke relation is checked; the Jones polynomial and Markov
+    trace are not computed.
     """
     Rv = R_check_V1(q_sym)
     Rv_inv = sp.simplify(Rv.inv())
@@ -207,10 +208,10 @@ def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
 
 
 def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
-    """Kullanımdan kaldırıldı: ``hecke_skein_relation_check`` kullanın.
+    """Deprecated: use ``hecke_skein_relation_check``.
 
-    Eski ad yanıltıcıydı (Jones polinomu değil, Hecke bağıntısı
-    doğrulanır); geriye uyumluluk için korunmuştur.
+    The old name was misleading: this verifies the Hecke relation, not a
+    Jones polynomial. The alias remains for backward compatibility.
     """
     warnings.warn(
         "jones_skein_relation_check is deprecated; "

@@ -2,20 +2,19 @@
 visualization.py
 ================
 
-U_q(sl_2) temsillerinin ve kristallerinin görselleştirilmesi.
+Visualization of U_q(sl_2) representations and crystals.
 
-İki tip diyagram:
+Two kinds of diagrams:
 
-1. **Ağırlık diyagramı** — V_n'in K-ağırlıkları (n - 2k, k = 0..n) bir
-   sayı doğrusu üzerinde nokta olarak çizilir. Bu, klasik sl_2 ağırlık
-   gösterimiyle aynı yapıya sahiptir; q yalnızca özdeğerlerin çarpan
-   tabanını değiştirir, üs örüntüsünü değil.
+1. **Weight diagram** — The K-weights of V_n (n - 2k, k = 0..n) are plotted
+   as points on a number line. This has the same structure as the classical
+   sl_2 weight diagram; q changes the base of the eigenvalues but not the
+   pattern of exponents.
 
-2. **Kristal grafiği** — B(n) kristali bir yönlü yol b_0 -> b_1 -> ... -> b_n
-   olarak networkx ile çizilir.
+2. **Crystal graph** — NetworkX draws the crystal B(n) as a directed path
+   b_0 -> b_1 -> ... -> b_n.
 
-Tüm fonksiyonlar matplotlib `Figure` döndürür; ekrana gösterme veya kayıt
-çağıran sorumluluğundadır.
+All functions return a Matplotlib `Figure`; the caller handles display or saving.
 """
 
 from __future__ import annotations
@@ -29,13 +28,13 @@ from .crystal import build_crystal
 
 
 # ---------------------------------------------------------------------------
-# Ağırlık diyagramı
+# Weight diagram
 # ---------------------------------------------------------------------------
 
 def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
-    """V_n için ağırlık diyagramı (sayı doğrusu üzerinde noktalar).
+    """Plot the weight diagram of V_n as points on a number line.
 
-    Ağırlıklar n, n-2, ..., -n+2, -n.
+    The weights are n, n-2, ..., -n+2, -n.
     """
     weights = [n - 2 * k for k in range(n + 1)]
 
@@ -56,8 +55,8 @@ def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
     ax.set_ylim(-1, 1)
     ax.set_yticks([])
     ax.set_xticks(weights)
-    ax.set_xlabel("ağırlık (K-özdeğerinin q-üssü)")
-    ax.set_title(f"V_{n} ağırlık diyagramı (boyut {n+1})")
+    ax.set_xlabel("weight (q-exponent of the K-eigenvalue)")
+    ax.set_title(f"V_{n} weight diagram (dimension {n+1})")
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
@@ -66,11 +65,11 @@ def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
 
 
 # ---------------------------------------------------------------------------
-# Kristal grafiği
+# Crystal graph
 # ---------------------------------------------------------------------------
 
 def plot_crystal_graph(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
-    """B(n) kristal grafiğini yatay yönlü yol olarak çizer."""
+    """Plot the crystal graph B(n) as a horizontal directed path."""
     G = build_crystal(n)
 
     if ax is None:
@@ -90,7 +89,7 @@ def plot_crystal_graph(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels,
                                  font_size=9, ax=ax)
 
-    ax.set_title(f"B({n}) kristal grafiği")
+    ax.set_title(f"B({n}) crystal graph")
     ax.set_axis_off()
     ax.set_xlim(-0.5, n + 0.5)
     ax.set_ylim(-0.5, 0.5)
@@ -99,7 +98,7 @@ def plot_crystal_graph(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
 
 
 def plot_combined(n: int) -> plt.Figure:
-    """Bir çağrıda hem ağırlık diyagramı hem kristal grafiğini çizer."""
+    """Plot both the weight diagram and crystal graph in one call."""
     fig, axes = plt.subplots(2, 1, figsize=(max(5, n + 2), 4.0))
     plot_weight_diagram(n, ax=axes[0])
     plot_crystal_graph(n, ax=axes[1])

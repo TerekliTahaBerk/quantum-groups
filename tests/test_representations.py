@@ -2,11 +2,11 @@
 test_representations.py
 =======================
 
-V_n temsillerinin yapısal testleri:
-- doğru boyut
-- en yüksek/en düşük ağırlık vektörü davranışı
-- ağırlıkların klasik limiti
-- F'nin kuvvetli alt-üçgenliği, E'nin kuvvetli üst-üçgenliği
+Structural tests of V_n representations:
+- correct dimension
+- behavior of highest- and lowest-weight vectors
+- classical limit of the weights
+- strict lower-triangular F and strict upper-triangular E
 """
 
 import sympy as sp
@@ -28,7 +28,7 @@ from quantum_group import (
 
 
 # ---------------------------------------------------------------------------
-# Boyut ve yapı
+# Dimension and structure
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("n", [0, 1, 2, 3, 5])
@@ -42,7 +42,7 @@ def test_dimension(n):
 
 @pytest.mark.parametrize("n", [1, 2, 3, 4])
 def test_F_is_strict_lower_shift(n):
-    """F . v_k = v_{k+1}: F yalnızca alt-altköşegende 1'lere sahip."""
+    """F . v_k = v_{k+1}: F has ones only on the first lower diagonal."""
     rep = build_representation(n)
     for i in range(rep.dim):
         for j in range(rep.dim):
@@ -54,7 +54,7 @@ def test_F_is_strict_lower_shift(n):
 
 @pytest.mark.parametrize("n", [1, 2, 3, 4])
 def test_E_strict_upper_shift_pattern(n):
-    """E sadece (k-1, k) konumlarında sıfır olmayan girdilere sahip."""
+    """E has nonzero entries only at positions (k-1, k)."""
     rep = build_representation(n)
     for i in range(rep.dim):
         for j in range(rep.dim):
@@ -63,7 +63,7 @@ def test_E_strict_upper_shift_pattern(n):
 
 
 # ---------------------------------------------------------------------------
-# En yüksek / en düşük ağırlık vektörleri
+# Highest- and lowest-weight vectors
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("n", [0, 1, 2, 3, 4])
@@ -92,14 +92,14 @@ def test_highest_weight_K_eigenvalue(n):
 
 @pytest.mark.parametrize("n", [1, 2, 3, 4])
 def test_weights_classical_limit(n):
-    """q -> 1 alındığında K-özdeğerleri 1 olur (q^{n-2k} -> 1)."""
+    """As q -> 1, the K-eigenvalues approach 1 (q^{n-2k} -> 1)."""
     rep = build_representation(n)
     for k in range(rep.dim):
         assert classical_limit(weight_of(rep, k)) == 1
 
 
 # ---------------------------------------------------------------------------
-# Kristal
+# Crystal
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("n", [0, 1, 2, 4])

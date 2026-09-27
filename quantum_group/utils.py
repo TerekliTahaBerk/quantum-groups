@@ -2,50 +2,50 @@
 utils.py
 ========
 
-q-aritmetik yardımcıları: q-tamsayı, q-faktöriyel ve q-binom katsayıları.
+q-arithmetic helpers: q-integers, q-factorials and q-binomial coefficients.
 
-Tanımlar
---------
-q-tamsayı:
+Definitions
+-----------
+q-integer:
     [n]_q = (q^n - q^{-n}) / (q - q^{-1})
           = q^{n-1} + q^{n-3} + ... + q^{-(n-1)}
 
-q-faktöriyel:
+q-factorial:
     [n]_q! = [n]_q [n-1]_q ... [1]_q,    [0]_q! = 1
 
-q-binom:
+q-binomial:
     [n choose k]_q = [n]_q! / ([k]_q! [n-k]_q!)
 
-Bu fonksiyonlar SymPy ifadeleri döndürür; böylece sembolik q ile çalışılabilir
-ve gerektiğinde sayısal q için subs() çağrılabilir.
+These functions return SymPy expressions, so q can remain symbolic or be
+assigned a numerical value with subs() when needed.
 """
 
 from __future__ import annotations
 
 import sympy as sp
 
-# Modül düzeyinde standart sembolik q. Tüm modüller içe aktarabilir.
+# Standard module-level symbolic q, available to every module.
 q = sp.Symbol("q", nonzero=True)
 
 
 def q_integer(n: int, q_sym: sp.Expr = q) -> sp.Expr:
-    """q-tamsayı [n]_q'yi döndürür.
+    """Return the q-integer [n]_q.
 
-    Parametreler
-    ------------
+    Parameters
+    ----------
     n : int
-        İşaretsiz tamsayı veya negatif olabilir; [-n]_q = -[n]_q.
-    q_sym : sympy ifadesi
-        q parametresi. Varsayılan olarak modül sembolü `q`.
+        May be nonnegative or negative; [-n]_q = -[n]_q.
+    q_sym : sympy expression
+        The q parameter. Defaults to the module symbol `q`.
 
-    Dönüş
-    -----
-    sympy ifadesi.
+    Returns
+    -------
+    sympy expression.
 
-    Örnek
-    -----
+    Example
+    -------
     >>> q_integer(3)
-    q**2 + 1 + q**(-2)  # eşdeğer biçimde sadeleştirilebilir
+    q**2 + 1 + q**(-2)
     """
     if n == 0:
         return sp.Integer(0)
@@ -54,9 +54,9 @@ def q_integer(n: int, q_sym: sp.Expr = q) -> sp.Expr:
 
 
 def q_factorial(n: int, q_sym: sp.Expr = q) -> sp.Expr:
-    """q-faktöriyel [n]_q! = [n]_q [n-1]_q ... [1]_q'yi döndürür."""
+    """Return the q-factorial [n]_q! = [n]_q [n-1]_q ... [1]_q."""
     if n < 0:
-        raise ValueError("q-faktöriyel yalnızca n >= 0 için tanımlıdır.")
+        raise ValueError("The q-factorial is defined only for n >= 0.")
     result = sp.Integer(1)
     for k in range(1, n + 1):
         result *= q_integer(k, q_sym)
@@ -64,7 +64,7 @@ def q_factorial(n: int, q_sym: sp.Expr = q) -> sp.Expr:
 
 
 def q_binomial(n: int, k: int, q_sym: sp.Expr = q) -> sp.Expr:
-    """q-binom katsayısı [n choose k]_q'yi döndürür."""
+    """Return the q-binomial coefficient [n choose k]_q."""
     if k < 0 or k > n:
         return sp.Integer(0)
     return sp.simplify(
@@ -73,8 +73,8 @@ def q_binomial(n: int, k: int, q_sym: sp.Expr = q) -> sp.Expr:
 
 
 def classical_limit(expr: sp.Expr, q_sym: sp.Expr = q) -> sp.Expr:
-    """q -> 1 klasik limitini hesaplar (L'Hôpital ile).
+    """Compute the classical limit q -> 1 (using L'Hôpital's rule).
 
-    Bu, [n]_q -> n gibi limitlerin sembolik doğrulaması için kullanışlıdır.
+    This is useful for symbolic checks of limits such as [n]_q -> n.
     """
     return sp.limit(expr, q_sym, 1)

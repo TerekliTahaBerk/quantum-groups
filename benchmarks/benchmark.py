@@ -2,23 +2,23 @@
 benchmark.py
 ============
 
-GL_q(2|1) (ve karşılaştırma için U_q(sl_2)) doğrulama fonksiyonlarının
-duvar-saati sürelerini ölçer ve sonuçları ``benchmarks/results.csv`` ile
-``benchmarks/results.md`` dosyalarına yazar.
+Measure wall-clock time for GL_q(2|1) verification functions (and U_q(sl_2)
+for comparison), then write results to ``benchmarks/results.csv`` and
+``benchmarks/results.md``.
 
-Kullanım
---------
-    python benchmarks/benchmark.py                 # n <= 5, 3 tekrar
+Usage
+-----
+    python benchmarks/benchmark.py                 # n <= 5, 3 repeats
     python benchmarks/benchmark.py --repeats 5
-    python benchmarks/benchmark.py --max-n 6       # 729x729; çok yavaş olabilir
+    python benchmarks/benchmark.py --max-n 6       # 729x729; may be very slow
 
-Notlar
-------
-* Her görev aynı süreç içinde ``--repeats`` kez çalıştırılır. SymPy bazı
-  ara sonuçları önbelleğe aldığından ilk koşu ("first") genellikle
-  sonrakilerden yavaştır; tabloda ilk koşu, ortalama ve minimum ayrı ayrı
-  verilir.
-* Süreler makineye bağlıdır; ortam bilgisi ``results.md`` içine yazılır.
+Notes
+-----
+* Each task runs ``--repeats`` times in the same process. SymPy caches some
+  intermediate results, so the first run is usually slower than later runs;
+  the table reports the first run, mean and minimum separately.
+* Timings depend on the machine; environment details are written to
+  ``results.md``.
 """
 
 from __future__ import annotations
@@ -52,13 +52,13 @@ from quantum_group.supergroup_gl21 import (  # noqa: E402
 
 class Task(NamedTuple):
     name: str
-    n: str          # tensör kuvveti (V^{⊗n}); uygulanamazsa "-"
-    size: str       # işlenen en büyük matrisin boyutu
+    n: str          # tensor power (V^{⊗n}); "-" if not applicable
+    size: str       # size of the largest matrix processed
     func: Callable[[], object]
 
 
 def _ybe_triple_holds(n: int) -> bool:
-    """V^{⊗n} içinde (0, 1, 2) üçlüsü için graded YBE (yerleştirme dahil)."""
+    """Check graded YBE on the (0, 1, 2) triple in V^{⊗n}, including embedding."""
     Rij = all_Rij_GLq21(n)
     R01, R02, R12 = Rij[(0, 1)], Rij[(0, 2)], Rij[(1, 2)]
     return _is_zero_matrix_symbolic(R01 * R02 * R12 - R12 * R02 * R01)

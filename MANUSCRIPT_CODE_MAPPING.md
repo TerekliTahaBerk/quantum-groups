@@ -1,8 +1,9 @@
 # Manuscript-Code Mapping
 
 This file maps the manuscript claims and code listings for
-"Quantum Grup Yapılarının Python Ortamında Modellenmesi" to repository modules
-and tests. Status values describe the current repository state.
+"Quantum Grup Yapılarının Python Ortamında Modellenmesi" (the submitted thesis
+in Turkish) to repository modules and tests. Status values describe the current
+repository state.
 
 The submitted thesis PDF is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
 build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is
@@ -10,13 +11,13 @@ build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is
 
 | Manuscript item | Repository implementation | Tests | Status | Notes |
 | --- | --- | --- | --- | --- |
-| Kod: `q_integer` | `quantum_group/utils.py::q_integer` | `tests/test_relations.py` | Implemented | Includes `[0]_q`, `[1]_q`, `[2]_q`, symmetry, and classical-limit checks. |
+| Code: `q_integer` | `quantum_group/utils.py::q_integer` | `tests/test_relations.py` | Implemented | Includes `[0]_q`, `[1]_q`, `[2]_q`, symmetry, and classical-limit checks. |
 | `q_factorial`, `q_binomial` | `quantum_group/utils.py::q_factorial`, `q_binomial` | `tests/test_relations.py` | Implemented | Classical limits checked for representative values. |
 | `classical_limit` | `quantum_group/utils.py::classical_limit` | `tests/test_relations.py`, `tests/test_representations.py` | Implemented | Uses SymPy limit at `q -> 1`. |
-| Kod: `build_representation` | `quantum_group/representations.py::build_representation` | `tests/test_representations.py` | Implemented | Returns a `Representation` data class with `E`, `F`, `K`, `K_inv`, and weights. |
+| Code: `build_representation` | `quantum_group/representations.py::build_representation` | `tests/test_representations.py` | Implemented | Returns a `Representation` data class with `E`, `F`, `K`, `K_inv`, and weights. |
 | Draft name: `build_representation_core` | `quantum_group/representations.py::build_representation_core` | `tests/test_relations.py` | Implemented | Compatibility wrapper around `build_representation`. |
 | Highest/lowest weight vectors | `highest_weight_vector`, `lowest_weight_vector` | `tests/test_representations.py` | Implemented | Checks `E v_0 = 0`, `F v_n = 0`, and highest `K` weight. |
-| Kod: relation residual checks | `quantum_group/relations.py::verify_on_representation` | `tests/test_relations.py` | Implemented | Returns `RelationCheck` objects with residual matrices. |
+| Code: relation residual checks | `quantum_group/relations.py::verify_on_representation` | `tests/test_relations.py` | Implemented | Returns `RelationCheck` objects with residual matrices. |
 | Draft name: `verify_relations_core` | `quantum_group/relations.py::verify_relations_core` | `tests/test_relations.py` | Implemented | Compatibility wrapper around `verify_on_representation`. |
 | Entrywise zero helper | `quantum_group/relations.py::is_zero_matrix` | `tests/test_relations.py` | Implemented | Public helper for symbolic zero-matrix checks. |
 | Hopf coproduct | `quantum_group/hopf.py::coproduct` | `tests/test_hopf.py` | Implemented | Uses explicit representation matrices for `Delta(E)`, `Delta(F)`, `Delta(K)`, `Delta(K_inv)`. |

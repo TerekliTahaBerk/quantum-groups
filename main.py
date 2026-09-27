@@ -2,19 +2,19 @@
 main.py
 =======
 
-U_q(sl_2) paketinin uçtan uca demo betiği.
+End-to-end demonstration script for the U_q(sl_2) package.
 
-Çalıştırmak için:
+Run with:
 
     python3 main.py
 
-Adımlar:
-1. q-aritmetik örnekleri
-2. U_q(sl_2) tanımlayıcı bağıntıları
-3. V_0..V_4 temsillerinin inşası ve bağıntı doğrulaması
-4. kristal yolları
-5. V_4 ağırlık + kristal diyagramının PNG olarak kaydedilmesi
-6. GL_q(2|1) için graded Yang–Baxter doğrulaması
+Steps:
+1. q-arithmetic examples
+2. Defining relations of U_q(sl_2)
+3. Construction and relation checks for V_0..V_4
+4. Crystal paths
+5. Save the V_4 weight and crystal diagram as a PNG
+6. Graded Yang–Baxter verification for GL_q(2|1)
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ import os
 
 import matplotlib
 
-matplotlib.use("Agg")  # başsız ortamlar için
+matplotlib.use("Agg")  # for headless environments
 
 import sympy as sp
 
@@ -48,41 +48,41 @@ def section(title: str) -> None:
 def main() -> None:
     Uq = QuantumGroupSL2()
 
-    section("1. q-aritmetik")
+    section("1. q-arithmetic")
     for n in range(6):
         qn = sp.simplify(q_integer(n))
         print(f"  [{n}]_q = {qn}     (q->1: {classical_limit(qn)})")
     print(f"  [4]_q! = {q_factorial(4)}")
 
-    section("2. U_q(sl_2) tanımlayıcı bağıntıları")
+    section("2. Defining relations of U_q(sl_2)")
     Uq.print_relations()
 
-    section("3. V_n inşası ve bağıntı doğrulaması")
+    section("3. Construction and relation checks for V_n")
     for n in range(5):
         rep = Uq.representation(n)
         checks = Uq.verify(rep)
         ok = all(c.holds for c in checks.values())
-        print(f"  V_{n}: boyut={rep.dim}, tüm bağıntılar = {ok}")
-        print(f"    K-ağırlıkları: {[sp.simplify(w) for w in rep.weights]}")
+        print(f"  V_{n}: dimension={rep.dim}, all relations hold = {ok}")
+        print(f"    K-weights: {[sp.simplify(w) for w in rep.weights]}")
 
-    section("4. Kristaller")
+    section("4. Crystals")
     for n in range(5):
         print(f"  B({n}): {crystal_string(n)}")
 
-    section("5. Diyagram çıktısı")
+    section("5. Diagram output")
     out_dir = os.path.join(os.path.dirname(__file__), "outputs")
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, "V4_combined.png")
     fig = plot_combined(4)
     fig.savefig(out_path, dpi=120)
-    print(f"  Kaydedildi: {out_path}")
+    print(f"  Saved: {out_path}")
 
-    section("6. GL_q(2|1) graded Yang-Baxter doğrulaması")
+    section("6. GL_q(2|1) graded Yang-Baxter verification")
     summary = summarize_GLq21_ybe()
-    print("  R boyutu:", summary["R_shape"])
-    print("  Üçlü tensör uzayı boyutu:", summary["triple_tensor_shape"])
-    print("  R nonzero entry sayısı:", summary["nonzero_entries_R"])
-    print("  Graded YBE sağlanıyor mu:", summary["residual_is_zero"])
+    print("  R shape:", summary["R_shape"])
+    print("  Triple tensor shape:", summary["triple_tensor_shape"])
+    print("  Number of nonzero R entries:", summary["nonzero_entries_R"])
+    print("  Graded YBE holds:", summary["residual_is_zero"])
 
 
 if __name__ == "__main__":

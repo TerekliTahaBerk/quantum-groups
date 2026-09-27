@@ -2,18 +2,18 @@
 crystal.py
 ==========
 
-U_q(sl_2) için Kashiwara kristal taban B(n)'in kombinatoryal modeli.
+Combinatorial model of the Kashiwara crystal B(n) for U_q(sl_2).
 
-q -> 0 limitinde V_n temsilinin baz vektörleri kombinatoryal nesnelere
-{b_0, b_1, ..., b_n} dönüşür. E ve F üreteçleri kısmi fonksiyonlara indirgenir:
+In the q -> 0 limit, the basis vectors of V_n become the combinatorial
+objects {b_0, b_1, ..., b_n}. The generators E and F reduce to partial maps:
 
-    tilde_f(b_k) = b_{k+1},   k < n iken;     tilde_f(b_n) = None
-    tilde_e(b_k) = b_{k-1},   k > 0 iken;     tilde_e(b_0) = None
+    tilde_f(b_k) = b_{k+1},   for k < n;     tilde_f(b_n) = None
+    tilde_e(b_k) = b_{k-1},   for k > 0;     tilde_e(b_0) = None
 
-Ağırlık dönüşümü: wt(b_k) = n - 2k.
+Weight map: wt(b_k) = n - 2k.
 
-Bu dosya kristali yönlü etiketli bir grafik olarak inşa eder; düğümler
-(name, weight) çiftleridir, kenarlar tilde_f oklarıdır.
+This module constructs the crystal as a directed labelled graph: nodes carry
+(name, weight) pairs, and edges are tilde_f arrows.
 """
 
 from __future__ import annotations
@@ -26,28 +26,28 @@ import networkx as nx
 
 @dataclass
 class CrystalNode:
-    """B(n) içindeki tek bir kristal düğümü."""
+    """A single crystal node in B(n)."""
     index: int      # k = 0, 1, ..., n
     weight: int     # n - 2k
     label: str      # "b_k"
 
 
 def build_crystal(n: int) -> nx.DiGraph:
-    """B(n) kristal grafiğini inşa eder.
+    """Construct the crystal graph B(n).
 
-    Parametreler
-    ------------
+    Parameters
+    ----------
     n : int
-        En yüksek ağırlık (boyut = n + 1). n >= 0.
+        Highest weight (dimension = n + 1). n >= 0.
 
-    Dönüş
-    -----
+    Returns
+    -------
     networkx.DiGraph
-        Düğüm = "b_k" (str). Her düğümde 'index', 'weight', 'label'
-        nitelikleri bulunur. Kenarlar tilde_f okları (b_k -> b_{k+1}).
+        Each node "b_k" (str) has 'index', 'weight' and 'label' attributes.
+        Edges are tilde_f arrows (b_k -> b_{k+1}).
     """
     if n < 0:
-        raise ValueError("n negatif olamaz.")
+        raise ValueError("n must be nonnegative.")
 
     G = nx.DiGraph()
     for k in range(n + 1):
@@ -62,13 +62,13 @@ def build_crystal(n: int) -> nx.DiGraph:
 
 
 def crystal_nodes(n: int) -> List[CrystalNode]:
-    """B(n) düğümlerini CrystalNode listesi olarak döndürür."""
+    """Return the nodes of B(n) as a list of CrystalNode objects."""
     return [CrystalNode(index=k, weight=n - 2 * k, label=f"b_{k}")
             for k in range(n + 1)]
 
 
 def f_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
-    """Kristal operatörü tilde_f."""
+    """Apply the crystal operator tilde_f."""
     if node.index >= n:
         return None
     return CrystalNode(index=node.index + 1, weight=n - 2 * (node.index + 1),
@@ -76,7 +76,7 @@ def f_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
 
 
 def e_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
-    """Kristal operatörü tilde_e."""
+    """Apply the crystal operator tilde_e."""
     if node.index <= 0:
         return None
     return CrystalNode(index=node.index - 1, weight=n - 2 * (node.index - 1),
@@ -84,5 +84,5 @@ def e_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
 
 
 def crystal_string(n: int) -> str:
-    """B(n) kristalini metin olarak döndürür: b_0 -f-> b_1 -f-> ... -f-> b_n."""
+    """Return B(n) as text: b_0 -f-> b_1 -f-> ... -f-> b_n."""
     return " -f-> ".join(f"b_{k}" for k in range(n + 1))

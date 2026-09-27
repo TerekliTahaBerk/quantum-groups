@@ -2,35 +2,34 @@
 limits.py
 =========
 
-q parametresinin "üç hayatı": klasik (q → 1), genel q, kristal (q → 0).
+The "three lives" of q: classical (q → 1), generic q and crystal (q → 0).
 
-Bu modül, V_n temsilinin ve dolayısıyla U_q(sl_2)'nin yapısının q
-değerine göre nasıl değiştiğini incelemek için yardımcılar sağlar.
+This module provides helpers for examining how V_n, and hence the structure
+of U_q(sl_2), changes with the value of q.
 
-(L1)  Klasik limit q -> 1:
-      U_q(sl_2) -> U(sl_2). [n]_q -> n; K -> 1, K-1 -> 0; ancak
-      H := (K - 1) / (q - 1) operatörü iyi tanımlı limite sahiptir
-      ve klasik h Cartan elemanını verir. q^{n-2k} -> 1 gibi görünür
-      ama H özdeğerleri n-2k klasik ağırlıklara karşılık gelir.
+(L1)  Classical limit q -> 1:
+      U_q(sl_2) -> U(sl_2). [n]_q -> n; K -> 1, K-1 -> 0; however,
+      the operator H := (K - 1) / (q - 1) has a well-defined limit
+      giving the classical Cartan element h. Although q^{n-2k} -> 1,
+      the eigenvalues of H are the classical weights n-2k.
 
-(L2)  Genel q:
-      Tipik kuantum rejim. Tüm formüller q'da rasyoneldir; temsiller
-      klasik temsillerin q-deformasyonudur.
+(L2)  Generic q:
+      The usual quantum regime. All formulas are rational in q, and the
+      representations are q-deformations of classical representations.
 
-(L3)  Birim kök q^N = 1 (N >= 2):
-      [N]_q = 0 olur. E^N, F^N merkez elemanları haline gelir;
-      sonlu boyutlu indirgenemezler farklı parametrelenir; "küçük
-      kuantum grup" ortaya çıkar. V_n'in matrisleri tekil olabilir.
+(L3)  Root of unity q^N = 1 (N >= 2):
+      [N]_q = 0. E^N and F^N become central elements; finite-dimensional
+      irreducibles are parametrized differently, and the "small quantum
+      group" appears. The matrices of V_n may become singular.
 
-(L4)  Kristal limit q -> 0:
-      Klasik baz seçimleriyle tekil; ancak Kashiwara'nın kristal bazı
-      kombinatoryal bir yapı bırakır: tilde_e, tilde_f kısmî
-      fonksiyonları. Bu modülde V_n'in matris katsayılarının q -> 0
-      "asimptotik mertebesi" hesaplanır.
+(L4)  Crystal limit q -> 0:
+      Classical basis choices are singular, but Kashiwara's crystal basis
+      leaves a combinatorial structure: the partial maps tilde_e and tilde_f.
+      This module computes the q -> 0 "asymptotic order" of matrix
+      coefficients of V_n.
 
-Bu üç limit, kuantum grupların "klasik / kuantum / kombinatoryal" üç
-yüzüne karşılık gelir ve tezin karşılaştırma bölümünün omurgasını
-oluşturur.
+These three regimes correspond to the classical, quantum and combinatorial
+aspects of quantum groups and frame the thesis's comparison section.
 """
 
 from __future__ import annotations
@@ -45,14 +44,14 @@ from .utils import q as default_q
 
 
 # ---------------------------------------------------------------------------
-# (L1) Klasik limit
+# (L1) Classical limit
 # ---------------------------------------------------------------------------
 
 def classical_K_to_h(rep: Representation, q_sym: sp.Expr = default_q) -> sp.Matrix:
-    """h := lim_{q->1} (K - 1)/(q - 1) operatörünü hesaplar.
+    """Compute the operator h := lim_{q->1} (K - 1)/(q - 1).
 
-    K köşegen olduğu için bu operatör de köşegendir; öğeleri
-    lim_{q->1} (q^{n-2k} - 1)/(q - 1) = n - 2k klasik ağırlıklarıdır.
+    Since K is diagonal, this operator is diagonal too, with entries
+    lim_{q->1} (q^{n-2k} - 1)/(q - 1) = n - 2k, the classical weights.
     """
     diag = []
     for k in range(rep.dim):
@@ -65,15 +64,14 @@ def classical_commutator_EF(
     rep: Representation,
     q_sym: sp.Expr = default_q,
 ) -> sp.Matrix:
-    """[E,F]'nin q -> 1 limitini doğrudan hesaplar; klasik h'a eşit
-    olmalıdır."""
+    """Compute the q -> 1 limit of [E,F] directly; it should equal h."""
     comm = rep.E * rep.F - rep.F * rep.E
     return sp.Matrix([[sp.limit(comm[i, j], q_sym, 1)
                        for j in range(rep.dim)] for i in range(rep.dim)])
 
 
 # ---------------------------------------------------------------------------
-# (L3) Birim kök q^N = 1
+# (L3) Root of unity q^N = 1
 # ---------------------------------------------------------------------------
 
 def root_of_unity_substitution(
@@ -81,12 +79,12 @@ def root_of_unity_substitution(
     N: int,
     q_sym: sp.Expr = default_q,
 ) -> Dict[str, sp.Matrix]:
-    """q'yu N-inci primitif birim kökle değerlendirir ve E^N matrisini hesaplar.
+    """Evaluate q at a primitive Nth root of unity and compute E^N.
 
-    Beklenen sonuç: V_n için n < N olduğunda E^N = 0 (nilpotent yapısı
-    korunur); n >= N olduğunda farklı davranış sergilenir.
+    Expected result: for V_n with n < N, E^N = 0 (the nilpotent structure
+    remains); for n >= N, behavior differs.
 
-    Burada q = exp(2πi/N) yerine sembolik primitif kök kullanılır
+    The primitive root is represented symbolically as q = exp(2πi/N)
     (sympy.exp(2*sp.pi*sp.I/N))."""
     zeta = sp.exp(2 * sp.pi * sp.I / N)
     sub = lambda M: sp.simplify(M.subs(q_sym, zeta))
@@ -103,22 +101,22 @@ def root_of_unity_substitution(
 
 
 # ---------------------------------------------------------------------------
-# (L4) Kristal limit q -> 0
+# (L4) Crystal limit q -> 0
 # ---------------------------------------------------------------------------
 
 @dataclass
 class CrystalAsymptotics:
-    """Bir matris girişinin q -> 0 asimptotik davranışı."""
+    """Asymptotic behavior of a matrix entry as q -> 0."""
     entry: sp.Expr
-    leading_order: sp.Expr   # q -> 0'da en küçük üs (None = sıfır)
-    crystal_value: int       # 0 (kaybolan) veya 1 (kalan)
+    leading_order: sp.Expr   # smallest exponent as q -> 0 (None = zero)
+    crystal_value: int       # 0 (vanishing) or 1 (surviving)
 
 
 def crystal_asymptotics_F(rep: Representation, q_sym: sp.Expr = default_q) -> sp.Matrix:
-    """F matrisinin q -> 0 limitinde "sağ kalan" girdileri.
+    """Return entries of F that survive the q -> 0 limit.
 
-    F'nin tüm girişleri 1 veya 0 olduğu için F kristal limitinde
-    değişmeden kalır.
+    Since every entry of F is either 1 or 0, F is unchanged in the
+    crystal limit.
     """
     return rep.F
 
@@ -127,19 +125,18 @@ def crystal_asymptotics_E_pattern(
     rep: Representation,
     q_sym: sp.Expr = default_q,
 ) -> sp.Matrix:
-    """E matrisinin q -> 0 davranışını gösterir.
+    """Show the q -> 0 behavior of the matrix E.
 
-    E_{k-1, k} = [k]_q [n-k+1]_q. q -> 0'da bu tek terimde belirleyici
-    güç q^{-(k + (n-k+1) - 2)} = q^{-(n-1)} ... gibi öğeler vardır;
-    tam tek-terim asimptotik için her girişin başlıca terimini
-    döndürürüz.
+    E_{k-1, k} = [k]_q [n-k+1]_q. As q -> 0, a dominant power is
+    q^{-(k + (n-k+1) - 2)} = q^{-(n-1)} ...; return the leading term
+    of each entry for the single-term asymptotic behavior.
     """
     n = rep.n
     out = sp.zeros(rep.dim, rep.dim)
     for k in range(1, rep.dim):
         coeff = rep.E[k - 1, k]
-        # Başlıca asimptotik (en yüksek negatif kuvveti baskın olur):
-        # SymPy.series ile q=0 etrafında açılım
+        # Leading asymptotic term (the largest negative power dominates):
+        # Expand around q=0 with SymPy.series.
         try:
             ser = sp.series(coeff, q_sym, 0, 2).removeO()
         except Exception:
@@ -149,18 +146,18 @@ def crystal_asymptotics_E_pattern(
 
 
 def three_limit_summary(n: int) -> str:
-    """V_n için üç limitin özet açıklamasını metin olarak döndürür."""
+    """Return a textual summary of the three regimes for V_n."""
     rep = build_representation(n)
     h = classical_K_to_h(rep)
     h_diag = [h[k, k] for k in range(rep.dim)]
     comm_lim = classical_commutator_EF(rep)
     h_match = sp.simplify(h - comm_lim) == sp.zeros(rep.dim, rep.dim)
 
-    lines = [f"V_{n} (boyut {rep.dim}) için üç limit:"]
-    lines.append(f"  (L1) Klasik q->1:")
-    lines.append(f"      h-özdeğerleri = {h_diag}")
-    lines.append(f"      [E,F] -> h doğrulandı mı? {h_match}")
-    lines.append(f"  (L2) Genel q: K-ağırlıkları = {[sp.simplify(w) for w in rep.weights]}")
-    lines.append(f"  (L4) Kristal q->0: E katsayıları sıfır olmayan;"
-                 " F kristal işlemi olarak hayatta kalır")
+    lines = [f"Three regimes for V_{n} (dimension {rep.dim}):"]
+    lines.append(f"  (L1) Classical q->1:")
+    lines.append(f"      h-eigenvalues = {h_diag}")
+    lines.append(f"      [E,F] -> h verified? {h_match}")
+    lines.append(f"  (L2) Generic q: K-weights = {[sp.simplify(w) for w in rep.weights]}")
+    lines.append(f"  (L4) Crystal q->0: E coefficients remain nonzero;"
+                 " F survives as a crystal operator")
     return "\n".join(lines)

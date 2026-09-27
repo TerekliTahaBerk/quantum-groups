@@ -1,4 +1,4 @@
-"""Tensör çarpımı ve Clebsch–Gordan ayrışımı testleri."""
+"""Tests of tensor products and Clebsch–Gordan decomposition."""
 
 import sympy as sp
 import pytest
@@ -14,7 +14,7 @@ from quantum_group import (
 
 @pytest.mark.parametrize("m,n", [(1, 1), (2, 1), (2, 2), (3, 2)])
 def test_tensor_satisfies_relations(m, n):
-    """V_m ⊗ V_n üzerinde de U_q(sl_2) bağıntıları sağlanmalı."""
+    """The U_q(sl_2) relations also hold on V_m ⊗ V_n."""
     A = build_representation(m)
     B = build_representation(n)
     T = tensor_product(A, B)
@@ -24,7 +24,7 @@ def test_tensor_satisfies_relations(m, n):
 
 @pytest.mark.parametrize("m,n", [(1, 1), (2, 2), (3, 1), (3, 2)])
 def test_cg_correct_summand_count(m, n):
-    """V_m ⊗ V_n'de en yüksek ağırlık vektörlerinin sayısı min(m,n)+1."""
+    """There are min(m,n)+1 highest-weight vectors in V_m ⊗ V_n."""
     A = build_representation(m)
     B = build_representation(n)
     T = tensor_product(A, B)

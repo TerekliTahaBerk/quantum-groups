@@ -70,7 +70,7 @@ Follow the style of the existing modules in `quantum_group/`:
 - Use type hints and `from __future__ import annotations`, as the existing
   modules do.
 - Give every module and public function a docstring stating the convention
-  and the relation being checked. Docstrings may be in Turkish or English.
+  and the relation being checked. Write docstrings and comments in English.
 - Verification helpers follow the existing pattern: a `*_residual` function
   returning the symbolic difference matrix and a `*_holds` / `*_check`
   function returning `bool` (or a `dict` of named `bool` results).

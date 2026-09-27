@@ -1,28 +1,24 @@
-# Quantum Grup Yapılarının Python Ortamında Modellenmesi
+# quantum-group: A lightweight SymPy package for verifying U_q(sl_2) and GL_q(2|1) structures
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22997681.svg)](https://doi.org/10.5281/zenodo.22997681)
 
-Bu depo, `U_q(sl_2)` ve `GL_q(2|1)` yapıları için SymPy tabanlı sembolik
-modelleme ve doğrulama kodlarını içerir. Amaç genel bir teorem ispatlayıcı
-oluşturmak değil; makaledeki açık sonlu boyutlu temsiller, kalıntı matrisleri,
-Yang-Baxter kontrolleri ve ilgili şekilleri yeniden üretilebilir testlere
-bağlamaktır.
+This repository contains SymPy-based symbolic modelling and verification code
+for `U_q(sl_2)` and `GL_q(2|1)`. It connects the manuscript's explicit
+finite-dimensional representations, residual matrices, Yang-Baxter checks and
+related figures to reproducible tests. It is not a general theorem prover.
 
 ## Main Features
 
-- `q`-tamsayı, `q`-faktöriyel, `q`-binom ve klasik limit yardımcıları.
-- `U_q(sl_2)` sonlu boyutlu `V_n` temsilleri için açık `E`, `F`, `K`, `K_inv`
-  matrisleri.
-- Tanımlayıcı bağıntıların temsil düzeyinde sıfır-kalıntı doğrulaması.
-- Hopf yapısı: eş-çarpım, eş-birim, antipod ve aksiyom kontrolleri.
-- Tensör çarpımı, Clebsch-Gordan örnekleri ve en yüksek ağırlık vektörleri.
-- `V_1 \otimes V_1` R-matrisi, QYBE, örgü bağıntısı, Hecke/skein kontrolü.
-- `GL_q(2|1)` için 9x9 R-matrisi, süper permütasyon ve 27x27 graded YBE
-  doğrulaması.
-- `V^{\otimes n}` içinde `R_{ij}` yerleşimleri, uzak komütativite ve lokal YBE
-  kontrolleri.
-- Kristal grafiği `B(n)` ve temel görselleştirme fonksiyonları.
-- `pytest` tabanlı yeniden üretilebilir test paketi.
+- Helpers for `q`-integers, `q`-factorials, `q`-binomial coefficients and classical limits.
+- Explicit `E`, `F`, `K`, `K_inv` matrices for finite-dimensional `U_q(sl_2)` representations `V_n`.
+- Representation-level verification of defining relations by zero residuals.
+- Hopf structure: coproduct, counit, antipode and axiom checks.
+- Tensor products, Clebsch-Gordan examples and highest-weight vectors.
+- The `V_1 \otimes V_1` R-matrix, QYBE, braid relation and Hecke/skein check.
+- The 9x9 R-matrix for `GL_q(2|1)`, super-permutation and 27x27 graded YBE verification.
+- `R_{ij}` embeddings in `V^{\otimes n}`, far commutativity and local YBE checks.
+- The crystal graph `B(n)` and basic visualization functions.
+- A reproducible `pytest` test suite.
 
 ## Mathematical Background
 
@@ -83,10 +79,10 @@ either. This reflects those sources only and is not a survey of all software.
 
 ## Installation
 
-Python 3.10+ gereklidir. Paket `pyproject.toml` ile tanımlıdır (dağıtım adı
-`quantum-group`, içe aktarma adı `quantum_group`).
+Python 3.10 or newer is required. The package is defined in `pyproject.toml`
+(distribution name `quantum-group`, import name `quantum_group`).
 
-Paket henüz PyPI'da yayımlanmadı; doğrudan bu depodan kurulur:
+The package is not yet published on PyPI; install it directly from this repository:
 
 ```bash
 git clone https://github.com/TerekliTahaBerk/quantum-groups.git
@@ -96,13 +92,13 @@ source .venv/bin/activate
 python3 -m pip install -e ".[test]"
 ```
 
-Klonlamadan kurmak için:
+To install without cloning:
 `python3 -m pip install "git+https://github.com/TerekliTahaBerk/quantum-groups"`.
-Çalışma zamanı bağımlılıkları SymPy, NetworkX ve Matplotlib'dir; pytest
-(`[test]`) ve Jupyter (`[notebooks]`) opsiyoneldir.
+Runtime dependencies are SymPy, NetworkX and Matplotlib; pytest (`[test]`)
+and Jupyter (`[notebooks]`) are optional.
 
-Notebook'ları çalıştırmak için `".[test,notebooks]"` kullanın
-(`pip install -r requirements.txt` ile eşdeğerdir).
+To run the notebooks, use `".[test,notebooks]"`
+(equivalent to `pip install -r requirements.txt`).
 
 ## Quickstart
 
@@ -228,7 +224,7 @@ Matplotlib `Figure` objects and leave saving/display to the caller.
 
 ## Manuscript and PDF
 
-The submitted thesis PDF is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
+The submitted thesis (in Turkish) is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
 build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is `thesis/thesis.tex`.
 If Tectonic is installed, rebuild the main manuscript PDF with:
 

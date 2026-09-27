@@ -2,23 +2,23 @@
 quantum_group
 =============
 
-U_q(sl_2) kuantum grubunun sembolik ve hesaplamalı modeli.
+Symbolic and computational models of U_q(sl_2) and GL_q(2|1) structures.
 
-Paket içeriği
--------------
-* QuantumGroupSL2  — üst seviye cephe sınıfı
-* build_representation — V_n temsilini matris olarak inşa eder
-* verify_on_representation — bağıntıları matris düzeyinde doğrular
-* verify_all_hopf_axioms — Hopf cebir aksiyomlarını doğrular
-* tensor_product, find_highest_weight_vectors — tensör çarpımı ve CG hesapları
-* R_matrix_V1, qybe_holds — R-matrisi ve Yang-Baxter doğrulaması
-* hecke_skein_relation_check — V_1 üzerinde Hecke bağıntısı
-* classical_K_to_h, root_of_unity_substitution — klasik ve birim-kök limitleri
-* q_integer, q_factorial, q_binomial — q-aritmetik yardımcıları
-* plot_weight_diagram, plot_crystal_graph — görselleştirme
+Package contents
+----------------
+* QuantumGroupSL2 — high-level facade class
+* build_representation — constructs the V_n representation as matrices
+* verify_on_representation — checks relations at the matrix level
+* verify_all_hopf_axioms — checks Hopf algebra axioms
+* tensor_product, find_highest_weight_vectors — tensor products and CG calculations
+* R_matrix_V1, qybe_holds — R-matrix and Yang-Baxter verification
+* hecke_skein_relation_check — Hecke relation on V_1
+* classical_K_to_h, root_of_unity_substitution — classical and root-of-unity limits
+* q_integer, q_factorial, q_binomial — q-arithmetic helpers
+* plot_weight_diagram, plot_crystal_graph — visualization
 
-Tipik kullanım
---------------
+Typical use
+-----------
 >>> from quantum_group import QuantumGroupSL2
 >>> Uq = QuantumGroupSL2()
 >>> rep = Uq.representation(3)

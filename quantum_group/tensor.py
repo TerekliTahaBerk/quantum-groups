@@ -2,24 +2,24 @@
 tensor.py
 =========
 
-U_q(sl_2) temsillerinin tensör çarpımı ve Clebsch–Gordan ayrışımı.
+Tensor products and Clebsch–Gordan decomposition of U_q(sl_2) representations.
 
-Tensör çarpım yapısı eş-çarpım Δ aracılığıyla taşınır:
+The tensor product action is induced by the coproduct Δ:
 
     X . (v ⊗ w) = Δ(X) . (v ⊗ w)
 
-Bu yüzden V_m ⊗ V_n üzerinde üreteçlerin etkisi:
+Thus the generators act on V_m ⊗ V_n as follows:
 
     E . (v ⊗ w) = E v ⊗ w + K v ⊗ E w
     F . (v ⊗ w) = F v ⊗ K^{-1} w + v ⊗ F w
     K . (v ⊗ w) = K v ⊗ K w
 
-Clebsch–Gordan ayrışımı (klasikle aynı yapı):
+Clebsch–Gordan decomposition (the same structure as in the classical case):
 
     V_m ⊗ V_n  ≅  V_{m+n}  ⊕  V_{m+n-2}  ⊕  ...  ⊕  V_{|m-n|}
 
-Bu modül V_m ⊗ V_n üzerinde etki matrislerini inşa eder ve her doğrudan
-toplam parçası için en yüksek ağırlık vektörünü açıkça hesaplar.
+This module constructs the action matrices on V_m ⊗ V_n and explicitly
+computes a highest-weight vector for each direct-sum component.
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ from .utils import q as default_q
 
 @dataclass
 class TensorRepresentation:
-    """V_m ⊗ V_n için kap."""
+    """Container for V_m ⊗ V_n."""
     m: int
     n: int
     dim: int
@@ -47,9 +47,9 @@ class TensorRepresentation:
 
 
 def tensor_product(repA: Representation, repB: Representation) -> TensorRepresentation:
-    """Δ aracılığıyla V_m ⊗ V_n üzerinde üreteçlerin matris etkisini inşa eder.
+    """Construct the matrix action of generators on V_m ⊗ V_n via Δ.
 
-    Baz sıralaması: e_{i,j} = v_i^A ⊗ v_j^B, sözlük sıralı (önce i, sonra j).
+    Basis order: e_{i,j} = v_i^A ⊗ v_j^B, lexicographic (first i, then j).
     """
     nA, nB = repA.dim, repB.dim
     IA = sp.eye(nA)
@@ -68,13 +68,13 @@ def tensor_product(repA: Representation, repB: Representation) -> TensorRepresen
 
 
 # ---------------------------------------------------------------------------
-# Clebsch–Gordan ayrışımı
+# Clebsch–Gordan decomposition
 # ---------------------------------------------------------------------------
 
 def cg_summands(m: int, n: int) -> List[int]:
-    """V_m ⊗ V_n = ⊕ V_k için ortaya çıkan k değerlerini listeler.
+    """List the k values appearing in V_m ⊗ V_n = ⊕ V_k.
 
-    k = |m-n|, |m-n|+2, ..., m+n  (hepsi m+n ile aynı pariteye sahip).
+    k = |m-n|, |m-n|+2, ..., m+n  (all have the parity of m+n).
     """
     lo = abs(m - n)
     hi = m + n
@@ -85,44 +85,42 @@ def find_highest_weight_vectors(
     tensor_rep: TensorRepresentation,
     q_sym: sp.Expr = default_q,
 ) -> List[Tuple[int, sp.Matrix]]:
-    """V_m ⊗ V_n içindeki tüm en yüksek ağırlık vektörlerini bulur.
+    """Find all highest-weight vectors in V_m ⊗ V_n.
 
-    Bir vektör v "en yüksek ağırlık k vektörüdür" anlamı:
-        E . v = 0     ve     K . v = q^k v.
+    A vector v has highest weight k when:
+        E . v = 0     and     K . v = q^k v.
 
-    Dönüş: [(k, v)] çiftleri listesi; k azalan sırada.
+    Returns a list of (k, v) pairs in descending order of k.
 
-    Algoritma:
-        Her aday k = |m-n|, |m-n|+2, ..., m+n için K-özdeğeri q^k olan
-        ağırlık altuzayını seçer (köşegen olduğu için indis seçimiyle),
-        bu altuzaydaki E'nin çekirdeğini hesaplar.
+    Algorithm:
+        For each candidate k = |m-n|, |m-n|+2, ..., m+n, select the
+        weight subspace with K-eigenvalue q^k by its diagonal indices,
+        then compute the kernel of E on that subspace.
     """
     m, n = tensor_rep.m, tensor_rep.n
     summands = cg_summands(m, n)
 
-    # K'nin köşegen olduğu varsayılır; her bazı vektörü için K-üssünü hesapla.
+    # K is diagonal; compute its q-exponent for each basis vector.
     K_diag_exponents = []
     for i in range(m + 1):
         for j in range(n + 1):
-            # v_i^A için K-üssü m - 2i, v_j^B için n - 2j
+            # K-exponents: m - 2i for v_i^A and n - 2j for v_j^B.
             K_diag_exponents.append((m - 2 * i) + (n - 2 * j))
 
     results: List[Tuple[int, sp.Matrix]] = []
     for k in reversed(summands):
-        # Ağırlık k altuzayının indislerini topla
+        # Collect indices of the weight-k subspace.
         idx = [t for t, w in enumerate(K_diag_exponents) if w == k]
         if not idx:
             continue
-        # E matrisinin bu indis altuzayına kısıtlamasını al ve çekirdeğini bul.
+        # Restrict E to this indexed subspace and find its kernel.
         E_sub = sp.Matrix([[tensor_rep.E[r, c] for c in idx] for r in idx])
-        # Aslında E ağırlık altuzayını bir altta atan bir operatördür;
-        # tam çekirdek için E'nin tüm sütunlarına bakmak gerekir.
-        # Daha doğrusu: E'nin idx üzerindeki sütunlarına bakıp tüm domain
-        # üzerinde sıfır olanları seçeriz.
+        # E maps this weight subspace to the next one. For its full kernel,
+        # inspect the columns indexed by idx across all target rows.
         E_cols = sp.Matrix([[tensor_rep.E[r, c] for c in idx]
                             for r in range(tensor_rep.dim)])
         null = E_cols.nullspace()
-        # null alanındaki her vektörü tam V_m ⊗ V_n bazına geri yerleştir.
+        # Embed each nullspace vector back into the full V_m ⊗ V_n basis.
         for vec in null:
             full = sp.zeros(tensor_rep.dim, 1)
             for local_i, global_i in enumerate(idx):
@@ -134,8 +132,8 @@ def find_highest_weight_vectors(
 
 
 def cg_decomposition_summary(m: int, n: int) -> str:
-    """V_m ⊗ V_n ayrışımını okunabilir biçimde döndürür."""
+    """Return a readable summary of the V_m ⊗ V_n decomposition."""
     summands = cg_summands(m, n)
     parts = " ⊕ ".join(f"V_{k}" for k in reversed(summands))
     total = sum(k + 1 for k in summands)
-    return f"V_{m} ⊗ V_{n} ≅ {parts}    (boyut: {(m+1)*(n+1)} = {total})"
+    return f"V_{m} ⊗ V_{n} ≅ {parts}    (dimension: {(m+1)*(n+1)} = {total})"

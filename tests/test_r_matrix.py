@@ -1,4 +1,4 @@
-"""R-matris, Yang–Baxter ve örgü bağıntısı testleri."""
+"""Tests of the R-matrix, Yang–Baxter equation and braid relation."""
 
 import sympy as sp
 import pytest
@@ -33,7 +33,7 @@ def test_R_check_satisfies_braid():
 
 
 def test_R_check_eigenvalues():
-    """Ř özdeğerleri q (3 katlı) ve −q^{-1} (1 katlı)."""
+    """Ř has eigenvalues q (multiplicity 3) and −q^{-1} (multiplicity 1)."""
     q = sp.Symbol("q", nonzero=True)
     eigs = R_check_eigenvalues()
     assert eigs == {q: 3, -1/q: 1}
@@ -46,7 +46,7 @@ def test_hecke_skein():
 
 
 def test_jones_skein():
-    """Eski ad hâlâ çalışır, fakat DeprecationWarning verir."""
+    """The old name still works but emits DeprecationWarning."""
     with pytest.warns(DeprecationWarning, match="hecke_skein_relation_check"):
         res = jones_skein_relation_check()
     assert res == hecke_skein_relation_check()
