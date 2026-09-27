@@ -1,7 +1,8 @@
 # Overlap review: JOSS draft (`paper/paper.md`) vs JORS metapaper (`jors/paper.tex`)
 
-Checked 27 September 2026 on the texts in this commit. `paper/paper.md` was
-not changed.
+Final check 27 September 2026, after integrating the JOSS corrections of
+`33ae33c` and the last JORS edits. `paper/paper.md` was changed only by
+`33ae33c` (JOSS wording), not by the JORS work.
 
 ## Method
 
@@ -13,9 +14,9 @@ words was listed and read.
 
 | Measure | Result |
 |---|---|
-| Length | JOSS ≈ 1,710 words; JORS ≈ 4,700 words |
-| Shared 6-grams | 71 of 4,661 JORS 6-grams (1.5 %) |
-| Shared 8-grams | 25 of 4,680 (0.5 %) |
+| Length | JOSS ≈ 1,600 words; JORS ≈ 4,830 words |
+| Shared 6-grams | 59 of 4,795 JORS 6-grams (1.2 %) |
+| Shared 8-grams | 19 of 4,810 (0.4 %) |
 | Shared 12-grams | 0 |
 
 A first draft had 1.1 % shared 8-grams and 12 shared 12-grams; the closest
@@ -32,16 +33,15 @@ substitution.
 | "checks the defining relations and generator-level Hopf identities" | Functional description of the same API. Unavoidable. |
 | "noncommutative graded algebra … such as the Gauss decomposition of" | Technical reason for a scope limitation. Unavoidable. |
 | "R-matrix and verifies the graded Yang–Baxter equation on three [factors]" | Functional description. Unavoidable. |
-| "… grows exponentially. In the recorded benchmark (benchmarks/…" | Pointer to the same benchmark file. Acceptable. |
 | "links each computational claim to its implementation and [tests]" | Description of `MANUSCRIPT_CODE_MAPPING.md`. Acceptable. |
 | "are authored or co-authored by 'Claude' in the Git history" | Factual AI-disclosure statement; deliberately consistent with the JOSS disclosure. |
-| "into English and with a mathematical and technical audit" | Factual AI-disclosure statement; must not contradict the JOSS text. |
-| "the difference between the two sides of an identity" | Definition of the residual; standard phrasing. |
-| "R_check_V1_coproduct and intertwining_residual_V1" | Function names. |
 | "is not by itself a proof of inequality" | Precise technical caveat about `sympy.simplify`. Acceptable. |
 
 No paragraph of the JORS text is close to a JOSS paragraph; no shared run
-exceeds eleven words.
+exceeds eleven words. Both texts deliberately use the corrected provenance
+phrase "developed for and used in the author's undergraduate thesis" and
+"after the thesis was submitted in June 2026" (from `33ae33c`), so that the
+two papers state the history identically.
 
 ## Structural comparison
 
