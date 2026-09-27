@@ -1,0 +1,185 @@
+"""
+benchmark.py
+============
+
+GL_q(2|1) (ve karşılaştırma için U_q(sl_2)) doğrulama fonksiyonlarının
+duvar-saati sürelerini ölçer ve sonuçları ``benchmarks/results.csv`` ile
+``benchmarks/results.md`` dosyalarına yazar.
+
+Kullanım
+--------
+    python benchmarks/benchmark.py                 # n <= 5, 3 tekrar
+    python benchmarks/benchmark.py --repeats 5
+    python benchmarks/benchmark.py --max-n 6       # 729x729; çok yavaş olabilir
+
+Notlar
+------
+* Her görev aynı süreç içinde ``--repeats`` kez çalıştırılır. SymPy bazı
+  ara sonuçları önbelleğe aldığından ilk koşu ("first") genellikle
+  sonrakilerden yavaştır; tabloda ilk koşu, ortalama ve minimum ayrı ayrı
+  verilir.
+* Süreler makineye bağlıdır; ortam bilgisi ``results.md`` içine yazılır.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import datetime as _dt
+import platform
+import statistics
+import sys
+import time
+from pathlib import Path
+from typing import Callable, List, NamedTuple
+
+import sympy as sp
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT.parent))
+
+from quantum_group import R_matrix_V1, qybe_holds  # noqa: E402
+from quantum_group.supergroup_gl21 import (  # noqa: E402
+    R_matrix_GLq21,
+    _is_zero_matrix_symbolic,
+    all_Rij_GLq21,
+    braid_far_commutativity_residual_GLq21,
+    graded_yang_baxter_holds_GLq21,
+    graded_yang_baxter_residual_GLq21,
+    local_ybe_on_four_tensor_GLq21,
+)
+
+
+class Task(NamedTuple):
+    name: str
+    n: str          # tensör kuvveti (V^{⊗n}); uygulanamazsa "-"
+    size: str       # işlenen en büyük matrisin boyutu
+    func: Callable[[], object]
+
+
+def _ybe_triple_holds(n: int) -> bool:
+    """V^{⊗n} içinde (0, 1, 2) üçlüsü için graded YBE (yerleştirme dahil)."""
+    Rij = all_Rij_GLq21(n)
+    R01, R02, R12 = Rij[(0, 1)], Rij[(0, 2)], Rij[(1, 2)]
+    return _is_zero_matrix_symbolic(R01 * R02 * R12 - R12 * R02 * R01)
+
+
+def build_tasks(max_n: int) -> List[Task]:
+    tasks = [
+        Task("qybe_holds(R_matrix_V1()) [U_q(sl_2)]", "3", "8x8",
+             lambda: qybe_holds(R_matrix_V1())),
+        Task("R_matrix_GLq21", "2", "9x9", R_matrix_GLq21),
+        Task("graded_yang_baxter_residual_GLq21", "3", "27x27",
+             graded_yang_baxter_residual_GLq21),
+        Task("graded_yang_baxter_holds_GLq21", "3", "27x27",
+             graded_yang_baxter_holds_GLq21),
+        Task("braid_far_commutativity_residual_GLq21", "4", "81x81",
+             braid_far_commutativity_residual_GLq21),
+        Task("local_ybe_on_four_tensor_GLq21", "4", "81x81",
+             local_ybe_on_four_tensor_GLq21),
+    ]
+    for n in range(3, max_n + 1):
+        d = 3 ** n
+        tasks.append(Task("all_Rij_GLq21", str(n), f"{d}x{d}",
+                          lambda n=n: all_Rij_GLq21(n)))
+    for n in range(5, max_n + 1):
+        d = 3 ** n
+        tasks.append(Task("graded YBE, one triple incl. embedding", str(n),
+                          f"{d}x{d}", lambda n=n: _ybe_triple_holds(n)))
+    return tasks
+
+
+def time_task(task: Task, repeats: int) -> List[float]:
+    times = []
+    for _ in range(repeats):
+        start = time.perf_counter()
+        task.func()
+        times.append(time.perf_counter() - start)
+    return times
+
+
+def environment() -> dict:
+    cpu = platform.processor() or platform.machine()
+    try:
+        for line in Path("/proc/cpuinfo").read_text().splitlines():
+            if line.startswith("model name"):
+                cpu = line.split(":", 1)[1].strip()
+                break
+    except OSError:
+        pass
+    return {
+        "date": _dt.date.today().isoformat(),
+        "python": platform.python_version(),
+        "sympy": sp.__version__,
+        "platform": platform.platform(),
+        "cpu": cpu,
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[1])
+    parser.add_argument("--repeats", type=int, default=3)
+    parser.add_argument("--max-n", type=int, default=5)
+    parser.add_argument("--out-dir", type=Path, default=ROOT)
+    args = parser.parse_args()
+
+    rows = []
+    for task in build_tasks(args.max_n):
+        times = time_task(task, args.repeats)
+        row = {
+            "function": task.name,
+            "n": task.n,
+            "matrix_size": task.size,
+            "repeats": args.repeats,
+            "first_s": round(times[0], 3),
+            "mean_s": round(statistics.mean(times), 3),
+            "stdev_s": round(statistics.stdev(times), 3) if len(times) > 1 else 0.0,
+            "min_s": round(min(times), 3),
+        }
+        rows.append(row)
+        print(f"{task.name:45s} n={task.n:2s} {task.size:>9s}  "
+              f"first={row['first_s']:.3f}s mean={row['mean_s']:.3f}s",
+              flush=True)
+
+    env = environment()
+    args.out_dir.mkdir(parents=True, exist_ok=True)
+    with open(args.out_dir / "results.csv", "w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+
+    lines = [
+        "# Benchmark results",
+        "",
+        "Generated by `python benchmarks/benchmark.py "
+        f"--repeats {args.repeats} --max-n {args.max_n}`.",
+        "Wall-clock times in seconds; `n` is the tensor power of the",
+        "3-dimensional GL_q(2|1) module (2-dimensional for U_q(sl_2)).",
+        "SymPy caches some intermediate results, so the first run is",
+        "reported separately from the mean and minimum.",
+        "",
+        "| Function | n | Matrix size | First run (s) | Mean (s) | Std (s) | Min (s) |",
+        "| --- | --- | --- | ---: | ---: | ---: | ---: |",
+    ]
+    for r in rows:
+        lines.append(
+            f"| `{r['function']}` | {r['n']} | {r['matrix_size']} | "
+            f"{r['first_s']:.3f} | {r['mean_s']:.3f} | {r['stdev_s']:.3f} | "
+            f"{r['min_s']:.3f} |"
+        )
+    lines += [
+        "",
+        "## Environment",
+        "",
+        *[f"- {k}: {v}" for k, v in env.items()],
+        "",
+        "Timings depend on hardware and SymPy version; rerun the script to",
+        "reproduce them on your machine.",
+        "",
+    ]
+    (args.out_dir / "results.md").write_text("\n".join(lines))
+    print(f"wrote {args.out_dir / 'results.csv'} and {args.out_dir / 'results.md'}")
+
+
+if __name__ == "__main__":
+    main()

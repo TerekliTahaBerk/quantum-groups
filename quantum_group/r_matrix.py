@@ -52,7 +52,47 @@ from .utils import q as default_q
 # ---------------------------------------------------------------------------
 
 def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
-    """V_1 ⊗ V_1 üzerinde Drinfeld R-matrisi (4×4)."""
+    """V_1 ⊗ V_1 üzerinde Drinfeld–Jimbo R-matrisi (4×4).
+
+    Türetme
+    -------
+    U_q(sl_2)'nin evrensel R-matrisi (Drinfeld 1987)
+
+        𝓡 = q^{H⊗H/2} · (1 + (q - q^{-1}) E⊗F + ...)
+
+    biçimindedir; burada K = q^H ve "..." E^n ⊗ F^n (n ≥ 2) terimleridir
+    (tam seri için bkz. Kassel 1995). V_1 üzerinde E² = F² = 0 olduğundan
+    seri ilk iki terimde kesilir ve H = diag(1, -1) ile
+
+        R = q^{1/2} · (ρ_1 ⊗ ρ_1)(𝓡)
+
+    tam olarak bu fonksiyonun döndürdüğü matrise eşittir; q^{1/2} çarpanı
+    q^{±1/2} kesirli üslerini kaldıran bir normalizasyondur. Bu 4×4 matris,
+    Jimbo'nun U_q(gl(N+1)) vektör temsili R-matrisinin N = 1 halidir
+    (Jimbo 1985, 1986).
+
+    Konvansiyon notu
+    ----------------
+    Yukarıdaki 𝓡, Δ(E) = E⊗K + 1⊗E, Δ(F) = F⊗1 + K^{-1}⊗F koproduktuna
+    göre Δ^op(x) 𝓡 = 𝓡 Δ(x) sağlar. Bu paketin ``hopf.coproduct``
+    fonksiyonu ise Δ(E) = E⊗1 + K⊗E, Δ(F) = F⊗K^{-1} + 1⊗F kullanır; bu
+    koproduktla aynı ara bağlama (intertwining) bağıntısını sağlayan matris
+    R değil R_21 = τ R τ = R^T'dir. R ve R_21'in ikisi de QYBE'yi sağlar;
+    bu modüldeki QYBE, örgü ve Hecke kontrolleri bu farktan etkilenmez.
+
+    Kaynaklar
+    ---------
+    * M. Jimbo, "A q-difference analogue of U(g) and the Yang–Baxter
+      equation", Lett. Math. Phys. 10 (1985) 63–69,
+      doi:10.1007/BF00704588.
+    * M. Jimbo, "A q-analogue of U(gl(N+1)), Hecke algebra, and the
+      Yang–Baxter equation", Lett. Math. Phys. 11 (1986) 247–252,
+      doi:10.1007/BF00400222.
+    * V. G. Drinfeld, "Quantum groups", Proc. ICM (Berkeley, 1986),
+      Vol. 1, Amer. Math. Soc., 1987, 798–820.
+    * C. Kassel, Quantum Groups, GTM 155, Springer, 1995,
+      doi:10.1007/978-1-4612-0783-2.
+    """
     qi = q_sym**(-1)
     return sp.Matrix([
         [q_sym, 0,         0,             0],
