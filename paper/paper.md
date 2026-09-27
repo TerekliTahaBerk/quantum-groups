@@ -91,12 +91,21 @@ theory.
 
 # Software design
 
-Every identity is checked with the same *zero-residual* pattern. The package
-builds both sides as exact SymPy matrices, forms their difference and
-simplifies each entry. The identity holds if and only if every entry
-simplifies to zero. Functions come in pairs: `*_residual` returns the residual
-matrix for inspection, and `*_holds` or `*_check` returns a Boolean. Nothing
-is evaluated in floating point.
+Most identities are checked with the same *zero-residual* pattern. The
+package builds both sides as exact SymPy matrices, forms their difference and
+simplifies each entry; if every entry simplifies to zero, the identity is
+taken to hold (SymPy's `simplify` is not a decision procedure, so this is
+sound in practice rather than a formal guarantee). Where this pattern
+applies, functions come in pairs: `*_residual` returns the residual matrix
+for inspection, and `*_holds` or `*_check` returns a Boolean; a few checks
+(the Hopf axioms, the Hecke relation, and the local Yang-Baxter checks on
+$V^{\otimes 4}$) return only a Boolean or a dictionary of Booleans, with no
+separate residual-matrix accessor. Computation stays symbolic as long as `q`
+is passed as a SymPy object (`Symbol`, `Integer`, `Rational`, ...), which
+every example and test in the repository does; passing a native Python `int`
+or `float` can introduce floating-point values, since Python's own `**`
+operator, not SymPy's, evaluates an expression such as `q**(-1)` on a plain
+`int`.
 
 The modules follow the mathematics: `generators` and `representations`
 (matrices of $E$, $F$, $K$, $K^{-1}$ on $V_n$), `relations`, `hopf`, `tensor`
