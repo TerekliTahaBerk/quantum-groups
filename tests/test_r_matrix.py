@@ -6,7 +6,8 @@ import pytest
 from quantum_group import (
     R_matrix_V1, R_check_V1,
     qybe_holds, braid_relation_holds,
-    R_check_eigenvalues, jones_skein_relation_check,
+    R_check_eigenvalues, hecke_skein_relation_check,
+    jones_skein_relation_check,
     q,
 )
 
@@ -38,9 +39,17 @@ def test_R_check_eigenvalues():
     assert eigs == {q: 3, -1/q: 1}
 
 
-def test_jones_skein():
+def test_hecke_skein():
     """Ř - Ř^{-1} = (q - q^{-1}) I."""
-    res = jones_skein_relation_check()
+    res = hecke_skein_relation_check()
+    assert all(res.values())
+
+
+def test_jones_skein():
+    """Eski ad hâlâ çalışır, fakat DeprecationWarning verir."""
+    with pytest.warns(DeprecationWarning, match="hecke_skein_relation_check"):
+        res = jones_skein_relation_check()
+    assert res == hecke_skein_relation_check()
     assert all(res.values())
 
 

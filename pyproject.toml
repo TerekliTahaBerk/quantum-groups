@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantum-group"
+version = "1.0.0"
+description = "Symbolic SymPy models and reproducible verification of U_q(sl_2) and GL_q(2|1) quantum group structures"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Taha Berk Terekli", email = "terekli@tahaberk.com"},
+]
+keywords = ["quantum groups", "Hopf algebras", "R-matrix", "Yang-Baxter equation", "sympy"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "sympy",
+    "networkx",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+notebooks = ["jupyter"]
+
+[project.urls]
+Homepage = "https://github.com/TerekliTahaBerk/quantum-groups"
+Repository = "https://github.com/TerekliTahaBerk/quantum-groups"
+Issues = "https://github.com/TerekliTahaBerk/quantum-groups/issues"
+
+[tool.setuptools]
+packages = ["quantum_group"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

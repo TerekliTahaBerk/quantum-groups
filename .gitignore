@@ -3,6 +3,12 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 
+# Packaging
+build/
+dist/
+*.egg-info/
+.venv/
+
 # LaTeX ara dosyaları (tectonic/xelatex)
 *.aux
 *.log
@@ -14,3 +20,6 @@ __pycache__/
 
 # macOS
 .DS_Store
+
+# Node
+node_modules/
