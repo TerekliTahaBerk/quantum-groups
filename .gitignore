@@ -18,6 +18,17 @@ dist/
 *.fls
 *.fdb_latexmk
 
+# Thesis draft and generated delivery variants
+thesis/*DRAFT*
+thesis/*DUZELTILMIS*
+thesis/*FINAL*.pdf
+thesis/*FINAL.docx
+thesis/*RENDER*
+thesis/*_v[0-9]*
+thesis/Quantum Grup Yapıları - YTÜ Bitirme Tezi.*
+thesis/*Python Ortamında Modellenmesi.pdf
+thesis/thesis_ytu.pdf
+
 # macOS
 .DS_Store
 

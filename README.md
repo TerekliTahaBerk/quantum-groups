@@ -172,7 +172,8 @@ quantum-groups/
 │   └── test_visualization.py
 ├── thesis/
 │   ├── thesis.tex
-│   ├── Quantum Grup Yapılarının Python Ortamında Modellenmesi.pdf
+│   ├── thesis_ytu.tex
+│   ├── Lisans Bitirme Tezi.pdf
 │   └── figures/
 │       ├── generate_figures.py
 │       ├── R_sl2_V1.pdf
@@ -225,8 +226,9 @@ Matplotlib `Figure` objects and leave saving/display to the caller.
 
 ## Manuscript and PDF
 
-The LaTeX source is `thesis/thesis.tex`. If Tectonic is installed, rebuild the
-main manuscript PDF with:
+The submitted thesis PDF is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
+build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is `thesis/thesis.tex`.
+If Tectonic is installed, rebuild the main manuscript PDF with:
 
 ```bash
 make pdf

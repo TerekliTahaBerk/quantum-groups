@@ -4,6 +4,10 @@ This file maps the manuscript claims and code listings for
 "Quantum Grup Yapılarının Python Ortamında Modellenmesi" to repository modules
 and tests. Status values describe the current repository state.
 
+The submitted thesis PDF is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
+build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is
+`thesis/thesis.tex`.
+
 | Manuscript item | Repository implementation | Tests | Status | Notes |
 | --- | --- | --- | --- | --- |
 | Kod: `q_integer` | `quantum_group/utils.py::q_integer` | `tests/test_relations.py` | Implemented | Includes `[0]_q`, `[1]_q`, `[2]_q`, symmetry, and classical-limit checks. |
