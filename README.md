@@ -64,7 +64,7 @@ has combinatorial crystals for the general linear Lie *super*algebra
 | Crystals | Combinatorial `B(n)` for `sl_2` only | Crystal bases, crystal graphs (LS paths) | Extensive crystal library |
 | Treatment of `q` | SymPy symbol; substitution helpers for classical and root-of-unity limits | Indeterminate `q` over `Q` | Generic `q` or a specialization, e.g. a root of unity |
 | Verification style | Explicit residual matrices checked entrywise to be zero, wired to `pytest` | Algebraic computation | Algebraic computation |
-| Installation / dependencies | `pip install`; SymPy, NetworkX, Matplotlib | GAP >= 4.8 | Full SageMath plus the optional `gap_package_quagroup` |
+| Installation / dependencies | `pip install` from the Git repository (not on PyPI); SymPy, NetworkX, Matplotlib | GAP >= 4.8 | Full SageMath plus the optional `gap_package_quagroup` |
 | License | MIT | GPL-2.0-or-later | Library code GPL-2.0-or-later; the Sage distribution as a whole is GPL-3.0 |
 
 This package does not try to replace these systems. It aims to be a small,
@@ -84,11 +84,20 @@ either. This reflects those sources only and is not a survey of all software.
 Python 3.10+ gereklidir. Paket `pyproject.toml` ile tanımlıdır (dağıtım adı
 `quantum-group`, içe aktarma adı `quantum_group`).
 
+Paket henüz PyPI'da yayımlanmadı; doğrudan bu depodan kurulur:
+
 ```bash
+git clone https://github.com/TerekliTahaBerk/quantum-groups.git
+cd quantum-groups
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install -e ".[test]"
 ```
+
+Klonlamadan kurmak için:
+`python3 -m pip install "git+https://github.com/TerekliTahaBerk/quantum-groups"`.
+Çalışma zamanı bağımlılıkları SymPy, NetworkX ve Matplotlib'dir; pytest
+(`[test]`) ve Jupyter (`[notebooks]`) opsiyoneldir.
 
 Notebook'ları çalıştırmak için `".[test,notebooks]"` kullanın
 (`pip install -r requirements.txt` ile eşdeğerdir).
