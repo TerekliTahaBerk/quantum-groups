@@ -73,9 +73,12 @@
 
 % Verified: title, authors, journal, volume, issue, year and DOI (the DOI
 % matches ScienceDirect pii S0034487721000732).
-% Page range deliberately omitted: the thesis bibliography gives 259--272,
-% the ScienceDirect listing 259--269; neither could be checked against the
-% publisher record from this environment. TODO: confirm and add `pages`.
+% ONAY BEKLİYOR: page range deliberately omitted.
+%   Proposal: pages = {259--272}, as given in every thesis bibliography
+%   (thesis/thesis.tex, thesis_ytu.tex, _ytu_bib.tex, ...).
+%   Conflict: a ScienceDirect search listing showed 259--269. The publisher
+%   record could not be opened from the build environment. Confirm on the
+%   article page (DOI below) or with the authors, then add `pages`.
 @article{celik2021,
   author  = {Celik, Salih and Celik, Sultan A.},
   title   = {A new quantum supergroup and its {G}auss decomposition},
@@ -110,7 +113,7 @@
 % Verified: PackageInfo.g in gap-packages/quagroup
 % (Version 1.8.4, Date 11/01/2024, author W. A. de Graaf).
 @software{quagroup,
-  author  = {de Graaf, Willem A.},
+  author  = {{de Graaf}, Willem A.},
   title   = {{QuaGroup}: computations with quantum groups, {V}ersion 1.8.4},
   note    = {{GAP} package},
   year    = {2024},
@@ -120,7 +123,7 @@
 % Verified: entry G01 in QuaGroup's doc/quagroup.bib and a web search of
 % J. Symbolic Comput. vol. 32. DOI not found, so none is given.
 @article{degraaf2001,
-  author  = {de Graaf, Willem A.},
+  author  = {{de Graaf}, Willem A.},
   title   = {Computing with quantized enveloping algebras: {PBW}-type bases,
              highest-weight modules and {$R$}-matrices},
   journal = {Journal of Symbolic Computation},

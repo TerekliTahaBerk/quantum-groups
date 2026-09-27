@@ -1,51 +1,78 @@
 # JOSS pre-flight checklist
 
-Checked on 2026-09-27 against `main` @ `a422f18`, plus the files added with
-this checklist. ✅ done · ⚠️ needs your review or a manual step · ❌ must be
-fixed before submission.
+Last updated 2026-09-27 on branch `claude/happy-lamport-lq2yqj` (based on
+`main` @ `a422f18`).
+
+✅ done · ⚠️ needs your review, approval or a manual step · ❌ must be fixed
+before submission. "Who" names who resolved an item or whose decision it
+awaits.
+
+## Pre-review fixes (latest round)
+
+| # | Item | Status | Who | Notes |
+|---|---|---|---|---|
+| 1 | AI usage disclosure | ⚠️ | Drafted by Claude Code; **author approval needed** | Section added to `paper.md`. It lists what Claude Code did (infrastructure, rename, benchmarks, docstring, README sections, paper/bib drafts, source and reference checks) and what the author did. The sentence saying the core `quantum_group/` code and tests predate AI use and were written by the author is marked `ONAY BEKLİYOR`: only the author can confirm it. |
+| 2 | "pip install" wording | ✅ | Claude Code | `paper.md` and `README.md` now say the package is installed from the Git repository (`pip install git+https://github.com/TerekliTahaBerk/quantum-groups` or clone + `pip install -e .`) and is not on PyPI. The `git+https` command was tested in a clean venv and the README Quickstart passes. No PyPI packaging was added. |
+| 3 | Dependency list | ✅ | Claude Code | Runtime dependencies are SymPy, NetworkX and Matplotlib; all three are imported when the package is imported. pytest and Jupyter are optional extras (`[test]`, `[notebooks]`), not runtime dependencies, and are described that way. The "lighter than GAP/SageMath" claim still holds (three pip-installable libraries versus a GAP or SageMath installation); the wording now names the dependencies. |
+| 4a | Çelik (2021) page range | ⚠️ | **Author decision** | Not filled in. Proposal: `259--272` (every thesis bibliography). Conflict: a ScienceDirect listing showed `259--269`. Marked `ONAY BEKLİYOR` in `paper.bib`. |
+| 4b | `paper.md` `date` | ⚠️ | **Author decision** | Still `27 September 2026`; marked `ONAY BEKLİYOR`. Today's date or the actual submission date? |
+| 4c | `CITATION.cff` `date-released` | ⚠️ | **Author decision** | Not added. Needs the v1.0.0 tag/release date. |
+| 4d | Affiliation and acknowledgement | ⚠️ | Drafted; **author approval needed** | Both marked `ONAY BEKLİYOR` in `paper.md` (affiliation: YTÜ Department of Mathematics; acknowledgement: thanks to Prof. Dr. Salih Çelik). Note: the bibliography spells the name "Celik", as in the published article, while the acknowledgement uses "Çelik". |
+| 5 | Official PDF build | ✅ | Claude Code | Built with JOSS's own toolchain (`openjournals/inara` Docker image, `JOURNAL=joss`). PDF (4 pages), Crossref XML and JATS were generated without errors, with no unresolved citations; the table and math render; `ONAY BEKLİYOR` comments do not appear in the PDF. This fixed the name order "Graaf, W. A. de" to "de Graaf". The editorialbot build at submission (`@editorialbot generate pdf`) remains the final check. |
+| 6 | Development history | ⚠️ | **Author decision** (see note below) | Objective facts recorded below; no threshold is claimed. |
+
+## Development history (objective note for positioning with the editor)
+
+Based on `git log` of `main` (author dates; the date the repository became
+*public* is not recorded in git and should be checked on GitHub):
+
+- **Time span.** First commit 2026-04-28; last pre-JOSS commit 2026-06-14.
+  The JOSS preparation commits all date from 2026-09-27. So there are about
+  7 weeks of active development, then a 3-month gap, then one day of release
+  preparation.
+- **Commit activity.** 14 non-merge commits by the author, on 5 distinct
+  days, plus 3 JOSS-preparation commits made with Claude Code. Nine of the
+  author's commits have the message "test", which says little about the
+  history.
+- **Collaboration.** One contributor. No GitHub issues. The only pull
+  requests are the JOSS-preparation PRs.
+- **Where JOSS looks.** Reviewers assess "substantial scholarly effort" and
+  signs of an open development process. Short, bursty, single-author history
+  is something reviewers commonly ask about. The strongest evidence of
+  effort here is the content: the thesis, the manuscript-to-code mapping and
+  the 126-case test suite. Consider asking the editors in a pre-submission
+  inquiry, and check JOSS's current submission requirements for any
+  explicit history criteria.
 
 ## Repository
 
 | | Item | Status / evidence |
 |---|---|---|
 | ✅ | OSI-approved license at repo root | `LICENSE` is the MIT text, © 2026 Taha Berk Terekli; `pyproject.toml` and `CITATION.cff` agree (MIT). |
-| ✅ | Installable package | `pip install ".[test]"` works in a clean venv (Python 3.11). |
-| ⚠️ | Not on PyPI | The name `quantum-group` is free on PyPI (404). The paper says the package "needs only `pip install`"; a reviewer may try `pip install quantum-group`. Either publish to PyPI or say "installable with pip from the repository". |
-| ✅ | Version 1.0.0 | `pyproject.toml` `version = "1.0.0"`; `CITATION.cff` `version: 1.0.0`. |
-| ⚠️ | `CITATION.cff` `date-released` | Missing. Add the release date before the GitHub Release (Zenodo reads it). |
-| ✅ | Tests pass | `pytest -q`: 126 passed (Python 3.11, clean venv). |
+| ✅ | Installable package | `pip install ".[test]"` and `pip install git+https://…` both work in clean venvs. |
+| ✅ | Version 1.0.0 | `pyproject.toml` and `CITATION.cff`. |
+| ✅ | Tests pass | `pytest -q`: 126 passed. |
 | ✅ | CI green on `main` | GitHub Actions "tests", run 36321146370 on `a422f18`: success (Python 3.10/3.11/3.12). |
-| ✅ | README Quickstart runs | Code block executed verbatim from outside the repo in a clean venv: all assertions pass. |
-| ✅ | Contribution guidelines | `CONTRIBUTING.md` (issues, PRs, tests, style). |
-| ✅ | CHANGELOG | `CHANGELOG.md` with a `1.0.0` entry. |
-| ⚠️ | `v1.0.0` tag | Annotated tag created **locally only**, not pushed. Push it after this branch is merged into `main` with a merge commit. After a squash merge, recreate the tag on the new `main` commit. |
-| ⚠️ | Zenodo DOI | Not yet created. Manual steps are in `paper/README.md` (enable the repo in Zenodo, publish a GitHub Release). JOSS needs the DOI at acceptance, not at submission. |
-| ⚠️ | Development history | Public history starts 2026-04-28. Compare with JOSS's current "substantial scholarly effort" and development-history criteria before submitting. |
+| ✅ | README Quickstart runs | Executed verbatim from outside the repo in a clean venv. |
+| ✅ | Contribution guidelines, CHANGELOG | `CONTRIBUTING.md`, `CHANGELOG.md`. |
+| ⚠️ | `v1.0.0` tag | Must not be pushed until items 1 and 4 are settled. After this branch is merged into `main` with a merge commit, (re)create the tag on the final commit and push it. After a squash merge, create it on the new `main` commit. |
+| ⚠️ | Zenodo DOI | Not yet created; manual steps are in `paper/README.md`. JOSS needs it at acceptance. |
 
 ## paper/paper.md
 
 | | Item | Status / evidence |
 |---|---|---|
-| ✅ | YAML parses | `title`, `tags` (6), `authors`, `affiliations`, `date`, `bibliography` all present. |
-| ✅ | ORCID | `0009-0004-8266-1116`: valid format and checksum (ISO 7064 mod 11-2). |
-| ✅ | Affiliation indices | Author's `affiliation: 1` matches `affiliations[0].index: 1`. |
-| ⚠️ | Author, affiliation, acknowledgement | Confirm "Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye" is correct at submission time, and confirm the wording of the acknowledgement to Prof. Dr. Salih Çelik. |
-| ⚠️ | `date` | `27 September 2026`. Set it to the submission date. |
-| ✅ | Citations resolve | Every `[@key]` exists in `paper.bib` and every bib entry is cited; pandoc 3.9 `--citeproc` renders with no unresolved citations. |
-| ✅ | Length | Body about 850 words (limit about 1000). |
-| ❌ | AI usage disclosure | Only an HTML comment placeholder. JOSS requires this section. It must describe the tools actually used; the git history contains `Co-Authored-By: Claude` commits. |
-| ⚠️ | Çelik & Çelik (2021) pages | `pages` omitted in `paper.bib`: the thesis gives 259–272, ScienceDirect 259–269. Check the publisher record and add the range. |
-| ⚠️ | Installation wording | The comparison table says "`pip`; SymPy", but the package also depends on NetworkX and Matplotlib (see README). Align the wording. |
-| ⚠️ | Official PDF build | Only checked with local pandoc. Run `@editorialbot generate pdf` (or JOSS's Docker/Inara build) to confirm the table and math render. |
+| ✅ | YAML | `title`, `tags`, `authors` (ORCID valid, with checksum), `affiliations`, `date`, `bibliography` present; affiliation index matches. |
+| ✅ | Citations | All keys resolve; no unused bib entries. |
+| ✅ | Length | About 1000 words in the body (JOSS guideline: about 1000), including the AI disclosure. |
 
 ## Before you submit (in order)
 
-1. Write the AI usage disclosure (❌ above).
-2. Add the Çelik (2021) page range; update the paper `date`; confirm
-   author, affiliation and acknowledgement.
-3. Fix the installation wording (and optionally publish to PyPI).
-4. Add `date-released` to `CITATION.cff`.
-5. Merge this branch; push the `v1.0.0` tag; publish the GitHub Release.
-6. Enable Zenodo first (see `paper/README.md`) so the release gets a DOI.
-7. Build the paper with JOSS's tooling, then submit at
-   <https://joss.theoj.org/papers/new>.
+1. Approve or edit the AI usage disclosure, especially the `ONAY BEKLİYOR`
+   sentence about the core code.
+2. Decide items 4a–4d (page range, paper date, `date-released`, affiliation
+   and acknowledgement), then remove the `ONAY BEKLİYOR` markers.
+3. Merge; create and push `v1.0.0`; enable Zenodo; publish the GitHub Release.
+4. Decide how to present the development history (item 6).
+5. Submit at <https://joss.theoj.org/papers/new> and run
+   `@editorialbot generate pdf`.

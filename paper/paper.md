@@ -12,8 +12,10 @@ authors:
     orcid: 0009-0004-8266-1116
     affiliation: 1
 affiliations:
+  # ONAY BEKLİYOR: affiliation must be confirmed by the author.
   - name: Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye
     index: 1
+# ONAY BEKLİYOR: set to the actual submission date (author to decide).
 date: 27 September 2026
 bibliography: paper.bib
 ---
@@ -46,8 +48,8 @@ The package targets researchers and students in computational representation
 theory who want to check concrete identities in quantum groups quickly and
 reproducibly, in particular for $\mathbb{Z}_2$-graded (super) structures. It
 is also meant for readers of papers on quantum supergroups who want to
-reproduce R-matrix computations without installing a full computer algebra
-system.
+reproduce R-matrix computations without installing a standalone computer
+algebra system such as GAP or SageMath.
 
 | | quantum-group | GAP QuaGroup | SageMath `QuantumGroup` |
 |---|---|---|---|
@@ -55,7 +57,7 @@ system.
 | R-matrices | yes (4×4, 9×9) | yes | yes (via QuaGroup) |
 | Graded (super) YBE | yes, $GL_q(2\|1)$ | not found | not found |
 | Parameter $q$ | SymPy symbol | indeterminate | generic or specialized |
-| Installation | `pip`; SymPy | GAP | SageMath + optional package |
+| Installation | `pip` from the Git repository; needs SymPy, NetworkX, Matplotlib | GAP | SageMath + optional package |
 
 : Comparison with existing software. "Not found" means absent from the
 sources we inspected (see State of the field). \label{tab:comparison}
@@ -81,9 +83,11 @@ We therefore wrote a separate package rather than contributing to these
 systems, for two reasons. First, the graded structure is the central object
 here. Parity-dependent super-permutations and sign conventions do not fit
 the data models of QuaGroup or Sage's quantum group module, which are
-organised around semisimple root systems. Second, we wanted a small reference
-implementation that needs only `pip install` and pure Python, so that its
-matrices can be read and checked in a few lines of SymPy. `quantum-group`
+organised around semisimple root systems. Second, we wanted a small pure-Python
+reference implementation, installed with `pip` from the Git repository
+(`pip install git+https://github.com/TerekliTahaBerk/quantum-groups`) and
+depending only on SymPy, NetworkX and Matplotlib (pytest and Jupyter are
+optional). This is much lighter than a GAP or SageMath setup. `quantum-group`
 does not aim to replace QuaGroup or SageMath, and it covers far less of the
 theory.
 
@@ -96,11 +100,10 @@ simplifies to zero. Functions come in pairs: `*_residual` returns the residual
 matrix for inspection, and `*_holds` or `*_check` returns a Boolean. Nothing
 is evaluated in floating point.
 
-The modules follow the mathematics. `generators` and `representations`
-construct $E$, $F$, $K$, $K^{-1}$ on $V_n$. `relations` checks the defining
-relations. `hopf` provides the coproduct, counit and antipode. `tensor`
-handles tensor products and Clebsch-Gordan decompositions, and `r_matrix`
-covers the R-matrix, the QYBE, the braid relation and the Hecke relation.
+The modules follow the mathematics: `generators` and `representations`
+(matrices of $E$, $F$, $K$, $K^{-1}$ on $V_n$), `relations`, `hopf`, `tensor`
+(Clebsch-Gordan decompositions) and `r_matrix` (QYBE, braid and Hecke
+relations).
 `supergroup_gl21` builds the graded R-matrix and the super-permutation and
 embeds $R_{ij}$ into $V^{\otimes n}$ by conjugating with graded adjacent
 swaps. Smaller modules cover classical and root-of-unity limits, the
@@ -134,10 +137,30 @@ Hopf superalgebra structure of @celik2021. Its contribution is to make these
 computations explicit, executable and continuously tested, so that others can
 reuse them for related R-matrices.
 
-<!-- TODO (author): JOSS requires an "AI usage disclosure" section; complete before submission. -->
+# AI usage disclosure
+
+Claude Code (Anthropic), an AI coding assistant, was used in September 2026
+to prepare this repository for publication. It drafted the packaging and
+project infrastructure: `LICENSE`, `pyproject.toml`, the GitHub Actions
+workflow, `CONTRIBUTING.md`, `CITATION.cff` and `CHANGELOG.md`. It renamed
+`jones_skein_relation_check` to `hecke_skein_relation_check`, adding a
+deprecated alias and the matching tests. It wrote the benchmark script, the
+docstring of `R_matrix_V1` and the README sections on mathematical background
+and related work. It also drafted this paper and its bibliography. While
+doing so it checked the R-matrix convention symbolically, read the QuaGroup
+and SageMath sources for the comparison, and looked up bibliographic records.
+All of this was reviewed by the author, and the test suite was run after
+every change.
+<!-- ONAY BEKLİYOR: the next sentences state what was done without AI; only the author can confirm them. -->
+The mathematical content, the undergraduate thesis and the research
+questions are the author's own work. The core implementation in
+`quantum_group/` and its test suite predate the use of Claude Code (git
+history from April to June 2026); apart from the rename above they were
+written by the author.
 
 # Acknowledgements
 
+<!-- ONAY BEKLİYOR: acknowledgement wording and name/title spelling to be confirmed by the author. -->
 The author thanks Prof. Dr. Salih Çelik for supervising the thesis from which
 this package originated.
 
