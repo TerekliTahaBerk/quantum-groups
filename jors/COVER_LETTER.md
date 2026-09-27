@@ -69,25 +69,30 @@ Turkish), which the manuscript cites; (ii) the public repository also
 contains a separate draft software paper prepared for the *Journal of Open
 Source Software* (`paper/paper.md`). That draft has not been submitted to
 JOSS or elsewhere, and it will not be submitted while this manuscript is
-under consideration at JORS. The two texts concern the same software but
+under consideration at JORS (author's confirmation, 27 September 2026). The
+two texts concern the same software but
 were written separately; the JORS manuscript is organized around
 architecture, quality control, availability and reuse.
 **[Re-confirm both statements on the day of submission.]**
 
-**Competing interests.** [confirmed statement]
+**Competing interests.** The author has no competing interests to declare.
 
-**Funding.** [confirmed statement]
+**Funding.** This work received no specific funding.
 
 **Use of generative AI.** As required by the Ubiquity Press policy, the
-manuscript contains a section describing the use of Claude Code (Anthropic;
-[model]) and Codex (OpenAI; [model]) in preparing the software version, its
-tests and documentation, and in drafting the manuscript and submission
-materials. The tools are not authors. [Confirmation of human review and
-validation, in the author's words.]
+manuscript contains a section describing the use of generative AI. No AI
+tools were used during the original development and thesis work
+(April–June 2026). In September 2026 Claude Code (Anthropic; Claude Opus
+5.5) was used in preparing this software version, its tests and
+documentation, and in drafting the manuscript and submission materials
+**[Codex: wording pending the author's clarification]**. The tools are not
+authors. I reviewed and validated all AI-assisted output and take
+responsibility for the software and the manuscript.
 
 **Suggested reviewers.** [Five names and e-mail addresses from
 `POTENTIAL_REVIEWERS.md`, each copied from the official page.] None has
-collaborated with me or on this software. [Confirm.]
+collaborated with me or on this software, and I have no personal or
+professional relationship with any of them.
 
 **Article processing charge.** [One of: "The APC will be paid on
 acceptance." / "I request a waiver/discount because …" / "The APC will be
@@ -98,6 +103,6 @@ Thank you for considering this submission.
 Yours sincerely,
 
 Taha Berk Terekli
-[Current affiliation]
+Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye
 ORCID: 0009-0004-8266-1116
 terekli@tahaberk.com

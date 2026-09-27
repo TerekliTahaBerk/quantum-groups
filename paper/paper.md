@@ -210,6 +210,6 @@ responsible for the software, the mathematical claims and this disclosure.
 # Acknowledgements
 
 The author thanks Prof. Dr. Salih Çelik for supervising the thesis from which
-this package originated.
+this package originated. This work received no specific funding.
 
 # References

@@ -118,9 +118,9 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 
 | Item | Class | Why it cannot be closed here |
 |---|---|---|
-| Affiliation, funding, competing interests, AI model names and thesis-period AI use, confirmation of human review | AUTHOR ACTION REQUIRED | personal declarations |
+| Codex use/model (answer "none" conflicts with the repository record) | AUTHOR ACTION REQUIRED | one clarification; all other declarations were confirmed on 27 Sep 2026 and are in `submission-facts.tex` |
 | Reviewer e-mails (5) | AUTHOR ACTION REQUIRED | official pages unreachable here; the search index gave conflicting values |
-| APC amount and choice | AUTHOR ACTION REQUIRED | amount not retrievable; choice is the author's |
+| APC amount and choice | AUTHOR ACTION REQUIRED | amount not retrievable; the choice was left unfilled in the author's answers |
 | Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
 | Merge to `main` | AUTHOR ACTION REQUIRED | `workflow_dispatch` is only offered for workflows on the default branch |

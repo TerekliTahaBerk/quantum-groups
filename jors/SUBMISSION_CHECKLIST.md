@@ -34,16 +34,16 @@ provides).
 | 18 | Tables in text and cited | READY | Table 1 |
 | 19 | Vancouver references in citation order; DOIs/URLs | READY | 15 entries, all cited; de Graaf DOI author-confirmed (`33ae33c`) |
 | 20 | Not previously published | READY (re-confirm on the day) | Thesis and public JOSS draft disclosed; neither is prior journal publication |
-| 21 | Not under consideration elsewhere; JOSS/JORS exclusivity | AUTHOR ACTION REQUIRED | Repository records: JOSS not submitted. Author to confirm JORS goes first and JOSS stays unsubmitted while JORS reviews |
-| 22 | Affiliation | AUTHOR ACTION REQUIRED | `submission-facts.tex` `\AuthorAffiliation` |
-| 23 | Funding Information | AUTHOR ACTION REQUIRED | `\FundingText`; the repository contains no funding information |
-| 24 | Competing Interests | AUTHOR ACTION REQUIRED | `\CompetingText` |
+| 21 | Not under consideration elsewhere; JOSS/JORS exclusivity | READY (re-check on the day) | Author confirmed 27 Sep 2026: JORS first; JOSS not submitted and will not be while JORS reviews |
+| 22 | Affiliation | READY | Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye (author, 27 Sep 2026) |
+| 23 | Funding Information | READY | "This work received no specific funding." (author, 27 Sep 2026); also added to the JOSS draft |
+| 24 | Competing Interests | READY | "The author has no competing interests to declare." (author, 27 Sep 2026) |
 | 25 | Authors' Contributions; authorship | READY (sole author) | Supervisor in Acknowledgements only |
-| 26 | Generative-AI disclosure | AUTHOR ACTION REQUIRED | Model names, thesis-period use, review confirmation (`\ClaudeModel`, `\CodexModel`, `\ThesisPeriodAI`, `\AIReviewStatement`) |
-| 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED | Five chosen and screened (`POTENTIAL_REVIEWERS.md`); each address must be copied from the official page (pages unreachable here) |
-| 28 | Cover letter | BLOCKED (by 21–27, APC) | `COVER_LETTER.md`, bracketed fields only |
+| 26 | Generative-AI disclosure | AUTHOR ACTION REQUIRED | Confirmed: no AI in April–June 2026; Claude Code with Claude Opus 5.5; human review and validation. **Open:** the answer "Codex model: none" conflicts with the repository record of Codex use for the translation (`dbe56af`) and audit (`bc5c370`) stated in `paper/paper.md` and `AUDIT.md`; clarify whether Codex was used and, if so, which model |
+| 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED | Five chosen; author confirmed no conflicts (27 Sep 2026). Each address must still be copied from the official page (pages unreachable here) |
+| 28 | Cover letter | BLOCKED (by 26, 27, APC, snapshot/DOI) | `COVER_LETTER.md`, bracketed fields only |
 | 29 | APC | AUTHOR ACTION REQUIRED | See below |
-| 30 | PDF without [PENDING] markers | BLOCKED (by 5–9, 22–26) | `make -C jors check` must print `OK` |
+| 30 | PDF without [PENDING] markers | BLOCKED (by 5–9, 26) | `make -C jors check` must print `OK` |
 
 ## APC
 
