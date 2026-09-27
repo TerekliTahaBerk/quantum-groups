@@ -22,11 +22,10 @@ repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
 # Version prepared on main; set date-released when the v1.1.0 release is made.
+# No DOI is listed: the only existing archive (Zenodo 10.5281/zenodo.22997681)
+# contains v1.0.0, not this version. Add the DOI of the archive of this
+# version once it exists.
 version: 1.1.0
-identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22997681"
-    description: "Zenodo archive of the earlier release v1.0.0 only; it does not contain the 1.1.0 changes."
 keywords:
   - quantum groups
   - Hopf algebras

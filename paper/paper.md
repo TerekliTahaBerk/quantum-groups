@@ -83,10 +83,9 @@ linear superalgebras of @bkk2000.
 all of their functionality. \label{tab:comparison}
 
 Why build rather than contribute? QuaGroup's documented scope is
-$U_q(\mathfrak{g})$ for semisimple $\mathfrak{g}$. The $GL_q(2|1)$ example is
-a quantum supergroup defined by an RTT presentation with a graded R-matrix
-[@celik2021], so it would enter those systems only as a separate set of
-explicit matrices and sign rules, which is what this package provides. For
+$U_q(\mathfrak{g})$ for semisimple $\mathfrak{g}$. The $GL_q(2|1)$ example, a
+quantum supergroup defined by an RTT presentation with a graded R-matrix
+[@celik2021], lies outside that documented scope. For
 $U_q(\mathfrak{sl}_2)$ the same identities can be computed in QuaGroup; the
 aim here is instead to expose the explicit matrices and residuals, in the
 basis order and coproduct of a given text, inside an ordinary SymPy
@@ -107,20 +106,16 @@ approximated with commuting symbols.
 
 *Residuals are part of the API.* Functions such as `qybe_residual`,
 `intertwining_residual_V1` and `graded_yang_baxter_residual_GLq21` return
-the exact difference matrix; the corresponding Boolean helpers apply one
-shared zero test to it, while Hopf-identity and four-factor checks return
-Boolean summaries only. The residual shows *where* an identity fails: replacing the
-super-permutation by an ordinary flip leaves exactly two nonzero entries,
-which a test records. Calculations use an exact nonzero symbol $q$; Python
-integers become exact SymPy numbers and only user-supplied floats are
-approximate. Identities are rational in $q$ and hold where denominators are
-defined; $q$-arithmetic uses Laurent-polynomial forms so that removable
-singularities, e.g. at roots of unity, specialize correctly. A residual that
-SymPy does not simplify to zero is not by itself a proof of inequality.
+the exact difference matrix, which shows *where* an identity fails:
+replacing the super-permutation by an ordinary flip leaves exactly two
+nonzero entries. Calculations use an exact nonzero symbol $q$, and Python
+integers become exact SymPy numbers. Identities are rational in $q$ and hold
+where denominators are defined; $q$-arithmetic uses Laurent-polynomial forms
+so that removable singularities specialize correctly. A residual that SymPy
+does not simplify to zero is not by itself a proof of inequality.
 
-*Conventions are visible.* Conventions cause the errors the package
-targets, so basis orders are documented, parities are explicit arguments,
-and the coproduct
+*Conventions are visible.* Basis orders are documented, parities are
+explicit arguments, and the coproduct
 $\Delta(E)=E\otimes1+K\otimes E$, $\Delta(F)=F\otimes K^{-1}+1\otimes F$ is
 fixed and stated. For $GL_q(2|1)$, the parities are $(0,0,1)$ and the
 super-permutation is $P_s(e_i\otimes e_j)=(-1)^{p(i)p(j)}e_j\otimes e_i$;
@@ -137,24 +132,17 @@ independent signed basis-action formula.
 
 *Dense symbolic matrices, accepted cost.* Operators on $V^{\otimes n}$ are
 stored as dense $3^n\times3^n$ SymPy matrices, which keeps every entry
-printable but grows exponentially. In the recorded benchmark
-(`benchmarks/`), the four local YBE checks on $V^{\otimes4}$ ($81\times81$)
-take about 1.6 s and building all $R_{ij}$ on $V^{\otimes5}$
-($243\times243$) about 15 s. Sparse or tensor-network representations would
+printable but grows exponentially: in the recorded benchmark, building all
+$R_{ij}$ on $V^{\otimes5}$ ($243\times243$) takes about 15 s. Sparse or tensor-network representations would
 scale further but hide the matrices the package exists to show, and the
 targeted calculations need at most four or five factors.
 
 *Stable outputs under correction.* An audit found that the historical
 upper-triangular `R_matrix_V1` intertwines the *opposite* of the package
 coproduct. Changing its output would silently alter results already used in
-the thesis, so it was kept and documented, and `R_matrix_V1_coproduct`
-($R_{21}=PRP$), `R_check_V1_coproduct` and `intertwining_residual_V1` were
-added. Tests verify $R_{21}\Delta(X)=\Delta^{\mathrm{op}}(X)R_{21}$ for all
-four generators, that the historical matrix fails it for $E$ and $F$, and
-that the
-compatible braid $PR_{21}$ acts by $q$ and $-q^{-1}$ on the generic $V_2$
-and $V_0$ summands of $V_1\otimes V_1$. The renamed Hecke check likewise
-keeps a deprecated alias.
+the thesis, so it was kept and documented, and the coproduct-compatible
+`R_matrix_V1_coproduct` ($R_{21}=PRP$) and `intertwining_residual_V1` were
+added alongside it, with tests for both conventions.
 
 The test suite, including doctests, is run by `python -m pytest` in GitHub
 Actions on Python 3.10–3.13 and against the oldest supported dependency
@@ -170,8 +158,7 @@ of @celik2021, a Markov trace, or the Jones polynomial.
 
 # Research impact statement
 
-Realized use is so far the author's own research. The package was written for, and used throughout, the
-author's undergraduate thesis at Yıldız Technical University
+Realized use is so far the author's own research. The package was developed for and used in the author's undergraduate thesis at Yıldız Technical University
 [@terekli2026thesis], supervised by S. Çelik, a co-author of the
 $GL_q(2|1)$ source paper. In the thesis, the package produced the table of
 $q$-integers, the three matrix figures (regenerated by
@@ -182,7 +169,8 @@ the verification of the graded Yang–Baxter residual (all 729 entries), the
 six four-factor placements, the four local Yang–Baxter triples and the
 commutation of $R_{12}$ with $R_{34}$.
 
-After submission, the package was used to audit the thesis itself
+After the undergraduate thesis was submitted in June 2026, the package was
+used to audit the thesis itself
 (`AUDIT.md`). An explicit intertwining residual, now exposed as
 `intertwining_residual_V1`, showed that the thesis's R-matrix
 intertwines the opposite of the coproduct used in the text, so the thesis
