@@ -1,5 +1,7 @@
 # Quantum Grup Yapılarının Python Ortamında Modellenmesi
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22997681.svg)](https://doi.org/10.5281/zenodo.22997681)
+
 Bu depo, `U_q(sl_2)` ve `GL_q(2|1)` yapıları için SymPy tabanlı sembolik
 modelleme ve doğrulama kodlarını içerir. Amaç genel bir teorem ispatlayıcı
 oluşturmak değil; makaledeki açık sonlu boyutlu temsiller, kalıntı matrisleri,

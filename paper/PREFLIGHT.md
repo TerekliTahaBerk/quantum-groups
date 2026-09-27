@@ -1,7 +1,6 @@
 # JOSS pre-flight checklist
 
-Last updated 2026-09-27 on branch `claude/happy-lamport-lq2yqj` (based on
-`main` @ `a422f18`).
+Last updated 2026-09-27 on `main`.
 
 ✅ done · ⚠️ manual step outside the repository · ℹ️ note for the editor.
 No item is awaiting approval. "Who" names who resolved each item.
@@ -59,8 +58,8 @@ Based on `git log` of `main` (author dates; the date the repository became
 | ✅ | CI green on `main` | GitHub Actions "tests", run 36321146370 on `a422f18`: success (Python 3.10/3.11/3.12). |
 | ✅ | README Quickstart runs | Executed verbatim from outside the repo in a clean venv. |
 | ✅ | Contribution guidelines, CHANGELOG | `CONTRIBUTING.md`, `CHANGELOG.md`. |
-| ⚠️ | `v1.0.0` tag | **Not on GitHub yet.** The build environment could push the branch but not tags (HTTP 403). Create the tag yourself on the final commit of PR #4, either locally (`git fetch origin && git tag -a v1.0.0 -m "First release prepared for JOSS submission" origin/claude/happy-lamport-lq2yqj && git push origin v1.0.0`), or after merging PR #4 by creating the GitHub Release with a new tag `v1.0.0` on `main`, which also triggers Zenodo. The release date is pinned to 2026-09-27 in `CITATION.cff` and `paper.md`. |
-| ⚠️ | Zenodo DOI | Not yet created; manual steps are in `paper/README.md`. JOSS needs it at acceptance. |
+| ✅ | `v1.0.0` tag | Pushed to GitHub on 2026-09-27; the GitHub Release is published. The tag points to `8dcfe996`, before the later thesis cleanup commit. |
+| ✅ | Zenodo DOI | Version DOI for `v1.0.0`: [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681). Included in `CITATION.cff` and the repository README. |
 
 ## paper/paper.md
 
@@ -73,9 +72,8 @@ Based on `git log` of `main` (author dates; the date the repository became
 ## Before you submit (in order)
 
 1. Merge PR #4 with a merge commit.
-2. Enable the repository in Zenodo, then create the `v1.0.0` tag and publish
-   the GitHub Release to mint the DOI (see the tag row above and
-   `paper/README.md`).
+2. ✅ Enable the repository in Zenodo, create the `v1.0.0` tag, publish the
+   GitHub Release, and record its version DOI: 10.5281/zenodo.22997681.
 3. Decide how to present the development history (see note above).
 4. If the submission date is not 2026-09-27, update `date` in `paper.md`.
 5. Submit at <https://joss.theoj.org/papers/new> and run

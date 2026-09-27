@@ -19,6 +19,10 @@ url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
 version: 1.0.0
 date-released: 2026-09-27
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.22997681"
+    description: "Version DOI for v1.0.0"
 keywords:
   - quantum groups
   - Hopf algebras
