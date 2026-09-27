@@ -12,10 +12,8 @@ authors:
     orcid: 0009-0004-8266-1116
     affiliation: 1
 affiliations:
-  # ONAY BEKLİYOR: affiliation must be confirmed by the author.
   - name: Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye
     index: 1
-# ONAY BEKLİYOR: set to the actual submission date (author to decide).
 date: 27 September 2026
 bibliography: paper.bib
 ---
@@ -151,7 +149,6 @@ doing so it checked the R-matrix convention symbolically, read the QuaGroup
 and SageMath sources for the comparison, and looked up bibliographic records.
 All of this was reviewed by the author, and the test suite was run after
 every change.
-<!-- ONAY BEKLİYOR: the next sentences state what was done without AI; only the author can confirm them. -->
 The mathematical content, the undergraduate thesis and the research
 questions are the author's own work. The core implementation in
 `quantum_group/` and its test suite predate the use of Claude Code (git
@@ -160,7 +157,6 @@ written by the author.
 
 # Acknowledgements
 
-<!-- ONAY BEKLİYOR: acknowledgement wording and name/title spelling to be confirmed by the author. -->
 The author thanks Prof. Dr. Salih Çelik for supervising the thesis from which
 this package originated.
 

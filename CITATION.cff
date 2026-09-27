@@ -18,6 +18,7 @@ repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
 version: 1.0.0
+date-released: 2026-09-27
 keywords:
   - quantum groups
   - Hopf algebras
