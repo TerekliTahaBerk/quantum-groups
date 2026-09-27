@@ -6,10 +6,14 @@
 % control], (2) Availability [Operating system, Programming language,
 % Additional system requirements, Dependencies, List of contributors,
 % Software location (Archive, Code repository), Language], (3) Reuse
-% potential, Acknowledgements, Funding statement, Competing interests,
-% References. See jors/PREFLIGHT.md for how the template was checked.
+% potential; followed by the statements listed in the journal's suggested
+% structure (Data Accessibility, Acknowledgements, Funding Information,
+% Competing Interests, Authors' Contributions) and a generative-AI statement
+% required by the Ubiquity Press policy. See jors/PREFLIGHT.md for how the
+% current rules were checked.
 %
-% Build (from jors/):  latexmk -pdf paper.tex
+% Author- and event-dependent facts live in submission-facts.tex.
+% Build (from jors/):  make  (or latexmk -pdf paper.tex)
 \documentclass[11pt,a4paper]{article}
 
 \usepackage[T1]{fontenc}
@@ -41,10 +45,10 @@
 \setlist{itemsep=0.15em, topsep=0.25em}
 \captionsetup{font=small, labelfont=bf}
 
-% Fields that can only be completed after an author action (archive DOI,
-% release date, confirmations). They are printed visibly so that an
-% incomplete manuscript cannot be mistaken for a final one.
+% Values that can only be supplied by the author or an external event are
+% defined in submission-facts.tex; unresolved ones print as red markers.
 \newcommand{\pending}[1]{\textcolor{red!70!black}{\textbf{[PENDING: #1]}}}
+\input{submission-facts}
 
 \newcommand{\pkg}{\texttt{quantum-group}}
 \newcommand{\code}[1]{\texttt{#1}}
@@ -70,11 +74,11 @@
 
 \subsection*{Paper Author Roles and Affiliations}
 
-1. Department of Mathematics, Y{\i}ld{\i}z Technical University, Istanbul, Türkiye \pending{author to confirm current affiliation}. Sole developer and maintainer of the software; author of this paper.
+1. \AuthorAffiliation. Sole developer and maintainer of the software; author of this paper.
 
 \subsection*{Abstract}
 
-\pkg{} is an open-source Python package for checking explicit matrix identities that arise in calculations with quantum groups. Identities such as the Yang--Baxter equation, the compatibility of an R-matrix with a coproduct, or the defining relations on a representation are simple to state but error-prone to check by hand, because the answer depends on basis order, the placement of tensor factors, the chosen coproduct and, for superalgebras, sign rules. The package builds the relevant matrices exactly with SymPy, returns the difference between the two sides of an identity as an exact residual matrix, and tests whether every entry simplifies to zero. It covers finite-dimensional $\Uq$ modules, their tensor products and fundamental R-matrix, and the graded R-matrix of the quantum supergroup $\GL$ of Çelik and Çelik. Researchers and students can use it to check published matrices in their own conventions and to keep those checks as regression tests. It is MIT-licensed, developed on GitHub and archived on Zenodo \pending{archive DOI}.
+\pkg{} is an open-source Python package for checking explicit matrix identities from the theory of quantum groups. Such identities, for example Yang--Baxter equations, the compatibility of an R-matrix with a coproduct, or the defining relations on a representation, are easy to state but error-prone to check by hand, because the answer depends on basis order, tensor placement, the coproduct and, for superalgebras, sign rules. The package builds the matrices exactly with SymPy and returns each identity as an exact residual matrix whose entries must simplify to zero. It covers finite-dimensional $\Uq$ modules, their tensor products and fundamental R-matrix, and the graded R-matrix of the quantum supergroup $\GL$ of Çelik and Çelik. Researchers and students can use it to check published matrices in their own conventions and keep the checks as regression tests. It is MIT-licensed; Availability lists its repository, package and archive identifiers.
 
 \subsection*{Keywords}
 
@@ -88,7 +92,7 @@ The characteristic mistakes are not arithmetic ones. A matrix is transcribed in 
 
 \pkg{} addresses this with a deliberately narrow design. Every object is an ordinary exact \code{sympy.Matrix} \cite{meurer2017sympy}; conventions (basis order, coproduct, parities) are fixed in documented functions; and every identity is exposed as a \emph{residual}, the exact matrix $\mathrm{LHS}-\mathrm{RHS}$, which is then tested entry by entry. For $\Uq$ the package constructs the irreducible modules $V_n$, checks the defining relations and generator-level Hopf identities, builds tensor products through the coproduct, computes Clebsch--Gordan highest-weight vectors, and verifies the fundamental R-matrix: QYBE, braid and Hecke relations and coproduct intertwining. For the quantum supergroup $\GL$ introduced by Çelik and Çelik \cite{celik2021}, whose third basis vector is odd, it constructs the published $9\times9$ R-matrix and verifies the graded Yang--Baxter equation on three factors and on every triple of factors in $V^{\otimes4}$.
 
-The software was written during the author's undergraduate thesis \cite{terekli2026thesis}, where it produced the thesis's tables, matrix figures and Yang--Baxter verifications. It was later used to audit that thesis: an explicit intertwining residual showed that the thesis's R-matrix intertwines the opposite of the coproduct used in the text, an error that passing QYBE, braid and Hecke checks had not revealed. The correction is recorded in the repository (\code{thesis/ERRATA.md}, \code{AUDIT.md}), and the check is now part of the API and the test suite. No new mathematical results are claimed here; the contribution is the software and its verification method.
+The software was developed for and used in the author's undergraduate thesis \cite{terekli2026thesis}, where it produced the thesis's tables, matrix figures and Yang--Baxter verifications. After the thesis was submitted in June 2026, the software was used to audit it: an explicit intertwining residual showed that the thesis's R-matrix intertwines the opposite of the coproduct used in the text, an error that passing QYBE, braid and Hecke checks had not revealed. The correction is recorded in the repository (\code{thesis/ERRATA.md}, \code{AUDIT.md}), and the check is now part of the API and the test suite. No new mathematical results are claimed here; the contribution is the software and its verification method.
 
 The intended users are researchers who need to confirm a matrix identity from the literature in their own conventions, mathematical physicists working with R-matrices, representation theorists and computer-algebra users who want an inspectable reference calculation, and students reproducing standard quantum-group computations.
 
@@ -109,7 +113,7 @@ The intended users are researchers who need to confirm a matrix identity from th
 
 \emph{Explicit matrices rather than an abstract algebra engine.} The package contains no noncommutative rewriting system; the symbols in \code{generators.py} only display the relations. Every check runs on concrete representation matrices. This keeps each object directly comparable, entry by entry, with a printed matrix, and makes every intermediate result an ordinary SymPy object that users can print, substitute into or pass to other SymPy code. The price is that a verification holds for the representations on which it is run, and that the cost grows with the dimension of the tensor product (see \emph{Scaling}). Identities that need a genuinely noncommutative graded algebra, such as the Gauss decomposition of $\GL$, are omitted rather than approximated with commuting symbols.
 
-\emph{Layers.} The modules form three layers. A small foundation provides the default symbol $q$ (declared nonzero), $q$-integers, $q$-factorials and $q$-binomials (\code{utils}); the Kronecker product \code{kron}/\code{kron\_list} and the zero-residual test \code{is\_zero\_matrix} (\code{linalg}); and internal argument checks (\code{\_validation}). Construction modules build the matrices: $\Uq$ modules (\code{representations}), coproduct, counit and antipode (\code{hopf}), tensor products and Clebsch--Gordan vectors (\code{tensor}), $\Uq$ R-matrices (\code{r\_matrix}) and the $\GL$ R-matrix, super-permutation and embeddings (\code{supergroup\_gl21}). Verification functions sit next to the constructions they check and all use the same foundation. Auxiliary modules provide classical and root-of-unity specializations (\code{limits}), the crystal graph $B(n)$ as a NetworkX \cite{hagberg2008networkx} graph (\code{crystal}), Matplotlib \cite{hunter2007matplotlib} weight and crystal plots (\code{visualization}) and a convenience facade, \code{QuantumGroupSL2}. Everything public is re-exported from the package namespace and listed in \code{\_\_all\_\_}.
+\emph{Layers.} The modules form three layers. A small foundation provides the default symbol $q$ (declared nonzero), $q$-integers, $q$-factorials and $q$-binomials (\code{utils}); the Kronecker product \code{kron}/\code{kron\_list} and the zero-residual test \code{is\_zero\_matrix} (\code{linalg}); and internal argument checks (\code{\_validation}). Construction modules build the matrices: $\Uq$ modules (\code{representations}), coproduct, counit and antipode (\code{hopf}), tensor products and Clebsch--Gordan vectors (\code{tensor}), $\Uq$ R-matrices (\code{r\_matrix}) and the $\GL$ R-matrix, super-permutation and embeddings (\code{supergroup\_gl21}). Verification functions sit next to the constructions they check and all use the same foundation. Auxiliary modules provide classical and root-of-unity specializations (\code{limits}), the crystal graph $B(n)$ as a NetworkX \cite{hagberg2008networkx} graph (\code{crystal}), Matplotlib \cite{hunter2007matplotlib} weight and crystal plots (\code{visualization}) and a convenience facade, \code{QuantumGroupSL2}. The main functions are re-exported from the package namespace and listed in \code{\_\_all\_\_}; a few helpers, such as \code{kron}, are imported from their modules (\code{quantum\_group.linalg}).
 
 \emph{Residual-first verification.} Each check follows one pattern: build the left-hand side, build the right-hand side, return their difference, and decide whether every entry is zero. Functions named \code{*\_residual} (\code{qybe\_residual}, \code{braid\_relation\_residual}, \code{intertwining\_residual\_V1}, \code{graded\_yang\_baxter\_residual\_GLq21}, and others) return the exact difference matrix; the corresponding \code{*\_holds} functions apply \code{is\_zero\_matrix} to it; and \code{verify\_on\_representation} returns, for each defining relation, a \code{RelationCheck} record holding both the Boolean and the residual. Returning the residual rather than only a Boolean is what makes a failed check informative: the positions and values of the nonzero entries identify which basis vectors and which convention disagree. For example, placing the $\GL$ R-matrix with an ordinary flip instead of the super-permutation leaves exactly two nonzero entries of the $27\times27$ residual, both equal to $2q^2(q-1)^2(q+1)^2$ (Listing~\ref{lst:example}). The zero test simplifies each entry with \code{sympy.simplify}. A \code{True} result means that every entry was reduced to the exact value 0; a \code{False} result is not by itself a proof of inequality, because \code{simplify} is not a decision procedure. For the rational functions of $q$ produced by the package, a nonzero entry can be confirmed with \code{sympy.cancel}, which the regression tests do.
 
@@ -156,7 +160,15 @@ Input validation & Every validation path raises the documented error; shared hel
 
 The negative controls deserve emphasis. A suite that only checks that correct identities hold cannot show that the checks are able to fail. Several tests therefore apply a known wrong convention (the opposite coproduct, the ordinary instead of the graded flip, a mutated counit) and require the residual to be nonzero, in some cases at specified entries with specified values. These tests fix the scientific content of the conventions, not only the behaviour of the code. Two further tests are independent re-derivations: the four-factor placements are compared with a formula that acts on basis vectors directly, and the normalization of the fundamental R-matrix is recomputed from Drinfeld's universal R-matrix \cite{drinfeld1987}.
 
-A user can check an installation in a few seconds with \code{examples/sample\_verification.py}, reproduced as Listing~\ref{lst:example} with its output. It runs against the installed package from any directory.
+\emph{Installing and running the example.} Version 1.1.0 is installed from PyPI, or without the registry from the exact commit described here (\SnapshotSHA); the archived copy listed under \emph{Software location} contains the same source:
+\begin{center}\small
+\begin{tabular}{@{}l@{}}
+\code{python -m pip install quantum-group==1.1.0}\\
+\code{python -m pip install "git+https://github.com/TerekliTahaBerk/quantum-groups@}\textit{commit}\code{"}\\
+\code{python -c "import quantum\_group; print(quantum\_group.\_\_version\_\_)"}\quad prints \code{1.1.0}
+\end{tabular}
+\end{center}
+\code{examples/sample\_verification.py}, reproduced as Listing~\ref{lst:example} with its output, checks an installation in a few seconds and runs against the installed package from any directory.
 
 \noindent\begin{minipage}{\linewidth}
 \begin{lstlisting}[language=Python, caption={Sample input: \code{examples/sample\_verification.py}.}, label={lst:example}, captionpos=b]
@@ -223,18 +235,20 @@ Runtime (installed automatically): SymPy $\geq$ 1.10 \cite{meurer2017sympy}, Net
 
 \subsection*{List of contributors}
 
-Taha Berk Terekli, Department of Mathematics, Y{\i}ld{\i}z Technical University: design, implementation, testing, documentation and maintenance. No other person has contributed code. Generative AI tools were used during publication preparation; they are not contributors and their use is disclosed below.
+Taha Berk Terekli (\AuthorAffiliation): design, implementation, testing, documentation and maintenance. No other person has contributed code. Generative AI tools were used during publication preparation; they are not contributors and their use is disclosed below.
 
 \subsection*{Software location}
+
+Version 1.1.0 is identified by the commit \SnapshotSHA{} of the code repository; the archive and the package below were built from that commit. Version 1.1.0 has no GitHub Release; the only GitHub Release, v1.0.0, is an earlier version whose Zenodo DOI (10.5281/zenodo.22997681) does not contain the software described here.
 
 \textbf{Archive}
 \begin{description}[leftmargin=1.2em, style=nextline, itemsep=0pt]
   \item[Name:] Zenodo
-  \item[Persistent identifier:] \pending{version DOI of the v1.1.0 archive; the existing DOI 10.5281/zenodo.22997681 archives v1.0.0 only and must not be used}
+  \item[Persistent identifier:] \ArchiveDOI
   \item[Licence:] MIT
   \item[Publisher:] Taha Berk Terekli
-  \item[Version published:] 1.1.0
-  \item[Date published:] \pending{release date of v1.1.0}
+  \item[Version published:] 1.1.0 (source archive of commit \SnapshotSHA)
+  \item[Date published:] \ArchiveDate
 \end{description}
 
 \textbf{Code repository}
@@ -242,13 +256,15 @@ Taha Berk Terekli, Department of Mathematics, Y{\i}ld{\i}z Technical University:
   \item[Name:] GitHub
   \item[Identifier:] \url{https://github.com/TerekliTahaBerk/quantum-groups}
   \item[Licence:] MIT
-  \item[Date published:] \pending{release date of v1.1.0} (repository created 24 March 2026)
+  \item[Date published:] \SnapshotDate{} (version 1.1.0, commit \SnapshotSHA)
 \end{description}
 
 \textbf{Package registry}
 \begin{description}[leftmargin=1.2em, style=nextline, itemsep=0pt]
-  \item[Name:] PyPI
-  \item[Identifier:] \pending{\url{https://pypi.org/project/quantum-group/} once published; install with \code{python -m pip install quantum-group==1.1.0}}
+  \item[Name:] PyPI (Python Package Index)
+  \item[Identifier:] \PyPIIdentifier
+  \item[Licence:] MIT
+  \item[Version published:] 1.1.0
 \end{description}
 
 \subsection*{Language}
@@ -279,19 +295,27 @@ English (source code, documentation and repository). Historical thesis material 
 
 \section*{Use of generative AI}
 
-Generative AI tools were used in preparing the software release and this paper; they are not authors or contributors. The core implementation (April--June 2026) was written by the author during the thesis work \pending{author to confirm whether any AI tool was used in that period}. From September 2026, Claude Code (Anthropic) \pending{insert the exact model name(s) and version(s), as recorded in the Co-Authored-By trailers of the corresponding commits} was used for the packaging and CI configuration, the benchmark script, the shared matrix helpers and input validation with their tests, documentation, and drafting of this manuscript and its submission materials; commits produced with it are authored or co-authored by ``Claude'' in the Git history. Codex (OpenAI) \pending{insert model name and version; not verifiable from the repository} assisted with translating Turkish docstrings and comments into English and with a mathematical and technical audit that led to the parameter-handling corrections, the coproduct-compatible R-matrix functions and the regression tests described above. Every AI-assisted code change is exercised by the test suite described under Quality control, and every AI-assisted mathematical claim was confirmed by an executable symbolic test or by comparison with the primary source, in particular the published Çelik--Çelik article. The author reviewed and validated all AI-assisted output, made the scientific and design decisions, and takes responsibility for the software and this paper.
+Generative AI tools were used in preparing this version of the software and this paper. They are not authors or contributors. \emph{Thesis and core development (April--June 2026):} \ThesisPeriodAI. \emph{Publication engineering (September 2026):} Claude Code (Anthropic; \ClaudeModel) was used for packaging and continuous-integration configuration, the benchmark script, the shared matrix helpers, input validation and their tests, the sample-verification example, documentation, and drafting of this manuscript and its submission materials; commits produced with it are authored or co-authored by ``Claude'' in the Git history. Codex (OpenAI; \CodexModel) was used to translate Turkish docstrings and comments into English and in a mathematical and technical audit that led to the parameter-handling corrections, the coproduct-compatible R-matrix functions and the audit regression tests. Every AI-assisted code change is exercised by the test suite described under Quality control, and every AI-assisted mathematical claim was checked by an executable symbolic test or against the primary source, in particular the published Çelik--Çelik article. \AIReviewStatement
+
+\section*{Data Accessibility Statement}
+
+No research data were generated or analysed for this article. The software, its tests, the example of Listing~\ref{lst:example} with its expected output, and the benchmark script with its recorded results are available from the code repository and the archive listed under \emph{Software location}.
 
 \section*{Acknowledgements}
 
 The author thanks Prof.\ Dr.\ Salih Çelik for supervising the undergraduate thesis from which this software originated.
 
-\section*{Funding statement}
+\section*{Funding Information}
 
-\pending{author to state whether the work received funding; if not, use the journal's wording for no funding}
+\FundingText
 
-\section*{Competing interests}
+\section*{Competing Interests}
 
-\pending{author to confirm; if none: ``The author has no competing interests to declare.''}
+\CompetingText
+
+\section*{Authors' Contributions}
+
+T.B.T. is the sole author: T.B.T. designed and wrote the original implementation; decided on, reviewed and integrated all later changes to the software, including AI-assisted ones; and prepared and approved the manuscript.
 
 \printbibliography[heading=subbibintoc, title={References}]
 

@@ -1,0 +1,49 @@
+{
+  "_comment": "Metadata for the manual Zenodo software deposit of quantum-group 1.1.0 (see jors/DISTRIBUTION.md, section D). Replace every value in angle brackets before use; the affiliation must be the one the author confirms.",
+  "metadata": {
+    "upload_type": "software",
+    "title": "quantum-group: Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities",
+    "version": "1.1.0",
+    "creators": [
+      {
+        "name": "Terekli, Taha Berk",
+        "orcid": "0009-0004-8266-1116",
+        "affiliation": "<confirmed current affiliation>"
+      }
+    ],
+    "description": "Source archive of quantum-group 1.1.0, created with git archive from commit <full snapshot SHA> of https://github.com/TerekliTahaBerk/quantum-groups. A small SymPy package that builds the explicit matrices behind concrete quantum-group calculations and checks identities as exact residual matrices: finite-dimensional U_q(sl_2) representations, defining relations and generator-level Hopf identities, tensor products and Clebsch-Gordan highest-weight vectors, the fundamental R-matrix with Yang-Baxter, braid, Hecke and coproduct-intertwining checks, and the graded Yang-Baxter equation for the GL_q(2|1) R-matrix of Celik and Celik (2021). Checks are representation-level verifications, not proofs in the abstract algebra. This version has no GitHub Release; it is also distributed on PyPI as quantum-group 1.1.0. The earlier record 10.5281/zenodo.22997681 archives version 1.0.0 only.",
+    "license": "MIT",
+    "keywords": [
+      "quantum groups",
+      "symbolic computation",
+      "SymPy",
+      "R-matrix",
+      "Yang-Baxter equation",
+      "Lie superalgebras",
+      "computer algebra",
+      "reproducible research"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/TerekliTahaBerk/quantum-groups/tree/<full snapshot SHA>",
+        "relation": "isIdenticalTo",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "https://github.com/TerekliTahaBerk/quantum-groups",
+        "relation": "isSupplementTo",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "https://pypi.org/project/quantum-group/1.1.0/",
+        "relation": "isSupplementTo",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "10.5281/zenodo.22997681",
+        "relation": "isNewVersionOf",
+        "resource_type": "software"
+      }
+    ]
+  }
+}

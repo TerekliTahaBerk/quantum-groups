@@ -4,10 +4,8 @@ Material for a *Journal of Open Research Software* (JORS) Software
 Metapaper about `quantum-group` version **1.1.0**. It is independent of the
 JOSS draft in `../paper/`, which is unchanged.
 
-> **Status (27 September 2026): not submittable.** Hard blockers: no
-> v1.1.0 release/archive DOI, not on PyPI, author confirmations, five
-> verified reviewer e-mails, and the JOSS/JORS exclusivity check. See
-> `SUBMISSION_CHECKLIST.md`. Nothing has been submitted anywhere.
+> **Status:** see `SUBMISSION_CHECKLIST.md`. Nothing has been submitted to
+> JORS or JOSS, and nothing has been published to PyPI or Zenodo.
 
 ## Files
 
@@ -15,16 +13,19 @@ JOSS draft in `../paper/`, which is unchanged.
 |---|---|---|
 | `paper.pdf` | Compiled manuscript | **Yes** (main file) |
 | `paper.tex` | LaTeX source | **Yes** (source, as JORS asks for LaTeX submissions) |
+| `submission-facts.tex` | Author- and event-dependent values used by `paper.tex` | **Yes** (with the source) |
 | `references.bib` | Bibliography used by `paper.tex` | **Yes** (with the source) |
 | `figures/figure1_workflow.png` | Figure 1, 600 dpi, 3824 × 1264 px | **Yes** (figure file) |
 | `figures/figure1_workflow.eps` | Figure 1 as vector EPS | Optional (if vector line art is requested) |
 | `figures/figure1_workflow.pdf` | Figure 1, vector PDF used by `paper.tex` | With the source |
 | `figures/figure1_workflow.tex` | TikZ source of Figure 1 | No (kept for reproducibility) |
 | `COVER_LETTER.md` | Text for the *Comments for the Editor* box | **Paste** (after completion) |
-| `POTENTIAL_REVIEWERS.md` | Screened candidates; choose five | Five names + e-mails **pasted** into *Comments for the Editor* |
+| `POTENTIAL_REVIEWERS.md` | Five screened reviewers (+ reserves); addresses to copy from official pages | Five names + e-mails **pasted** into *Comments for the Editor* |
 | `SUBMISSION_CHECKLIST.md` | Status of every submission requirement; APC decision | No |
 | `PREFLIGHT.md` | Verification record, reviewer simulation, blockers | No |
-| `RELEASE_STEPS.md` | Exact release, PyPI and Zenodo steps (not executed) | No |
+| `DISTRIBUTION.md` | PyPI and Zenodo steps for 1.1.0 without a GitHub Release (not executed) | No |
+| `zenodo-metadata.json` | Metadata for the manual Zenodo deposit | No (used on Zenodo) |
+| `check_submission.py`, `Makefile` | `make check`: builds the PDF, checks Listing 1 and its output against `examples/`, fails while any `[PENDING]` marker is rendered | No |
 | `OVERLAP_REVIEW.md` | Comparison with the JOSS draft | No |
 
 ## Figure 1
@@ -47,12 +48,12 @@ texlive-bibtex-extra biber latexmk`).
 
 ```sh
 cd jors
-latexmk -pdf paper.tex            # manuscript
+make check                        # manuscript + consistency checks
 cd figures && pdflatex figure1_workflow.tex \
   && pdftoppm -png -r 600 -singlefile figure1_workflow.pdf figure1_workflow \
   && pdftops -eps figure1_workflow.pdf figure1_workflow.eps
 ```
 
-Auxiliary files are git-ignored. Listing 1 must stay identical to
+Auxiliary files are git-ignored. `jors/` is excluded from `git archive` (`.gitattributes`), so the software archive contains the software only. Listing 1 must stay identical to
 `../examples/sample_verification.py` and its printed output to
 `../examples/sample_verification_expected.txt`.

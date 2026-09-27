@@ -1,50 +1,87 @@
 name: publish
 
-# Publishes the sdist and wheel to PyPI with Trusted Publishing (OIDC); no API
-# token is stored in the repository. It runs only when a GitHub Release is
-# published, or manually. Before the first run the maintainer must register
-# this repository, workflow file (publish.yml) and environment (pypi) as a
-# trusted publisher for the project "quantum-group" on pypi.org; until then
-# the upload step fails and nothing is published. See jors/RELEASE_STEPS.md.
+# Manual PyPI publication with Trusted Publishing (OIDC). No API token is
+# stored, and no GitHub Release or tag is involved: the maintainer starts the
+# workflow by hand (Actions -> publish -> Run workflow) and names the exact
+# commit to publish. The upload job waits for approval of the "pypi"
+# environment. Before the first run, register this repository, workflow file
+# (publish.yml) and environment (pypi) as a trusted publisher of the project
+# "quantum-group" on pypi.org. See jors/DISTRIBUTION.md.
 on:
-  release:
-    types: [published]
   workflow_dispatch:
+    inputs:
+      ref:
+        description: "Full 40-character commit SHA to build and publish"
+        required: true
+        type: string
+      expected_version:
+        description: "Version that pyproject.toml must declare (e.g. 1.1.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      REF: ${{ inputs.ref }}
+      EXPECTED: ${{ inputs.expected_version }}
     steps:
+      - name: Require a full commit SHA
+        run: |
+          echo "$REF" | grep -Eq '^[0-9a-f]{40}$' \
+            || { echo "ref must be a full 40-character commit SHA"; exit 1; }
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Check the declared version
+        run: |
+          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
+          echo "pyproject.toml version: $version"
+          test "$version" = "$EXPECTED" \
+            || { echo "expected $EXPECTED, found $version"; exit 1; }
       - name: Build sdist and wheel
         run: |
           python -m pip install --upgrade pip build twine
           python -m build
           python -m twine check --strict dist/*
-      - name: Check that the tag matches the package version
-        if: github.event_name == 'release'
+          ls -l dist
+      - name: Install the wheel in a clean environment and run the examples
+        working-directory: ${{ runner.temp }}
         run: |
-          version=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml', 'rb'))['project']['version'])")
-          test "${GITHUB_REF_NAME}" = "v${version}"
+          python -m venv clean
+          clean/bin/python -m pip install "$GITHUB_WORKSPACE"/dist/*.whl
+          clean/bin/python -c "import os, quantum_group as q; assert q.__version__ == os.environ['EXPECTED'], q.__version__; print(q.__version__)"
+          clean/bin/python "$GITHUB_WORKSPACE/examples/quickstart.py"
+          clean/bin/python "$GITHUB_WORKSPACE/examples/sample_verification.py" > sample.out
+          diff sample.out "$GITHUB_WORKSPACE/examples/sample_verification_expected.txt"
+      - name: Record provenance
+        run: |
+          { echo "commit: $REF"; echo "version: $EXPECTED"; sha256sum dist/*; } | tee dist-provenance.txt
       - uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: |
+            dist/
+            dist-provenance.txt
 
   pypi:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/quantum-group/
+      url: https://pypi.org/project/quantum-group/${{ inputs.expected_version }}/
     permissions:
       id-token: write
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/

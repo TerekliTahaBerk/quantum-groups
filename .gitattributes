@@ -1,0 +1,3 @@
+# Submission paperwork is not part of the software archive made with
+# `git archive` (see jors/DISTRIBUTION.md).
+jors/ export-ignore

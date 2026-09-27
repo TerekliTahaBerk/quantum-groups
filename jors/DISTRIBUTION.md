@@ -1,0 +1,106 @@
+# Distribution of version 1.1.0 without a GitHub Release
+
+Author's decision (recorded 27 September 2026): **no GitHub Release and no
+Git tag for 1.1.0.** The historical `v1.0.0` tag and release stay untouched.
+Version 1.1.0 is identified by one recorded commit, the **JORS submission
+software snapshot**, and distributed from that exact commit through:
+
+| Channel | Mechanism | Why |
+|---|---|---|
+| PyPI `quantum-group==1.1.0` | `.github/workflows/publish.yml`, started by hand with the snapshot SHA; Trusted Publishing (OIDC), no stored token; waits for approval of the `pypi` environment | JORS: "easy to install and supports versioning", which for Python means a package registry |
+| Zenodo software deposit | Manual upload of `git archive` of the snapshot commit (no GitHub integration involved) | JORS: the described version must be in a repository that provides a persistent identifier for that version; see `PREFLIGHT.md` §4 |
+| GitHub | The repository and the snapshot commit URL | Development, issues, support |
+
+Nothing below has been executed. Each numbered step says who does it.
+
+## A. Author, once (can be done in parallel)
+
+1. **PyPI pending publisher** — <https://pypi.org> → *Account → Publishing →
+   Add a new pending publisher → GitHub*:
+   project `quantum-group`, owner `TerekliTahaBerk`, repository
+   `quantum-groups`, workflow `publish.yml`, environment `pypi`.
+2. **GitHub environment** — repository *Settings → Environments → New
+   environment* `pypi`; add yourself as *required reviewer*.
+3. **Zenodo draft with a reserved DOI** — preferred: open the existing
+   v1.0.0 record (<https://doi.org/10.5281/zenodo.22997681>) and choose
+   *New version*; this creates a draft under the same concept DOI without
+   involving GitHub (remove the v1.0.0 files from the draft). Alternative:
+   *New upload* with resource type *Software*. In either case reserve the
+   DOI (*Get a DOI now!* / *Reserve DOI*) and do **not** publish yet. Send
+   the reserved DOI back. The `isNewVersionOf` relation in
+   `zenodo-metadata.json` is only needed for the alternative route.
+4. **Merge** the branch carrying this package into `main` once CI is green
+   (GitHub offers *Run workflow* only for workflows on the default branch).
+
+## B. Freeze the snapshot (Claude or author)
+
+5. Put the reserved DOI into `CITATION.cff` (`identifiers`) and the README
+   citation section; commit on `main`. The package source
+   (`quantum_group/`, `pyproject.toml`) must be unchanged from the reviewed
+   state. Wait for CI to pass on this commit on all jobs (Python 3.10–3.13,
+   minimum dependencies, wheel, Linux/macOS/Windows).
+6. Record that commit as the snapshot: full SHA, date
+   (`git show -s --format=%cI <SHA>`), in `jors/PREFLIGHT.md`.
+
+## C. Publish to PyPI (author approval required)
+
+7. *Actions → publish → Run workflow* on `main`, inputs
+   `ref = <full snapshot SHA>`, `expected_version = 1.1.0`.
+   The build job refuses to continue unless the SHA is a full 40-character
+   SHA and `pyproject.toml` says 1.1.0; it builds, runs
+   `twine check --strict`, installs the wheel in a clean environment, runs
+   both examples and diffs the sample output. Then approve the `pypi`
+   environment to upload. The job summary artifact `dist` contains
+   `dist-provenance.txt` (commit, version, SHA-256 of both files).
+8. Verify from a clean environment and record the output in
+   `jors/PREFLIGHT.md`:
+
+   ```sh
+   python -m venv /tmp/qg && cd /tmp
+   /tmp/qg/bin/python -m pip install quantum-group==1.1.0
+   /tmp/qg/bin/python -c "import quantum_group; print(quantum_group.__version__)"
+   curl -sO https://raw.githubusercontent.com/TerekliTahaBerk/quantum-groups/<SHA>/examples/sample_verification.py
+   curl -sO https://raw.githubusercontent.com/TerekliTahaBerk/quantum-groups/<SHA>/examples/sample_verification_expected.txt
+   /tmp/qg/bin/python sample_verification.py | diff - sample_verification_expected.txt && echo OK
+   ```
+
+PyPI versions are immutable. If package code changes after this, it needs a
+new version number; manuscript-only edits do not.
+
+## D. Archive on Zenodo (author approval required)
+
+9. Create the archive from the exact snapshot commit (`jors/` is excluded
+   by `.gitattributes` because it holds submission paperwork, not software):
+
+   ```sh
+   git archive --format=zip --prefix=quantum-group-1.1.0/ <SHA> > quantum-group-1.1.0.zip
+   sha256sum quantum-group-1.1.0.zip
+   ```
+
+10. Upload the zip to the Zenodo draft of step 3 and fill the metadata from
+    `jors/zenodo-metadata.json` (title, creator with ORCID and affiliation,
+    description, version `1.1.0`, licence MIT, keywords, related
+    identifiers: the repository and the snapshot commit URL
+    `https://github.com/TerekliTahaBerk/quantum-groups/tree/<SHA>`).
+11. **Publish** the deposit (irreversible; needs the author's approval).
+12. Download the published zip and verify:
+
+    ```sh
+    sha256sum downloaded.zip        # equals the value from step 9
+    mkdir a b && unzip -q downloaded.zip -d a && git archive <SHA> | tar -x -C b
+    diff -r a/quantum-group-1.1.0 b && echo IDENTICAL
+    ```
+
+## E. Complete the manuscript (Claude or author)
+
+13. Fill `jors/submission-facts.tex`: `\SnapshotSHA`, `\SnapshotDate`,
+    `\ArchiveDOI`, `\ArchiveDate`, `\PyPIIdentifier` (and the author
+    declarations). Run `make -C jors check`; it must print `OK`.
+14. Set `date-released` in `CITATION.cff` and the date in `CHANGELOG.md` to
+    the PyPI publication date.
+
+## Guard rails
+
+- Never attach the v1.0.0 DOI (10.5281/zenodo.22997681) to 1.1.0.
+- Never archive a moving branch; always the recorded SHA.
+- Do not create a tag or GitHub Release for 1.1.0.
