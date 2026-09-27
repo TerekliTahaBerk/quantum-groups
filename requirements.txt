@@ -1,5 +1,1 @@
-sympy
-networkx
-matplotlib
-pytest
-jupyter
+-e .[test,notebooks]

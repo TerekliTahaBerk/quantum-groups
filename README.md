@@ -24,14 +24,17 @@ bağlamaktır.
 
 ## Installation
 
-Python 3.10+ önerilir. Bu depoda şu an `pyproject.toml` veya `setup.py`
-bulunmadığı için kurulum `requirements.txt` üzerinden yapılır.
+Python 3.10+ gereklidir. Paket `pyproject.toml` ile tanımlıdır (dağıtım adı
+`quantum-group`, içe aktarma adı `quantum_group`).
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install -r requirements.txt
+python3 -m pip install -e ".[test]"
 ```
+
+Notebook'ları çalıştırmak için `".[test,notebooks]"` kullanın
+(`pip install -r requirements.txt` ile eşdeğerdir).
 
 ## Quickstart
 
@@ -181,8 +184,16 @@ make demo
 
 ## Citation
 
-If you use this repository, please cite:
+If you use this software, please cite it using the metadata in
+[`CITATION.cff`](CITATION.cff). On GitHub, the **"Cite this repository"**
+button in the sidebar exports it as APA or BibTeX, for example:
 
-```text
-[manuscript citation to be added]
+```bibtex
+@software{Terekli_quantum-group,
+  author  = {Terekli, Taha Berk},
+  title   = {{quantum-group: Symbolic modelling and verification of U_q(sl_2) and GL_q(2|1) quantum group structures in Python}},
+  version = {1.0.0},
+  license = {MIT},
+  url     = {https://github.com/TerekliTahaBerk/quantum-groups}
+}
 ```

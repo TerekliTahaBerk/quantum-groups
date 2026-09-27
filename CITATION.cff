@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+title: "quantum-group: Symbolic modelling and verification of U_q(sl_2) and GL_q(2|1) quantum group structures in Python"
+abstract: >-
+  A SymPy-based package for symbolic modelling and reproducible,
+  representation-level verification of quantum group structures:
+  finite-dimensional U_q(sl_2) representations, Hopf algebra axioms,
+  tensor products and Clebsch-Gordan decompositions, R-matrices with
+  Yang-Baxter, braid and Hecke relation checks, the graded Yang-Baxter
+  equation for GL_q(2|1), and crystal graphs.
+authors:
+  - family-names: Terekli
+    given-names: Taha Berk
+    email: terekli@tahaberk.com
+    orcid: "https://orcid.org/0009-0004-8266-1116"
+repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
+url: "https://github.com/TerekliTahaBerk/quantum-groups"
+license: MIT
+version: 1.0.0
+keywords:
+  - quantum groups
+  - Hopf algebras
+  - R-matrix
+  - Yang-Baxter equation
+  - Lie superalgebras
+  - symbolic computation
+  - SymPy

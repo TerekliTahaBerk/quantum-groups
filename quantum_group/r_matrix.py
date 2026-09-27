@@ -36,6 +36,7 @@ Baz sıralaması: v_0⊗v_0, v_0⊗v_1, v_1⊗v_0, v_1⊗v_1.
 
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass
 from typing import Dict
 
@@ -146,13 +147,16 @@ def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
     return {sp.simplify(k): v for k, v in raw.items()}
 
 
-def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
-    """Jones tipi skein bağıntısının kontrolü.
+def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
+    """Hecke (skein) bağıntısının kontrolü.
 
-    Ř ve Ř^{-1} arasında Hecke benzeri kuadratik bağıntı:
+    Ř ve Ř^{-1} arasında Hecke kuadratik bağıntısı:
         Ř - Ř^{-1} = (q - q^{-1}) · I
     Bu bağıntı, U_q(sl_2)'nin V_1 üzerindeki örgü temsilinin Hecke
     cebirinin H_n(q) niceliği üzerinden faktör olduğunu gösterir.
+
+    Not: Yalnızca Hecke bağıntısı doğrulanır; Jones polinomu ve Markov
+    izi hesaplanmaz.
     """
     Rv = R_check_V1(q_sym)
     Rv_inv = sp.simplify(Rv.inv())
@@ -160,3 +164,18 @@ def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
     return {
         "Ř - Ř^{-1} = (q - q^{-1}) I": _is_zero(diff),
     }
+
+
+def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
+    """Kullanımdan kaldırıldı: ``hecke_skein_relation_check`` kullanın.
+
+    Eski ad yanıltıcıydı (Jones polinomu değil, Hecke bağıntısı
+    doğrulanır); geriye uyumluluk için korunmuştur.
+    """
+    warnings.warn(
+        "jones_skein_relation_check is deprecated; "
+        "use hecke_skein_relation_check instead",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return hecke_skein_relation_check(q_sym)

@@ -27,7 +27,7 @@ and tests. Status values describe the current repository state.
 | QYBE residual | `qybe_residual`, `qybe_holds` | `tests/test_r_matrix.py` | Implemented | Checks 8x8 residual is zero. |
 | Braided R-matrix | `R_check_V1` | `tests/test_r_matrix.py` | Implemented | `R_check = tau R`. |
 | Braid relation | `braid_relation_residual`, `braid_relation_holds` | `tests/test_r_matrix.py` | Implemented | Checked for `R_check`. |
-| Hecke/skein relation | `jones_skein_relation_check` | `tests/test_r_matrix.py` | Implemented | Name is historical; the package verifies the Hecke relation, not a Jones polynomial. |
+| Hecke/skein relation | `hecke_skein_relation_check` | `tests/test_r_matrix.py` | Implemented | Verifies the Hecke relation, not a Jones polynomial. The historical name `jones_skein_relation_check` remains as a deprecated alias (emits `DeprecationWarning`). |
 | R-check spectrum | `R_check_eigenvalues` | `tests/test_r_matrix.py` | Implemented | Checks eigenvalues `q` and `-q^{-1}` with multiplicities. |
 | `GL_q(2|1)` parity | `super_parity_gl21` | `tests/test_supergroup_gl21.py` | Implemented | Convention `[0, 0, 1]`. |
 | `GL_q(2|1)` basis ordering | `basis_pairs_gl21` | `tests/test_supergroup_gl21.py` indirectly | Implemented | Row-major `e_i ⊗ e_j`; documented in module. |

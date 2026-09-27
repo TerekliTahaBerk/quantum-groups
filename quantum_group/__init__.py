@@ -12,6 +12,7 @@ Paket içeriği
 * verify_all_hopf_axioms — Hopf cebir aksiyomlarını doğrular
 * tensor_product, find_highest_weight_vectors — tensör çarpımı ve CG hesapları
 * R_matrix_V1, qybe_holds — R-matrisi ve Yang-Baxter doğrulaması
+* hecke_skein_relation_check — V_1 üzerinde Hecke bağıntısı
 * classical_K_to_h, root_of_unity_substitution — klasik ve birim-kök limitleri
 * q_integer, q_factorial, q_binomial — q-aritmetik yardımcıları
 * plot_weight_diagram, plot_crystal_graph — görselleştirme
@@ -62,7 +63,8 @@ from .r_matrix import (
     R_matrix_V1, R_check_V1, swap_matrix,
     qybe_holds, braid_relation_holds,
     qybe_residual, braid_relation_residual,
-    R_check_eigenvalues, jones_skein_relation_check,
+    R_check_eigenvalues, hecke_skein_relation_check,
+    jones_skein_relation_check,
 )
 from .limits import (
     classical_K_to_h, classical_commutator_EF,
@@ -106,7 +108,8 @@ __all__ = [
     "R_matrix_V1", "R_check_V1", "swap_matrix",
     "qybe_holds", "braid_relation_holds",
     "qybe_residual", "braid_relation_residual",
-    "R_check_eigenvalues", "jones_skein_relation_check",
+    "R_check_eigenvalues", "hecke_skein_relation_check",
+    "jones_skein_relation_check",
     "classical_K_to_h", "classical_commutator_EF",
     "root_of_unity_substitution", "three_limit_summary",
     "super_parity_gl21", "basis_pairs_gl21", "R_matrix_GLq21",
