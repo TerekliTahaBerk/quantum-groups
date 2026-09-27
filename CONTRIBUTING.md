@@ -64,9 +64,9 @@ issues for questions as well as bug reports.
 4. Open a pull request describing what changed and why. For mathematical
    changes, cite the convention or reference you follow.
 5. GitHub Actions runs the suite on Python 3.10–3.13, with the oldest
-   supported dependency versions, and runs the quickstart against an
-   installed wheel, for every push and pull request; a pull request is
-   merged only when CI is green.
+   supported dependency versions, and on Linux, macOS and Windows, and runs
+   the examples against an installed wheel, for every push and pull
+   request; a pull request is merged only when CI is green.
 
 Keep pull requests focused: one logical change per pull request is easier to
 review.

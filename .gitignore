@@ -17,6 +17,10 @@ dist/
 *.synctex.gz
 *.fls
 *.fdb_latexmk
+*.bbl
+*.blg
+*.bcf
+*.run.xml
 
 # Thesis draft and generated delivery variants
 thesis/*DRAFT*

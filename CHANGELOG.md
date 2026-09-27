@@ -44,6 +44,16 @@ invalid arguments (listed below) now raise errors.
   shared helpers and every new validation path.
 - `examples/quickstart.py` (the README quickstart, run by CI from outside the
   source tree against an installed wheel).
+- `examples/sample_verification.py` with its expected output
+  `examples/sample_verification_expected.txt`, including an ungraded-swap
+  negative control; CI compares the output after installing the wheel.
+- CI job installing the wheel and running the examples and the full test
+  suite on Linux, macOS and Windows.
+- `.github/workflows/publish.yml`: PyPI publication with Trusted Publishing,
+  triggered only by a published GitHub Release (inactive until the
+  maintainer registers the trusted publisher on PyPI).
+- `jors/`: Journal of Open Research Software metapaper and submission
+  records (not part of the installed package).
 - `AUDIT.md` with derivations, source limitations and novelty assessment.
 
 ### Changed
@@ -53,6 +63,9 @@ invalid arguments (listed below) now raise errors.
 - CI tests Python 3.10–3.13, the oldest supported dependencies, and a wheel
   install. Dependency lower bounds: SymPy ≥ 1.10, NetworkX ≥ 2.6,
   Matplotlib ≥ 3.5.
+- Packaging metadata uses an SPDX licence expression (`license = "MIT"`,
+  `license-files`) instead of the deprecated table form and licence
+  classifier; building requires setuptools ≥ 77.
 - Trove classifier `Development Status :: 4 - Beta` (was 5 - Production/Stable),
   reflecting the convention corrections made after 1.0.0.
 - Cross-module use of the private helpers `hopf._kron`, `r_matrix._is_zero`

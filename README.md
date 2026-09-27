@@ -77,6 +77,10 @@ assert residual.shape == (27, 27) and is_zero_matrix(residual)
 print("quickstart: all checks passed")
 ```
 
+`examples/sample_verification.py` is a slightly longer example that prints
+each result, including a negative control; its expected output is
+`examples/sample_verification_expected.txt`, and CI checks that the two agree.
+
 Every `*_residual` function returns the exact SymPy difference matrix, so a
 failing identity can be inspected entry by entry. Draft names used in the
 thesis, `build_representation_core` and `verify_relations_core`, remain
@@ -182,10 +186,11 @@ computational claim is mapped to code and tests in
 ```text
 quantum_group/        the package (linalg.py holds the shared kron/zero-test helpers)
 tests/                pytest suite; doctests in quantum_group/ run with it
-examples/quickstart.py
+examples/             quickstart.py, sample_verification.py (+ expected output)
 benchmarks/           timing script and recorded results
 notebooks/            exploratory notebook
 paper/                JOSS manuscript (paper.md, paper.bib) and maintainer records
+jors/                 JORS software metapaper and submission records (see jors/README.md)
 thesis/, poster/      historical thesis material (Turkish); see thesis/README.md
 AUDIT.md              mathematical/technical audit (September 2026)
 MANUSCRIPT_CODE_MAPPING.md

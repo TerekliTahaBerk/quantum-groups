@@ -1,0 +1,6 @@
+E on V_2: [[0, q + 1/q, 0], [0, 0, q + 1/q], [0, 0, 0]]
+relations: {'R1': True, 'R2': True, 'R3': True, 'R4': True}
+QYBE: True
+intertwines Delta: [True, True, True, True]
+graded YBE residual: (27, 27) zero: True
+ungraded residual, nonzero entries: {(8, 24): 2*q**2*(q - 1)**2*(q + 1)**2, (17, 25): 2*q**2*(q - 1)**2*(q + 1)**2}
