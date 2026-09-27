@@ -24,6 +24,7 @@ from typing import Optional
 import matplotlib.pyplot as plt
 import networkx as nx
 
+from ._validation import as_int
 from .crystal import build_crystal
 
 
@@ -36,6 +37,7 @@ def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
 
     The weights are n, n-2, ..., -n+2, -n.
     """
+    n = as_int(n, "n", minimum=0)
     weights = [n - 2 * k for k in range(n + 1)]
 
     if ax is None:

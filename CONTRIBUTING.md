@@ -32,31 +32,41 @@ Python 3.10 or newer is required.
 
 ## Running the tests
 
+The canonical validation command runs the test suite and the package
+doctests (configured in `pyproject.toml`); CI runs exactly this:
+
 ```bash
-python3 -m pytest -q
+python3 -m pytest        # or: make check
 ```
 
 Targeted runs are useful while iterating:
 
 ```bash
-python3 -m pytest tests/test_r_matrix.py -q
-python3 -m pytest tests/test_supergroup_gl21.py -q
+python3 -m pytest tests/test_r_matrix.py
+python3 -m pytest tests/test_supergroup_gl21.py
 ```
 
 The `GL_q(2|1)` tensor-power checks manipulate symbolic `81x81` matrices and
 are the slowest part of the suite.
+
+## Support and maintenance
+
+The package is maintained by its author on a best-effort basis. Use GitHub
+issues for questions as well as bug reports.
 
 ## Pull request process
 
 1. Fork the repository and create a topic branch from `main`.
 2. Make your change, adding or updating tests in `tests/` for any new or
    modified behaviour.
-3. **Run `python3 -m pytest -q` locally; the full suite must pass before you
-   open a pull request.**
+3. **Run `python3 -m pytest` locally; the full suite, including doctests,
+   must pass before you open a pull request.**
 4. Open a pull request describing what changed and why. For mathematical
    changes, cite the convention or reference you follow.
-5. GitHub Actions runs the test suite on Python 3.10, 3.11 and 3.12 for every
-   push and pull request; a pull request is merged only when CI is green.
+5. GitHub Actions runs the suite on Python 3.10–3.13, with the oldest
+   supported dependency versions, and runs the quickstart against an
+   installed wheel, for every push and pull request; a pull request is
+   merged only when CI is green.
 
 Keep pull requests focused: one logical change per pull request is easier to
 review.
@@ -74,7 +84,13 @@ Follow the style of the existing modules in `quantum_group/`:
 - Verification helpers follow the existing pattern: a `*_residual` function
   returning the symbolic difference matrix and a `*_holds` / `*_check`
   function returning `bool` (or a `dict` of named `bool` results).
-- Private helpers start with an underscore.
+- Private helpers start with an underscore and are not imported across
+  modules. Shared matrix helpers (`kron`, `kron_list`, `is_zero_matrix`) live
+  in `quantum_group/linalg.py`; shared argument checks live in
+  `quantum_group/_validation.py`.
+- Reject invalid arguments with a clear `TypeError` or `ValueError` and add a
+  test for each validation path, but do not forbid legitimate symbolic
+  input (for example a symbolic `q`).
 - New public functions are exported from `quantum_group/__init__.py` and
   listed in `__all__`.
 - Do not break the public API. When renaming a public function, keep the old

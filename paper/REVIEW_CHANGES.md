@@ -1,35 +1,39 @@
-# Change summary for the current review
+# Changes since v1.0.0 (summary for reviewers)
 
-Prepared 27 September 2026. Draft for the author; not sent to the editor.
+Updated 27 September 2026. No JOSS submission or review exists yet; this is
+a factual summary for the author and for future reviewers. The itemized list
+is the `[1.1.0]` section of `../CHANGELOG.md`; verification is recorded in
+`PREFLIGHT.md`.
 
-The revision corrects the relationship between the fundamental R-matrix and
-the coproduct used by the software. The historical upper-triangular matrix
-remains available, while explicit coproduct-compatible R and braid APIs now
-have generator-intertwining and eigenspace tests. This matters because QYBE
-and Hecke tests alone did not detect the convention mismatch.
+**Correctness (commit `bc5c370`).** An audit (`../AUDIT.md`) found that the
+historical upper-triangular `R_matrix_V1` intertwines the opposite of the
+package coproduct, so the thesis identified braid eigenspaces with the wrong
+tensor-product submodules. QYBE, braid and Hecke tests had not detected this.
+The historical matrix is unchanged; coproduct-compatible R and braid
+matrices and an intertwining residual were added and tested for all four
+generators and on the full `V_2`/`V_0` sectors. The 9×9 `GL_q(2|1)` matrix
+was compared with the original Çelik–Çelik article (all entries agree; the
+page range was corrected to 259–269), and new tests compare all six
+four-factor placements with an independent signed basis-action formula,
+with an ordinary-swap negative control. Integer inputs now stay exact,
+q-arithmetic is evaluated as Laurent polynomials, root-of-unity orders are
+validated, and the counit check uses the public counit values. Tests now
+check complete Clebsch–Gordan change-of-basis matrices for `(1,1)`, `(2,2)`
+and `(3,2)`. Corrections to the archived thesis are in `../thesis/ERRATA.md`.
 
-The original Çelik–Çelik article was checked directly. Its 9×9 R-matrix and
-grading agree with the implementation; the bibliographic page range has been
-corrected from 259–272 to 259–269. New independent component tests cover all
-six four-factor embeddings and all three disjoint-pair commutators. A negative
-control demonstrates the nonzero residual produced by an ordinary flip.
+**Maintainability and validation (this revision).** Shared matrix helpers
+moved to `quantum_group/linalg.py`, removing cross-module imports of private
+functions (old names kept as aliases). Public functions reject invalid
+arguments (non-integral or negative sizes and indices, mismatched or
+non-square matrices, invalid tensor positions and parities, `q = 0`) with
+tested errors. `python -m pytest` runs tests and doctests everywhere; CI
+covers Python 3.10–3.13, the oldest supported dependencies, and a wheel
+install running the README quickstart. The development-status classifier is
+now Beta. Generated files were removed and the historical thesis material is
+documented as such.
 
-The tests now verify full Clebsch–Gordan change-of-basis matrices for the
-three manuscript examples, rather than only counting highest-weight vectors.
-Integer inputs preserve exact arithmetic, q-arithmetic avoids removable
-singularities, root-of-unity orders are validated, and the asymptotics helper
-returns the documented leading term. Counit verification now consumes the
-public counit values.
-
-The English manuscript states precisely what is checked at representation
-level and retains its software-verification framing. It makes no new
-mathematical claim. Jones/Markov-trace and noncommutative Gauss extensions
-were evaluated but did not meet the requested novelty/scope threshold.
-The AI disclosure now includes the audit-assisted implementation, regression
-tests and manuscript revisions. Corrections to archived thesis proofs and
-conventions are documented separately in `thesis/ERRATA.md`.
-
-Validation: 158 pytest cases and three doctests, with local environment and
-rendering status recorded in `PREFLIGHT.md`. These changes are uncommitted;
-remote CI, official journal typesetting and an updated release archive are
-subsequent publication steps, not outcomes claimed by this note.
+**Manuscript.** Restructured to JOSS's current sections: a non-specialist
+Summary, a concrete Statement of need, an explicit build-versus-contribute
+argument, design trade-offs, a research-impact statement limited to
+demonstrated use, and an AI-usage disclosure based on the Git record. No new
+mathematical result is claimed.

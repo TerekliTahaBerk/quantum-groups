@@ -1,28 +1,32 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it using the metadata from this file."
 type: software
-title: "quantum-group: Symbolic modelling and verification of U_q(sl_2) and GL_q(2|1) quantum group structures in Python"
+title: "quantum-group: Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities"
 abstract: >-
-  A SymPy-based package for symbolic modelling and reproducible,
-  representation-level verification of quantum group structures:
-  finite-dimensional U_q(sl_2) representations, Hopf algebra axioms,
-  tensor products and Clebsch-Gordan decompositions, R-matrices with
-  Yang-Baxter, braid and Hecke relation checks, the graded Yang-Baxter
-  equation for GL_q(2|1), and crystal graphs.
+  A small SymPy package that builds the explicit matrices behind concrete
+  quantum-group calculations and checks identities as exact residual
+  matrices: finite-dimensional U_q(sl_2) representations, their defining
+  relations and generator-level Hopf identities, tensor products and
+  Clebsch-Gordan highest-weight vectors, the fundamental R-matrix with
+  Yang-Baxter, braid, Hecke and coproduct-intertwining checks, and the
+  graded Yang-Baxter equation for the GL_q(2|1) R-matrix of Celik and
+  Celik (2021). Checks are representation-level verifications, not proofs
+  in the abstract algebra.
 authors:
   - family-names: Terekli
     given-names: Taha Berk
     email: terekli@tahaberk.com
+    affiliation: "Department of Mathematics, Yıldız Technical University"
     orcid: "https://orcid.org/0009-0004-8266-1116"
 repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
-version: 1.0.0
-date-released: 2026-09-27
+# Version prepared on main; set date-released when the v1.1.0 release is made.
+version: 1.1.0
 identifiers:
   - type: doi
     value: "10.5281/zenodo.22997681"
-    description: "Version DOI for v1.0.0"
+    description: "Zenodo archive of the earlier release v1.0.0 only; it does not contain the 1.1.0 changes."
 keywords:
   - quantum groups
   - Hopf algebras

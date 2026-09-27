@@ -4,16 +4,23 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.1.0] - Unreleased
+
+Prepared on `main`; not yet tagged or archived. Replace "Unreleased" with the
+release date when `v1.1.0` is tagged. The Zenodo DOI 10.5281/zenodo.22997681
+archives v1.0.0 only and does not contain these changes. This is a minor
+release under Semantic Versioning because it adds public functions; existing
+public functions keep their names and documented outputs, except that
+invalid arguments (listed below) now raise errors.
 
 ### Fixed
 
 - Preserve exact Python integer parameters in representations, R matrices,
   relation checks and the public facade; reject singular defining-relation
-  parameters with an explanatory error.
+  parameters (q = 0, ±1) with an explanatory error.
 - Evaluate q-integers and q-binomials as Laurent polynomials, including
   removable-singularity specializations at q = ±1 and roots of unity.
-- Return actual leading terms for E asymptotics; validate root orders N>2.
+- Return actual leading terms for E asymptotics; validate root orders N > 2.
 - Check counit identities using the public counit values.
 - Require even operators and compatible dimensions for graded embeddings.
 - Correct coproduct/spectral interpretation, source pagination and manuscript
@@ -21,11 +28,50 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Explicit coproduct-compatible fundamental R and braid matrices, plus
-  intertwining residual/Boolean APIs; historical R outputs are unchanged.
-- Independent regressions for full CG basis changes, source matrix entries,
-  graded component embeddings, wrong-sign controls and exact specializations.
+- Explicit coproduct-compatible fundamental R and braid matrices
+  (`R_matrix_V1_coproduct`, `R_check_V1_coproduct`) and intertwining
+  residual/Boolean APIs (`intertwining_residual_V1`, `intertwining_holds_V1`);
+  historical R outputs are unchanged.
+- `quantum_group.linalg` with the shared `kron`, `kron_list` and
+  `is_zero_matrix` helpers; `quantum_group.__version__`.
+- Clear `TypeError`/`ValueError` for invalid input: non-integral or negative
+  highest weights, sizes and indices; mismatched or non-square generator
+  matrices in `verify_on_representation`; non-`d²×d²` R-matrices; invalid
+  tensor positions, tensor powers and parity lists; `q = 0` in
+  `QuantumGroupSL2`.
+- Regression tests for full CG basis changes, source matrix entries, graded
+  component embeddings, wrong-sign controls, exact specializations, the
+  shared helpers and every new validation path.
+- `examples/quickstart.py` (the README quickstart, run by CI from outside the
+  source tree against an installed wheel).
 - `AUDIT.md` with derivations, source limitations and novelty assessment.
+
+### Changed
+
+- `python -m pytest` now runs the tests and the package doctests (configured
+  in `pyproject.toml`); CI, README, CONTRIBUTING and `make check` use it.
+- CI tests Python 3.10–3.13, the oldest supported dependencies, and a wheel
+  install. Dependency lower bounds: SymPy ≥ 1.10, NetworkX ≥ 2.6,
+  Matplotlib ≥ 3.5.
+- Trove classifier `Development Status :: 4 - Beta` (was 5 - Production/Stable),
+  reflecting the convention corrections made after 1.0.0.
+- Cross-module use of the private helpers `hopf._kron`, `r_matrix._is_zero`
+  and `supergroup_gl21._is_zero_matrix_symbolic` replaced by
+  `quantum_group.linalg`; the private names remain as aliases.
+- Makefile: `make pdf` replaced by `make historical-article-pdf` (it builds the
+  earlier Turkish article, not the JOSS paper); new `check`, `quickstart`,
+  `benchmark-smoke` and `joss-pdf` targets.
+- Documentation, docstrings and comments translated to English; JOSS paper
+  revised to the current JOSS section structure.
+
+### Removed
+
+- Generated or redundant files: `outputs/V4_combined.png` (written by
+  `main.py`), the stale local paper preview in `output/pdf/`, the unzipped
+  poster build directory `poster/_ytu_build/` (identical to the committed
+  `.pptx`), LaTeX list files `thesis/thesis_ytu.lof/.lot`, an unused ORCID
+  icon, and redundant thesis draft/export variants. Thesis QA page renders
+  moved from `qa_pdf_pages/` to `thesis/qa_pdf_pages/`.
 
 ## [1.0.0] - 2026-09-27
 
@@ -74,4 +120,5 @@ in Python"; thesis in Turkish):
 - limits, crystal graphs and visualization;
 - the `pytest` suite.
 
+[1.1.0]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.0.0...main
 [1.0.0]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.0.0

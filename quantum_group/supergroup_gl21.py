@@ -51,7 +51,8 @@ from typing import Dict, List, Tuple
 
 import sympy as sp
 
-from .hopf import kron_list
+from ._validation import as_int, check_square
+from .linalg import is_zero_matrix, kron_list
 from .utils import q as default_q
 
 
@@ -140,12 +141,12 @@ def _eye_pow(d: int, n: int) -> sp.Matrix:
 
 def R12_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
     """R12 = R ⊗ I_3  (27×27)."""
-    return _kron_list([R_matrix_GLq21(q_sym), sp.eye(3)])
+    return kron_list([R_matrix_GLq21(q_sym), sp.eye(3)])
 
 
 def R23_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
     """R23 = I_3 ⊗ R  (27×27)."""
-    return _kron_list([sp.eye(3), R_matrix_GLq21(q_sym)])
+    return kron_list([sp.eye(3), R_matrix_GLq21(q_sym)])
 
 
 def R13_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
@@ -154,7 +155,7 @@ def R13_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
     This follows the paper's definition; P is the super-permutation matrix.
     """
     P = super_permutation_matrix(super_parity_gl21())
-    PI = _kron_list([P, sp.eye(3)])
+    PI = kron_list([P, sp.eye(3)])
     R23 = R23_GLq21(q_sym)
     return PI * R23 * PI
 
@@ -163,9 +164,8 @@ def R13_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
 # Graded Yang–Baxter verification
 # ---------------------------------------------------------------------------
 
-def _is_zero_matrix_symbolic(M: sp.Matrix) -> bool:
-    """Check whether all entries are symbolically zero, simplifying each."""
-    return all(sp.simplify(x) == 0 for x in M)
+# Backward-compatible private alias; the helper now lives in ``linalg``.
+_is_zero_matrix_symbolic = is_zero_matrix
 
 
 def graded_yang_baxter_residual_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
@@ -178,7 +178,7 @@ def graded_yang_baxter_residual_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
 
 def graded_yang_baxter_holds_GLq21(q_sym: sp.Expr = default_q) -> bool:
     """Check the graded Yang–Baxter equation entry by entry."""
-    return _is_zero_matrix_symbolic(graded_yang_baxter_residual_GLq21(q_sym))
+    return is_zero_matrix(graded_yang_baxter_residual_GLq21(q_sym))
 
 
 def summarize_GLq21_ybe(q_sym: sp.Expr = default_q) -> dict:
@@ -205,7 +205,7 @@ def _adjacent_swap(parity: List[int], n: int, k: int) -> sp.Matrix:
     """
     d = len(parity)
     P = super_permutation_matrix(parity)
-    return _kron_list([_eye_pow(d, k), P, _eye_pow(d, n - k - 2)])
+    return kron_list([_eye_pow(d, k), P, _eye_pow(d, n - k - 2)])
 
 
 def embed_R_in_tensor_power(
@@ -228,13 +228,18 @@ def embed_R_in_tensor_power(
         R_{i,j} = S_{j-1} ... S_{i+1} · R_{i,i+1} · S_{i+1} ... S_{j-1}.
     This conjugation carries the graded signs correctly.
     """
-    i, j = positions
+    tensor_power = as_int(tensor_power, "tensor_power", minimum=2)
+    try:
+        i, j = (as_int(x, "position") for x in positions)
+    except ValueError:
+        raise ValueError("positions must be a pair (i, j) of integers.") from None
     if not (0 <= i < j < tensor_power):
         raise ValueError("positions (i, j) must satisfy 0 <= i < j < tensor_power.")
     d = len(parity)
     n = tensor_power
     if not parity or any(p not in (0, 1) for p in parity):
         raise ValueError("parity must be a nonempty list of zeros and ones.")
+    check_square(R, "R")
     if R.shape != (d*d, d*d):
         raise ValueError("R must have shape (d², d²), where d = len(parity).")
     degrees = [(parity[a] + parity[b]) % 2 for a in range(d) for b in range(d)]
@@ -243,7 +248,7 @@ def embed_R_in_tensor_power(
         raise ValueError("R must be an even operator (preserve total parity).")
 
     # Adjacent embedding R_{i, i+1}
-    op = _kron_list([_eye_pow(d, i), R, _eye_pow(d, n - i - 2)])
+    op = kron_list([_eye_pow(d, i), R, _eye_pow(d, n - i - 2)])
 
     # Move the second index from i+1 to j by conjugation.
     for k in range(i + 1, j):
@@ -260,6 +265,7 @@ def all_Rij_GLq21(
     For example, ``all_Rij_GLq21(3)`` -> {(0,1), (0,2), (1,2)};
     ``all_Rij_GLq21(4)`` -> six operators, each 81×81.
     """
+    tensor_power = as_int(tensor_power, "tensor_power", minimum=2)
     parity = super_parity_gl21()
     R = R_matrix_GLq21(q_sym)
     return {
@@ -298,5 +304,5 @@ def local_ybe_on_four_tensor_GLq21(
         Rac = Rij[(a, c)]
         Rbc = Rij[(b, c)]
         residual = Rab * Rac * Rbc - Rbc * Rac * Rab
-        result[(a, b, c)] = _is_zero_matrix_symbolic(residual)
+        result[(a, b, c)] = is_zero_matrix(residual)
     return result

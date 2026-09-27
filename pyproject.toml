@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quantum-group"
-version = "1.0.0"
-description = "Symbolic SymPy models and reproducible verification of U_q(sl_2) and GL_q(2|1) quantum group structures"
+version = "1.1.0"
+description = "Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -14,7 +14,7 @@ authors = [
 ]
 keywords = ["quantum groups", "Hopf algebras", "R-matrix", "Yang-Baxter equation", "sympy"]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
@@ -22,12 +22,15 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Mathematics",
 ]
+# Lower bounds are the oldest versions exercised by the "minimum
+# dependencies" CI job (Python 3.10, with numpy<2 for Matplotlib 3.5).
 dependencies = [
-    "sympy",
-    "networkx",
-    "matplotlib",
+    "sympy>=1.10",
+    "networkx>=2.6",
+    "matplotlib>=3.5",
 ]
 
 [project.optional-dependencies]
@@ -38,9 +41,13 @@ notebooks = ["jupyter"]
 Homepage = "https://github.com/TerekliTahaBerk/quantum-groups"
 Repository = "https://github.com/TerekliTahaBerk/quantum-groups"
 Issues = "https://github.com/TerekliTahaBerk/quantum-groups/issues"
+Changelog = "https://github.com/TerekliTahaBerk/quantum-groups/blob/main/CHANGELOG.md"
 
 [tool.setuptools]
 packages = ["quantum_group"]
 
+# `python -m pytest` is the canonical validation command: it runs the test
+# suite and the package doctests, exactly as CI does.
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "quantum_group"]
+addopts = "--doctest-modules"

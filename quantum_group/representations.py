@@ -23,6 +23,7 @@ from typing import List
 
 import sympy as sp
 
+from ._validation import as_int
 from .utils import q, q_integer
 
 
@@ -61,6 +62,7 @@ def build_representation(n: int, q_sym: sp.Expr = q) -> Representation:
     Representation
         Data class containing generator matrices and a list of K-weights.
     """
+    n = as_int(n, "The highest weight n")
     if n < 0:
         raise ValueError("The highest weight n must be nonnegative.")
 
@@ -122,6 +124,7 @@ def lowest_weight_vector(rep: Representation) -> sp.Matrix:
 
 def weight_of(rep: Representation, k: int) -> sp.Expr:
     """Return the K-eigenvalue (q^{n-2k}) of basis vector v_k."""
+    k = as_int(k, "k")
     if not (0 <= k < rep.dim):
         raise IndexError(f"k must be in [0, {rep.dim}).")
     return rep.weights[k]

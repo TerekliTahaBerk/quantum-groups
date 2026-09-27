@@ -3,6 +3,13 @@ name: tests
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+# The validation command is `python -m pytest`; pyproject.toml configures it
+# to run tests/ plus the package doctests. README, CONTRIBUTING, the Makefile
+# (`make check`) and paper/PREFLIGHT.md use the same command.
+env:
+  MPLBACKEND: Agg
 
 jobs:
   pytest:
@@ -10,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,5 +29,41 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[test]"
-      - name: Run tests
-        run: pytest -q
+      - name: Show versions
+        run: python -c "import sys, sympy, networkx, matplotlib, quantum_group; print(sys.version); print('sympy', sympy.__version__, 'networkx', networkx.__version__, 'matplotlib', matplotlib.__version__, 'quantum-group', quantum_group.__version__)"
+      - name: Run tests and doctests
+        run: python -m pytest
+
+  minimum-dependencies:
+    # Exercises the lower bounds declared in pyproject.toml.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install oldest supported dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "sympy==1.10.1" "networkx==2.6.3" "matplotlib==3.5.3" "numpy<2" pytest
+          python -m pip install --no-deps -e .
+      - name: Run tests and doctests
+        run: python -m pytest
+
+  wheel-quickstart:
+    # Builds and installs a wheel (non-editable) and runs the README
+    # quickstart from outside the source tree.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and install wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+          python -m pip install dist/*.whl
+      - name: Run README quickstart outside the repository
+        working-directory: ${{ runner.temp }}
+        run: python "$GITHUB_WORKSPACE/examples/quickstart.py"

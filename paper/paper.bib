@@ -86,7 +86,7 @@
 }
 
 % Verified: SageMath's own CITATION.cff (concept DOI covering all versions)
-% and the GitHub release tag 10.9 (latest stable at time of writing).
+% and VERSION.txt on the master (stable) branch, 10.9, re-checked 2026-09-27.
 @software{sagemath,
   author  = {{The Sage Developers}},
   title   = {{SageMath}, the {S}age {M}athematics {S}oftware {S}ystem
@@ -97,7 +97,7 @@
 }
 
 % Verified: CHANGES.md in the gap-system/gap repository
-% ("GAP 4.16.1 (August 2026)").
+% ("GAP 4.16.1 (August 2026)"), re-checked 2026-09-27.
 @software{gap,
   author  = {{The GAP Group}},
   title   = {{GAP} -- {G}roups, {A}lgorithms, and {P}rogramming,
@@ -116,8 +116,13 @@
   url     = {https://github.com/gap-packages/quagroup}
 }
 
-% Verified: entry G01 in QuaGroup's doc/quagroup.bib and a web search of
-% J. Symbolic Comput. vol. 32. DOI not found, so none is given.
+% Verified: entry G01 in QuaGroup's doc/quagroup.bib (re-checked 2026-09-27;
+% it gives no DOI) and web-search records of J. Symbolic Comput. 32(5),
+% 475--490. The DOI 10.1006/jsco.2001.0479 follows the publisher's pattern
+% for this journal but could not be confirmed on 2026-09-27: doi.org,
+% Crossref, OpenAlex, zbMATH and dblp were unreachable from the checking
+% environment and no reachable record lists it. Add it only after resolving
+% it at https://doi.org/10.1006/jsco.2001.0479 to this article.
 @article{degraaf2001,
   author  = {{de Graaf}, Willem A.},
   title   = {Computing with quantized enveloping algebras: {PBW}-type bases,
@@ -142,4 +147,21 @@
   year    = {2000},
   eprint  = {math/9810092},
   archivePrefix = {arXiv}
+}
+
+% The undergraduate thesis in which the package was developed and used; the
+% submitted PDF is archived in this repository (thesis/Lisans Bitirme Tezi.pdf).
+% Title, department, supervisor and date (June 2026) from thesis/thesis_ytu.tex.
+@thesis{terekli2026thesis,
+  author      = {Terekli, Taha Berk},
+  title       = {Quantum Grup Yap{\i}lar{\i}n{\i}n {P}ython Ortam{\i}nda
+                 Modellenmesi [{M}odelling Quantum Group Structures in
+                 {P}ython]},
+  type        = {Undergraduate thesis},
+  institution = {Department of Mathematics, Y{\i}ld{\i}z Technical University},
+  address     = {Istanbul, T{\"u}rkiye},
+  year        = {2026},
+  month       = jun,
+  langid      = {turkish},
+  url         = {https://github.com/TerekliTahaBerk/quantum-groups/tree/main/thesis}
 }

@@ -17,9 +17,13 @@ inspected Drinfeld formula and the GL matrix to the supplied original.
 The retained computational claims are checked independently below; an
 exhaustive page-by-page audit of all cited books is not claimed.
 
-No commit, push, submission, or message to an editor has been made. The active
-English paper and software are revised; archived thesis files are accompanied
-by `thesis/ERRATA.md`. Part 2's bounded feasibility assessment follows the
+**Repository status (updated 27 September 2026).** The corrections in §12
+were committed to `main` as `bc5c370`, after the `v1.0.0` tag, and GitHub
+Actions passed on that commit. They are therefore *not* contained in the
+v1.0.0 release or its Zenodo archive; they are part of the unreleased 1.1.0
+(`CHANGELOG.md`). The current verification record is `paper/PREFLIGHT.md`.
+No JOSS submission or message to an editor has been made. Archived thesis
+files are accompanied by `thesis/ERRATA.md`. Part 2's bounded feasibility assessment follows the
 completed GL comparison in §13 and identifies no defensible new mathematical
 result to implement within this scope.
 
@@ -580,7 +584,7 @@ the final paper makes no equation-specific claim requiring them.
 
 ## 12. Authorized remediation and current verification
 
-| Baseline finding | Resolution in the working tree | Evidence |
+| Baseline finding | Resolution (committed in `bc5c370`) | Evidence |
 |---|---|---|
 | Coproduct mismatch | Keep historical upper R API; add `R_matrix_V1_coproduct`, `R_check_V1_coproduct`, `intertwining_residual_V1`, `intertwining_holds_V1`. Distinguish sectors explicitly. | All four generator intertwiners; full descendant sectors; historical-R negative controls; compatible QYBE/braid/Hecke tests. |
 | Universal normalization | Cite directly inspected Drinfeld §13; remove unsupported exact Jimbo-normalization attribution. | Fundamental universal-series regression independently constructs the diagonal and nilpotent term. |
@@ -601,12 +605,13 @@ Relation verification still uses the defining commutator quotient, so it
 rejects q=±1 and q=0; the classical-limit helper is the appropriate API there.
 Floating inputs remain approximate by design.
 
-Current local verification: Python 3.12.10, SymPy 1.14.0. The initial corrected
-suite passed **156 tests in 7.01 s**; the final count includes additional
-public-facade exactness and generic q-binomial quotient regressions (158). See `paper/PREFLIGHT.md` for the
-final test and rendering record. New tests belong to a correctness repair;
-they are not a claimed new mathematical result. No remote CI result is
-asserted for these uncommitted changes.
+Verification at the time of the audit: Python 3.12.10, SymPy 1.14.0. The
+initial corrected suite passed **156 tests in 7.01 s**; with additional
+public-facade exactness and generic q-binomial quotient regressions it had
+158 tests plus 3 doctests when committed as `bc5c370`, and CI passed on that
+commit. Later test additions and the current counts are recorded in
+`paper/PREFLIGHT.md`. New tests belong to a correctness repair; they are not
+a claimed new mathematical result.
 
 ## 13. Part 2: bounded feasibility and contribution assessment
 
