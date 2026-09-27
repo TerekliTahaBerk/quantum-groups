@@ -1,33 +1,56 @@
 # JOSS paper and release notes (maintainer)
 
-This directory holds the JOSS submission (`paper.md`, `paper.bib`) and the
-pre-submission checklist (`PREFLIGHT.md`).
+- `paper.md`, `paper.bib` — the JOSS manuscript (the only active manuscript).
+- `PREFLIGHT.md` — current verification record and JOSS gate assessment.
+- `REVIEW_CHANGES.md` — factual summary of changes since v1.0.0.
+- `review-header.tex` — header for the optional plain-Pandoc reading copy.
 
-## Zenodo archiving: manual steps
+## Building the paper
 
-These steps are done in the GitHub and Zenodo web interfaces; no code in this
-repository can perform them.
+With Docker, the official JOSS toolchain (the `openjournals/inara` image
+used by the editorial bot) builds `paper/paper.pdf`:
 
-1. **Connect GitHub to Zenodo.** Sign in at <https://zenodo.org> with the
-   GitHub account that owns the repository. Open *Account → GitHub* and switch
-   `TerekliTahaBerk/quantum-groups` **On**. If the repository is not listed,
-   use *Sync now*.
-2. **Complete the citation metadata first.** Zenodo builds the record from
-   `CITATION.cff` when there is no `.zenodo.json`. Before releasing, add
-   `date-released: YYYY-MM-DD` and check authors, ORCID, license and
-   version (`1.0.0`).
-3. **Create a GitHub Release.** Pushing a tag alone does **not** trigger
-   Zenodo. After the `v1.0.0` tag is on GitHub, open *Releases → Draft a new
-   release*, select `v1.0.0` and publish it. Zenodo then archives the
-   release and mints a DOI within a few minutes.
-4. **Record the DOI.** Zenodo issues two DOIs:
-   - a **version DOI** (this exact release), which is the one JOSS asks for;
-   - a **concept DOI** (always resolves to the latest version), which suits
-     a README badge.
+```sh
+make joss-pdf
+```
 
-   Add the DOI to `CITATION.cff` (`doi:` or `identifiers:`) and a badge to
-   `README.md`.
-5. **JOSS timing.** JOSS asks for the archive DOI and the release version at
-   the *end* of review, when the paper is accepted. If review leads to code
-   changes, make a new release (e.g. `v1.0.1`) and give JOSS that version's
-   DOI.
+Generated PDFs are not committed (`paper/paper.pdf` is ignored), so a stale
+copy cannot be mistaken for the current source. A plain Pandoc reading copy,
+not JOSS typesetting, can be made with Pandoc ≥ 3 and XeLaTeX:
+
+```sh
+mkdir -p build && pandoc paper/paper.md --citeproc --bibliography paper/paper.bib \
+  --pdf-engine=xelatex --include-in-header=paper/review-header.tex \
+  -V geometry:margin=22mm -M author='Taha Berk Terekli' -o build/paper-preview.pdf
+```
+
+## Releases and Zenodo archiving
+
+Zenodo's GitHub integration was used for `v1.0.0`: publishing that GitHub
+release produced the version DOI
+[10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681)
+(recorded by the author in commit `855cade`). That archive contains the code
+at tag `v1.0.0` (commit `8dcfe99`) only. Before releasing, confirm in the
+Zenodo account that the repository toggle is still on.
+
+`main` carries version **1.1.0** (see `../CHANGELOG.md`), which has not been
+released. To release it, after reviewing the diff since `v1.0.0`:
+
+1. In `../CHANGELOG.md` replace "Unreleased" in the `[1.1.0]` heading with
+   the release date; in `../CITATION.cff` add `date-released: YYYY-MM-DD`.
+   Commit and wait for CI to pass on that commit.
+2. Create an annotated tag `v1.1.0` on that commit and push it
+   (`git tag -a v1.1.0 -m "v1.1.0" && git push origin v1.1.0`).
+3. On GitHub, *Releases → Draft a new release*, select `v1.1.0`, paste the
+   1.1.0 changelog section, and publish. (A tag alone does not trigger
+   Zenodo.)
+4. Zenodo mints a new version DOI within minutes. Record it: add it to
+   `CITATION.cff` `identifiers` (describe it as the v1.1.0 archive, keep the
+   v1.0.0 entry), and cite it in `README.md`. Also note the concept DOI shown
+   on the Zenodo record, which always resolves to the latest version.
+5. Never move or delete the `v1.0.0` tag or release; its DOI must keep
+   pointing at the code it archived.
+
+JOSS asks for the archive DOI and version at the *end* of review. If review
+leads to code changes, make a further release and give JOSS that version's
+DOI.

@@ -1,103 +1,35 @@
-# quantum-group: A lightweight SymPy package for verifying U_q(sl_2) and GL_q(2|1) structures
+# quantum-group: exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22997681.svg)](https://doi.org/10.5281/zenodo.22997681)
+[![tests](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml/badge.svg)](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml)
 
-This repository contains SymPy-based symbolic modelling and verification code
-for `U_q(sl_2)` and `GL_q(2|1)`. It connects the manuscript's explicit
-finite-dimensional representations, residual matrices, Yang-Baxter checks and
-related figures to reproducible tests. It is not a general theorem prover.
+`quantum-group` builds the explicit matrices behind concrete quantum-group
+calculations with SymPy, forms the difference between the two sides of an
+identity, and checks that every entry of this residual simplifies exactly to
+zero. It covers finite-dimensional `U_q(sl_2)` representations and the graded
+`GL_q(2|1)` R-matrix of Çelik and Çelik (2021). It verifies identities on
+concrete representations; it is not a general quantum-group computer algebra
+system and not a theorem prover.
 
-## Main Features
+## Main features
 
-- Helpers for `q`-integers, `q`-factorials, `q`-binomial coefficients and classical limits.
-- Explicit `E`, `F`, `K`, `K_inv` matrices for finite-dimensional `U_q(sl_2)` representations `V_n`.
-- Representation-level verification of defining relations by zero residuals.
-- Hopf structure: coproduct, counit, antipode and axiom checks.
-- Tensor products, Clebsch-Gordan examples and highest-weight vectors.
-- The `V_1 \otimes V_1` R-matrix, QYBE, braid relation and Hecke/skein check.
-- The 9x9 R-matrix for `GL_q(2|1)`, super-permutation and 27x27 graded YBE verification.
-- `R_{ij}` embeddings in `V^{\otimes n}`, far commutativity and local YBE checks.
-- The crystal graph `B(n)` and basic visualization functions.
-- A reproducible `pytest` test suite.
-
-## Mathematical Background
-
-`R_matrix_V1()` is the Drinfeld-Jimbo R-matrix of `U_q(sl_2)` on
-`V_1 \otimes V_1`. The universal R-matrix
-`q^{H⊗H/2}(1 + (q - q^{-1}) E⊗F + ...)` (Drinfeld 1987; see Kassel 1995 for
-the full series) truncates after two terms on `V_1`, because `E^2 = F^2 = 0`
-there. Its image, rescaled by `q^{1/2}` to remove fractional powers, is the
-4x4 matrix `diag(q, 1, 1, q)` plus a single off-diagonal entry `q - q^{-1}`.
-The normalization is derived from Drinfeld §13, pp. 816–817 in `AUDIT.md`.
-
-The historical `R_matrix_V1()` uses the opposite of the package coproduct.
-For `hopf.coproduct` and the tensor-product submodules, use
-`R_matrix_V1_coproduct()` (equal to `R.T`) and
-`R_check_V1_coproduct()` (equal to `R * swap_matrix(2)`).
-`intertwining_residual_V1("E")` exposes the coproduct-compatibility check;
-`intertwining_holds_V1` also accepts `F`, `K` and `K_inv`.
-Both R conventions satisfy QYBE and their braided forms satisfy the Hecke
-relation, but their eigenspaces must not be identified across conventions.
-
-Exact Python integer parameters are sympified before negative powers;
-floats remain approximate. The default domain is generic nonzero q.
-Laurent-polynomial q-arithmetic supports removable-singularity specializations,
-while the defining commutator quotient itself excludes q = ±1.
-At roots of unity the modules need not be irreducible or semisimple.
-The generic CG algorithm is not a root-of-unity decomposition algorithm.
-
-The GL matrix matches the unnumbered display on printed page 261 of
-Çelik and Çelik, *Reports on Mathematical Physics* 88 (2021), **259–269**.
-All twelve nonzero entries, the graded signs and all six four-factor
-placements are independently checked. General embeddings accept even
-operators only. See [audit](AUDIT.md) and [thesis errata](thesis/ERRATA.md).
-
-- M. Jimbo, Lett. Math. Phys. 10 (1985) 63-69, doi:10.1007/BF00704588.
-- M. Jimbo, Lett. Math. Phys. 11 (1986) 247-252, doi:10.1007/BF00400222.
-- V. G. Drinfeld, "Quantum groups", Proc. ICM Berkeley 1986, Vol. 1, AMS
-  (1987) 798-820.
-- C. Kassel, *Quantum Groups*, GTM 155, Springer (1995),
-  doi:10.1007/978-1-4612-0783-2.
-
-## Related Work
-
-The main existing tools for computing with quantized enveloping algebras are
-the GAP package [QuaGroup](https://github.com/gap-packages/quagroup)
-(W. A. de Graaf) and SageMath's `QuantumGroup` class, which is an interface to
-QuaGroup. Both are far more general than this package: they handle `U_q(g)`
-for semisimple Lie types, subject to computational limits, including
-R-matrices, crystal and canonical bases, and the Hopf structure. SageMath also
-has combinatorial crystals for the general linear Lie *super*algebra
-(Benkart-Kang-Kashiwara crystals of type `A(m|n)`).
-
-| | quantum-group (this package) | GAP QuaGroup 1.8.4 | SageMath `QuantumGroup` |
-| --- | --- | --- | --- |
-| Scope | `U_q(sl_2)` and one quantum supergroup example, `GL_q(2\|1)` | `U_q(g)`, `g` finite-dimensional semisimple | Same as QuaGroup (wraps it) |
-| R-matrix | `V_1⊗V_1` (4x4); `GL_q(2\|1)` (9x9) | `RMatrix` for modules with computable weights | `R_matrix()` via QuaGroup |
-| Super / graded structures | Graded (super) YBE for `GL_q(2\|1)`, including `R_ij` on `V^{⊗n}` | This specific graded YBE example is not documented | This example is not documented in `QuantumGroup`; gl(m\|n) crystals exist separately |
-| Crystals | Combinatorial `B(n)` for `sl_2` only | Crystal bases, crystal graphs (LS paths) | Extensive crystal library |
-| Treatment of `q` | SymPy symbol; substitution helpers for classical and root-of-unity limits | Indeterminate `q` over `Q` | Generic `q` or a specialization, e.g. a root of unity |
-| Verification style | Explicit residual matrices checked entrywise to be zero, wired to `pytest` | Algebraic computation | Algebraic computation |
-| Installation / dependencies | `pip install` from the Git repository (not on PyPI); SymPy, NetworkX, Matplotlib | GAP >= 4.8 | Full SageMath plus the optional `gap_package_quagroup` |
-| License | MIT | GPL-2.0-or-later | Library code GPL-2.0-or-later; the Sage distribution as a whole is GPL-3.0 |
-
-This package does not try to replace these systems. It aims to be a small,
-pip-installable, pure-Python reference implementation. It makes the concrete
-matrices behind the manuscript's claims explicit, including the graded
-Yang-Baxter equation for `GL_q(2|1)`, and checks them in CI.
-
-The comparison concerns the documented
-[QuaGroup](https://gap-packages.github.io/quagroup/doc/chap1.html) and
-[Sage QuantumGroup](https://doc.sagemath.org/html/en/reference/algebras/sage/algebras/quantum_groups/quantum_group_gap.html)
-interfaces, not all software or all superalgebra functionality. Historical
-commit-level search claims are not needed to establish this package's scope.
+- `q`-integers, `q`-factorials and `q`-binomials as Laurent polynomials, and classical limits.
+- Explicit `E`, `F`, `K`, `K_inv` matrices for the modules `V_n` of `U_q(sl_2)`.
+- Defining relations checked as exact residual matrices.
+- Coproduct, counit and antipode, with generator-level Hopf identities.
+- Tensor products, Clebsch–Gordan highest-weight vectors.
+- The fundamental R-matrix on `V_1 ⊗ V_1`: QYBE, braid and Hecke relations,
+  coproduct intertwining, in both the historical and the coproduct-compatible
+  convention (see below).
+- The 9x9 `GL_q(2|1)` R-matrix, super-permutation, the 27x27 graded
+  Yang–Baxter residual, and `R_ij` placements on `V^{⊗n}` via graded swaps.
+- The combinatorial crystal graph `B(n)` and simple weight/crystal plots.
 
 ## Installation
 
-Python 3.10 or newer is required. The package is defined in `pyproject.toml`
-(distribution name `quantum-group`, import name `quantum_group`).
-
-The package is not yet published on PyPI; install it directly from this repository:
+Python 3.10–3.13. Runtime dependencies: SymPy ≥ 1.10, NetworkX ≥ 2.6,
+Matplotlib ≥ 3.5 (installed automatically). The package is not on PyPI;
+install it from this repository (distribution name `quantum-group`, import
+name `quantum_group`):
 
 ```bash
 git clone https://github.com/TerekliTahaBerk/quantum-groups.git
@@ -107,162 +39,103 @@ source .venv/bin/activate
 python3 -m pip install -e ".[test]"
 ```
 
-To install without cloning:
+Without cloning:
 `python3 -m pip install "git+https://github.com/TerekliTahaBerk/quantum-groups"`.
-Runtime dependencies are SymPy, NetworkX and Matplotlib; pytest (`[test]`)
-and Jupyter (`[notebooks]`) are optional.
-
-To run the notebooks, use `".[test,notebooks]"`
-(equivalent to `pip install -r requirements.txt`).
+For the notebook in `notebooks/`, install `".[test,notebooks]"` (equivalent
+to `pip install -r requirements.txt`).
 
 ## Quickstart
+
+This is `examples/quickstart.py`; CI runs it from outside the source tree
+against an installed wheel.
 
 ```python
 from quantum_group import (
     build_representation,
     verify_on_representation,
-    R_matrix_V1,
+    R_matrix_V1_coproduct,
+    intertwining_holds_V1,
     qybe_holds,
-    graded_yang_baxter_holds_GLq21,
+    graded_yang_baxter_residual_GLq21,
+    is_zero_matrix,
 )
 
+# U_q(sl_2): the 3-dimensional module V_2 satisfies the defining relations.
 rep = build_representation(2)
 checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv)
 assert all(check.holds for check in checks.values())
 
-assert qybe_holds(R_matrix_V1())
-assert graded_yang_baxter_holds_GLq21()
+# The fundamental R-matrix compatible with the package coproduct satisfies
+# the QYBE and intertwines the coproduct for every generator.
+assert qybe_holds(R_matrix_V1_coproduct())
+assert all(intertwining_holds_V1(X) for X in ("E", "F", "K", "K_inv"))
+
+# GL_q(2|1): the graded Yang-Baxter residual is an exact 27x27 zero matrix.
+residual = graded_yang_baxter_residual_GLq21()
+assert residual.shape == (27, 27) and is_zero_matrix(residual)
+
+print("quickstart: all checks passed")
 ```
 
-Compatibility names used by manuscript drafts are also available:
-`build_representation_core(...)` and `verify_relations_core(...)`.
+Every `*_residual` function returns the exact SymPy difference matrix, so a
+failing identity can be inspected entry by entry. Draft names used in the
+thesis, `build_representation_core` and `verify_relations_core`, remain
+available as wrappers.
 
-## Tests
+## Validation
 
-Run the full reproducibility suite:
+One command runs the complete test suite and the package doctests; it is
+what CI runs on Python 3.10–3.13 and with the oldest supported dependency
+versions:
 
 ```bash
-python3 -m pytest -q
+python3 -m pytest          # or: make check
 ```
 
-Useful targeted runs:
+Plots use Matplotlib's noninteractive `Agg` backend in the tests. The
+`GL_q(2|1)` checks use symbolic 81x81 matrices; the full suite took about
+15 s when prepared for 1.1.0 (Python 3.12, SymPy 1.14, x86-64 Linux). Targeted runs, e.g.
+`python3 -m pytest tests/test_supergroup_gl21.py`, also work.
 
-```bash
-python3 -m pytest tests/test_r_matrix.py -q
-python3 -m pytest tests/test_supergroup_gl21.py -q
-python3 -m pytest tests/test_tensor.py -q
-```
+## Conventions and mathematical background
 
-The `GL_q(2|1)` tensor-power checks use symbolic `81x81` matrices. On the
-reference machine in `benchmarks/results.md`, `tests/test_supergroup_gl21.py`
-takes about 5 s and the full suite about 13 s.
+The coproduct is `Δ(E) = E⊗1 + K⊗E`, `Δ(F) = F⊗K^{-1} + 1⊗F`, `Δ(K) = K⊗K`.
 
-## Repository Structure
+`R_matrix_V1()` is the historical upper-triangular matrix
+`diag(q, 1, 1, q)` plus the entry `q - q^{-1}`: the image of Drinfeld's
+universal R-matrix on `V_1 ⊗ V_1` multiplied by `q^{1/2}` (Drinfeld 1987,
+§13, pp. 816–817; derivation in [`AUDIT.md`](AUDIT.md) §4). It intertwines
+the **opposite** of the package coproduct. For the package coproduct and its
+tensor-product submodules use `R_matrix_V1_coproduct()` (`= R_21 = P R P`)
+and `R_check_V1_coproduct()` (`= R P`); `intertwining_residual_V1(X)` exposes
+the check for `X` in `E, F, K, K_inv`. Both conventions satisfy the QYBE and
+the Hecke relation, but their braid eigenspaces differ. The historical
+function is kept unchanged so that earlier results remain reproducible.
 
-```text
-quantum-groups/
-├── quantum_group/
-│   ├── utils.py                 # q-arithmetic and classical limits
-│   ├── generators.py            # symbolic E, F, K, K_inv
-│   ├── representations.py       # V_n construction
-│   ├── relations.py             # U_q(sl_2) relation checks
-│   ├── quantum_group_sl2.py     # facade class
-│   ├── hopf.py                  # coproduct, counit, antipode
-│   ├── tensor.py                # tensor products and CG examples
-│   ├── r_matrix.py              # R, R_check, QYBE, braid and Hecke checks
-│   ├── supergroup_gl21.py       # GL_q(2|1), graded YBE, R_ij embeddings
-│   ├── limits.py                # classical/root-of-unity/crystal-limit helpers
-│   ├── crystal.py               # combinatorial crystal graph B(n)
-│   └── visualization.py         # weight and crystal diagrams
-├── tests/
-│   ├── test_relations.py
-│   ├── test_representations.py
-│   ├── test_hopf.py
-│   ├── test_tensor.py
-│   ├── test_r_matrix.py
-│   ├── test_supergroup_gl21.py
-│   ├── test_limits.py
-│   └── test_visualization.py
-├── thesis/
-│   ├── thesis.tex
-│   ├── thesis_ytu.tex
-│   ├── Lisans Bitirme Tezi.pdf
-│   └── figures/
-│       ├── generate_figures.py
-│       ├── R_sl2_V1.pdf
-│       ├── R_gl21_structure.pdf
-│       └── ybe_products_27.pdf
-├── benchmarks/
-│   ├── benchmark.py             # timing script
-│   ├── results.csv
-│   └── results.md
-├── notebooks/exploration.ipynb
-├── MANUSCRIPT_CODE_MAPPING.md
-├── main.py
-├── Makefile
-├── requirements.txt
-└── README.md
-```
+Exact Python integers are converted to SymPy integers; floats remain
+approximate. The default parameter is a generic nonzero symbol `q`;
+identities are rational in `q` and hold where denominators are defined. The
+defining commutator quotient excludes `q = ±1` (use the classical-limit
+helpers there). At roots of unity the modules need not be irreducible or
+semisimple, and the Clebsch–Gordan routine assumes generic `q`.
 
-## Reproducing Manuscript Results
+For `GL_q(2|1)` the basis parities are `(0, 0, 1)`. The matrix matches the
+unnumbered display on printed page 261 of Çelik and Çelik, *Reports on
+Mathematical Physics* 88 (2021) 259–269; every entry is fixed by a test.
+General placements accept even (parity-preserving) operators only.
 
-| Section | Claim | Module | Test |
-| --- | --- | --- | --- |
-| `q` arithmetic | `[n]_q`, factorials, binomials, classical limits | `quantum_group/utils.py` | `tests/test_relations.py` |
-| `U_q(sl_2)` relations | R1-R4 hold on explicit `V_n` matrices | `quantum_group/relations.py` | `tests/test_relations.py` |
-| Representations | `V_n` dimensions, weights, highest/lowest vectors | `quantum_group/representations.py` | `tests/test_representations.py` |
-| Hopf structure | coproduct, counit, antipode checks | `quantum_group/hopf.py` | `tests/test_hopf.py` |
-| Tensor products | coproduct action and CG highest-weight vectors | `quantum_group/tensor.py` | `tests/test_tensor.py` |
-| R-matrix/QYBE | `R_{12}R_{13}R_{23}=R_{23}R_{13}R_{12}` | `quantum_group/r_matrix.py` | `tests/test_r_matrix.py` |
-| `GL_q(2|1)` graded YBE | 27x27 residual is zero | `quantum_group/supergroup_gl21.py` | `tests/test_supergroup_gl21.py` |
-| Limits and crystals | classical/root-of-unity helpers and `B(n)` graph | `quantum_group/limits.py`, `quantum_group/crystal.py` | `tests/test_limits.py`, `tests/test_representations.py` |
-| Figures | PDF figures generated from package outputs | `thesis/figures/generate_figures.py` | smoke-checked by running the script |
+## Scope and limitations
 
-For a fuller listing, see `MANUSCRIPT_CODE_MAPPING.md`.
-
-## Figures
-
-Regenerate manuscript figures:
-
-```bash
-python3 thesis/figures/generate_figures.py
-```
-
-The script writes:
-
-- `thesis/figures/R_sl2_V1.pdf`
-- `thesis/figures/R_gl21_structure.pdf`
-- `thesis/figures/ybe_products_27.pdf`
-
-The general visualization helpers in `quantum_group/visualization.py` return
-Matplotlib `Figure` objects and leave saving/display to the caller.
-
-## Manuscript and PDF
-
-The submitted thesis (in Turkish) is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
-build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is `thesis/thesis.tex`.
-The active JOSS manuscript is `paper/paper.md`; its local reading copy and
-rendering command are in `output/pdf/`. Official JOSS typesetting remains a
-separate journal build. `make pdf` instead rebuilds the **historical Turkish
-article**, whose corrections are recorded in `thesis/ERRATA.md`. With Tectonic:
-
-```bash
-make pdf
-```
-
-The Makefile also contains convenience targets:
-
-```bash
-make test
-make figures
-make pdf
-make demo
-```
-
-## Limitations
-
-- Cost grows quickly with the tensor power. On a 2.1 GHz Xeon (Python 3.11,
-  SymPy 1.14; mean of 3 runs, see `benchmarks/results.md`):
+- Checks run on explicit finite-dimensional representations; they do not
+  prove identities in the abstract Hopf algebra or classify representations.
+- A residual that SymPy does not simplify to zero is not by itself a proof of
+  inequality (`simplify` is not a decision procedure).
+- Root-of-unity helpers are examples; the small quantum group is not
+  implemented. `B(n)` is a combinatorial model, not a crystal-basis algorithm.
+- The RTT relations, Hopf superalgebra and Gauss decomposition of
+  `GL_q(2|1)`, Markov traces and the Jones polynomial are not implemented.
+- Dense symbolic matrices grow as `3^n`. Recorded timings
+  (`benchmarks/results.md`; Python 3.11, SymPy 1.14, 2.1 GHz Xeon, mean of 3):
 
   | Check | n | Matrix size | Mean time |
   | --- | --- | --- | ---: |
@@ -272,33 +145,76 @@ make demo
   | `all_Rij_GLq21` | 5 | 243x243 | 14.6 s |
   | graded YBE on one triple, incl. embedding | 5 | 243x243 | 15.2 s |
 
-  These are historical measurements of the benchmarked functions, not a
-  timing guarantee for the current expanded test suite. At n = 5
-  the time is dominated by building the dense symbolic `R_ij` embeddings
-  (about 14.6 s), not by simplifying the Yang-Baxter residual. n >= 6
-  (729x729) has not been benchmarked. Reproduce with
-  `python benchmarks/benchmark.py`.
-- Most checks are explicit finite-dimensional representation-level
-  verifications, not general formal proofs inside an abstract proof assistant.
-- Root-of-unity behavior is exploratory; the package does not implement the
-  full small quantum group theory.
-- `crystal.py` implements the combinatorial crystal graph `B(n)`; it does not
-  construct a full Kashiwara global basis.
-- The Hecke/skein relation and braid representation are checked, but the Jones
-  polynomial and Markov trace are not implemented.
+  At n = 5 building the embeddings dominates. n ≥ 6 has not been
+  benchmarked. Rerun with `python benchmarks/benchmark.py` (overwrites the
+  recorded table) or `make benchmark-smoke` (writes to `build/`).
+
+## Related software
+
+GAP's [QuaGroup](https://github.com/gap-packages/quagroup) (W. A. de Graaf)
+and SageMath's `QuantumGroup` interface to it are far more general: they
+compute with `U_q(g)` for semisimple `g`, including highest-weight modules,
+R-matrices and canonical/crystal bases; SageMath also has crystals for
+`gl(m|n)`. This package does not replace them. It is a small pure-Python
+layer for checking the explicit matrices of a particular text, in its basis
+order and conventions, including the graded `GL_q(2|1)` example, which lies
+outside QuaGroup's documented `U_q(g)` scope. For general `U_q(g)`
+computations, use those systems. See `paper/paper.md` for a fuller
+comparison.
+
+## Reproducing the paper's calculations
+
+The JOSS manuscript is [`paper/paper.md`](paper/paper.md). Each
+computational claim is mapped to code and tests in
+[`MANUSCRIPT_CODE_MAPPING.md`](MANUSCRIPT_CODE_MAPPING.md). The main ones:
+
+| Claim | Command |
+| --- | --- |
+| Graded YBE: all 729 residual entries vanish; ordinary flip fails in exactly two entries | `python3 -m pytest tests/test_supergroup_gl21.py tests/test_audit_regressions.py -k "yang_baxter or swap"` |
+| Six `V^{⊗4}` placements match an independent signed formula; four local triples | `python3 -m pytest tests/test_audit_regressions.py tests/test_supergroup_gl21.py -k "embeddings or local"` |
+| Every entry of the 9x9 matrix equals Çelik–Çelik p. 261 | `python3 -m pytest tests/test_audit_regressions.py -k primary_source` |
+| `R_21` intertwines the coproduct for all four generators; braid sectors `q`, `-q^{-1}` | `python3 -m pytest tests/test_audit_regressions.py -k "intertwining or sectors"` |
+| Full Clebsch–Gordan change of basis for `(1,1)`, `(2,2)`, `(3,2)` | `python3 -m pytest tests/test_audit_regressions.py -k cg` |
+| Thesis figures regenerated from package output | `make figures` |
+
+## Repository layout
+
+```text
+quantum_group/        the package (linalg.py holds the shared kron/zero-test helpers)
+tests/                pytest suite; doctests in quantum_group/ run with it
+examples/quickstart.py
+benchmarks/           timing script and recorded results
+notebooks/            exploratory notebook
+paper/                JOSS manuscript (paper.md, paper.bib) and maintainer records
+thesis/, poster/      historical thesis material (Turkish); see thesis/README.md
+AUDIT.md              mathematical/technical audit (September 2026)
+MANUSCRIPT_CODE_MAPPING.md
+main.py               demo script (writes outputs/V4_combined.png)
+```
+
+Makefile targets: `make check`, `make quickstart`, `make demo`,
+`make figures`, `make benchmark-smoke`, `make joss-pdf` (official JOSS Inara
+Docker image), and `make historical-article-pdf`, which builds the earlier
+Turkish article `thesis/thesis.tex` — not the JOSS paper and not the
+submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`). Corrections to the
+archived thesis are listed in [`thesis/ERRATA.md`](thesis/ERRATA.md).
+
+## Contributing and support
+
+Bug reports, questions and suggestions are welcome through
+[GitHub issues](https://github.com/TerekliTahaBerk/quantum-groups/issues);
+see [`CONTRIBUTING.md`](CONTRIBUTING.md). The package is maintained by its
+author on a best-effort basis. Changes are listed in
+[`CHANGELOG.md`](CHANGELOG.md).
 
 ## Citation
 
-If you use this software, please cite it using the metadata in
-[`CITATION.cff`](CITATION.cff). On GitHub, the **"Cite this repository"**
-button in the sidebar exports it as APA or BibTeX, for example:
+Please cite the software using [`CITATION.cff`](CITATION.cff) (GitHub's
+"Cite this repository" button exports it). Version 1.0.0 is archived on
+Zenodo as [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681);
+that archive does **not** contain the changes listed for 1.1.0 in the
+changelog.
 
-```bibtex
-@software{Terekli_quantum-group,
-  author  = {Terekli, Taha Berk},
-  title   = {{quantum-group: Symbolic modelling and verification of U_q(sl_2) and GL_q(2|1) quantum group structures in Python}},
-  version = {1.0.0},
-  license = {MIT},
-  url     = {https://github.com/TerekliTahaBerk/quantum-groups}
-}
-```
+## License
+
+MIT; see [`LICENSE`](LICENSE).

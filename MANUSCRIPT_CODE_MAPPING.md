@@ -1,15 +1,14 @@
 # Manuscript-Code Mapping
 
-This file maps the manuscript claims and code listings for
-"Quantum Grup Yapılarının Python Ortamında Modellenmesi" (the submitted thesis
-in Turkish) to repository modules and tests. Status values describe the current
-repository state.
-
-The submitted thesis PDF is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
-build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is
-`paper/paper.md`. `thesis/thesis.tex` is an earlier Turkish article source,
-not the JOSS paper. Historical thesis files are accompanied by `thesis/ERRATA.md`.
-The publication audit and source-access limitations are recorded in `AUDIT.md`.
+This file maps the computational claims of the JOSS manuscript
+(`paper/paper.md`) and of the thesis it grew out of, "Quantum Grup Yapılarının
+Python Ortamında Modellenmesi" (submitted thesis, in Turkish,
+`thesis/Lisans Bitirme Tezi.pdf`, source `thesis/thesis_ytu.tex`), to
+repository modules and tests. Status values describe the current `main`.
+`thesis/thesis.tex` is an earlier Turkish article source, not the JOSS paper.
+Corrections to the archived thesis are in `thesis/ERRATA.md`; the publication
+audit and source-access limitations are in `AUDIT.md`. All tests listed here
+run with `python -m pytest`.
 
 | Manuscript item | Repository implementation | Tests | Status | Notes |
 | --- | --- | --- | --- | --- |
@@ -21,12 +20,12 @@ The publication audit and source-access limitations are recorded in `AUDIT.md`.
 | Highest/lowest weight vectors | `highest_weight_vector`, `lowest_weight_vector` | `tests/test_representations.py` | Implemented | Checks `E v_0 = 0`, `F v_n = 0`, and highest `K` weight. |
 | Code: relation residual checks | `quantum_group/relations.py::verify_on_representation` | `tests/test_relations.py` | Implemented | Returns `RelationCheck` objects with residual matrices. |
 | Draft name: `verify_relations_core` | `quantum_group/relations.py::verify_relations_core` | `tests/test_relations.py` | Implemented | Compatibility wrapper around `verify_on_representation`. |
-| Entrywise zero helper | `quantum_group/relations.py::is_zero_matrix` | `tests/test_relations.py` | Implemented | Public helper for symbolic zero-matrix checks. |
+| Entrywise zero helper | `quantum_group/linalg.py::is_zero_matrix` (re-exported by `relations` and the package) | `tests/test_relations.py`, `tests/test_validation_and_linalg.py` | Implemented | Shared by all residual checks; `simplify` per entry, so a `False` is not a proof of nonzero. |
 | Hopf coproduct | `quantum_group/hopf.py::coproduct` | `tests/test_hopf.py` | Implemented | Uses explicit representation matrices for `Delta(E)`, `Delta(F)`, `Delta(K)`, `Delta(K_inv)`. |
 | Hopf counit | `quantum_group/hopf.py::counit` | `tests/test_hopf.py` | Implemented | Generator-level counit values. |
 | Hopf antipode | `quantum_group/hopf.py::antipode` | `tests/test_hopf.py` | Implemented | Checks antipode identities on selected `V_n`. |
 | Hopf axioms | `verify_all_hopf_axioms`, `verify_coassociativity`, `verify_antipode` | `tests/test_hopf.py` | Implemented | Representation-level symbolic checks. |
-| Kronecker helper | `quantum_group/hopf.py::kron_list` | Indirect coverage through Hopf/GL tests | Implemented | Public helper; older private helpers remain for compatibility. |
+| Kronecker helpers | `quantum_group/linalg.py::kron`, `kron_list` (re-exported by `hopf` and the package) | `tests/test_validation_and_linalg.py` (against `sympy.kronecker_product`) | Implemented | Older private names (`hopf._kron`, `supergroup_gl21._kron_list`) remain as aliases. |
 | Tensor product action | `quantum_group/tensor.py::tensor_product` | `tests/test_tensor.py` | Implemented | Uses coproduct formulas on `V_m \otimes V_n`. |
 | Clebsch-Gordan summands | `cg_summands`, `cg_decomposition_summary` | `tests/test_tensor.py` | Implemented | Covers `V_1⊗V_1`, `V_2⊗V_2`, `V_3⊗V_2`. |
 | Highest-weight vectors in tensor products | `find_highest_weight_vectors` | `tests/test_tensor.py` | Implemented | Checks `E v = 0` and `K v = q^k v`. |
@@ -50,8 +49,9 @@ The publication audit and source-access limitations are recorded in `AUDIT.md`.
 | Crystal graph `B(n)` | `quantum_group/crystal.py::build_crystal` | `tests/test_representations.py` | Implemented | Combinatorial graph model, not a full global basis construction. |
 | Visualization: weights/crystals | `plot_weight_diagram`, `plot_crystal_graph`, `plot_combined` | `tests/test_visualization.py` | Implemented | Smoke-tested with noninteractive backend. |
 | Manuscript PDF figures | `thesis/figures/generate_figures.py` | Manual validation command | Implemented | Generates `R_sl2_V1.pdf`, `R_gl21_structure.pdf`, and `ybe_products_27.pdf`. |
-| Jones polynomial | None | None | TODO | The repository checks braid/Hecke relations only; Markov trace and Jones polynomial computation are out of scope. |
-| Full `GL_q(2|1)` Gauss/Hopf superalgebra verification | None | None | TODO | Future work; current code verifies the R-matrix and graded YBE infrastructure. |
+| Input validation | `quantum_group/_validation.py` used by the public API | `tests/test_validation_and_linalg.py` | Implemented | Non-integral/negative sizes and indices, mismatched shapes, invalid positions/parities, `q = 0`. |
+| Jones polynomial | None | None | Out of scope | The repository checks braid/Hecke relations only; no Markov trace or Jones polynomial. |
+| `GL_q(2|1)` RTT relations, Hopf superalgebra, Gauss decomposition | None | None | Out of scope | Needs a graded noncommutative algebra; see `AUDIT.md` §13. The code verifies the R-matrix and graded YBE only. |
 
 ## Publication-audit regressions
 
