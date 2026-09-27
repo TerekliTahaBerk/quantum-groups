@@ -65,10 +65,10 @@ def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
 
         R = q^{1/2} · (ρ_1 ⊗ ρ_1)(𝓡)
 
-    is exactly the matrix returned by this function. The factor q^{1/2}
-    normalizes away fractional powers q^{±1/2}. This 4×4 matrix is the
-    N = 1 case of Jimbo's vector-representation R-matrix for U_q(gl(N+1))
-    (Jimbo 1985, 1986).
+    is exactly the matrix returned by this function. See Drinfeld §13,
+    pp. 816–817, with q = exp(h/2); the higher nilpotent terms vanish. The factor q^{1/2}
+    normalizes away fractional powers q^{±1/2}. The source normalization
+    is evaluated explicitly in AUDIT.md.
 
     Convention note
     ---------------
@@ -93,6 +93,9 @@ def R_matrix_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
     * C. Kassel, Quantum Groups, GTM 155, Springer, 1995,
       doi:10.1007/978-1-4612-0783-2.
     """
+    q_sym = sp.sympify(q_sym)
+    if q_sym == 0:
+        raise ValueError("q must be nonzero.")
     qi = q_sym**(-1)
     return sp.Matrix([
         [q_sym, 0,         0,             0],
@@ -116,6 +119,44 @@ def R_check_V1(q_sym: sp.Expr = default_q) -> sp.Matrix:
     return sp.simplify(swap_matrix(2) * R_matrix_V1(q_sym))
 
 
+def R_matrix_V1_coproduct(q_sym: sp.Expr = default_q) -> sp.Matrix:
+    """Return R_21 = P R P, compatible with ``hopf.coproduct``.
+
+    R_21 Δ(X) = Δ^op(X) R_21 for E, F, K, K_inv. The historical
+    ``R_matrix_V1`` keeps its upper-triangular convention for compatibility.
+    """
+    return R_matrix_V1(q_sym).T
+
+
+def R_check_V1_coproduct(q_sym: sp.Expr = default_q) -> sp.Matrix:
+    """Return P R_21 = R P, commuting with the package coproduct action."""
+    return swap_matrix(2) * R_matrix_V1_coproduct(q_sym)
+
+
+def intertwining_residual_V1(
+    generator: str, q_sym: sp.Expr = default_q
+) -> sp.Matrix:
+    """Return R_21 Δ(X) − Δ^op(X) R_21 on V_1 ⊗ V_1.
+
+    ``generator`` is E, F, K or K_inv; other names raise ValueError.
+    """
+    from .hopf import coproduct
+    from .representations import build_representation
+
+    actions = coproduct(build_representation(1, q_sym))
+    if generator not in actions:
+        raise ValueError("generator must be E, F, K or K_inv.")
+    action = actions[generator]
+    P = swap_matrix(2)
+    R = R_matrix_V1_coproduct(q_sym)
+    return (R * action - P * action * P * R).applyfunc(sp.cancel)
+
+
+def intertwining_holds_V1(generator: str, q_sym: sp.Expr = default_q) -> bool:
+    """Whether the fundamental coproduct-intertwining residual is zero."""
+    return _is_zero(intertwining_residual_V1(generator, q_sym))
+
+
 # ---------------------------------------------------------------------------
 # Verification of the QYBE and braid relation
 # ---------------------------------------------------------------------------
@@ -137,7 +178,7 @@ def braid_relation_residual(R: sp.Matrix) -> sp.Matrix:
     the relation.
     """
     d = int(sp.sqrt(R.rows))
-    if d * d != R.rows:
+    if R.rows != R.cols or d * d != R.rows:
         raise ValueError("R must be square with dimension d².")
     I = sp.eye(d)
     R12 = _kron(R, I)
@@ -153,7 +194,7 @@ def qybe_residual(R: sp.Matrix) -> sp.Matrix:
     R_{13} acts on factors 1 and 3, with identity on factor 2.
     """
     d = int(sp.sqrt(R.rows))
-    if d * d != R.rows:
+    if R.rows != R.cols or d * d != R.rows:
         raise ValueError("R must be square with dimension d².")
     I = sp.eye(d)
     R12 = _kron(R, I)
@@ -179,9 +220,10 @@ def qybe_holds(R: sp.Matrix) -> bool:
 def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
     """Return eigenvalues and multiplicities of Ř on V_1 ⊗ V_1.
 
-    Expected: q (multiplicity 3, symmetric V_2 sector) and −q^{-1}
-    (multiplicity 1, V_0). This spectrum is the braided counterpart of
-    V_1 ⊗ V_1 = V_2 ⊕ V_0 and is an input to the Jones polynomial.
+    Generically q has multiplicity 3 and −q^{-1} multiplicity 1. These
+    sectors use the opposite coproduct, not ``hopf.coproduct``. Use
+    ``R_check_V1_coproduct`` for the package tensor-product submodules.
+    At q² = −1 the eigenvalues merge and the matrix is not diagonalizable.
     """
     Rv = R_check_V1(q_sym)
     raw = Rv.eigenvals()
@@ -199,6 +241,7 @@ def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
     Only the Hecke relation is checked; the Jones polynomial and Markov
     trace are not computed.
     """
+    q_sym = sp.sympify(q_sym)
     Rv = R_check_V1(q_sym)
     Rv_inv = sp.simplify(Rv.inv())
     diff = sp.simplify(Rv - Rv_inv - (q_sym - q_sym**(-1)) * sp.eye(4))

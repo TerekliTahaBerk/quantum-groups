@@ -127,31 +127,6 @@ def verify_counit(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     just its matrix. The construction uses the known formula for each
     generator, Δ(X) = Σ A_i ⊗ B_i.
     """
-    eps = counit()
-    n = rep.dim
-    I = sp.eye(n)
-    results: Dict[str, HopfAxiomCheck] = {}
-
-    # For each generator, we have Δ(X) = Σ A_i ⊗ B_i:
-    #   E:  [(E,I), (K,E)]
-    #   F:  [(F,K_inv), (I,F)]
-    #   K:  [(K,K)]
-    #   K_inv: [(K_inv,K_inv)]
-    decompositions: Dict[str, list] = {
-        "E": [(rep.E, I), (rep.K, rep.E)],
-        "F": [(rep.F, rep.K_inv), (I, rep.F)],
-        "K": [(rep.K, rep.K)],
-        "K_inv": [(rep.K_inv, rep.K_inv)],
-    }
-    rep_mats = {"E": rep.E, "F": rep.F, "K": rep.K, "K_inv": rep.K_inv}
-
-    for X, terms in decompositions.items():
-        # (ε ⊗ id) Δ(X) = Σ ε(A_i) · B_i does not mean treating A_i as a
-        # scalar: ε is an algebra homomorphism and A_i is a matrix. Applying
-        # ε to A_i here means applying it to the algebra element represented
-        # by A_i. The labelled decomposition below provides those elements.
-        pass  # The full check is in _verify_counit_via_labels.
-
     return _verify_counit_via_labels(rep)
 
 
@@ -172,7 +147,7 @@ def _verify_counit_via_labels(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     }
     label_to_mat = {"E": rep.E, "F": rep.F, "K": rep.K,
                     "K_inv": rep.K_inv, "1": I}
-    label_to_eps = {"E": 0, "F": 0, "K": 1, "K_inv": 1, "1": 1}
+    label_to_eps = {**eps, "1": sp.S.One}
     target = {"E": rep.E, "F": rep.F, "K": rep.K, "K_inv": rep.K_inv}
 
     results: Dict[str, HopfAxiomCheck] = {}

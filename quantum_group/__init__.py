@@ -61,6 +61,8 @@ from .tensor import (
 )
 from .r_matrix import (
     R_matrix_V1, R_check_V1, swap_matrix,
+    R_matrix_V1_coproduct, R_check_V1_coproduct,
+    intertwining_residual_V1, intertwining_holds_V1,
     qybe_holds, braid_relation_holds,
     qybe_residual, braid_relation_residual,
     R_check_eigenvalues, hecke_skein_relation_check,
@@ -106,6 +108,8 @@ __all__ = [
     "TensorRepresentation", "tensor_product",
     "cg_summands", "find_highest_weight_vectors", "cg_decomposition_summary",
     "R_matrix_V1", "R_check_V1", "swap_matrix",
+    "R_matrix_V1_coproduct", "R_check_V1_coproduct",
+    "intertwining_residual_V1", "intertwining_holds_V1",
     "qybe_holds", "braid_relation_holds",
     "qybe_residual", "braid_relation_residual",
     "R_check_eigenvalues", "hecke_skein_relation_check",

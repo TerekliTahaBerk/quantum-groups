@@ -28,13 +28,29 @@ related figures to reproducible tests. It is not a general theorem prover.
 the full series) truncates after two terms on `V_1`, because `E^2 = F^2 = 0`
 there. Its image, rescaled by `q^{1/2}` to remove fractional powers, is the
 4x4 matrix `diag(q, 1, 1, q)` plus a single off-diagonal entry `q - q^{-1}`.
-This is the `N = 1` case of Jimbo's R-matrix for the vector representation of
-`U_q(gl(N+1))` (Jimbo 1985, 1986).
-Convention note: this R intertwines `Δ` and `Δ^op` for the coproduct
-`Δ(E) = E⊗K + 1⊗E`. The coproduct in `quantum_group/hopf.py`
-(`Δ(E) = E⊗1 + K⊗E`) corresponds to `R_21 = R^T` instead. Both satisfy the
-QYBE, so the Yang-Baxter, braid and Hecke checks are unaffected. Details and
-full references are in the docstring of `R_matrix_V1`.
+The normalization is derived from Drinfeld §13, pp. 816–817 in `AUDIT.md`.
+
+The historical `R_matrix_V1()` uses the opposite of the package coproduct.
+For `hopf.coproduct` and the tensor-product submodules, use
+`R_matrix_V1_coproduct()` (equal to `R.T`) and
+`R_check_V1_coproduct()` (equal to `R * swap_matrix(2)`).
+`intertwining_residual_V1("E")` exposes the coproduct-compatibility check;
+`intertwining_holds_V1` also accepts `F`, `K` and `K_inv`.
+Both R conventions satisfy QYBE and their braided forms satisfy the Hecke
+relation, but their eigenspaces must not be identified across conventions.
+
+Exact Python integer parameters are sympified before negative powers;
+floats remain approximate. The default domain is generic nonzero q.
+Laurent-polynomial q-arithmetic supports removable-singularity specializations,
+while the defining commutator quotient itself excludes q = ±1.
+At roots of unity the modules need not be irreducible or semisimple.
+The generic CG algorithm is not a root-of-unity decomposition algorithm.
+
+The GL matrix matches the unnumbered display on printed page 261 of
+Çelik and Çelik, *Reports on Mathematical Physics* 88 (2021), **259–269**.
+All twelve nonzero entries, the graded signs and all six four-factor
+placements are independently checked. General embeddings accept even
+operators only. See [audit](AUDIT.md) and [thesis errata](thesis/ERRATA.md).
 
 - M. Jimbo, Lett. Math. Phys. 10 (1985) 63-69, doi:10.1007/BF00704588.
 - M. Jimbo, Lett. Math. Phys. 11 (1986) 247-252, doi:10.1007/BF00400222.
@@ -49,7 +65,7 @@ The main existing tools for computing with quantized enveloping algebras are
 the GAP package [QuaGroup](https://github.com/gap-packages/quagroup)
 (W. A. de Graaf) and SageMath's `QuantumGroup` class, which is an interface to
 QuaGroup. Both are far more general than this package: they handle `U_q(g)`
-for every finite-dimensional semisimple Lie algebra `g`, including
+for semisimple Lie types, subject to computational limits, including
 R-matrices, crystal and canonical bases, and the Hopf structure. SageMath also
 has combinatorial crystals for the general linear Lie *super*algebra
 (Benkart-Kang-Kashiwara crystals of type `A(m|n)`).
@@ -58,7 +74,7 @@ has combinatorial crystals for the general linear Lie *super*algebra
 | --- | --- | --- | --- |
 | Scope | `U_q(sl_2)` and one quantum supergroup example, `GL_q(2\|1)` | `U_q(g)`, `g` finite-dimensional semisimple | Same as QuaGroup (wraps it) |
 | R-matrix | `V_1⊗V_1` (4x4); `GL_q(2\|1)` (9x9) | `RMatrix` for modules with computable weights | `R_matrix()` via QuaGroup |
-| Super / graded structures | Graded (super) YBE for `GL_q(2\|1)`, including `R_ij` on `V^{⊗n}` | None found in source or manual | None in `sage.algebras.quantum_groups`; gl(m\|n) crystals in `sage.combinat.crystals.bkk_crystals` |
+| Super / graded structures | Graded (super) YBE for `GL_q(2\|1)`, including `R_ij` on `V^{⊗n}` | This specific graded YBE example is not documented | This example is not documented in `QuantumGroup`; gl(m\|n) crystals exist separately |
 | Crystals | Combinatorial `B(n)` for `sl_2` only | Crystal bases, crystal graphs (LS paths) | Extensive crystal library |
 | Treatment of `q` | SymPy symbol; substitution helpers for classical and root-of-unity limits | Indeterminate `q` over `Q` | Generic `q` or a specialization, e.g. a root of unity |
 | Verification style | Explicit residual matrices checked entrywise to be zero, wired to `pytest` | Algebraic computation | Algebraic computation |
@@ -70,12 +86,11 @@ pip-installable, pure-Python reference implementation. It makes the concrete
 matrices behind the manuscript's claims explicit, including the graded
 Yang-Baxter equation for `GL_q(2|1)`, and checks them in CI.
 
-*How this comparison was checked (September 2026):* by reading the source
-and manual of QuaGroup (`gap-packages/quagroup`, commit `72751e5`, version
-1.8.4) and SageMath's `src/sage/algebras/quantum_groups/` and
-`src/sage/combinat/crystals/` (`sagemath/sage`, commit `3801b3c`). No quantum
-supergroup, graded R-matrix or graded Yang-Baxter functionality was found in
-either. This reflects those sources only and is not a survey of all software.
+The comparison concerns the documented
+[QuaGroup](https://gap-packages.github.io/quagroup/doc/chap1.html) and
+[Sage QuantumGroup](https://doc.sagemath.org/html/en/reference/algebras/sage/algebras/quantum_groups/quantum_group_gap.html)
+interfaces, not all software or all superalgebra functionality. Historical
+commit-level search claims are not needed to establish this package's scope.
 
 ## Installation
 
@@ -226,7 +241,10 @@ Matplotlib `Figure` objects and leave saving/display to the caller.
 
 The submitted thesis (in Turkish) is `thesis/Lisans Bitirme Tezi.pdf`. The thesis LaTeX
 build source is `thesis/thesis_ytu.tex`; the JOSS manuscript source is `thesis/thesis.tex`.
-If Tectonic is installed, rebuild the main manuscript PDF with:
+The active JOSS manuscript is `paper/paper.md`; its local reading copy and
+rendering command are in `output/pdf/`. Official JOSS typesetting remains a
+separate journal build. `make pdf` instead rebuilds the **historical Turkish
+article**, whose corrections are recorded in `thesis/ERRATA.md`. With Tectonic:
 
 ```bash
 make pdf
@@ -254,7 +272,8 @@ make demo
   | `all_Rij_GLq21` | 5 | 243x243 | 14.6 s |
   | graded YBE on one triple, incl. embedding | 5 | 243x243 | 15.2 s |
 
-  Every check exercised by the test suite (n <= 4) runs in under 2 s. At n = 5
+  These are historical measurements of the benchmarked functions, not a
+  timing guarantee for the current expanded test suite. At n = 5
   the time is dominated by building the dense symbolic `R_ij` embeddings
   (about 14.6 s), not by simplifying the Yang-Baxter residual. n >= 6
   (729x729) has not been benchmarked. Reproduce with

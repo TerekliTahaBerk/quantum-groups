@@ -85,7 +85,12 @@ def find_highest_weight_vectors(
     tensor_rep: TensorRepresentation,
     q_sym: sp.Expr = default_q,
 ) -> List[Tuple[int, sp.Matrix]]:
-    """Find all highest-weight vectors in V_m ⊗ V_n.
+    """Find highest-weight vectors for generic q in V_m ⊗ V_n.
+
+    Both factors must use the same parameter. Candidate weights come from
+    the generic Clebsch–Gordan rule; this is not a root-of-unity classifier.
+    ``q_sym`` is retained for API compatibility; exponent labels determine
+    the subspaces and the supplied matrices determine their kernels.
 
     A vector v has highest weight k when:
         E . v = 0     and     K . v = q^k v.
@@ -114,7 +119,6 @@ def find_highest_weight_vectors(
         if not idx:
             continue
         # Restrict E to this indexed subspace and find its kernel.
-        E_sub = sp.Matrix([[tensor_rep.E[r, c] for c in idx] for r in idx])
         # E maps this weight subspace to the next one. For its full kernel,
         # inspect the columns indexed by idx across all target rows.
         E_cols = sp.Matrix([[tensor_rep.E[r, c] for c in idx]

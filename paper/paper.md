@@ -20,157 +20,133 @@ bibliography: paper.bib
 
 # Summary
 
-Quantum groups are deformations of Lie groups and Lie algebras that depend on
-a parameter $q$ and recover the classical objects as $q \to 1$. They were
-introduced by Drinfeld and Jimbo [@drinfeld1987; @jimbo1985] and are closely
-tied to the quantum Yang-Baxter equation (QYBE), braid group representations
-and knot invariants. The simplest example is $U_q(\mathfrak{sl}_2)$. Quantum
-*super*groups such as $GL_q(2|1)$ extend these ideas to $\mathbb{Z}_2$-graded
-spaces. There, the Yang-Baxter equation carries parity-dependent signs
-[@celik2021].
+`quantum-group` is a Python package for reproducible, symbolic matrix
+calculations in quantum groups. Built on SymPy [@meurer2017sympy], it covers
+finite-dimensional representations of $U_q(\mathfrak{sl}_2)$ and the graded
+R-matrix of the quantum supergroup $GL_q(2|1)$ introduced by @celik2021.
+Quantum groups connect representation theory with the quantum Yang–Baxter
+equation (QYBE), braid groups and knot invariants
+[@drinfeld1987; @jimbo1985; @jimbo1986]. In super vector spaces, tensor
+permutations also carry parity-dependent signs.
 
-`quantum-group` is a Python package, built on SymPy [@meurer2017sympy], that
-turns the defining identities of these structures into explicit, symbolic
-matrix computations. For $U_q(\mathfrak{sl}_2)$ it constructs the
-finite-dimensional representations $V_n$ and checks the defining relations,
-the Hopf algebra axioms and tensor product decompositions. It also verifies
-the R-matrix on $V_1 \otimes V_1$ against the QYBE, the braid relation and the
-Hecke relation. For $GL_q(2|1)$ it builds the $9 \times 9$ R-matrix of
-@celik2021 and the graded super-permutation, and verifies the graded
-Yang-Baxter equation on $V^{\otimes 3}$ and all $R_{ij}$ placements on
-$V^{\otimes 4}$.
+For $U_q(\mathfrak{sl}_2)$, the package constructs the highest-weight modules
+$V_n$, checks their defining relations and generator-level Hopf identities,
+and computes tensor-product highest-weight vectors [@kassel1995]. It verifies the
+fundamental R-matrix, its coproduct compatibility, the QYBE, and braid and
+Hecke relations. For $GL_q(2|1)$, it constructs the published $9\times9$
+R-matrix, verifies the graded YBE on $V^{\otimes3}$, and checks all six
+R-matrix placements and all four local YBE triples on $V^{\otimes4}$.
 
 # Statement of need
 
-The package targets researchers and students in computational representation
-theory who want to check concrete identities in quantum groups quickly and
-reproducibly, in particular for $\mathbb{Z}_2$-graded (super) structures. It
-is also meant for readers of papers on quantum supergroups who want to
-reproduce R-matrix computations without installing a standalone computer
-algebra system such as GAP or SageMath.
-
-| | quantum-group | GAP QuaGroup | SageMath `QuantumGroup` |
-|---|---|---|---|
-| Scope | $U_q(\mathfrak{sl}_2)$; $GL_q(2\|1)$ example | $U_q(\mathfrak{g})$, $\mathfrak{g}$ semisimple | as QuaGroup (interface) |
-| R-matrices | yes (4×4, 9×9) | yes | yes (via QuaGroup) |
-| Graded (super) YBE | yes, $GL_q(2\|1)$ | not found | not found |
-| Parameter $q$ | SymPy symbol | indeterminate | generic or specialized |
-| Installation | `pip` from the Git repository; needs SymPy, NetworkX, Matplotlib | GAP | SageMath + optional package |
-
-: Comparison with existing software. "Not found" means absent from the
-sources we inspected (see State of the field). \label{tab:comparison}
+Researchers and students reading quantum-group calculations often need to
+check a specific matrix identity, basis convention or grading sign. A small,
+inspectable implementation makes these calculations reproducible without
+requiring a standalone computer algebra system. `quantum-group` provides
+explicit matrices and residuals that can be examined, modified and reused
+in Python notebooks. Its intended use is verification of concrete
+representation-level calculations and teaching examples.
 
 # State of the field
 
-The established tools for quantized enveloping algebras are the GAP
-[@gap] package QuaGroup [@quagroup; @degraaf2001] and SageMath's
-`QuantumGroup` class [@sagemath], which is an interface to QuaGroup. Both are
-far more general than `quantum-group`. They handle $U_q(\mathfrak{g})$ for
-every finite-dimensional semisimple Lie algebra $\mathfrak{g}$ and provide
-R-matrices, crystal and canonical bases, and the Hopf structure. SageMath
-also implements the crystals of @bkk2000 for the general linear Lie
-superalgebra $\mathfrak{gl}(m|n)$.
+GAP's QuaGroup [@gap; @quagroup; @degraaf2001] and SageMath's `QuantumGroup`
+interface to QuaGroup [@sagemath] provide substantially broader functionality
+for quantized enveloping algebras of semisimple Lie algebras, including
+highest-weight modules and R-matrices. SageMath also implements crystals for
+quantum general linear superalgebras following @bkk2000. Thus, superalgebra
+computations are not absent from these systems.
 
-We inspected the source code and manual of QuaGroup (version 1.8.4, commit
-`72751e5`) and SageMath's `quantum_groups` and `crystals` modules (commit
-`3801b3c`). We found no quantum supergroup, graded R-matrix or graded
-Yang-Baxter functionality in either. This statement reflects only those
-sources.
+| Capability | quantum-group | QuaGroup / SageMath `QuantumGroup` |
+|---|---|---|
+| Enveloping algebras | $U_q(\mathfrak{sl}_2)$ | semisimple Lie types |
+| Fundamental R-matrix examples | $4\times4$, $9\times9$ | general highest-weight modules |
+| Graded YBE for the Çelik–Çelik matrix | explicit implementation and tests | not documented in the cited interfaces |
+| Runtime | Python, SymPy, NetworkX, Matplotlib | GAP; SageMath for its interface |
 
-We therefore wrote a separate package rather than contributing to these
-systems, for two reasons. First, the graded structure is the central object
-here. Parity-dependent super-permutations and sign conventions do not fit
-the data models of QuaGroup or Sage's quantum group module, which are
-organised around semisimple root systems. Second, we wanted a small pure-Python
-reference implementation, installed with `pip` from the Git repository
-(`pip install git+https://github.com/TerekliTahaBerk/quantum-groups`) and
-depending only on SymPy, NetworkX and Matplotlib (pytest and Jupyter are
-optional). This is much lighter than a GAP or SageMath setup. `quantum-group`
-does not aim to replace QuaGroup or SageMath, and it covers far less of the
-theory.
+: Comparison of the specific quantum-group interfaces, not all functionality
+of GAP or SageMath. \label{tab:comparison}
+
+The contribution is a focused SymPy implementation with explicit grading
+conventions and executable checks for this published supergroup example.
+The package installs with `pip` from its Git repository; pytest and Jupyter
+are optional dependencies. It does not attempt to replace the broader
+algebraic algorithms of QuaGroup or SageMath.
 
 # Software design
 
-Most identities are checked with the same *zero-residual* pattern. The
-package builds both sides as exact SymPy matrices, forms their difference and
-simplifies each entry; if every entry simplifies to zero, the identity is
-taken to hold (SymPy's `simplify` is not a decision procedure, so this is
-sound in practice rather than a formal guarantee). Where this pattern
-applies, functions come in pairs: `*_residual` returns the residual matrix
-for inspection, and `*_holds` or `*_check` returns a Boolean; a few checks
-(the Hopf axioms, the Hecke relation, and the local Yang-Baxter checks on
-$V^{\otimes 4}$) return only a Boolean or a dictionary of Booleans, with no
-separate residual-matrix accessor. Computation stays symbolic as long as `q`
-is passed as a SymPy object (`Symbol`, `Integer`, `Rational`, ...), which
-every example and test in the repository does; passing a native Python `int`
-or `float` can introduce floating-point values, since Python's own `**`
-operator, not SymPy's, evaluates an expression such as `q**(-1)` on a plain
-`int`.
+Most checks build both sides of a matrix identity, subtract them and simplify
+the residual entries. Default calculations use an exact symbolic, nonzero
+parameter $q$. Rational identities hold wherever their denominators are
+defined; specialization at exceptional parameters needs separate analysis.
+A residual that does not simplify to zero is not, by itself, a proof of
+inequality for arbitrary SymPy expressions. Python integer parameters are
+converted to exact SymPy values; floating-point inputs remain approximate.
+The $q$-arithmetic helpers use Laurent-polynomial formulas to avoid
+removable singularities at roots of unity.
 
-The modules follow the mathematics: `generators` and `representations`
-(matrices of $E$, $F$, $K$, $K^{-1}$ on $V_n$), `relations`, `hopf`, `tensor`
-(Clebsch-Gordan decompositions) and `r_matrix` (QYBE, braid and Hecke
-relations).
-`supergroup_gl21` builds the graded R-matrix and the super-permutation and
-embeds $R_{ij}$ into $V^{\otimes n}$ by conjugating with graded adjacent
-swaps. Smaller modules cover classical and root-of-unity limits, the
-combinatorial crystal graph $B(n)$ and plotting.
+The modules follow the mathematics: `representations`, `relations`, `hopf`,
+`tensor`, `r_matrix` and `supergroup_gl21`. Intertwining and Yang–Baxter checks expose residual/Boolean pairs.
+Defining-relation checks return residuals and Booleans in structured objects;
+Hopf, Hecke and four-factor local YBE checks return statuses or Boolean
+dictionaries. Separate modules provide classical limits, root-of-unity
+examples, combinatorial crystal graphs and visualization.
 
-The $U_q(\mathfrak{sl}_2)$ R-matrix is the image of the universal R-matrix on
-$V_1 \otimes V_1$, rescaled by $q^{1/2}$ [@drinfeld1987; @jimbo1986;
-@kassel1995]. Its docstring records the coproduct convention and how it
-relates to the coproduct used in the package.
+Conventions are part of the API. With
+$\Delta(E)=E\otimes1+K\otimes E$ and
+$\Delta(F)=F\otimes K^{-1}+1\otimes F$, the compatible matrix is
+`R_matrix_V1_coproduct`, equal to $R_{21}=PRP$ for the historical
+upper-triangular `R_matrix_V1`. Here $P$ is the ordinary flip.
+The latter matrix is the fundamental image of Drinfeld's universal
+R-matrix, multiplied by $q^{1/2}$ to remove half powers
+[@drinfeld1987, §13, pp. 816–817]. Tests verify
+$R_{21}\Delta(X)=\Delta^{\mathrm{op}}(X)R_{21}$ for all four generators.
+The compatible braid $PR_{21}$ acts by $q$ and $-q^{-1}$ on the package's
+generic $V_2$ and $V_0$ summands, respectively.
 
-The test suite has 126 `pytest` cases and runs on GitHub Actions for Python
-3.10, 3.11 and 3.12. `MANUSCRIPT_CODE_MAPPING.md` maps each mathematical
-claim to its implementing function and its test. A benchmark script records
-running times. On a 2.1 GHz Xeon, every check on $V^{\otimes 4}$
-($81 \times 81$ matrices) finishes in under 2 s. On $V^{\otimes 5}$
-($243 \times 243$) one graded Yang-Baxter check takes about 15 s, most of it
-spent building the embeddings.
+For $GL_q(2|1)$, the basis parities are $(0,0,1)$ and
+$P_s(e_i\otimes e_j)=(-1)^{p(i)p(j)}e_j\otimes e_i$.
+The matrix entries and the construction
+$R_{13}=(P_s\otimes I)R_{23}(P_s\otimes I)$ follow the unnumbered display on
+page 261 of @celik2021. General placements use graded adjacent swaps and
+require an even operator. Tests compare them with an independent signed
+basis-action formula; replacing $P_s$ by an ordinary flip gives a nonzero
+YBE residual, providing a negative control.
+
+The suite contains 158 pytest cases. It verifies complete Clebsch–Gordan
+change-of-basis matrices for $V_1\otimes V_1$, $V_2\otimes V_2$ and
+$V_3\otimes V_2$, including invertibility and all four generator actions.
+`MANUSCRIPT_CODE_MAPPING.md` links claims to implementations and tests.
+GitHub Actions is configured for Python 3.10–3.12. A reproducible benchmark
+script and its recorded environment document the cost of dense tensor-power
+calculations; these grow rapidly with tensor degree.
 
 # Research impact statement
 
-`quantum-group` was developed as the verification infrastructure for an
-undergraduate thesis at Yıldız Technical University on modelling quantum
-group structures in Python. Its main research use is independent,
-reproducible computational verification. It checks that the $9 \times 9$
-R-matrix of the quantum supergroup $GL_q(2|1)$ given by @celik2021 satisfies
-the graded Yang-Baxter equation, with all $27 \times 27$ residual entries
-simplifying symbolically to zero. It also checks far commutativity and every
-local Yang-Baxter triple on $V^{\otimes 4}$. The package does not claim new
-mathematical results, and it does not verify the Gauss decomposition or the
-Hopf superalgebra structure of @celik2021. Its contribution is to make these
-computations explicit, executable and continuously tested, so that others can
-reuse them for related R-matrices.
+The package originated in an undergraduate thesis at Yıldız Technical
+University. Its contribution is reproducible software verification of known
+identities, including all 729 entries of the graded YBE residual, all
+four-factor local triples, and disjoint-pair commutators. It does not claim
+new mathematical results. Finite matrix checks do not prove an abstract
+Hopf-algebra presentation or classify representations. The package does not
+implement the noncommutative Gauss decomposition or Hopf superalgebra of
+@celik2021, a Markov trace, or a Jones polynomial. Root-of-unity examples
+are not a construction of the small quantum group, and the graph $B(n)$
+is a combinatorial crystal model rather than a crystal-basis algorithm.
 
 # AI usage disclosure
 
-Claude Code (Anthropic), an AI coding assistant, was used in September 2026
-to prepare this repository for publication. It drafted the packaging and
-project infrastructure: `LICENSE`, `pyproject.toml`, the GitHub Actions
-workflow, `CONTRIBUTING.md`, `CITATION.cff` and `CHANGELOG.md`. It renamed
-`jones_skein_relation_check` to `hecke_skein_relation_check`, adding a
-deprecated alias and the matching tests. It wrote the benchmark script, the
-docstring of `R_matrix_V1` and the README sections on mathematical background
-and related work. It also drafted this paper and its bibliography. While
-doing so it checked the R-matrix convention symbolically, read the QuaGroup
-and SageMath sources for the comparison, and looked up bibliographic records.
-All of this was reviewed by the author, and the test suite was run after
-every change.
-
-Codex (OpenAI, GPT-6) was used in September 2026 to translate the
-repository-facing documentation, source and test docstrings, comments, and
-user-visible messages into English, and to review this paper's JOSS formatting
-and AI usage disclosure. The author reviewed, edited and validated these
-AI-assisted changes, including their mathematical notation and API behavior;
-the 126-case test suite and three doctests passed after the translation.
-The mathematical content, the undergraduate thesis and the research
-questions are the author's own work. The core implementation in
-`quantum_group/` and its test suite predate the use of Claude Code (git
-history from April to June 2026); apart from the rename above they were
-written by the author. Codex's later changes to those files were limited to
-explanatory text and user-visible messages.
+Claude Code (Anthropic) assisted with packaging, project infrastructure,
+benchmarks, publication documentation, bibliography preparation and the
+renaming of the Hecke-check function. Codex (OpenAI, GPT-6) assisted with
+English translation and a subsequent mathematical and technical audit.
+The latter included source comparison, symbolic calculations, corrections
+to parameter handling and asymptotics, coproduct-compatible R-matrix APIs,
+regression tests, and revision of this manuscript and supporting documentation.
+The original core implementation and thesis predate these publication
+preparation changes. AI-generated calculations were checked with executable
+symbolic tests and against the primary sources identified in `AUDIT.md`.
+The author is responsible for the submitted software, mathematical claims
+and disclosure.
 
 # Acknowledgements
 

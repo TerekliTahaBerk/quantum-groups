@@ -4,7 +4,8 @@ representations.py
 
 Finite-dimensional irreducible highest-weight representations of U_q(sl_2).
 
-For every nonnegative integer n, there is an (n+1)-dimensional irreducible
+For generic nonzero q and every nonnegative integer n, there is an
+(n+1)-dimensional irreducible
 representation V_n. On the basis {v_0, v_1, ..., v_n}, the generators act as:
 
     K . v_k = q^{n - 2k} v_k                                 (diagonal)
@@ -52,7 +53,8 @@ def build_representation(n: int, q_sym: sp.Expr = q) -> Representation:
     n : int
         Highest weight (dimension = n + 1). n >= 0.
     q_sym : sympy expression
-        The q parameter, symbolic or numerical.
+        The nonzero q parameter. Python integers remain exact; floats are
+        approximate. At roots of unity the module need not be irreducible.
 
     Returns
     -------
@@ -62,6 +64,9 @@ def build_representation(n: int, q_sym: sp.Expr = q) -> Representation:
     if n < 0:
         raise ValueError("The highest weight n must be nonnegative.")
 
+    q_sym = sp.sympify(q_sym)
+    if q_sym == 0:
+        raise ValueError("q must be nonzero.")
     dim = n + 1
 
     # K is diagonal: K . v_k = q^{n-2k} v_k

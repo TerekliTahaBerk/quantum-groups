@@ -82,7 +82,7 @@ def R_matrix_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
 
     The basis order matches ``basis_pairs_gl21()``.
     """
-    q = q_sym
+    q = sp.sympify(q_sym)
     return sp.Matrix([
         [1, 0,      0,  0,        0, 0,      0,        0,      0],
         [0, q**2,   0,  1 - q**2, 0, 0,      0,        0,      0],
@@ -109,6 +109,8 @@ def super_permutation_matrix(parity: List[int]) -> sp.Matrix:
     parity = [0, 0, 1], it differs from the ordinary swap only at
     P[8, 8] = -1 (the e_3⊗e_3 component).
     """
+    if not parity or any(p not in (0, 1) for p in parity):
+        raise ValueError("parity must be a nonempty list of zeros and ones.")
     d = len(parity)
     P = sp.zeros(d * d, d * d)
     for i in range(d):
@@ -214,7 +216,8 @@ def embed_R_in_tensor_power(
 ) -> sp.Matrix:
     """Embed the R-matrix into factors (i, j) of V^{⊗n}.
 
-    R is a d²×d² matrix acting on V ⊗ V (d = len(parity)).
+    R must be an even d²×d² operator on V ⊗ V (d = len(parity)).
+    Odd operators require additional prefix signs and are not supported.
     ``positions = (i, j)`` uses zero-based indices with i < j. The output
     is the d^n × d^n operator R_{ij}.
 
@@ -230,6 +233,14 @@ def embed_R_in_tensor_power(
         raise ValueError("positions (i, j) must satisfy 0 <= i < j < tensor_power.")
     d = len(parity)
     n = tensor_power
+    if not parity or any(p not in (0, 1) for p in parity):
+        raise ValueError("parity must be a nonempty list of zeros and ones.")
+    if R.shape != (d*d, d*d):
+        raise ValueError("R must have shape (d², d²), where d = len(parity).")
+    degrees = [(parity[a] + parity[b]) % 2 for a in range(d) for b in range(d)]
+    if any(degrees[a] != degrees[b] and sp.simplify(R[a, b]) != 0
+           for a in range(d*d) for b in range(d*d)):
+        raise ValueError("R must be an even operator (preserve total parity).")
 
     # Adjacent embedding R_{i, i+1}
     op = _kron_list([_eye_pow(d, i), R, _eye_pow(d, n - i - 2)])

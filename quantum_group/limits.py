@@ -17,10 +17,10 @@ of U_q(sl_2), changes with the value of q.
       The usual quantum regime. All formulas are rational in q, and the
       representations are q-deformations of classical representations.
 
-(L3)  Root of unity q^N = 1 (N >= 2):
+(L3)  Root of unity q^N = 1 (primitive root, N > 2):
       [N]_q = 0. E^N and F^N become central elements; finite-dimensional
       irreducibles are parametrized differently, and the "small quantum
-      group" appears. The matrices of V_n may become singular.
+      group" appears. The modules V_n may become reducible and need not split.
 
 (L4)  Crystal limit q -> 0:
       Classical basis choices are singular, but Kashiwara's crystal basis
@@ -81,11 +81,14 @@ def root_of_unity_substitution(
 ) -> Dict[str, sp.Matrix]:
     """Evaluate q at a primitive Nth root of unity and compute E^N.
 
-    Expected result: for V_n with n < N, E^N = 0 (the nilpotent structure
-    remains); for n >= N, behavior differs.
+    For primitive roots with N > 2, E^N = 0 for every V_n in this
+    undivided-basis family; F^N = 0 only when n < N. This does not
+    construct the small quantum group or classify its modules.
 
     The primitive root is represented symbolically as q = exp(2πi/N)
     (sympy.exp(2*sp.pi*sp.I/N))."""
+    if not isinstance(N, (int, sp.Integer)) or N <= 2:
+        raise ValueError("N must be an integer greater than 2.")
     zeta = sp.exp(2 * sp.pi * sp.I / N)
     sub = lambda M: sp.simplify(M.subs(q_sym, zeta))
     E_N = sub(rep.E**N)
@@ -115,8 +118,8 @@ class CrystalAsymptotics:
 def crystal_asymptotics_F(rep: Representation, q_sym: sp.Expr = default_q) -> sp.Matrix:
     """Return entries of F that survive the q -> 0 limit.
 
-    Since every entry of F is either 1 or 0, F is unchanged in the
-    crystal limit.
+    F has a finite entrywise limit in this basis. Its graph agrees with
+    B(n); this is not a construction of a Kashiwara lattice or basis.
     """
     return rep.F
 
@@ -135,13 +138,7 @@ def crystal_asymptotics_E_pattern(
     out = sp.zeros(rep.dim, rep.dim)
     for k in range(1, rep.dim):
         coeff = rep.E[k - 1, k]
-        # Leading asymptotic term (the largest negative power dominates):
-        # Expand around q=0 with SymPy.series.
-        try:
-            ser = sp.series(coeff, q_sym, 0, 2).removeO()
-        except Exception:
-            ser = coeff
-        out[k - 1, k] = sp.simplify(ser)
+        out[k - 1, k] = coeff.as_leading_term(q_sym)
     return out
 
 
@@ -158,6 +155,6 @@ def three_limit_summary(n: int) -> str:
     lines.append(f"      h-eigenvalues = {h_diag}")
     lines.append(f"      [E,F] -> h verified? {h_match}")
     lines.append(f"  (L2) Generic q: K-weights = {[sp.simplify(w) for w in rep.weights]}")
-    lines.append(f"  (L4) Crystal q->0: E coefficients remain nonzero;"
-                 " F survives as a crystal operator")
+    lines.append(f"  (L4) q->0: E has leading power q^{-(n-1)} for n>=1;"
+                 " the separate B(n) graph models crystal arrows")
     return "\n".join(lines)

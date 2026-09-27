@@ -107,6 +107,9 @@ def verify_on_representation(
     -------
     A dictionary mapping relation names to RelationCheck objects.
     """
+    q_sym = sp.sympify(q_sym)
+    if q_sym in (0, 1, -1):
+        raise ValueError("The defining commutator quotient requires q != 0, 1, -1; use classical limits separately.")
     n = E_mat.rows
     I = sp.eye(n)
 

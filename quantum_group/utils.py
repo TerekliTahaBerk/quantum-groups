@@ -49,8 +49,11 @@ def q_integer(n: int, q_sym: sp.Expr = q) -> sp.Expr:
     """
     if n == 0:
         return sp.Integer(0)
-    expr = (q_sym**n - q_sym**(-n)) / (q_sym - q_sym**(-1))
-    return sp.simplify(expr)
+    q_sym = sp.sympify(q_sym)
+    if q_sym == 0:
+        raise ValueError("q must be nonzero.")
+    sign = 1 if n > 0 else -1
+    return sign * sum((q_sym**j for j in range(abs(n) - 1, -abs(n), -2)), sp.S.Zero)
 
 
 def q_factorial(n: int, q_sym: sp.Expr = q) -> sp.Expr:
@@ -67,9 +70,18 @@ def q_binomial(n: int, k: int, q_sym: sp.Expr = q) -> sp.Expr:
     """Return the q-binomial coefficient [n choose k]_q."""
     if k < 0 or k > n:
         return sp.Integer(0)
-    return sp.simplify(
-        q_factorial(n, q_sym) / (q_factorial(k, q_sym) * q_factorial(n - k, q_sym))
-    )
+    q_sym = sp.sympify(q_sym)
+    if q_sym == 0:
+        raise ValueError("q must be nonzero.")
+    # Laurent-polynomial recurrence avoids removable 0/0 at roots of unity.
+    row = [sp.S.One]
+    for m in range(1, n + 1):
+        row = [sp.S.One] + [
+            sp.expand(q_sym**(-j) * (row[j] if j < len(row) else 0)
+                      + q_sym**(m-j) * row[j-1])
+            for j in range(1, min(m, k) + 1)
+        ]
+    return sp.simplify(row[k])
 
 
 def classical_limit(expr: sp.Expr, q_sym: sp.Expr = q) -> sp.Expr:

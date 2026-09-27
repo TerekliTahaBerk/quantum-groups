@@ -1,0 +1,6 @@
+\makeatletter
+\renewcommand{\@maketitle}{\begin{center}{\LARGE\@title\par}\vskip1.2em{\large\@author\par}\vskip0.8em{\@date\par}\end{center}\vskip1em}
+\def\ps@review{\def\@oddhead{}\def\@evenhead{}\def\@oddfoot{\hfil\footnotesize Local review copy --- not official JOSS typesetting\quad\thepage\hfil}\let\@evenfoot\@oddfoot}
+\let\ps@plain\ps@review
+\pagestyle{review}
+\makeatother
