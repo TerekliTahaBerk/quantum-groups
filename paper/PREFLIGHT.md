@@ -14,7 +14,7 @@ No item is awaiting approval. "Who" names who resolved each item.
 | 2 | "pip install" wording | ✅ | Claude Code | The package installs from the Git repository (`pip install git+https://…` or clone + `pip install -e .`); it is not on PyPI. |
 | 3 | Dependency list | ✅ | Claude Code | Runtime: SymPy, NetworkX, Matplotlib. Optional extras: pytest (`[test]`), Jupyter (`[notebooks]`). |
 | 4a | Çelik (2021) page range | ✅ | Author decision | `pages = {259--272}`, as in the thesis bibliographies. |
-| 4b | `paper.md` `date` | ✅ | Author decision | `27 September 2026`, the date of the `v1.0.0` tag. |
+| 4b | `paper.md` `date` | ✅ | Author decision | `27 September 2026`, the planned `v1.0.0` release date. |
 | 4c | `CITATION.cff` `date-released` | ✅ | Author decision | `2026-09-27`, alongside `version: 1.0.0`; `cffconvert --validate` passes. |
 | 4d | Affiliation and acknowledgement | ✅ | Approved by the author | Author names use the Turkish spelling "Çelik" throughout (bibliography, text, acknowledgement). |
 | 5 | Official PDF build | ✅ | Claude Code | Rebuilt with `openjournals/inara` (`JOURNAL=joss`) after the final edits: 4 pages, Crossref XML generated, no unresolved citations, no leftover approval markers. `@editorialbot generate pdf` at submission remains the final check. |
@@ -59,7 +59,7 @@ Based on `git log` of `main` (author dates; the date the repository became
 | ✅ | CI green on `main` | GitHub Actions "tests", run 36321146370 on `a422f18`: success (Python 3.10/3.11/3.12). |
 | ✅ | README Quickstart runs | Executed verbatim from outside the repo in a clean venv. |
 | ✅ | Contribution guidelines, CHANGELOG | `CONTRIBUTING.md`, `CHANGELOG.md`. |
-| ✅ | `v1.0.0` tag | Annotated tag "First release prepared for JOSS submission" pushed on 2026-09-27. It points to the commit that finalized this checklist, on PR #4's branch. Merge PR #4 with a **merge commit** (not squash) so the tagged commit becomes part of `main`. |
+| ⚠️ | `v1.0.0` tag | **Not on GitHub yet.** The build environment could push the branch but not tags (HTTP 403). Create the tag yourself on the final commit of PR #4, either locally (`git fetch origin && git tag -a v1.0.0 -m "First release prepared for JOSS submission" origin/claude/happy-lamport-lq2yqj && git push origin v1.0.0`), or after merging PR #4 by creating the GitHub Release with a new tag `v1.0.0` on `main`, which also triggers Zenodo. The release date is pinned to 2026-09-27 in `CITATION.cff` and `paper.md`. |
 | ⚠️ | Zenodo DOI | Not yet created; manual steps are in `paper/README.md`. JOSS needs it at acceptance. |
 
 ## paper/paper.md
@@ -73,8 +73,9 @@ Based on `git log` of `main` (author dates; the date the repository became
 ## Before you submit (in order)
 
 1. Merge PR #4 with a merge commit.
-2. Enable the repository in Zenodo, then publish a GitHub Release from the
-   `v1.0.0` tag to mint the DOI (see `paper/README.md`).
+2. Enable the repository in Zenodo, then create the `v1.0.0` tag and publish
+   the GitHub Release to mint the DOI (see the tag row above and
+   `paper/README.md`).
 3. Decide how to present the development history (see note above).
 4. If the submission date is not 2026-09-27, update `date` in `paper.md`.
 5. Submit at <https://joss.theoj.org/papers/new> and run
