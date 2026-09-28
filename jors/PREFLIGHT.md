@@ -5,8 +5,11 @@ Rewritten **27 September 2026** from the current repository state; updated
 GitHub Release. Earlier versions of this file are superseded. The author
 reversed the earlier "no release" decision: **`v1.1.0` is now a published
 GitHub Release** (created by the author, 28 Sep 2026), target `main`,
-pointing at commit `103d538` (below). Nothing has been published to PyPI or
-Zenodo yet. **Re-checked 28 Sep 2026 (later same day):** `git ls-remote
+pointing at commit `103d538` (below). **Update, later the same day:** both
+PyPI (`quantum-group==1.1.0`) and Zenodo (DOI 10.5281/zenodo.23015576) have
+since been published by the author and independently verified; see the
+"Remaining open items" table below. **Re-checked 28 Sep 2026 (later same
+day):** `git ls-remote
 --tags origin` shows only `v1.0.0` and `v1.1.0` — no `v1.0.1` tag exists on
 the remote. The earlier note about a stray `v1.0.1` tag was based on a
 first, misnamed release attempt that was evidently cleaned up (tag and all)
@@ -159,7 +162,7 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 | Reviewer e-mails (5) | RESOLVED 28 Sep 2026 | Levandovskyy dropped (address unreachable after repeated attempts across three pages); replaced with Max Horn (RPTU Kaiserslautern, GAP/OSCAR), whose address is plainly published. All 5 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`) and copied into `COVER_LETTER.md` |
 | APC amount and choice | RESOLVED 28 Sep 2026 | Amount £824.00; author chose to request a full waiver (thesis-derived work, no specific funding). Request text in `COVER_LETTER.md` |
 | Zenodo DOI reservation, deposit, publication | RESOLVED 28 Sep 2026 | Published by the author: DOI [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576); filled into `submission-facts.tex`, `CITATION.cff`, `README.md`, `CHANGELOG.md`. Not independently re-fetched from this environment (Zenodo rate-limited); step-12 download-and-diff against `103d538` still recommended |
-| PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
+| PyPI publication of `quantum-group` 1.1.0 | RESOLVED 28 Sep 2026 | Published by the author via Trusted Publishing. Independently verified the same day from a clean venv: `pip install quantum-group==1.1.0` installs, `__version__ == 1.1.0`, and `examples/sample_verification.py` from `103d538` matches its expected output byte for byte. `submission-facts.tex` `\PyPIIdentifier` filled; `make -C jors check` now prints `OK` with no remaining `[PENDING]` fields |
 | Merge to `main` | DONE | merged 28 Sep 2026 (PR #8); this file's branch references predate the merge and are historical |
 | GitHub Release for 1.1.0 | DONE | `v1.1.0` published 28 Sep 2026, commit `103d538`; author reversed the earlier "no release" decision |
 | Stray `v1.0.1` tag | AUTHOR ACTION REQUIRED (trivial) | Delete the tag (its Release was already deleted); same commit as `v1.1.0`, harmless but should not remain as a second identifier for this version |

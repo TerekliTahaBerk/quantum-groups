@@ -4,15 +4,15 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
-## [1.1.0] - Unreleased
+## [1.1.0] - 2026-09-28
 
-Prepared on `main`, tagged as GitHub Release `v1.1.0` (commit
-`103d5384e70e8b0b746b296a0bdbd2d156ba8dde`) and archived on Zenodo as
+Tagged as GitHub Release `v1.1.0` (commit
+`103d5384e70e8b0b746b296a0bdbd2d156ba8dde`), published on PyPI as
+[quantum-group 1.1.0](https://pypi.org/project/quantum-group/1.1.0/) and
+archived on Zenodo as
 [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576)
-(`jors/DISTRIBUTION.md`). Replace "Unreleased" with the PyPI publication
-date once `quantum-group==1.1.0` is published there. The earlier Zenodo DOI
-10.5281/zenodo.22997681 archives v1.0.0 only and does not contain these
-changes. This is a minor
+(`jors/DISTRIBUTION.md`). The earlier Zenodo DOI 10.5281/zenodo.22997681
+archives v1.0.0 only and does not contain these changes. This is a minor
 release under Semantic Versioning because it adds public functions; existing
 public functions keep their names and documented outputs, except that
 invalid arguments (listed below) now raise errors.

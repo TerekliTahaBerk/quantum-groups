@@ -1,11 +1,11 @@
 # Cover letter (for the *Comments for the Editor* field)
 
-> **Status: not yet pasteable — one thing left.** All fields are filled
-> except the PyPI identifier, which needs `quantum-group==1.1.0` to be
-> published (`DISTRIBUTION.md` step C). Re-check the venue declaration on
-> the day of submission (the paragraph marked below). If an equivalent JOSS
-> submission exists at that moment, do not submit to JORS until that
-> process has ended or been withdrawn.
+> **Status: pasteable.** All fields are filled in (snapshot commit, PyPI
+> 1.1.0, Zenodo DOI 10.5281/zenodo.23015576, APC waiver, AI disclosure, all
+> five reviewers). The only remaining step is to re-check the venue
+> declaration on the day of submission (the paragraph marked below). If an
+> equivalent JOSS submission exists at that moment, do not submit to JORS
+> until that process has ended or been withdrawn.
 
 ---
 

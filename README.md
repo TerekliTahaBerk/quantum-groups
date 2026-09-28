@@ -27,9 +27,16 @@ system and not a theorem prover.
 ## Installation
 
 Python 3.10–3.13. Runtime dependencies: SymPy ≥ 1.10, NetworkX ≥ 2.6,
-Matplotlib ≥ 3.5 (installed automatically). The package is not on PyPI;
-install it from this repository (distribution name `quantum-group`, import
-name `quantum_group`):
+Matplotlib ≥ 3.5 (installed automatically). Distribution name
+`quantum-group`, import name `quantum_group`.
+
+From PyPI:
+
+```bash
+python3 -m pip install quantum-group==1.1.0
+```
+
+From this repository (for development, or to install a specific commit):
 
 ```bash
 git clone https://github.com/TerekliTahaBerk/quantum-groups.git

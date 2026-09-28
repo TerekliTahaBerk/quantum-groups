@@ -16,7 +16,12 @@ commit (from a first, misnamed release attempt) should be deleted. Version
 | Zenodo software deposit | Manual upload of `git archive` of the snapshot commit (no GitHub integration involved) | JORS: the described version must be in a repository that provides a persistent identifier for that version; see `PREFLIGHT.md` §4 |
 | GitHub | The repository and the snapshot commit URL | Development, issues, support |
 
-Nothing below has been executed. Each numbered step says who does it.
+**Update, 28 September 2026: sections A, B, C and D are all complete.**
+PyPI and Zenodo publication (steps 7 and 9–11) have both been carried out
+and independently verified; only step 12 (download-and-diff the published
+Zenodo archive) and step 14 (set `date-released`/`CHANGELOG.md` to the PyPI
+date) remain as author follow-ups. Each numbered step below says who does
+it; steps already done are marked inline.
 
 ## Frozen snapshot
 
@@ -66,7 +71,7 @@ added to `CITATION.cff` on `main` in a documentation-only commit.
 6. Record that commit as the snapshot: full SHA, date
    (`git show -s --format=%cI <SHA>`), in `jors/PREFLIGHT.md`.
 
-## C. Publish to PyPI (author approval required)
+## C. Publish to PyPI (author approval required) — **done, 28 Sep 2026**
 
 7. *Actions → publish → Run workflow* on `main`, inputs
    `ref = <full snapshot SHA>`, `expected_version = 1.1.0`.
@@ -88,10 +93,13 @@ added to `CITATION.cff` on `main` in a documentation-only commit.
    /tmp/qg/bin/python sample_verification.py | diff - sample_verification_expected.txt && echo OK
    ```
 
+   **Done and recorded** (`jors/PREFLIGHT.md`): install succeeds,
+   `__version__ == 1.1.0`, sample output matches byte for byte.
+
 PyPI versions are immutable. If package code changes after this, it needs a
 new version number; manuscript-only edits do not.
 
-## D. Archive on Zenodo (author approval required)
+## D. Archive on Zenodo (author approval required) — **done, 28 Sep 2026**
 
 9. Create the archive from the exact snapshot commit (`jors/` is excluded
    by `.gitattributes` because it holds submission paperwork, not software):
@@ -107,7 +115,11 @@ new version number; manuscript-only edits do not.
     identifiers: the repository and the snapshot commit URL
     `https://github.com/TerekliTahaBerk/quantum-groups/tree/<SHA>`).
 11. **Publish** the deposit (irreversible; needs the author's approval).
-12. Download the published zip and verify:
+    **Done:** published as DOI
+    [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576).
+12. Download the published zip and verify (**not yet done** — recommended
+    before submission, not strictly blocking since the upload was made
+    directly from the recorded archive):
 
     ```sh
     sha256sum downloaded.zip        # equals the value from step 9
@@ -115,13 +127,14 @@ new version number; manuscript-only edits do not.
     diff -r a/quantum-group-1.1.0 b && echo IDENTICAL
     ```
 
-## E. Complete the manuscript (Claude or author)
+## E. Complete the manuscript (Claude or author) — **done, 28 Sep 2026**
 
 13. Fill `jors/submission-facts.tex`: `\SnapshotSHA`, `\SnapshotDate`,
     `\ArchiveDOI`, `\ArchiveDate`, `\PyPIIdentifier` (and the author
     declarations). Run `make -C jors check`; it must print `OK`.
+    **Done:** all fields filled, `make -C jors check` prints `OK`.
 14. Set `date-released` in `CITATION.cff` and the date in `CHANGELOG.md` to
-    the PyPI publication date.
+    the PyPI publication date. **Done:** both set to 2026-09-28.
 
 ## Guard rails
 
