@@ -92,10 +92,14 @@ submission materials. No other AI tool was used. The tools are not authors.
 I reviewed and validated all AI-assisted output and take responsibility for
 the software and the manuscript.
 
-**Suggested reviewers.** [Five names and e-mail addresses from
-`POTENTIAL_REVIEWERS.md`, each copied from the official page.] None has
-collaborated with me or on this software, and I have no personal or
-professional relationship with any of them.
+**Suggested reviewers.** None has collaborated with me or on this software,
+and I have no personal or professional relationship with any of them.
+
+1. Anne Schilling, University of California, Davis — anne@math.ucdavis.edu
+2. Nicolas M. Thiéry, Université Paris-Saclay — Nicolas.Thiery@universite-paris-saclay.fr
+3. Max Horn, RPTU Kaiserslautern-Landau — mhorn@rptu.de
+4. Vidas Regelskis, University of Hertfordshire — v.regelskis@herts.ac.uk
+5. Paul Zinn-Justin, University of Melbourne — pzinn@unimelb.edu.au
 
 **Article processing charge.** I request a full waiver of the £824.00
 Software Metapaper APC. This software was developed as part of my
