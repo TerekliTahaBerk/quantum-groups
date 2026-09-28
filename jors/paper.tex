@@ -1,16 +1,19 @@
 % JORS Software Metapaper: quantum-group
 %
-% Structure follows the JORS Software Metapaper template headings:
-% (1) Overview [Title, Paper Authors, Paper Author Roles and Affiliations,
-% Abstract, Keywords, Introduction, Implementation and architecture, Quality
-% control], (2) Availability [Operating system, Programming language,
-% Additional system requirements, Dependencies, List of contributors,
-% Software location (Archive, Code repository), Language], (3) Reuse
-% potential; followed by the statements listed in the journal's suggested
-% structure (Data Accessibility, Acknowledgements, Funding Information,
-% Competing Interests, Authors' Contributions) and a generative-AI statement
-% required by the Ubiquity Press policy. See jors/PREFLIGHT.md for how the
-% current rules were checked.
+% Structure follows the official JORS_Template (jors_sw_paper_template_0.2,
+% obtained 28 Sep 2026 -- see jors/PREFLIGHT.md): (1) Overview [Title, Paper
+% Authors, Paper Author Roles and Affiliations, Abstract, Keywords,
+% Introduction, Implementation and architecture, Quality control],
+% (2) Availability [Operating system, Programming language, Additional
+% system requirements, Dependencies, List of contributors, Software
+% location (Archive, Code repository), Language], (3) Reuse potential,
+% Acknowledgements, Funding statement, Competing interests, References,
+% Copyright Notice -- plus, beyond the template, a Data Accessibility
+% Statement, an Authors' Contributions section and a generative-AI
+% disclosure, none of which the template forbids. References follow the
+% template's own instruction ("Harvard style ... citing them in the text
+% with a number in square brackets"), not Vancouver as earlier assumed
+% before the template was in hand.
 %
 % Author- and event-dependent facts live in submission-facts.tex.
 % Build (from jors/):  make  (or latexmk -pdf paper.tex)
@@ -32,13 +35,107 @@
 \usepackage{caption}
 \usepackage{enumitem}
 \usepackage{microtype}
-\usepackage[backend=biber,style=vancouver,sorting=none,maxnames=6,minnames=6]{biblatex}
+\usepackage[backend=biber,style=numeric,giveninits=true,
+  sorting=none,maxnames=6,minnames=6]{biblatex}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xurl}
 
 \addbibresource{references.bib}
-% Vancouver form "Place: Publisher; year. p. x-y." for proceedings chapters.
-\DeclareFieldFormat[inproceedings]{pages}{\unskip.\space p.~\mkcomprange{#1}}
+
+% --- JORS house reference style -------------------------------------------
+% The official JORS template instructs: "Please enter references in the
+% Harvard style ... citing them in the text with a number in square
+% brackets", worked example: "Piwowar, H A 2011 Who Shares? ... PLoS ONE
+% 6(7): e18657. DOI: http://dx.doi.org/...". That is: Family, Initials
+% Year. Title. Journal Volume(Issue): Pages. DOI: <url> -- with a numeric
+% in-text citation, not biblatex's built-in numeric bibliography format
+% (which uses given-name-first order, quoted titles and an "In:" prefix).
+% The drivers below reassemble each entry type in that order; in-text
+% citations already print as [n] under style=numeric.
+\DeclareNameAlias{default}{family-given}
+\renewcommand*{\labelnamepunct}{\addcomma\space}
+% No automatic label here: style=numeric's own bibliography list already
+% supplies the "[n]" via \mkbibitem, so the drivers below print content only.
+
+% Plain "Vol(Issue): Pages", no "pp." prefix, to match the journal's example.
+\DeclareFieldFormat{pages}{#1}
+\DeclareFieldFormat{doi}{DOI\addcolon\space\url{https://doi.org/#1}}
+\DeclareFieldFormat{url}{URL\addcolon\space\url{#1}}
+\DeclareFieldFormat{version}{Version~#1}
+
+\newbibmacro*{jors:authoryear}{%
+  \usebibmacro{author}%
+  \setunit{\addspace}%
+  \printfield{year}\isdot}
+\newbibmacro*{jors:volissue}{%
+  \iffieldundef{volume}{}{%
+    \setunit{\addspace}\printfield{volume}%
+    \iffieldundef{number}{}{(\printfield{number})}%
+    \setunit{\addcolon\space}}%
+  \printfield{pages}\isdot}
+\newbibmacro*{jors:doiurl}{%
+  \iffieldundef{doi}{%
+    \iffieldundef{url}{}{\newunit\printfield{url}}%
+  }{\newunit\printfield{doi}}%
+  \iffieldundef{eprint}{}{\newunit\printtext{arXiv\addcolon\space\url{https://arxiv.org/abs/\thefield{eprint}}}}}
+
+\DeclareBibliographyDriver{article}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{jors:authoryear}%
+  \newunit
+  \printfield{title}\isdot
+  \newunit
+  \printfield{journaltitle}%
+  \usebibmacro{jors:volissue}%
+  \usebibmacro{jors:doiurl}%
+  \finentry}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{jors:authoryear}%
+  \newunit
+  \printfield{title}\isdot
+  \newunit
+  \printtext{In:\space}\printfield{booktitle}\isdot
+  \newunit
+  \iflistundef{location}{}{\printlist{location}\addcolon\space}%
+  \printlist{publisher}%
+  \iffieldundef{pages}{}{\setunit{\addcomma\space}\printtext{pp.\space}\printfield{pages}}\isdot
+  \usebibmacro{jors:doiurl}%
+  \finentry}
+
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{jors:authoryear}%
+  \newunit
+  \printfield{title}\isdot
+  \newunit
+  \iflistundef{location}{}{\printlist{location}\addcolon\space}%
+  \printlist{publisher}\isdot
+  \usebibmacro{jors:doiurl}%
+  \finentry}
+
+\DeclareBibliographyDriver{thesis}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{jors:authoryear}%
+  \newunit
+  \printfield{title}\isdot
+  \newunit
+  \printfield{type}%
+  \iflistundef{institution}{}{\setunit{\addcomma\space}\printlist{institution}}%
+  \iflistundef{location}{}{\setunit{\addcomma\space}\printlist{location}}\isdot
+  \usebibmacro{jors:doiurl}%
+  \finentry}
+
+\DeclareBibliographyDriver{software}{%
+  \usebibmacro{begentry}%
+  \usebibmacro{jors:authoryear}%
+  \newunit
+  \printfield{title}\isdot
+  \newunit
+  \iffieldundef{version}{}{\printfield{version}\isdot}%
+  \usebibmacro{jors:doiurl}%
+  \finentry}
 
 \setlength{\parskip}{0.45em}
 \setlength{\parindent}{0pt}
@@ -306,11 +403,11 @@ No research data were generated or analysed for this article. The software, its 
 
 The author thanks Prof.\ Dr.\ Salih Çelik for supervising the undergraduate thesis from which this software originated.
 
-\section*{Funding Information}
+\section*{Funding statement}
 
 \FundingText
 
-\section*{Competing Interests}
+\section*{Competing interests}
 
 \CompetingText
 
