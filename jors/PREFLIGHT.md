@@ -84,8 +84,10 @@ registry as in jors.523), Language; (3) Reuse potential; then the statements
 of §2. The layout is a plain LaTeX `article` because the official template
 file could not be obtained; JORS typesets accepted papers itself, and the
 guidelines accept PDF + LaTeX source. Title case as in current articles.
-Abstract **138 words** as rendered (current articles: 104–143 words; the historical
-"ca. 100 words" instruction could not be confirmed as current).
+Abstract **143 words** as rendered (updated 28 Sep 2026 to name the thesis-error
+catch, its strongest selling point, which the earlier draft left out; current
+articles: 104–143 words, so this is at the top of the range but within it;
+the historical "ca. 100 words" instruction could not be confirmed as current).
 
 ## 4. Archive decision
 

@@ -29,7 +29,7 @@ misnamed release attempt; re-checked 28 September 2026 via `git ls-remote
 | 9 | Snapshot commit frozen with green CI | READY | All 9 CI jobs passed on `103d538` (re-verified via the GitHub API 28 Sep 2026); this is also the `v1.1.0` release commit; archive reference file and SHA-256 need updating in `DISTRIBUTION.md` (see below) |
 | 10 | Template sections and fields | READY | `PREFLIGHT.md` §3 (official template file unobtainable; headings as in current articles) |
 | 11 | Title | READY | Title case, no novelty claim |
-| 12 | Abstract | READY | 138 words, within the range of current JORS articles |
+| 12 | Abstract | READY | 143 words (updated 28 Sep 2026 to name the thesis-error catch), at the top of the range of current JORS articles (104–143) |
 | 13 | Sample input and output | READY | Listing 1 = `examples/sample_verification.py`; expected output compared in CI and by `make -C jors check` |
 | 14 | Quality control, supported systems, dependencies | READY | 202 tests (198 + 4 doctests); Python 3.10–3.13; minimum dependencies; Linux, macOS, Windows (CI) |
 | 15 | Reuse potential and support | READY | Section (3) |
