@@ -43,9 +43,9 @@ A stray `v1.0.1` tag on the same commit (its Release was deleted before
 | 25 | Authors' Contributions; authorship | READY (sole author) | Supervisor in Acknowledgements only |
 | 26 | Generative-AI disclosure | READY | Confirmed: no AI in April–June 2026; Claude Code (Claude Opus 5.5) only, for all publication-preparation work including the translation and the mathematical/technical audit; human review and validation. 28 Sep 2026: author confirmed Codex (OpenAI) was never used at any stage — the earlier text in `paper/paper.md`, `AUDIT.md`, `jors/paper.tex`, `jors/COVER_LETTER.md` and `jors/submission-facts.tex` that attributed the translation and audit to Codex was a mislabeling and has been corrected to Claude Code throughout |
 | 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED (1 of 5 only) | Five chosen; author confirmed no conflicts (27 Sep 2026). 28 Sep 2026: 4 of 5 addresses confirmed directly from the reviewers' own official pages (`POTENTIAL_REVIEWERS.md`) — Schilling, Thiéry, Regelskis, Zinn-Justin. Levandovskyy's address still could not be fetched (page returned no visible address); author must open his official Kassel page directly before submitting |
-| 28 | Cover letter | BLOCKED (by 26, 27, APC, snapshot/DOI) | `COVER_LETTER.md`, bracketed fields only |
-| 29 | APC | AUTHOR ACTION REQUIRED | See below |
-| 30 | PDF without [PENDING] markers | BLOCKED (by 5, 7, 26) | `make -C jors check` must print `OK` |
+| 28 | Cover letter | BLOCKED (by 27, snapshot/DOI) | `COVER_LETTER.md`; APC and AI disclosure fields now filled in, waiver text added |
+| 29 | APC | READY (waiver requested) | £824.00; author decided 28 Sep 2026 to request a full waiver (no funding, thesis-derived work). Waiver request text is in `COVER_LETTER.md`. The editor decides independently of ability to pay; a decline would mean either paying or withdrawing, not an automatic rejection |
+| 30 | PDF without [PENDING] markers | BLOCKED (by 5, 7) | `make -C jors check` must print `OK`; the remaining `\pending` fields are `\ArchiveDOI`, `\ArchiveDate`, `\PyPIIdentifier` (items 5 and 7) |
 
 ## APC
 
@@ -60,6 +60,10 @@ A stray `v1.0.1` tag on the same commit (its Release was deleted before
   "around 350 GBP", which does not match the journal's own page; treat that
   figure as stale/unreliable and use £824.00, re-checking the official page
   once more on the actual submission day in case the fee schedule changed.
-- No waiver has been requested.
-- **Author decision:** `will pay` / `waiver or discount requested` /
-  `institution or funder pays` — currently **undecided**.
+- **Author decision (28 Sep 2026): waiver or discount requested.** Grounds:
+  thesis-derived work, no specific funding (matches the Funding statement).
+  The waiver request text is in `COVER_LETTER.md`, submitted with the
+  manuscript as required. This is a request, not a guarantee — the editor's
+  acceptance decision is independent of it, and a decline on the waiver
+  itself would mean choosing to pay or withdrawing, not an automatic
+  rejection of the paper.

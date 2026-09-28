@@ -147,7 +147,7 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 |---|---|---|
 | Codex use/model | RESOLVED 28 Sep 2026 | Author confirmed Codex (OpenAI) was never used at any stage. All mentions in `paper/paper.md`, `paper/PREFLIGHT.md`, `AUDIT.md`, `jors/paper.tex`, `jors/COVER_LETTER.md`, `jors/SUBMISSION_CHECKLIST.md` and `jors/submission-facts.tex` corrected to attribute that work to Claude Code |
 | Reviewer e-mails (5) | AUTHOR ACTION REQUIRED (1 of 5) | 28 Sep 2026: 4 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`); Levandovskyy's page returned no visible address in two fetch attempts, needs a direct human visit |
-| APC amount and choice | AUTHOR ACTION REQUIRED (amount resolved) | Amount confirmed 28 Sep 2026: £824.00. The choice (pay / waiver / institution pays) is still the author's to make |
+| APC amount and choice | RESOLVED 28 Sep 2026 | Amount £824.00; author chose to request a full waiver (thesis-derived work, no specific funding). Request text in `COVER_LETTER.md` |
 | Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
 | Merge to `main` | DONE | merged 28 Sep 2026 (PR #8); this file's branch references predate the merge and are historical |

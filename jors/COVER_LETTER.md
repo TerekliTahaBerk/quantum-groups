@@ -97,9 +97,11 @@ the software and the manuscript.
 collaborated with me or on this software, and I have no personal or
 professional relationship with any of them.
 
-**Article processing charge.** [One of: "The APC will be paid on
-acceptance." / "I request a waiver/discount because …" / "The APC will be
-covered by …".]
+**Article processing charge.** I request a full waiver of the £824.00
+Software Metapaper APC. This software was developed as part of my
+undergraduate thesis and has received no specific funding (see Funding,
+above); I have no institutional or grant funding available to cover the
+charge.
 
 Thank you for considering this submission.
 
