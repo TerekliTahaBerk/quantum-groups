@@ -128,8 +128,8 @@ new version number; manuscript-only edits do not.
 - Never attach the v1.0.0 DOI (10.5281/zenodo.22997681) to 1.1.0.
 - Never archive a moving branch; always the recorded SHA (`103d538`, = the
   `v1.1.0` tag).
-- Delete the stray `v1.0.1` tag (same commit as `v1.1.0`, left over from a
-  first, misnamed release attempt) before submission — one version should
-  have one tag.
+- A stray `v1.0.1` tag was suspected (same commit as `v1.1.0`, from a first,
+  misnamed release attempt); re-checked 28 Sep 2026 via `git ls-remote
+  --tags origin` — it does not exist on the remote. Nothing to delete.
 - PyPI's `workflow_dispatch` `ref` input should still be the full 40-character
   commit SHA, not the tag name, per the workflow's own validation.

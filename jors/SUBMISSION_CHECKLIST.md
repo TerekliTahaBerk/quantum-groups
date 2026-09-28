@@ -11,8 +11,10 @@ A GitHub Release/tag is not strictly required by the JORS rules (a
 repository with a persistent identifier for the described version, i.e. the
 Zenodo deposit, is what matters) — but the author has in fact created one:
 `v1.1.0`, published 28 Sep 2026, commit `103d5384e70e8b0b746b296a0bdbd2d156ba8dde`.
-A stray `v1.0.1` tag on the same commit (its Release was deleted before
-`v1.1.0` was created correctly) should be deleted before submission.
+A stray `v1.0.1` tag was suspected on the same commit from an earlier,
+misnamed release attempt; re-checked 28 September 2026 via `git ls-remote
+--tags origin` — no such tag exists on the remote (only `v1.0.0` and
+`v1.1.0`). Nothing to delete.
 
 | # | Requirement | Status | Evidence / action |
 |---|---|---|---|

@@ -6,9 +6,11 @@ GitHub Release. Earlier versions of this file are superseded. The author
 reversed the earlier "no release" decision: **`v1.1.0` is now a published
 GitHub Release** (created by the author, 28 Sep 2026), target `main`,
 pointing at commit `103d538` (below). Nothing has been published to PyPI or
-Zenodo yet. A stray `v1.0.1` git tag also points at this same commit (its
-GitHub Release was deleted before `v1.1.0` was created correctly); it is
-harmless but should be deleted for cleanliness before submission.
+Zenodo yet. **Re-checked 28 Sep 2026 (later same day):** `git ls-remote
+--tags origin` shows only `v1.0.0` and `v1.1.0` — no `v1.0.1` tag exists on
+the remote. The earlier note about a stray `v1.0.1` tag was based on a
+first, misnamed release attempt that was evidently cleaned up (tag and all)
+before this check; there is nothing left to delete.
 
 ## 1. Repository topology (fetched 27 Sep 2026, releases re-checked 28 Sep 2026)
 
@@ -20,7 +22,7 @@ harmless but should be deleted for cleanliness before submission.
 | `claude/happy-lamport-lq2yqj` | — | fully contained in `main` |
 | tag `v1.0.0` | `8dcfe99` | historical; untouched. GitHub Release: "v1.0.0 — First release" (2026-09-27T13:44:49Z); untouched |
 | tag `v1.1.0` | `103d538` | **GitHub Release published 28 Sep 2026T11:18:18Z**, title "v1.1.0", target `main` |
-| tag `v1.0.1` | `103d538` | stray leftover tag (its Release was deleted); same commit as `v1.1.0`; delete before submission to avoid a second, wrongly-named identifier for this version |
+| tag `v1.0.1` | — | **does not exist** (re-checked via `git ls-remote --tags origin`, 28 Sep 2026, later same day); the earlier misnamed release attempt left no tag behind, so there is nothing to delete |
 
 Package source identity: `quantum_group/` tree `804d66f83a1d`, `tests/` tree
 `a2a4fdc80bf4`, `pyproject.toml` blob `b17aa2bbc012` — all identical between
