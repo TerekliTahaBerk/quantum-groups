@@ -1,5 +1,15 @@
 # JORS submission checklist
 
+**SUBMITTED 28 September 2026.** The manuscript was submitted to the
+*Journal of Open Research Software*, Software Metapapers section (submission
+#798 in the journal's OJS system), with `paper.pdf` as the manuscript file,
+`paper.tex` and `references.bib` as supplementary source files (for review),
+and `figures/figure1_workflow.png` as the figure. The cover-letter text,
+five recommended reviewers, and APC waiver request were entered in their own
+OJS fields (Comments for the Editor / Recommended reviewers), not attached
+as a separate file. Everything below is the pre-submission record kept for
+reference.
+
 Status **27 September 2026**, verified against the current repository and
 the live JORS rules as far as they could be retrieved (`PREFLIGHT.md` §2).
 
