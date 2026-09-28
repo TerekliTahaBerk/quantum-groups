@@ -44,10 +44,11 @@ released. To release it, after reviewing the diff since `v1.0.0`:
 3. On GitHub, *Releases → Draft a new release*, select `v1.1.0`, paste the
    1.1.0 changelog section, and publish. (A tag alone does not trigger
    Zenodo.)
-4. Zenodo mints a new version DOI within minutes. Record it: add it to
-   `CITATION.cff` `identifiers` (describe it as the v1.1.0 archive, keep the
-   v1.0.0 entry), and cite it in `README.md`. Also note the concept DOI shown
-   on the Zenodo record, which always resolves to the latest version.
+4. Zenodo mints a new version DOI within minutes. Add it to
+   `CITATION.cff` under `identifiers` as the archive of that version (do not
+   list the v1.0.0 DOI there, since the file describes the current version),
+   and cite it in `README.md`. Note the concept DOI shown on the Zenodo
+   record, which always resolves to the latest version.
 5. Never move or delete the `v1.0.0` tag or release; its DOI must keep
    pointing at the code it archived.
 
