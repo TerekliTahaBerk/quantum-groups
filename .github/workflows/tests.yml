@@ -67,3 +67,39 @@ jobs:
       - name: Run README quickstart outside the repository
         working-directory: ${{ runner.temp }}
         run: python "$GITHUB_WORKSPACE/examples/quickstart.py"
+      - name: Run sample verification and compare with its expected output
+        working-directory: ${{ runner.temp }}
+        run: |
+          python "$GITHUB_WORKSPACE/examples/sample_verification.py" > sample.out
+          diff sample.out "$GITHUB_WORKSPACE/examples/sample_verification_expected.txt"
+
+  cross-platform:
+    # Installs the built wheel on Linux, macOS and Windows, runs both examples
+    # from outside the source tree (comparing the sample output line by
+    # line), then runs the full test suite and doctests.
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and install wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build --wheel
+          python -m pip install dist/*.whl pytest
+      - name: Run examples outside the repository
+        working-directory: ${{ runner.temp }}
+        run: |
+          python "$GITHUB_WORKSPACE/examples/quickstart.py"
+          python "$GITHUB_WORKSPACE/examples/sample_verification.py" > sample.out
+          python -c "import sys; a, b = (open(p).read().splitlines() for p in sys.argv[1:]); sys.exit(a != b)" sample.out "$GITHUB_WORKSPACE/examples/sample_verification_expected.txt"
+      - name: Run tests and doctests
+        run: python -m pytest

@@ -1,0 +1,31 @@
+% Facts that only the author or an external event can supply.
+%
+% Every value below that is still \pending{...} is printed in red in the PDF,
+% so an incomplete manuscript cannot be mistaken for a final one. Replace each
+% \pending{...} with the confirmed text; `make -C jors check` (see
+% jors/Makefile) fails while any \pending remains in the rendered PDF.
+% Do not fill a field with a guess.
+
+% --- Author declarations -------------------------------------------------
+\newcommand{\AuthorAffiliation}{Department of Mathematics, Y{\i}ld{\i}z Technical University, Istanbul, Türkiye}
+\newcommand{\FundingText}{This work received no specific funding.}
+\newcommand{\CompetingText}{The author has no competing interests to declare.}
+% AI use during the April--June 2026 thesis/core-development period.
+\newcommand{\ThesisPeriodAI}{no generative AI tools were used}
+% Model names exactly as confirmed by the author.
+\newcommand{\ClaudeModel}{Claude Opus 5.5}
+% Author answered none on 27 Sep 2026, which conflicts with the repository
+% record of Codex use (paper/paper.md, AUDIT.md); awaiting clarification.
+\newcommand{\CodexModel}{\pending{clarify: was Codex used at all, and which model}}
+% Confirmation that all AI-assisted output was human reviewed and validated.
+\newcommand{\AIReviewStatement}{The author reviewed and validated all AI-assisted output, made the scientific and design decisions, and takes responsibility for the software and this paper.}
+
+% --- Software snapshot and distribution ----------------------------------
+% Exact commit described by the paper (the JORS submission software snapshot).
+\newcommand{\SnapshotSHA}{\texttt{892dfaee23644ede78d940051eb3a20c9e6a5918}}
+\newcommand{\SnapshotDate}{27 September 2026}
+% Zenodo software deposition of `git archive` of the snapshot commit.
+\newcommand{\ArchiveDOI}{\pending{Zenodo DOI of the 1.1.0 snapshot}}
+\newcommand{\ArchiveDate}{\pending{Zenodo publication date}}
+% PyPI: public once `python -m pip install quantum-group==1.1.0` works.
+\newcommand{\PyPIIdentifier}{\pending{PyPI publication of quantum-group 1.1.0}}

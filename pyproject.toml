@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,8 @@ version = "1.1.0"
 description = "Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {file = "LICENSE"}
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     {name = "Taha Berk Terekli", email = "terekli@tahaberk.com"},
 ]
@@ -16,7 +17,6 @@ keywords = ["quantum groups", "Hopf algebras", "R-matrix", "Yang-Baxter equation
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",

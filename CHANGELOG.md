@@ -6,9 +6,12 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [1.1.0] - Unreleased
 
-Prepared on `main`; not yet tagged or archived. Replace "Unreleased" with the
-release date when `v1.1.0` is tagged. The Zenodo DOI 10.5281/zenodo.22997681
-archives v1.0.0 only and does not contain these changes. This is a minor
+Prepared on `main`. By the author's decision 1.1.0 has no GitHub Release or
+tag: it is identified by one recorded commit and distributed through PyPI and
+a Zenodo deposit of that commit (`jors/DISTRIBUTION.md`). Replace
+"Unreleased" with the PyPI publication date once it exists. The Zenodo DOI
+10.5281/zenodo.22997681 archives v1.0.0 only and does not contain these
+changes. This is a minor
 release under Semantic Versioning because it adds public functions; existing
 public functions keep their names and documented outputs, except that
 invalid arguments (listed below) now raise errors.
@@ -44,6 +47,18 @@ invalid arguments (listed below) now raise errors.
   shared helpers and every new validation path.
 - `examples/quickstart.py` (the README quickstart, run by CI from outside the
   source tree against an installed wheel).
+- `examples/sample_verification.py` with its expected output
+  `examples/sample_verification_expected.txt`, including an ungraded-swap
+  negative control; CI compares the output after installing the wheel.
+- CI job installing the wheel and running the examples and the full test
+  suite on Linux, macOS and Windows.
+- `.github/workflows/publish.yml`: manual PyPI publication of an explicitly
+  named commit with Trusted Publishing (no stored token, no GitHub Release);
+  it checks the version, builds, runs `twine check`, installs the wheel in a
+  clean environment and compares the sample output before uploading, and
+  waits for approval of the `pypi` environment.
+- `jors/`: Journal of Open Research Software metapaper and submission
+  records (not part of the installed package).
 - `AUDIT.md` with derivations, source limitations and novelty assessment.
 
 ### Changed
@@ -53,6 +68,9 @@ invalid arguments (listed below) now raise errors.
 - CI tests Python 3.10–3.13, the oldest supported dependencies, and a wheel
   install. Dependency lower bounds: SymPy ≥ 1.10, NetworkX ≥ 2.6,
   Matplotlib ≥ 3.5.
+- Packaging metadata uses an SPDX licence expression (`license = "MIT"`,
+  `license-files`) instead of the deprecated table form and licence
+  classifier; building requires setuptools ≥ 77.
 - Trove classifier `Development Status :: 4 - Beta` (was 5 - Production/Stable),
   reflecting the convention corrections made after 1.0.0.
 - Cross-module use of the private helpers `hopf._kron`, `r_matrix._is_zero`

@@ -21,10 +21,11 @@ authors:
 repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
-# Version prepared on main; set date-released when the v1.1.0 release is made.
-# No DOI is listed: the only existing archive (Zenodo 10.5281/zenodo.22997681)
-# contains v1.0.0, not this version. Add the DOI of the archive of this
-# version once it exists.
+# Version 1.1.0 has no GitHub Release or tag. It is identified by one recorded
+# commit and distributed through PyPI and a Zenodo deposit of that commit
+# (see jors/DISTRIBUTION.md). No DOI is listed yet: the only existing archive,
+# Zenodo 10.5281/zenodo.22997681, contains v1.0.0, not this version. Add the
+# DOI of the 1.1.0 deposit (and date-released) only once it exists.
 version: 1.1.0
 keywords:
   - quantum groups
