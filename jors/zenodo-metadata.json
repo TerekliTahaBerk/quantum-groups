@@ -1,5 +1,5 @@
 {
-  "_comment": "Metadata for the Zenodo software deposit of quantum-group 1.1.0, snapshot commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (= the GitHub Release v1.1.0 commit; see jors/DISTRIBUTION.md, section D). Upload exactly: git archive --format=zip --prefix=quantum-group-1.1.0/ 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (SHA-256 47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d with git 2.43.0), or equivalently the 'Source code (zip)' asset of the v1.1.0 GitHub Release.",
+  "_comment": "Metadata for the Zenodo software deposit of quantum-group 1.1.0, snapshot commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (= the GitHub Release v1.1.0 commit; see jors/DISTRIBUTION.md, section D). Published 28 Sep 2026 as DOI 10.5281/zenodo.23015576, via Zenodo's GitHub integration on the v1.1.0 Release (not a manual git-archive upload as this comment originally instructed). Content independently verified identical, file-by-file, to git archive --prefix=TerekliTahaBerk-quantum-groups-103d538/ 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (201 files; the uploaded zip's MD5 2f6fafa8efb71a7f036f401ab6d8b370 matches Zenodo's own listed MD5).",
   "metadata": {
     "upload_type": "software",
     "title": "quantum-group: Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities",

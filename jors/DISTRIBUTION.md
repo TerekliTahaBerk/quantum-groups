@@ -34,7 +34,7 @@ it; steps already done are marked inline.
 | Python | 3.10, 3.11, 3.12, 3.13 |
 | Tested OS | Linux, macOS, Windows (CI; all 9 jobs green on `103d538`) |
 | Dependencies | SymPy ≥ 1.10, NetworkX ≥ 2.6, Matplotlib ≥ 3.5 |
-| Archive file | `git archive --format=zip --prefix=quantum-group-1.1.0/ 103d538…` → `quantum-group-1.1.0.zip`, 236 files, 13,011,364 bytes, SHA-256 `47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d` (git 2.43.0; other git versions may produce a different zip checksum but identical contents — verify contents with step 12). This is also exactly what GitHub's own "Source code (zip)" asset on the `v1.1.0` Release contains, modulo GitHub's own zip wrapper differences — prefer `git archive` for a reproducible, documented hash. |
+| Archive file (as actually published, 28 Sep 2026) | Zenodo's GitHub-integration archive of the `v1.1.0` Release: `TerekliTahaBerk/quantum-groups-v1.1.0.zip`, 13,020,332 bytes, MD5 `2f6fafa8efb71a7f036f401ab6d8b370` (matches Zenodo's own listed MD5), root folder `TerekliTahaBerk-quantum-groups-103d538/`, 201 files. Content-verified (step 12, D) identical to `git archive --prefix=TerekliTahaBerk-quantum-groups-103d538/ 103d538…`, file-by-file, including per-file hashes. An earlier draft of this file estimated a manual `git archive --prefix=quantum-group-1.1.0/` upload at 236 files / 13,011,364 bytes / SHA-256 `47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d`; that plan was not what was run and its figures are superseded by the verified numbers above. |
 
 Steps 5–6 below are therefore done: the reserved DOI does **not** need to be
 inside the snapshot (the Zenodo record carries it); after publication it is
@@ -101,8 +101,19 @@ new version number; manuscript-only edits do not.
 
 ## D. Archive on Zenodo (author approval required) — **done, 28 Sep 2026**
 
-9. Create the archive from the exact snapshot commit (`jors/` is excluded
-   by `.gitattributes` because it holds submission paperwork, not software):
+**Note on what actually happened:** this section originally planned a
+*manual* `git archive` upload (steps 9–10 below). The author instead
+archived via Zenodo's GitHub integration on the `v1.1.0` Release, which
+produces a zip named `TerekliTahaBerk/quantum-groups-v1.1.0.zip` with
+GitHub's own `{owner}-{repo}-{short-sha}` root folder
+(`TerekliTahaBerk-quantum-groups-103d538/`), not the
+`quantum-group-1.1.0/` prefix steps 9 and 12 assumed. Content was verified
+identical regardless (step 12); only the file name and internal folder
+name differ from the original plan, which is harmless.
+
+9. *(Superseded — not what was run; kept for reference.)* Create the
+   archive from the exact snapshot commit manually (`jors/` is excluded by
+   `.gitattributes` because it holds submission paperwork, not software):
 
    ```sh
    git archive --format=zip --prefix=quantum-group-1.1.0/ <SHA> > quantum-group-1.1.0.zip
@@ -114,17 +125,23 @@ new version number; manuscript-only edits do not.
     description, version `1.1.0`, licence MIT, keywords, related
     identifiers: the repository and the snapshot commit URL
     `https://github.com/TerekliTahaBerk/quantum-groups/tree/<SHA>`).
+    **Done differently:** via the GitHub-integration archive described
+    above, not a manual upload; the metadata fields were still filled in
+    to match `zenodo-metadata.json`.
 11. **Publish** the deposit (irreversible; needs the author's approval).
     **Done:** published as DOI
     [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576).
-12. Download the published zip and verify (**not yet done** — recommended
-    before submission, not strictly blocking since the upload was made
-    directly from the recorded archive):
+12. Download the published zip and verify. **Done, 28 Sep 2026** (this
+    environment's egress policy blocks `zenodo.org`, so this was run from a
+    session with working Zenodo access):
 
     ```sh
-    sha256sum downloaded.zip        # equals the value from step 9
-    mkdir a b && unzip -q downloaded.zip -d a && git archive <SHA> | tar -x -C b
-    diff -r a/quantum-group-1.1.0 b && echo IDENTICAL
+    # Zenodo's actual file name and root folder (not quantum-group-1.1.0.zip):
+    sha256sum downloaded.zip   # MD5 was compared instead: 2f6fafa8efb71a7f036f401ab6d8b370, matched Zenodo's own listed MD5
+    mkdir a b && unzip -q downloaded.zip -d a
+    git archive --format=zip --prefix=TerekliTahaBerk-quantum-groups-103d538/ <SHA> | (cd b && unzip -q -)
+    diff -r a/TerekliTahaBerk-quantum-groups-103d538 b/TerekliTahaBerk-quantum-groups-103d538
+    # Result: empty diff, 201/201 files identical (also checked per-file SHA-256) -- IDENTICAL
     ```
 
 ## E. Complete the manuscript (Claude or author) — **done, 28 Sep 2026**

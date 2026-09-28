@@ -44,12 +44,17 @@ snapshot (see above); 202 tests passed locally; CI: all 9 jobs green (§7).
 **This commit is now tagged `v1.1.0` with a published GitHub Release** — the
 earlier "no release" plan in this file and in `DISTRIBUTION.md` no longer
 applies; PyPI and Zenodo should be built from this commit / this release.
-Archive reference: `git archive --format=zip --prefix=quantum-group-1.1.0/
-103d538…` = 236 files, 13,011,364 bytes, SHA-256
-`47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d`
-(git 2.43.0; deterministic on repeat; file count matches the earlier
-snapshot exactly, byte size differs only because of the documentation
-changes).
+Archive reference (superseded by what was actually published — see
+`DISTRIBUTION.md` §D and `SUBMISSION_CHECKLIST.md` item 8): the plan here
+was a manual `git archive --prefix=quantum-group-1.1.0/` upload (236 files,
+13,011,364 bytes, SHA-256 `47433ae4feef...`); the author instead used
+Zenodo's GitHub integration on the `v1.1.0` Release, producing
+`TerekliTahaBerk-quantum-groups-v1.1.0.zip` (201 files, 13,020,332 bytes,
+MD5 `2f6fafa8efb71a7f036f401ab6d8b370`, root folder
+`TerekliTahaBerk-quantum-groups-103d538/`). Content-verified identical to
+`git archive` of `103d538` with the matching prefix, file-by-file, 28 Sep
+2026 (session with working Zenodo access; this environment's own egress
+policy blocks `zenodo.org`).
 
 ## 2. JORS rules: sources and retrieval (27 Sep 2026)
 
