@@ -19,11 +19,11 @@ Never use an address that the page does not show.
 
 | # | Name | Institution | Expertise covered | Official page | Search-index report (unverified) | Copied from page? |
 |---|---|---|---|---|---|---|
-| 1 | Anne Schilling | Department of Mathematics, University of California, Davis, USA | Quantum algebras and crystal bases by combinatorial methods; SageMath developer (incl. queer supercrystals) — quantum groups, representation theory, superalgebras, research software | <https://www.math.ucdavis.edu/~anne/> | `aschilling@ucdavis.edu` (another query: `anne@math.ucdavis.edu`) | ☐ |
-| 2 | Nicolas M. Thiéry | LISN, Université Paris-Saclay, France | Algebraic combinatorics; design and sustainability of mathematical research software (SageMath infrastructure, OpenDreamKit) | <https://nicolas.thiery.name/> | `Nicolas.Thiery@universite-paris-saclay.fr` | ☐ |
-| 3 | Viktor Levandovskyy | Computer Algebra, University of Kassel, Germany | Noncommutative computer algebra (Singular:Plural), PBW algebras, quantum algebras — the alternative (algebra-engine) design the paper argues against | <https://www.uni-kassel.de/fb10/en/1004383?tx_ukpersons_personfunctiondetail%5BpersonFunction%5D=1310&cHash=b745a0f76a902ac5d7d59fc12783e345> | `levandovskyy[at]mathematik.uni-kassel[dot]de` | ☐ |
-| 4 | Vidas Regelskis | University of Hertfordshire, UK | Yangians, R-matrices and Yang–Baxter equations including Lie superalgebras; integrable spin chains | <https://researchprofiles.herts.ac.uk/en/persons/vidas-regelskis/> | `v.regelskis@herts.ac.uk` | ☐ |
-| 5 | Paul Zinn-Justin | School of Mathematics and Statistics, University of Melbourne, Australia | Quantum integrable systems, Yang–Baxter equation, explicit R-matrices, computer-assisted mathematics | <https://findanexpert.unimelb.edu.au/profile/454473-paul-zinn-justin> | `pzinn` at `unimelb.edu.au` | ☐ |
+| 1 | Anne Schilling | Department of Mathematics, University of California, Davis, USA | Quantum algebras and crystal bases by combinatorial methods; SageMath developer (incl. queer supercrystals) — quantum groups, representation theory, superalgebras, research software | <https://www.math.ucdavis.edu/~anne/> | `anne@math.ucdavis.edu` | ☑ (28 Sep 2026: official page states the pattern "first name at math dot ucdavis dot edu") |
+| 2 | Nicolas M. Thiéry | LISN, Université Paris-Saclay, France | Algebraic combinatorics; design and sustainability of mathematical research software (SageMath infrastructure, OpenDreamKit) | <https://nicolas.thiery.name/> | `Nicolas.Thiery@universite-paris-saclay.fr` | ☑ (28 Sep 2026: listed on the official page as the current professional address) |
+| 3 | Viktor Levandovskyy | Computer Algebra, University of Kassel, Germany | Noncommutative computer algebra (Singular:Plural), PBW algebras, quantum algebras — the alternative (algebra-engine) design the paper argues against | <https://www.uni-kassel.de/fb10/en/1004383?tx_ukpersons_personfunctiondetail%5BpersonFunction%5D=1310&cHash=b745a0f76a902ac5d7d59fc12783e345> | `levandovskyy[at]mathematik.uni-kassel[dot]de` | ☐ still unverified — 28 Sep 2026: both the FB10 profile page and the RWTH Aachen teaching page rendered with no visible address (likely JS-obfuscated or image-based on the Kassel site). **Author must open the page directly in a browser before submitting.** |
+| 4 | Vidas Regelskis | University of Hertfordshire, UK | Yangians, R-matrices and Yang–Baxter equations including Lie superalgebras; integrable spin chains | <https://researchprofiles.herts.ac.uk/en/persons/vidas-regelskis/> | `v.regelskis@herts.ac.uk` | ☑ (28 Sep 2026: shown on the official page as `v.regelskis herts.ac uk`, `@` stripped for scraping protection) |
+| 5 | Paul Zinn-Justin | School of Mathematics and Statistics, University of Melbourne, Australia | Quantum integrable systems, Yang–Baxter equation, explicit R-matrices, computer-assisted mathematics | <https://findanexpert.unimelb.edu.au/profile/454473-paul-zinn-justin> | `pzinn@unimelb.edu.au` | ☑ (28 Sep 2026: confirmed via his University of Melbourne blog page, "My email is pzinn at unimelb dot edu dot au") |
 
 Coverage: quantum groups / representation theory (1, 4), Yang–Baxter and
 R-matrices (4, 5), quantum superalgebras (1, 4), computer algebra (3),
@@ -59,12 +59,19 @@ mathematical research software (1, 2, 3).
 
 ```
 Suggested reviewers (none has collaborated with me or on this software):
-1. Anne Schilling, University of California, Davis - <address from official page>
-2. Nicolas M. Thiéry, Université Paris-Saclay - <address from official page>
-3. Viktor Levandovskyy, University of Kassel - <address from official page>
-4. Vidas Regelskis, University of Hertfordshire - <address from official page>
-5. Paul Zinn-Justin, University of Melbourne - <address from official page>
+1. Anne Schilling, University of California, Davis - anne@math.ucdavis.edu
+2. Nicolas M. Thiéry, Université Paris-Saclay - Nicolas.Thiery@universite-paris-saclay.fr
+3. Viktor Levandovskyy, University of Kassel - <address from official page — still unverified>
+4. Vidas Regelskis, University of Hertfordshire - v.regelskis@herts.ac.uk
+5. Paul Zinn-Justin, University of Melbourne - pzinn@unimelb.edu.au
 ```
+
+Four of five addresses were confirmed directly from the reviewers' own official
+pages on 28 September 2026 (see the table above for the exact wording found on
+each page). Levandovskyy's address could not be extracted by automated fetch
+from either the Kassel or RWTH Aachen page (no visible address in the fetched
+content) and still needs a direct, human visit to the official page before
+submission.
 
 ## Sources consulted (27 September 2026)
 

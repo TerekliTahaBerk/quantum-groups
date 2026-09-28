@@ -55,7 +55,7 @@ template file could not be downloaded; see §3.
 | Ubiquity Press GenAI policy: AI use beyond basic copy-editing must be declared (ideally in Methods); AI cannot be an author | "Use of generative AI" section; model names from the author |
 | Preprints and public drafts are not prior publication | Public JOSS draft disclosed, not prior publication |
 | Five potential reviewers (names + e-mails) and a cover letter in *Comments for the Editor*; APC waiver requests with the submission | `POTENTIAL_REVIEWERS.md`, `COVER_LETTER.md` |
-| APC amount | **Not retrievable** (no extract states the amount) |
+| APC amount | **£824.00**, confirmed 28 Sep 2026 directly from `openresearchsoftware.metajnl.com/about/submissions` (reachable from a later environment; see `SUBMISSION_CHECKLIST.md`) |
 
 ## 3. Template compliance
 
@@ -132,8 +132,8 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 | Item | Class | Why it cannot be closed here |
 |---|---|---|
 | Codex use/model (answer "none" conflicts with the repository record) | AUTHOR ACTION REQUIRED | one clarification; all other declarations were confirmed on 27 Sep 2026 and are in `submission-facts.tex` |
-| Reviewer e-mails (5) | AUTHOR ACTION REQUIRED | official pages unreachable here; the search index gave conflicting values |
-| APC amount and choice | AUTHOR ACTION REQUIRED | amount not retrievable; the choice was left unfilled in the author's answers |
+| Reviewer e-mails (5) | AUTHOR ACTION REQUIRED (1 of 5) | 28 Sep 2026: 4 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`); Levandovskyy's page returned no visible address in two fetch attempts, needs a direct human visit |
+| APC amount and choice | AUTHOR ACTION REQUIRED (amount resolved) | Amount confirmed 28 Sep 2026: £824.00. The choice (pay / waiver / institution pays) is still the author's to make |
 | Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
 | Merge to `main` | AUTHOR ACTION REQUIRED | `workflow_dispatch` is only offered for workflows on the default branch |

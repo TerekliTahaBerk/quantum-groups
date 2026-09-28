@@ -40,20 +40,24 @@ provides).
 | 24 | Competing Interests | READY | "The author has no competing interests to declare." (author, 27 Sep 2026) |
 | 25 | Authors' Contributions; authorship | READY (sole author) | Supervisor in Acknowledgements only |
 | 26 | Generative-AI disclosure | AUTHOR ACTION REQUIRED | Confirmed: no AI in April–June 2026; Claude Code with Claude Opus 5.5; human review and validation. **Open:** the answer "Codex model: none" conflicts with the repository record of Codex use for the translation (`dbe56af`) and audit (`bc5c370`) stated in `paper/paper.md` and `AUDIT.md`; clarify whether Codex was used and, if so, which model |
-| 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED | Five chosen; author confirmed no conflicts (27 Sep 2026). Each address must still be copied from the official page (pages unreachable here) |
+| 27 | Five reviewers with e-mails | AUTHOR ACTION REQUIRED (1 of 5 only) | Five chosen; author confirmed no conflicts (27 Sep 2026). 28 Sep 2026: 4 of 5 addresses confirmed directly from the reviewers' own official pages (`POTENTIAL_REVIEWERS.md`) — Schilling, Thiéry, Regelskis, Zinn-Justin. Levandovskyy's address still could not be fetched (page returned no visible address); author must open his official Kassel page directly before submitting |
 | 28 | Cover letter | BLOCKED (by 26, 27, APC, snapshot/DOI) | `COVER_LETTER.md`, bracketed fields only |
 | 29 | APC | AUTHOR ACTION REQUIRED | See below |
 | 30 | PDF without [PENDING] markers | BLOCKED (by 5, 7, 26) | `make -C jors check` must print `OK` |
 
 ## APC
 
-- Current Software Metapaper APC: **not retrievable** on 27 September 2026
-  (journal and publisher sites blocked; no search extract states the
-  amount). Confirmed from extracts: an Article Publication Charge is due on
-  acceptance; waivers/discounts exist; a waiver request must be part of the
-  submission information (e.g. the cover letter); editorial decisions are
-  independent of ability to pay. Tax (VAT) may be added depending on the
-  payer. **Author:** read the amount on the journal site and note it here.
+- Current Software Metapaper APC: **£824.00**, confirmed 28 September 2026
+  directly from `openresearchsoftware.metajnl.com/about/submissions` (fetched
+  successfully; the site was unreachable from the environment that wrote the
+  earlier version of this file). The page adds: "Tax will be added to all
+  fees charged, when applicable (VAT/Sales tax or other applicable taxes)."
+  About 12% of APC revenue is retained to fund the waiver programme, and
+  authors without institutional funding may request a reduction or waiver.
+  A third-party aggregator site (`journalsearches.com`) separately reports
+  "around 350 GBP", which does not match the journal's own page; treat that
+  figure as stale/unreliable and use £824.00, re-checking the official page
+  once more on the actual submission day in case the fee schedule changed.
 - No waiver has been requested.
 - **Author decision:** `will pay` / `waiver or discount requested` /
   `institution or funder pays` — currently **undecided**.
