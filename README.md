@@ -215,10 +215,11 @@ author on a best-effort basis. Changes are listed in
 ## Citation
 
 Please cite the software using [`CITATION.cff`](CITATION.cff) (GitHub's
-"Cite this repository" button exports it). Version 1.0.0 is archived on
-Zenodo as [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681);
-that archive does **not** contain the changes listed for 1.1.0 in the
-changelog.
+"Cite this repository" button exports it). Version 1.1.0 is archived on
+Zenodo as [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576).
+The earlier record, [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681),
+archives version 1.0.0 only and does **not** contain the changes listed for
+1.1.0 in the changelog.
 
 ## License
 

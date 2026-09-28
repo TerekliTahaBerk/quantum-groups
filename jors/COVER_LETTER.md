@@ -1,10 +1,11 @@
 # Cover letter (for the *Comments for the Editor* field)
 
-> **Status: not yet pasteable.** Fill the `[bracketed]` fields from the
-> author's confirmed declarations and the completed distribution steps
-> (`DISTRIBUTION.md`), and re-check the venue declaration on the day of
-> submission. If an equivalent JOSS submission exists at that moment, do not
-> submit to JORS until that process has ended or been withdrawn.
+> **Status: not yet pasteable — one thing left.** All fields are filled
+> except the PyPI identifier, which needs `quantum-group==1.1.0` to be
+> published (`DISTRIBUTION.md` step C). Re-check the venue declaration on
+> the day of submission (the paragraph marked below). If an equivalent JOSS
+> submission exists at that moment, do not submit to JORS until that
+> process has ended or been withdrawn.
 
 ---
 
@@ -44,11 +45,12 @@ conventions, including a graded example outside QuaGroup's documented scope.
 
 **Availability of the exact version described.**
 - Licence: MIT. Repository: https://github.com/TerekliTahaBerk/quantum-groups
-- Version 1.1.0 = commit **[snapshot SHA]**. There is no GitHub Release for
-  1.1.0; the version is identified by this commit.
+- Version 1.1.0 = commit **103d5384e70e8b0b746b296a0bdbd2d156ba8dde**,
+  tagged as GitHub Release `v1.1.0`.
 - Installation: `python -m pip install quantum-group==1.1.0` (PyPI).
-- Archive: Zenodo, DOI **[1.1.0 DOI]**, a `git archive` of that commit. The
-  earlier DOI 10.5281/zenodo.22997681 archives version 1.0.0 only.
+- Archive: Zenodo, DOI **10.5281/zenodo.23015576**, a `git archive` of that
+  commit. The earlier DOI 10.5281/zenodo.22997681 archives version 1.0.0
+  only.
 - Quality control: continuous integration on Python 3.10–3.13, the oldest
   supported dependency versions, wheel installation, and Linux, macOS and
   Windows. The paper's example (Listing 1) and its expected output are in

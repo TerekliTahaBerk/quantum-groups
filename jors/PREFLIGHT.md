@@ -98,8 +98,14 @@ preferably as *New version* of the existing v1.0.0 Zenodo record (same
 concept DOI, no GitHub involvement), with a DOI reserved before the
 snapshot commit so that `CITATION.cff` in the archive already carries it.
 `jors/` is `export-ignore`d so the archive holds software only. Procedure:
-`DISTRIBUTION.md` §A3, B, D; metadata: `zenodo-metadata.json`. Not
-executed: requires the author's Zenodo account and approval.
+`DISTRIBUTION.md` §A3, B, D; metadata: `zenodo-metadata.json`. **Executed by
+the author 28 Sep 2026:** published as DOI
+[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576), filled
+into `submission-facts.tex`, `CITATION.cff`, `README.md`, `CHANGELOG.md`.
+The record's contents (upload, metadata) were not independently re-fetched
+from this environment — Zenodo rate-limited the verification attempt — so
+the step-12 download-and-diff against `103d538` is still recommended before
+submission.
 
 ## 5. Validation results (commit `86f794b`, package source identical to `main`)
 
@@ -150,9 +156,9 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 | Item | Class | Why it cannot be closed here |
 |---|---|---|
 | Codex use/model | RESOLVED 28 Sep 2026 | Author confirmed Codex (OpenAI) was never used at any stage. All mentions in `paper/paper.md`, `paper/PREFLIGHT.md`, `AUDIT.md`, `jors/paper.tex`, `jors/COVER_LETTER.md`, `jors/SUBMISSION_CHECKLIST.md` and `jors/submission-facts.tex` corrected to attribute that work to Claude Code |
-| Reviewer e-mails (5) | AUTHOR ACTION REQUIRED (1 of 5) | 28 Sep 2026: 4 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`); Levandovskyy's page returned no visible address in two fetch attempts, needs a direct human visit |
+| Reviewer e-mails (5) | RESOLVED 28 Sep 2026 | Levandovskyy dropped (address unreachable after repeated attempts across three pages); replaced with Max Horn (RPTU Kaiserslautern, GAP/OSCAR), whose address is plainly published. All 5 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`) and copied into `COVER_LETTER.md` |
 | APC amount and choice | RESOLVED 28 Sep 2026 | Amount £824.00; author chose to request a full waiver (thesis-derived work, no specific funding). Request text in `COVER_LETTER.md` |
-| Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
+| Zenodo DOI reservation, deposit, publication | RESOLVED 28 Sep 2026 | Published by the author: DOI [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576); filled into `submission-facts.tex`, `CITATION.cff`, `README.md`, `CHANGELOG.md`. Not independently re-fetched from this environment (Zenodo rate-limited); step-12 download-and-diff against `103d538` still recommended |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
 | Merge to `main` | DONE | merged 28 Sep 2026 (PR #8); this file's branch references predate the merge and are historical |
 | GitHub Release for 1.1.0 | DONE | `v1.1.0` published 28 Sep 2026, commit `103d538`; author reversed the earlier "no release" decision |

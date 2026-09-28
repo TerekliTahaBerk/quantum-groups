@@ -21,12 +21,12 @@ authors:
 repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
-# Version 1.1.0 has no GitHub Release or tag. It is identified by one recorded
-# commit and distributed through PyPI and a Zenodo deposit of that commit
-# (see jors/DISTRIBUTION.md). No DOI is listed yet: the only existing archive,
-# Zenodo 10.5281/zenodo.22997681, contains v1.0.0, not this version. Add the
-# DOI of the 1.1.0 deposit (and date-released) only once it exists.
 version: 1.1.0
+date-released: "2026-09-28"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23015576"
+    description: "Zenodo archive of quantum-group 1.1.0 (commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde)"
 keywords:
   - quantum groups
   - Hopf algebras

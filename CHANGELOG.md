@@ -6,10 +6,11 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [1.1.0] - Unreleased
 
-Prepared on `main`. By the author's decision 1.1.0 has no GitHub Release or
-tag: it is identified by one recorded commit and distributed through PyPI and
-a Zenodo deposit of that commit (`jors/DISTRIBUTION.md`). Replace
-"Unreleased" with the PyPI publication date once it exists. The Zenodo DOI
+Prepared on `main`, tagged as GitHub Release `v1.1.0` (commit
+`103d5384e70e8b0b746b296a0bdbd2d156ba8dde`) and archived on Zenodo as
+[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576)
+(`jors/DISTRIBUTION.md`). Replace "Unreleased" with the PyPI publication
+date once `quantum-group==1.1.0` is published there. The earlier Zenodo DOI
 10.5281/zenodo.22997681 archives v1.0.0 only and does not contain these
 changes. This is a minor
 release under Semantic Versioning because it adds public functions; existing
