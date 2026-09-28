@@ -1,9 +1,14 @@
-# Distribution of version 1.1.0 without a GitHub Release
+# Distribution of version 1.1.0
 
-Author's decision (recorded 27 September 2026): **no GitHub Release and no
-Git tag for 1.1.0.** The historical `v1.0.0` tag and release stay untouched.
-Version 1.1.0 is identified by one recorded commit, the **JORS submission
-software snapshot**, and distributed from that exact commit through:
+**Updated 28 September 2026: the author reversed the earlier "no release"
+decision.** `v1.1.0` is now a published GitHub Release, target `main`,
+commit `103d5384e70e8b0b746b296a0bdbd2d156ba8dde` (`103d538`) — the same
+commit this file called the JORS submission software snapshot before this
+update (previously `892dfae`; package source trees are identical between
+the two, only documentation changed, see `PREFLIGHT.md` §1). The historical
+`v1.0.0` tag and release stay untouched. A stray `v1.0.1` tag on the same
+commit (from a first, misnamed release attempt) should be deleted. Version
+1.1.0 is distributed from the `v1.1.0` release commit through:
 
 | Channel | Mechanism | Why |
 |---|---|---|
@@ -17,14 +22,14 @@ Nothing below has been executed. Each numbered step says who does it.
 
 | Field | Value |
 |---|---|
-| Snapshot commit | `892dfaee23644ede78d940051eb3a20c9e6a5918` (short `892dfae`), 2026-09-27T17:48:22Z, branch `claude/sleepy-darwin-o4mr5p` |
+| Snapshot commit | `103d5384e70e8b0b746b296a0bdbd2d156ba8dde` (short `103d538`), 2026-09-28T14:13:05+03:00, branch `main` — **= the `v1.1.0` GitHub Release commit** |
 | Package version | 1.1.0 |
-| Package source trees | `quantum_group/` `804d66f83a1d`, `tests/` `a2a4fdc80bf4`, `examples/` `0e9c0c5c3469`, `pyproject.toml` `b17aa2bbc012` |
+| Package source trees | `quantum_group/` `804d66f83a1d`, `tests/` `a2a4fdc80bf4`, `pyproject.toml` `b17aa2bbc012` — identical to the earlier `892dfae` snapshot; only `jors/` and `paper/` documentation changed since (Codex-attribution correction) |
 | Tests | 202 passed (198 + 4 doctests) |
 | Python | 3.10, 3.11, 3.12, 3.13 |
-| Tested OS | Linux, macOS, Windows (CI) |
+| Tested OS | Linux, macOS, Windows (CI; all 9 jobs green on `103d538`) |
 | Dependencies | SymPy ≥ 1.10, NetworkX ≥ 2.6, Matplotlib ≥ 3.5 |
-| Archive file | `git archive --format=zip --prefix=quantum-group-1.1.0/ 892dfae…` → `quantum-group-1.1.0.zip`, 236 files, 13,011,184 bytes, SHA-256 `2e2621916eb5c9d85b72e7f9a3be9a0c6f1df7d1f714f307a39a24a5a7c40984` (git 2.43.0; other git versions may produce a different zip checksum but identical contents — verify contents with step 12) |
+| Archive file | `git archive --format=zip --prefix=quantum-group-1.1.0/ 103d538…` → `quantum-group-1.1.0.zip`, 236 files, 13,011,364 bytes, SHA-256 `47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d` (git 2.43.0; other git versions may produce a different zip checksum but identical contents — verify contents with step 12). This is also exactly what GitHub's own "Source code (zip)" asset on the `v1.1.0` Release contains, modulo GitHub's own zip wrapper differences — prefer `git archive` for a reproducible, documented hash. |
 
 Steps 5–6 below are therefore done: the reserved DOI does **not** need to be
 inside the snapshot (the Zenodo record carries it); after publication it is
@@ -46,8 +51,9 @@ added to `CITATION.cff` on `main` in a documentation-only commit.
    DOI (*Get a DOI now!* / *Reserve DOI*) and do **not** publish yet. Send
    the reserved DOI back. The `isNewVersionOf` relation in
    `zenodo-metadata.json` is only needed for the alternative route.
-4. **Merge** the branch carrying this package into `main` once CI is green
-   (GitHub offers *Run workflow* only for workflows on the default branch).
+4. ~~**Merge** the branch carrying this package into `main`~~ — **done**
+   (PR #8, 28 Sep 2026); `main` now carries the JORS package and the
+   Codex-attribution correction, and the `v1.1.0` GitHub Release exists.
 
 ## B. Freeze the snapshot (Claude or author)
 
@@ -120,5 +126,10 @@ new version number; manuscript-only edits do not.
 ## Guard rails
 
 - Never attach the v1.0.0 DOI (10.5281/zenodo.22997681) to 1.1.0.
-- Never archive a moving branch; always the recorded SHA.
-- Do not create a tag or GitHub Release for 1.1.0.
+- Never archive a moving branch; always the recorded SHA (`103d538`, = the
+  `v1.1.0` tag).
+- Delete the stray `v1.0.1` tag (same commit as `v1.1.0`, left over from a
+  first, misnamed release attempt) before submission — one version should
+  have one tag.
+- PyPI's `workflow_dispatch` `ref` input should still be the full 40-character
+  commit SHA, not the tag name, per the workflow's own validation.

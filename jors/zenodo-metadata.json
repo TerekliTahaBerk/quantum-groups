@@ -1,5 +1,5 @@
 {
-  "_comment": "Metadata for the manual Zenodo software deposit of quantum-group 1.1.0, snapshot commit 892dfaee23644ede78d940051eb3a20c9e6a5918 (see jors/DISTRIBUTION.md, section D). Upload exactly: git archive --format=zip --prefix=quantum-group-1.1.0/ 892dfaee23644ede78d940051eb3a20c9e6a5918 (SHA-256 2e2621916eb5c9d85b72e7f9a3be9a0c6f1df7d1f714f307a39a24a5a7c40984 with git 2.43.0).",
+  "_comment": "Metadata for the Zenodo software deposit of quantum-group 1.1.0, snapshot commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (= the GitHub Release v1.1.0 commit; see jors/DISTRIBUTION.md, section D). Upload exactly: git archive --format=zip --prefix=quantum-group-1.1.0/ 103d5384e70e8b0b746b296a0bdbd2d156ba8dde (SHA-256 47433ae4feef57f81daf2c219fd4051dd60a04435aed38a5ba8b3a5b77cd5c1d with git 2.43.0), or equivalently the 'Source code (zip)' asset of the v1.1.0 GitHub Release.",
   "metadata": {
     "upload_type": "software",
     "title": "quantum-group: Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities",
@@ -11,7 +11,7 @@
         "affiliation": "Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye"
       }
     ],
-    "description": "Source archive of quantum-group 1.1.0, created with git archive from commit 892dfaee23644ede78d940051eb3a20c9e6a5918 of https://github.com/TerekliTahaBerk/quantum-groups. A small SymPy package that builds the explicit matrices behind concrete quantum-group calculations and checks identities as exact residual matrices: finite-dimensional U_q(sl_2) representations, defining relations and generator-level Hopf identities, tensor products and Clebsch-Gordan highest-weight vectors, the fundamental R-matrix with Yang-Baxter, braid, Hecke and coproduct-intertwining checks, and the graded Yang-Baxter equation for the GL_q(2|1) R-matrix of Celik and Celik (2021). Checks are representation-level verifications, not proofs in the abstract algebra. This version has no GitHub Release; it is also distributed on PyPI as quantum-group 1.1.0. The earlier record 10.5281/zenodo.22997681 archives version 1.0.0 only.",
+    "description": "Source archive of quantum-group 1.1.0, created with git archive from commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde of https://github.com/TerekliTahaBerk/quantum-groups (GitHub Release v1.1.0). A small SymPy package that builds the explicit matrices behind concrete quantum-group calculations and checks identities as exact residual matrices: finite-dimensional U_q(sl_2) representations, defining relations and generator-level Hopf identities, tensor products and Clebsch-Gordan highest-weight vectors, the fundamental R-matrix with Yang-Baxter, braid, Hecke and coproduct-intertwining checks, and the graded Yang-Baxter equation for the GL_q(2|1) R-matrix of Celik and Celik (2021). Checks are representation-level verifications, not proofs in the abstract algebra. Also distributed on PyPI as quantum-group 1.1.0. The earlier record 10.5281/zenodo.22997681 archives version 1.0.0 only.",
     "license": "MIT",
     "keywords": [
       "quantum groups",
@@ -25,7 +25,12 @@
     ],
     "related_identifiers": [
       {
-        "identifier": "https://github.com/TerekliTahaBerk/quantum-groups/tree/892dfaee23644ede78d940051eb3a20c9e6a5918",
+        "identifier": "https://github.com/TerekliTahaBerk/quantum-groups/tree/103d5384e70e8b0b746b296a0bdbd2d156ba8dde",
+        "relation": "isIdenticalTo",
+        "resource_type": "software"
+      },
+      {
+        "identifier": "https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.0",
         "relation": "isIdenticalTo",
         "resource_type": "software"
       },

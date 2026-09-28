@@ -7,10 +7,12 @@ Labels: **READY** · **AUTHOR ACTION REQUIRED** ·
 **CREDENTIAL/AUTHORIZATION REQUIRED** · **BLOCKED** (cannot proceed until
 another item is done)
 
-Not required and therefore not listed as blockers: a GitHub Release, a Git
-tag (the current rules ask for a repository with a persistent identifier
-for the described version, which the Zenodo deposit of the snapshot commit
-provides).
+A GitHub Release/tag is not strictly required by the JORS rules (a
+repository with a persistent identifier for the described version, i.e. the
+Zenodo deposit, is what matters) — but the author has in fact created one:
+`v1.1.0`, published 28 Sep 2026, commit `103d5384e70e8b0b746b296a0bdbd2d156ba8dde`.
+A stray `v1.0.1` tag on the same commit (its Release was deleted before
+`v1.1.0` was created correctly) should be deleted before submission.
 
 | # | Requirement | Status | Evidence / action |
 |---|---|---|---|
@@ -18,11 +20,11 @@ provides).
 | 2 | Public repository, open issue tracker | READY | https://github.com/TerekliTahaBerk/quantum-groups |
 | 3 | OSI licence | READY | MIT (`LICENSE`, `License-Expression: MIT`) |
 | 4 | Easy installation, documented | READY | Two install commands in the paper; wheel install tested on Linux/macOS/Windows in CI |
-| 5 | Package-registry installation (PyPI) | CREDENTIAL/AUTHORIZATION REQUIRED | Author approved publication (27 Sep 2026). Name still unclaimed. Needs: pending publisher on the author's PyPI account, `pypi` environment, merge to `main`, then *Run workflow* with `ref=892dfaee23644ede78d940051eb3a20c9e6a5918`, `expected_version=1.1.0` (`DISTRIBUTION.md` §A, C). READY only after a public `pip install quantum-group==1.1.0` succeeds |
-| 6 | Versioning; exact version identifiable | READY | 1.1.0 = snapshot commit `892dfaee23644ede78d940051eb3a20c9e6a5918`, named in the paper; consistent in `pyproject.toml`, `CITATION.cff`, `CHANGELOG.md`, `__version__`; no tag/Release by design |
-| 7 | Repository with persistent identifier for the described version (archive) | CREDENTIAL/AUTHORIZATION REQUIRED | Author approved the deposit (27 Sep 2026). Needs the author's Zenodo login (zenodo.org is unreachable from the preparation environment): upload the snapshot zip, metadata from `zenodo-metadata.json`, publish (`DISTRIBUTION.md` §A3, D) |
-| 8 | Archive content equals the described code | BLOCKED (by 7) | Download-and-diff procedure in `DISTRIBUTION.md` step 12 |
-| 9 | Snapshot commit frozen with green CI | READY | CI run 33: all 9 jobs passed on `892dfae`; `892dfae`; archive reference file and SHA-256 in `DISTRIBUTION.md` |
+| 5 | Package-registry installation (PyPI) | CREDENTIAL/AUTHORIZATION REQUIRED | Author approved publication. Name still unclaimed as of 27 Sep 2026. Needs: pending publisher on the author's PyPI account, `pypi` environment (`DISTRIBUTION.md` §A1–A2, done independently of the release), then *Run workflow* with `ref=103d5384e70e8b0b746b296a0bdbd2d156ba8dde`, `expected_version=1.1.0`. READY only after a public `pip install quantum-group==1.1.0` succeeds |
+| 6 | Versioning; exact version identifiable | READY | 1.1.0 = commit `103d5384e70e8b0b746b296a0bdbd2d156ba8dde`, tagged as GitHub Release `v1.1.0` (published 28 Sep 2026); consistent in `pyproject.toml`, `CITATION.cff`, `CHANGELOG.md`, `__version__` |
+| 7 | Repository with persistent identifier for the described version (archive) | CREDENTIAL/AUTHORIZATION REQUIRED | Author will do this directly in Zenodo (28 Sep 2026): open the `v1.0.0` record's *New version*, reserve a DOI without publishing yet, send the DOI back for `CITATION.cff`/`submission-facts.tex`, then publish. Upload either the `v1.1.0` GitHub Release tarball or `git archive` of `103d538` — both have identical content; metadata from `zenodo-metadata.json` (needs its snapshot fields updated to `103d538`, see `DISTRIBUTION.md`) |
+| 8 | Archive content equals the described code | BLOCKED (by 7) | Download-and-diff procedure in `DISTRIBUTION.md` step 12, against `103d538` |
+| 9 | Snapshot commit frozen with green CI | READY | All 9 CI jobs passed on `103d538` (re-verified via the GitHub API 28 Sep 2026); this is also the `v1.1.0` release commit; archive reference file and SHA-256 need updating in `DISTRIBUTION.md` (see below) |
 | 10 | Template sections and fields | READY | `PREFLIGHT.md` §3 (official template file unobtainable; headings as in current articles) |
 | 11 | Title | READY | Title case, no novelty claim |
 | 12 | Abstract | READY | 138 words, within the range of current JORS articles |
