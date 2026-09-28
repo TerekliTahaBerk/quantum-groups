@@ -131,13 +131,13 @@ The final snapshot commit must itself show green CI before PyPI/Zenodo.
 
 | Item | Class | Why it cannot be closed here |
 |---|---|---|
-| Codex use/model (answer "none" conflicts with the repository record) | AUTHOR ACTION REQUIRED | one clarification; all other declarations were confirmed on 27 Sep 2026 and are in `submission-facts.tex` |
+| Codex use/model | RESOLVED 28 Sep 2026 | Author confirmed Codex (OpenAI) was never used at any stage. All mentions in `paper/paper.md`, `paper/PREFLIGHT.md`, `AUDIT.md`, `jors/paper.tex`, `jors/COVER_LETTER.md`, `jors/SUBMISSION_CHECKLIST.md` and `jors/submission-facts.tex` corrected to attribute that work to Claude Code |
 | Reviewer e-mails (5) | AUTHOR ACTION REQUIRED (1 of 5) | 28 Sep 2026: 4 confirmed directly from official pages (`POTENTIAL_REVIEWERS.md`); Levandovskyy's page returned no visible address in two fetch attempts, needs a direct human visit |
 | APC amount and choice | AUTHOR ACTION REQUIRED (amount resolved) | Amount confirmed 28 Sep 2026: £824.00. The choice (pay / waiver / institution pays) is still the author's to make |
 | Zenodo DOI reservation, deposit, publication | CREDENTIAL/AUTHORIZATION REQUIRED | author's Zenodo account; irreversible |
 | PyPI publication of `quantum-group` 1.1.0 | CREDENTIAL/AUTHORIZATION REQUIRED | pending-publisher setup on the author's PyPI account; environment approval; name still unclaimed (404 on 27 Sep 2026) |
-| Merge to `main` | AUTHOR ACTION REQUIRED | `workflow_dispatch` is only offered for workflows on the default branch |
-| Snapshot SHA/date in the paper | READY | filled (`892dfae`, 27 September 2026) |
+| Merge to `main` | DONE | merged 28 Sep 2026 (PR #8); this file's branch references predate the merge and are historical |
+| Snapshot SHA/date in the paper | STALE — needs a new snapshot | `892dfae` predates the Codex-attribution correction (this revision) and the planned GitHub Release; re-freeze after that release is created (see §1a) |
 | Venue exclusivity re-check on the submission day | AUTHOR ACTION REQUIRED | time-dependent |
 
 ## 9. Reviewer simulation (from the manuscript alone)

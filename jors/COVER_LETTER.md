@@ -84,10 +84,13 @@ manuscript contains a section describing the use of generative AI. No AI
 tools were used during the original development and thesis work
 (April–June 2026). In September 2026 Claude Code (Anthropic; Claude Opus
 5.5) was used in preparing this software version, its tests and
-documentation, and in drafting the manuscript and submission materials
-**[Codex: wording pending the author's clarification]**. The tools are not
-authors. I reviewed and validated all AI-assisted output and take
-responsibility for the software and the manuscript.
+documentation — including translating Turkish docstrings and comments into
+English and a mathematical and technical audit that led to the
+parameter-handling corrections, the coproduct-compatible R-matrix functions
+and the audit regression tests — and in drafting the manuscript and
+submission materials. No other AI tool was used. The tools are not authors.
+I reviewed and validated all AI-assisted output and take responsibility for
+the software and the manuscript.
 
 **Suggested reviewers.** [Five names and e-mail addresses from
 `POTENTIAL_REVIEWERS.md`, each copied from the official page.] None has

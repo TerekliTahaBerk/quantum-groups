@@ -188,17 +188,19 @@ Generative AI was used in the publication-preparation phase that began in
 September 2026. Claude Code (Anthropic) assisted with packaging and
 continuous integration, the benchmark script, README and contributor
 documentation, the changelog, the first draft of this paper, bibliography
-checks, the renaming of the Hecke check with a deprecation alias, and later
-with the shared matrix-helper refactoring, input validation and its tests,
-repository cleanup, and revision of this paper and the status documents.
-Commits produced with Claude Code are authored or co-authored by "Claude" in
-the Git history, with the model recorded in their `Co-Authored-By` trailers
-where present. Codex (OpenAI, GPT-6) assisted with translating Turkish
-docstrings, comments and documentation into English, and with a
-mathematical and technical audit: source comparison, symbolic calculations,
-corrections to parameter handling and asymptotics, the coproduct-compatible
-R-matrix APIs, regression tests, and revisions of this paper, `AUDIT.md` and
-`thesis/ERRATA.md`.
+checks, the renaming of the Hecke check with a deprecation alias, translating
+Turkish docstrings, comments and documentation into English, a mathematical
+and technical audit (source comparison, symbolic calculations, corrections
+to parameter handling and asymptotics, the coproduct-compatible R-matrix
+APIs, regression tests), the shared matrix-helper refactoring, input
+validation and its tests, repository cleanup, and revision of this paper,
+`AUDIT.md`, `thesis/ERRATA.md` and the status documents. No other AI tool
+was used at any stage; an earlier revision of this disclosure and of
+`AUDIT.md` incorrectly attributed part of this work to a separate tool
+("Codex"), which was never in fact used, and that attribution has been
+corrected. Commits produced with Claude Code are authored or co-authored by
+"Claude" in the Git history, with the model recorded in their
+`Co-Authored-By` trailers where present.
 
 AI-assisted code is covered by the automated tests, and AI-assisted
 mathematical statements were checked with executable symbolic tests and

@@ -35,13 +35,17 @@ JOSS requirements were checked against the current documentation source
    `README.md` in this directory). Never present the v1.0.0 DOI as the
    archive of the code the paper describes.
 2. **AI disclosure.** The paper's disclosure is based on the Git record
-   (commits authored/co-authored by "Claude") and on the author's earlier
-   statement about Codex (OpenAI, GPT-6), which cannot be verified from the
-   repository. Before submitting: (a) insert the exact model names and
-   versions for every tool you actually used (JOSS asks for them; the
-   Claude model is in the `Co-Authored-By` trailers of the Claude commits,
-   and one Claude-authored commit, `aed9cc8`, has no trailer; for Codex,
-   keep "GPT-6" only if that is the model you used); (b) state whether any AI tools were
+   (commits authored/co-authored by "Claude"). The author confirmed on
+   28 September 2026 that Codex (OpenAI) was never used at any stage; an
+   earlier revision of this disclosure and of `AUDIT.md` incorrectly
+   attributed part of the translation/audit work to Codex, and that
+   attribution has been corrected to Claude Code throughout `paper.md`,
+   `AUDIT.md` and the `jors/` submission materials. Before submitting:
+   (a) insert the exact model name(s) and version(s) for every Claude Code
+   session actually used (JOSS asks for them; the model is in the
+   `Co-Authored-By` trailers of the Claude commits, and one Claude-authored
+   commit, `aed9cc8`, has no trailer — fill it in from memory or mark it
+   unknown rather than guessing); (b) state whether any AI tools were
    used during the April–June 2026 development and thesis work, and extend
    the disclosure if so; (c) only keep the sentence "The author reviewed,
    edited and validated all AI-assisted outputs…" once that review has
