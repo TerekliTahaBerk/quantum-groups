@@ -1,8 +1,10 @@
-# Historical thesis material (not the JOSS paper)
+# Historical thesis material
 
 This directory preserves the undergraduate thesis from which the package
-originated, for provenance. **None of these files is the JOSS manuscript;
-that is `../paper/paper.md`.**
+originated, for provenance. **None of these files is the current
+manuscript; that is the SciPost Physics Codebases userguide in
+[`../scipost/`](../scipost/).** Section 5.2 of the userguide describes how
+the package was used to audit this thesis.
 
 - `Lisans Bitirme Tezi.pdf` — the submitted thesis, *Quantum Grup
   Yapılarının Python Ortamında Modellenmesi* ("Modelling Quantum Group

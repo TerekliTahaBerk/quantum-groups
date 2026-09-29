@@ -1,5 +1,12 @@
 # JORS submission package
 
+> **Withdrawn (29 September 2026).** JORS submission #798 was withdrawn by
+> the author after the journal declined an article-processing-charge waiver.
+> The work is being prepared for *SciPost Physics Codebases* instead; the
+> current manuscript is in [`scipost/`](../../scipost/). This directory is
+> kept unchanged as a historical record; paths in it refer to the
+> repository layout before it was moved to `archive/jors/` (formerly `jors/`).
+
 Material for a *Journal of Open Research Software* (JORS) Software
 Metapaper about `quantum-group` version **1.1.0**. It is independent of the
 JOSS draft in `../paper/`, which is unchanged.

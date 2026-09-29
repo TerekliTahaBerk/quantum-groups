@@ -1,5 +1,5 @@
-"""Sample input and output (JORS metapaper listing; expected output in
-examples/sample_verification_expected.txt, compared by CI)."""
+"""Sample input and output (Listing 1 of the userguide in scipost/; expected
+output in examples/sample_verification_expected.txt, compared by CI)."""
 from quantum_group import (
     build_representation, verify_on_representation, R_matrix_V1_coproduct,
     qybe_holds, intertwining_holds_V1, R_matrix_GLq21,

@@ -1,5 +1,11 @@
 # Publication verification record
 
+> **Never submitted (archived 29 September 2026).** This JOSS draft was not
+> submitted. The current manuscript is the SciPost Physics Codebases
+> userguide in [`scipost/`](../../scipost/). This directory is kept
+> unchanged as a historical record; paths in it refer to the repository
+> layout before it was moved to `archive/joss/` (formerly `paper/`).
+
 Updated 27 September 2026 for the commit that contains this file (on top of
 `05a8148`, the merge of pull request #6). It supersedes earlier versions of this record, which described
 an uncommitted working tree. The active manuscript is `paper.md` with

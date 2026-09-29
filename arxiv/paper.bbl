@@ -1,0 +1,103 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{10}
+
+\bibitem{bkk2000}
+Georgia Benkart, Seok-Jin Kang, and Masaki Kashiwara, \emph{Crystal bases for
+  the quantum superalgebra ${U}_q(\mathfrak{gl}(m,n))$}, J. Amer. Math. Soc.
+  \textbf{13} (2000), 295, \doi{10.1090/S0894-0347-00-00321-0}.
+
+\bibitem{celik2021}
+Salih {\c{C}}elik and Sultan~A. {\c{C}}elik, \emph{A new quantum supergroup and
+  its {G}auss decomposition}, Rep. Math. Phys. \textbf{88} (2021), 259,
+  \doi{10.1016/S0034-4877(21)00073-2}.
+
+\bibitem{degraaf2001}
+Willem~A. de~Graaf, \emph{Computing with quantized enveloping algebras:
+  {PBW}-type bases, highest-weight modules and ${R}$-matrices}, J. Symb.
+  Comput. \textbf{32} (2001), 475, \doi{10.1006/jsco.2001.0479}.
+
+\bibitem{quagroup}
+\bysame, \emph{{QuaGroup}: computations with quantum groups ({GAP} package)},
+  2024, Version 1.8.4, \url{https://github.com/gap-packages/quagroup}.
+
+\bibitem{drinfeld1987}
+Vladimir~G. Drinfeld, \emph{Quantum groups}, Proceedings of the {I}nternational
+  {C}ongress of {M}athematicians, {B}erkeley, {C}alifornia, 1986 (Providence,
+  RI), vol.~1, American Mathematical Society, 1987, pp.~798--820,
+  \url{https://www.mathunion.org/fileadmin/ICM/Proceedings/ICM1986.1/ICM1986.1.ocr.pdf}.
+
+\bibitem{hagberg2008networkx}
+Aric~A. Hagberg, Daniel~A. Schult, and Pieter~J. Swart, \emph{Exploring network
+  structure, dynamics, and function using {N}etwork{X}}, Proceedings of the 7th
+  {P}ython in {S}cience {C}onference ({SciPy} 2008) (Pasadena, CA) (Ga{\"e}l
+  Varoquaux, Travis Vaught, and Jarrod Millman, eds.), 2008, pp.~11--15,
+  \url{https://conference.scipy.org/proceedings/SciPy2008/paper_2/}.
+
+\bibitem{hunter2007matplotlib}
+John~D. Hunter, \emph{Matplotlib: a {2D} graphics environment}, Comput. Sci.
+  Eng. \textbf{9} (2007), 90, \doi{10.1109/MCSE.2007.55}.
+
+\bibitem{jimbo1985}
+Michio Jimbo, \emph{A $q$-difference analogue of ${U}(\mathfrak{g})$ and the
+  {Y}ang--{B}axter equation}, Lett. Math. Phys. \textbf{10} (1985), 63,
+  \doi{10.1007/BF00704588}.
+
+\bibitem{jimbo1986}
+\bysame, \emph{A $q$-analogue of ${U}(\mathfrak{gl}({N}+1))$, {H}ecke algebra,
+  and the {Y}ang--{B}axter equation}, Lett. Math. Phys. \textbf{11} (1986),
+  247, \doi{10.1007/BF00400222}.
+
+\bibitem{kassel1995}
+Christian Kassel, \emph{Quantum groups}, Graduate Texts in Mathematics, vol.
+  155, Springer, New York, 1995, \doi{10.1007/978-1-4612-0783-2}.
+
+\bibitem{pytest}
+Holger Krekel, Bruno Oliveira, Ronny Pfannschmidt, Floris Bruynooghe, Brianna
+  Laugher, Freya Bruhin, et~al., \emph{pytest: simple powerful testing with
+  {P}ython}, 2004, \url{https://github.com/pytest-dev/pytest}.
+
+\bibitem{meurer2017sympy}
+Aaron Meurer, Christopher~P. Smith, Mateusz Paprocki, Ond{\v{r}}ej
+  {\v{C}}ert{\'i}k, Sergey~B. Kirpichev, Matthew Rocklin, Amit Kumar, Sergiu
+  Ivanov, Jason~K. Moore, Sartaj Singh, Thilina Rathnayake, Sean Vig, Brian~E.
+  Granger, Richard~P. Muller, Francesco Bonazzi, Harsh Gupta, Shivam Vats,
+  Fredrik Johansson, Fabian Pedregosa, Matthew~J. Curry, Andy~R. Terrel,
+  {\v{S}}t{\v{e}}p{\'a}n Rou{\v{c}}ka, Ashutosh Saboo, Isuru Fernando, Sumith
+  Kulal, Robert Cimrman, and Anthony Scopatz, \emph{{SymPy}: symbolic computing
+  in {Python}}, PeerJ Comput. Sci. \textbf{3} (2017), e103,
+  \doi{10.7717/peerj-cs.103}.
+
+\bibitem{quantumgroup111}
+Taha~Berk Terekli, \emph{quantum-group: {E}xact {SymPy} verification of
+  explicit ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix
+  identities}, GitHub Release (archived on Zenodo), 2026, Version 1.1.1,
+  \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}.
+
+\bibitem{quantumgroup110}
+\bysame, \emph{quantum-group: {E}xact {SymPy} verification of explicit
+  ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix identities}, Zenodo,
+  2026, Version 1.1.0, \doi{10.5281/zenodo.23015576}.
+
+\bibitem{terekli2026thesis}
+\bysame, \emph{Quantum grup yap{\i}lar{\i}n{\i}n {P}ython ortam{\i}nda
+  modellenmesi [{M}odelling quantum group structures in {P}ython]},
+  Undergraduate thesis, Department of Mathematics, Y{\i}ld{\i}z Technical
+  University, Istanbul, 2026,
+  \url{https://github.com/TerekliTahaBerk/quantum-groups/tree/main/thesis}.
+
+\bibitem{gap}
+{The GAP Group}, \emph{{GAP} -- {G}roups, {A}lgorithms, and {P}rogramming},
+  2022, Version 4.12.1, \url{https://www.gap-system.org}.
+
+\bibitem{sagemath}
+{The Sage Developers}, \emph{{SageMath}, the {S}age {M}athematics {S}oftware
+  {S}ystem}, 2026, Version 10.9, \url{https://www.sagemath.org},
+  \doi{10.5281/zenodo.8042260}.
+
+\end{thebibliography}

@@ -33,7 +33,7 @@ Matplotlib ≥ 3.5 (installed automatically). Distribution name
 From PyPI:
 
 ```bash
-python3 -m pip install quantum-group==1.1.0
+python3 -m pip install quantum-group==1.1.1
 ```
 
 From this repository (for development, or to install a specific commit):
@@ -105,7 +105,8 @@ python3 -m pytest          # or: make check
 
 Plots use Matplotlib's noninteractive `Agg` backend in the tests. The
 `GL_q(2|1)` checks use symbolic 81x81 matrices; the full suite took about
-15 s when prepared for 1.1.0 (Python 3.12, SymPy 1.14, x86-64 Linux). Targeted runs, e.g.
+15 s when prepared for 1.1.0 (Python 3.12, SymPy 1.14, x86-64 Linux; the
+suite is unchanged in 1.1.1). Targeted runs, e.g.
 `python3 -m pytest tests/test_supergroup_gl21.py`, also work.
 
 ## Conventions and mathematical background
@@ -170,14 +171,29 @@ R-matrices and canonical/crystal bases; SageMath also has crystals for
 layer for checking the explicit matrices of a particular text, in its basis
 order and conventions, including the graded `GL_q(2|1)` example, which lies
 outside QuaGroup's documented `U_q(g)` scope. For general `U_q(g)`
-computations, use those systems. See `paper/paper.md` for a fuller
-comparison.
+computations, use those systems. Section 6.3 of the userguide
+(`scipost/`) tests matrices computed by QuaGroup with this package and
+identifies where the two systems' conventions differ.
 
-## Reproducing the paper's calculations
+## Userguide and reproducing its calculations
 
-The JOSS manuscript is [`paper/paper.md`](paper/paper.md). Each
-computational claim is mapped to code and tests in
-[`MANUSCRIPT_CODE_MAPPING.md`](MANUSCRIPT_CODE_MAPPING.md). The main ones:
+The userguide is [`scipost/paper.pdf`](scipost/paper.pdf) (source
+`scipost/paper.tex`, prepared for *SciPost Physics Codebases*); the same text
+in the AMS `amsart` layout of an arXiv preprint is
+[`arxiv/paper.pdf`](arxiv/paper.pdf), generated from it by
+`arxiv/build.py`. Its six code listings are scripts in `examples/`,
+`scipost/examples/` and `scipost/crosscheck/`, each stored with its expected
+output:
+
+```bash
+make listings    # run Listings 1-6 and compare with the stored outputs (also run by CI)
+make paper       # build scipost/paper.pdf and check listings, outputs and references
+make -C arxiv check    # regenerate and check the arXiv version
+```
+
+The thesis claims are mapped to code and tests in
+[`MANUSCRIPT_CODE_MAPPING.md`](MANUSCRIPT_CODE_MAPPING.md). The main
+verification claims:
 
 | Claim | Command |
 | --- | --- |
@@ -196,19 +212,19 @@ tests/                pytest suite; doctests in quantum_group/ run with it
 examples/             quickstart.py, sample_verification.py (+ expected output)
 benchmarks/           timing script and recorded results
 notebooks/            exploratory notebook
-paper/                JOSS manuscript (paper.md, paper.bib) and maintainer records
-jors/                 JORS software metapaper and submission records (see jors/README.md)
+scipost/              userguide (SciPost Physics Codebases), Listings 2-6, QuaGroup cross-check
+arxiv/                the userguide as an amsart preprint, generated from scipost/
+archive/              withdrawn JORS and unsubmitted JOSS records (not in release archives)
 thesis/, poster/      historical thesis material (Turkish); see thesis/README.md
 AUDIT.md              mathematical/technical audit (September 2026)
 MANUSCRIPT_CODE_MAPPING.md
 main.py               demo script (writes outputs/V4_combined.png)
 ```
 
-Makefile targets: `make check`, `make quickstart`, `make demo`,
-`make figures`, `make benchmark-smoke`, `make joss-pdf` (official JOSS Inara
-Docker image), and `make historical-article-pdf`, which builds the earlier
-Turkish article `thesis/thesis.tex` — not the JOSS paper and not the
-submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`). Corrections to the
+Makefile targets: `make check`, `make quickstart`, `make listings`,
+`make paper`, `make demo`, `make figures`, `make benchmark-smoke`, and
+`make historical-article-pdf`, which builds the earlier Turkish article
+`thesis/thesis.tex` — not the userguide and not the submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`). Corrections to the
 archived thesis are listed in [`thesis/ERRATA.md`](thesis/ERRATA.md).
 
 ## Contributing and support
@@ -222,9 +238,11 @@ author on a best-effort basis. Changes are listed in
 ## Citation
 
 Please cite the software using [`CITATION.cff`](CITATION.cff) (GitHub's
-"Cite this repository" button exports it). Version 1.1.0 is archived on
-Zenodo as [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576).
-The earlier record, [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681),
+"Cite this repository" button exports it). Every GitHub Release is archived
+on Zenodo. Version 1.1.0 is
+[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576); version
+1.1.1 has the same package code and adds the userguide material. The earlier
+record [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681)
 archives version 1.0.0 only and does **not** contain the changes listed for
 1.1.0 in the changelog.
 

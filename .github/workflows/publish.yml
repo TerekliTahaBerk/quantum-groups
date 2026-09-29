@@ -6,7 +6,7 @@ name: publish
 # commit to publish. The upload job waits for approval of the "pypi"
 # environment. Before the first run, register this repository, workflow file
 # (publish.yml) and environment (pypi) as a trusted publisher of the project
-# "quantum-group" on pypi.org. See jors/DISTRIBUTION.md.
+# "quantum-group" on pypi.org (done for 1.1.0). Release steps: RELEASING.md.
 on:
   workflow_dispatch:
     inputs:

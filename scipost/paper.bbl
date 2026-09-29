@@ -38,13 +38,14 @@ C.~Kassel,
 \newblock Springer, New York,
 \newblock \doi{10.1007/978-1-4612-0783-2} (1995).
 
-\bibitem{quantumgroup110}
+\bibitem{quantumgroup111}
 T.~B. Terekli,
 \newblock \emph{quantum-group: {E}xact {SymPy} verification of explicit
-  ${U}_q(\mathfrak{sl}_2)$ and ${GL}_q(2|1)$ matrix identities},
-\newblock Zenodo,
-\newblock \doi{10.5281/zenodo.23015576},
-\newblock Version 1.1.0 (2026).
+  ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix identities},
+\newblock GitHub Release (archived on Zenodo),
+\newblock Version 1.1.1,
+  \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}
+  (2026).
 
 \bibitem{meurer2017sympy}
 A.~Meurer, C.~P. Smith, M.~Paprocki, O.~{\v{C}}ert{\'i}k, S.~B. Kirpichev,
@@ -73,7 +74,7 @@ T.~B. Terekli,
 \bibitem{gap}
 {The GAP Group},
 \newblock \emph{{GAP} -- {G}roups, {A}lgorithms, and {P}rogramming},
-\newblock Version 4.16.1, \url{https://www.gap-system.org} (2026).
+\newblock Version 4.12.1, \url{https://www.gap-system.org} (2022).
 
 \bibitem{quagroup}
 W.~A. de~Graaf,
@@ -121,5 +122,13 @@ H.~Krekel, B.~Oliveira, R.~Pfannschmidt, F.~Bruynooghe, B.~Laugher, F.~Bruhin
   \emph{et~al.},
 \newblock \emph{pytest: simple powerful testing with {P}ython},
 \newblock \url{https://github.com/pytest-dev/pytest} (2004).
+
+\bibitem{quantumgroup110}
+T.~B. Terekli,
+\newblock \emph{quantum-group: {E}xact {SymPy} verification of explicit
+  ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix identities},
+\newblock Zenodo,
+\newblock \doi{10.5281/zenodo.23015576},
+\newblock Version 1.1.0 (2026).
 
 \end{thebibliography}

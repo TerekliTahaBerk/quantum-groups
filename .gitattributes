@@ -1,3 +1,10 @@
-# Submission paperwork is not part of the software archive made with
-# `git archive` (see jors/DISTRIBUTION.md).
-jors/ export-ignore
+# Material that is not part of the software is kept in the repository but
+# left out of release archives (`git archive`, GitHub source downloads and
+# the Zenodo deposit made from each GitHub Release): earlier journal
+# submission records, the thesis poster, rendered QA page images and Word
+# copies of the thesis. The thesis sources and the submitted thesis PDF stay
+# in the archive because the userguide's Sec. 5.2 audits that thesis.
+archive/ export-ignore
+poster/ export-ignore
+thesis/qa_pdf_pages/ export-ignore
+thesis/*.docx export-ignore

@@ -1,5 +1,12 @@
 # JORS submission checklist
 
+> **Withdrawn (29 September 2026).** JORS submission #798 was withdrawn by
+> the author after the journal declined an article-processing-charge waiver.
+> The work is being prepared for *SciPost Physics Codebases* instead; the
+> current manuscript is in [`scipost/`](../../scipost/). This directory is
+> kept unchanged as a historical record; paths in it refer to the
+> repository layout before it was moved to `archive/jors/` (formerly `jors/`).
+
 **SUBMITTED 28 September 2026.** The manuscript was submitted to the
 *Journal of Open Research Software*, Software Metapapers section (submission
 #798 in the journal's OJS system), with `paper.pdf` as the manuscript file,

@@ -8,12 +8,14 @@ pdf:
 check: pdf
 	python3 check_submission.py
 
-# Source bundle for arXiv / SciPost: TeX, class, bst, generated .bbl, figure.
-arxiv: pdf
-	rm -f arxiv_source.tar.gz
-	tar czf arxiv_source.tar.gz paper.tex paper.bbl SciPost.cls SciPost_bibstyle.bst references.bib figures/figure1_workflow.pdf
+# Source bundle of the SciPost-format manuscript (TeX, class, bst, generated
+# .bbl, figure), e.g. for SciPost's production stage. The arXiv preprint in
+# the amsart layout is built separately in ../arxiv/.
+source: pdf
+	rm -f scipost_source.tar.gz
+	tar czf scipost_source.tar.gz paper.tex paper.bbl SciPost.cls SciPost_bibstyle.bst references.bib figures/figure1_workflow.pdf
 
 clean:
 	rm -f paper.aux paper.log paper.out paper.toc paper.blg
 
-.PHONY: pdf check arxiv clean
+.PHONY: pdf check source clean

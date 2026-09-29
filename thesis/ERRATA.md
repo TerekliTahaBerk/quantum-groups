@@ -2,9 +2,10 @@
 
 Date: 27 September 2026. Applies to `thesis_ytu.tex` at revision
 `dbe56afbb831a0734c964227e2c46209fca05848` and its existing PDF derivatives.
-The archived thesis/PDFs have not been silently replaced. The active English
-JOSS manuscript is `../paper/paper.md`; it incorporates these scope and
-convention corrections. Line numbers below refer to the archived source.
+The archived thesis/PDFs have not been silently replaced. The current English
+manuscript, the SciPost Physics Codebases userguide in `../scipost/`,
+incorporates these scope and convention corrections (as did the earlier
+JOSS draft, now `../archive/joss/paper.md`). Line numbers below refer to the archived source.
 
 | Location | Correction |
 |---|---|

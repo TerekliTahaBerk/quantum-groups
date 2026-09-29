@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 # The validation command is `python -m pytest`; pyproject.toml configures it
-# to run tests/ plus the package doctests. README, CONTRIBUTING, the Makefile
-# (`make check`) and paper/PREFLIGHT.md use the same command.
+# to run tests/ plus the package doctests. README, CONTRIBUTING and the
+# Makefile (`make check`) use the same command.
 env:
   MPLBACKEND: Agg
 
@@ -49,6 +49,8 @@ jobs:
           python -m pip install --no-deps -e .
       - name: Run tests and doctests
         run: python -m pytest
+      - name: Run the userguide's Listings 1-6 and compare with their expected outputs
+        run: make listings PYTHON=python
 
   wheel-quickstart:
     # Builds and installs a wheel (non-editable) and runs the README
@@ -72,6 +74,18 @@ jobs:
         run: |
           python "$GITHUB_WORKSPACE/examples/sample_verification.py" > sample.out
           diff sample.out "$GITHUB_WORKSPACE/examples/sample_verification_expected.txt"
+      - name: Run the userguide's Listings 2-6 and compare with their expected outputs
+        working-directory: ${{ runner.temp }}
+        run: |
+          for s in scipost/examples/coproduct_check.py \
+                   scipost/examples/transcription_check.py \
+                   scipost/examples/clebsch_gordan.py \
+                   scipost/examples/graded_four_factors.py \
+                   scipost/crosscheck/quagroup_crosscheck.py; do
+            python "$GITHUB_WORKSPACE/$s" > listing.out
+            diff listing.out "$GITHUB_WORKSPACE/${s%.py}_expected.txt"
+            echo "ok  $s"
+          done
 
   cross-platform:
     # Installs the built wheel on Linux, macOS and Windows, runs both examples

@@ -17,12 +17,17 @@ inspected Drinfeld formula and the GL matrix to the supplied original.
 The retained computational claims are checked independently below; an
 exhaustive page-by-page audit of all cited books is not claimed.
 
+**Path note (29 September 2026).** The JOSS draft that this audit refers to
+as `paper/` (`paper/paper.md`, `paper/paper.bib`, `paper/PREFLIGHT.md`) was
+never submitted and now lives in `archive/joss/`; the current manuscript is
+`scipost/paper.tex`. The audit text is otherwise unchanged.
+
 **Repository status (updated 27 September 2026).** The corrections in §12
 were committed to `main` as `bc5c370`, after the `v1.0.0` tag, and GitHub
 Actions passed on that commit. They are therefore *not* contained in the
 v1.0.0 release or its Zenodo archive; they are part of the unreleased 1.1.0
-(`CHANGELOG.md`). The current verification record is `paper/PREFLIGHT.md`.
-No JOSS submission or message to an editor has been made. Archived thesis
+(`CHANGELOG.md`); 1.1.0 was released on 28 September 2026.
+Archived thesis
 files are accompanied by `thesis/ERRATA.md`. Part 2's bounded feasibility assessment follows the
 completed GL comparison in §13 and identifies no defensible new mathematical
 result to implement within this scope.

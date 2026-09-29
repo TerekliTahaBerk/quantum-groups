@@ -1,3 +1,8 @@
+paper.aux
+paper.log
+paper.out
+paper.blg
+paper.toc
+arxiv_source.tar.gz
 # Keep the generated bibliography: arXiv does not run BibTeX.
 !paper.bbl
-scipost_source.tar.gz

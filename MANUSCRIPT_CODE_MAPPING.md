@@ -1,11 +1,12 @@
 # Manuscript-Code Mapping
 
-This file maps the computational claims of the JOSS manuscript
-(`paper/paper.md`) and of the thesis it grew out of, "Quantum Grup Yapılarının
+This file maps the computational claims of the thesis from which the
+package grew, "Quantum Grup Yapılarının
 Python Ortamında Modellenmesi" (submitted thesis, in Turkish,
 `thesis/Lisans Bitirme Tezi.pdf`, source `thesis/thesis_ytu.tex`), to
 repository modules and tests. Status values describe the current `main`.
-`thesis/thesis.tex` is an earlier Turkish article source, not the JOSS paper.
+`thesis/thesis.tex` is an earlier Turkish article source. The package's
+userguide, with its own worked examples, is in `scipost/`.
 Corrections to the archived thesis are in `thesis/ERRATA.md`; the publication
 audit and source-access limitations are in `AUDIT.md`. All tests listed here
 run with `python -m pytest`.

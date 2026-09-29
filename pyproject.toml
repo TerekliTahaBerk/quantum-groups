@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quantum-group"
-version = "1.1.0"
+version = "1.1.1"
 description = "Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities"
 readme = "README.md"
 requires-python = ">=3.10"

@@ -1,0 +1,55 @@
+{
+  "upload_type": "software",
+  "title": "quantum-group: Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities",
+  "creators": [
+    {
+      "name": "Terekli, Taha Berk",
+      "affiliation": "Department of Mathematics, Yıldız Technical University, Istanbul, Türkiye",
+      "orcid": "0009-0004-8266-1116"
+    }
+  ],
+  "description": "<p><strong>quantum-group</strong> is a small Python package that builds the explicit matrices behind concrete quantum-group calculations with exact <a href=\"https://www.sympy.org\">SymPy</a> arithmetic and checks each identity as an exact residual matrix. A nonzero residual entry locates the convention that disagrees: basis order, tensor placement, coproduct or, for superalgebras, the Koszul sign rule.</p><p><strong>Covered:</strong> finite-dimensional U<sub>q</sub>(sl<sub>2</sub>) modules and their defining relations; coproduct, counit and antipode with generator-level Hopf identities; tensor products and Clebsch&ndash;Gordan highest-weight vectors; the fundamental R-matrix with quantum Yang&ndash;Baxter, braid, Hecke and coproduct-intertwining checks, in the historical and the coproduct-compatible convention; and the graded Yang&ndash;Baxter equation for the 9&times;9 GL<sub>q</sub>(2|1) R-matrix of &Ccedil;elik and &Ccedil;elik (2021), including R<sub>ij</sub> placements on tensor powers via graded swaps.</p><p><strong>Scope:</strong> the checks are exact verifications on explicit finite-dimensional representations, not proofs in the abstract algebra, and the package is not a general quantum-group computer algebra system.</p><p><strong>This release (1.1.1)</strong> has the same package code and test suite as 1.1.0 (<a href=\"https://doi.org/10.5281/zenodo.23015576\">10.5281/zenodo.23015576</a>). It adds the userguide prepared for <em>SciPost Physics Codebases</em> (<code>scipost/</code>; the same text as an amsart preprint in <code>arxiv/</code>), its worked examples with stored expected outputs, and a cross-check against data exported from GAP's QuaGroup package; continuous integration runs every example and compares its output. Earlier journal-submission records, the thesis poster and rendered page images are kept in the repository but are left out of this archive.</p><p><strong>Install:</strong> <code>pip install quantum-group==1.1.1</code>. <strong>Validate:</strong> <code>python -m pytest</code> (202 tests and doctests). Requires Python &ge; 3.10, SymPy &ge; 1.10, NetworkX &ge; 2.6, Matplotlib &ge; 3.5. <strong>Source, documentation and issues:</strong> <a href=\"https://github.com/TerekliTahaBerk/quantum-groups\">github.com/TerekliTahaBerk/quantum-groups</a>.</p>",
+  "license": "MIT",
+  "language": "eng",
+  "access_right": "open",
+  "keywords": [
+    "quantum groups",
+    "Hopf algebras",
+    "R-matrix",
+    "Yang-Baxter equation",
+    "braid relation",
+    "quantum superalgebras",
+    "Clebsch-Gordan coefficients",
+    "symbolic computation",
+    "exact arithmetic",
+    "SymPy",
+    "Python"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.1016/S0034-4877(21)00073-2",
+      "relation": "cites",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.1007/BF00704588",
+      "relation": "cites",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.7717/peerj-cs.103",
+      "relation": "references",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    }
+  ],
+  "references": [
+    "Çelik, S. and Çelik, S. A. (2021). A new quantum supergroup and its Gauss decomposition. Rep. Math. Phys. 88, 259. doi:10.1016/S0034-4877(21)00073-2",
+    "Drinfeld, V. G. (1987). Quantum groups. Proceedings of the International Congress of Mathematicians, Berkeley, 1986, vol. 1, 798-820.",
+    "Jimbo, M. (1985). A q-difference analogue of U(g) and the Yang-Baxter equation. Lett. Math. Phys. 10, 63. doi:10.1007/BF00704588",
+    "Kassel, C. (1995). Quantum Groups. Graduate Texts in Mathematics 155, Springer. doi:10.1007/978-1-4612-0783-2",
+    "Meurer, A. et al. (2017). SymPy: symbolic computing in Python. PeerJ Comput. Sci. 3, e103. doi:10.7717/peerj-cs.103"
+  ]
+}

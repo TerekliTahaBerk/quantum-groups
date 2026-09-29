@@ -1,5 +1,11 @@
 # JOSS paper and release notes (maintainer)
 
+> **Never submitted (archived 29 September 2026).** This JOSS draft was not
+> submitted. The current manuscript is the SciPost Physics Codebases
+> userguide in [`scipost/`](../../scipost/). This directory is kept
+> unchanged as a historical record; paths in it refer to the repository
+> layout before it was moved to `archive/joss/` (formerly `paper/`).
+
 - `paper.md`, `paper.bib` — the JOSS manuscript (the only active manuscript).
 - `PREFLIGHT.md` — current verification record and JOSS gate assessment.
 - `REVIEW_CHANGES.md` — factual summary of changes since v1.0.0.

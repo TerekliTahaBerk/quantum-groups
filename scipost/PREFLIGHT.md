@@ -1,22 +1,19 @@
 # SciPost Physics Codebases — preflight record
 
 Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
-(20 pages; 14 before the 29 Sep extension, see §6). Build and verify with `make -C scipost check` (prints `OK`);
-`make -C scipost arxiv` writes `arxiv_source.tar.gz` for arXiv.
+(20 pages; 14 before the 29 Sep extension, see §6). Build and verify with
+`make -C scipost check` (prints `OK`). The arXiv preprint in the AMS
+`amsart` layout is generated from this file (`make -C arxiv check`, §7).
 
-## 0. Blockers — author actions before submitting
+## 0. Status and remaining author actions
 
-| # | Action | Why |
+| # | Item | Status |
 |---|---|---|
-| B1 | **Withdraw the JORS submission (#798) in writing and wait for the editor's confirmation.** | The same work is under consideration at JORS; the JORS cover letter promised exclusivity. Submitting to SciPost first would be a dual submission. |
-| B2 | Correct the AI disclosure you gave JORS, if the withdrawal message goes beyond a one-line withdrawal. | JORS text names only Claude Opus 5.5, but 8 commits of 28–29 Sep 2026 (publication materials only, no code) were made with Claude Sonnet 5. The SciPost text states both. |
-| B3 | arXiv: account (and endorsement, if arXiv asks for one), then upload `arxiv_source.tar.gz`. Suggested primary category **math-ph** (cross-list math.QA). Put `Submission to SciPost` in the Comments field. | SciPost's recommended route is preprint first; the SciPost form then auto-fills from arXiv. |
-| B4 | SciPost account; submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*; optional suggested referees (the five from `jors/POTENTIAL_REVIEWERS.md` can be reused). | Required to submit. No fee at any stage (verified on the journal pages). |
-
-Optional: tag a patch release (e.g. v1.1.1) that contains `scipost/examples/`, so
-that Listings 2–4 are also in an archived release. The paper already states
-that these listings were written after v1.1.0 and use only its public API.
-SciPost publishes the accepted release of the code on git.scipost.org anyway.
+| B1 | JORS submission #798 | **Withdrawn** by the author on 29 Sep 2026 (records in `archive/jors/`). The dual-submission blocker is gone. |
+| B2 | AI disclosure given to JORS (named only Claude Opus 5.5) | Moot after the withdrawal; the SciPost and arXiv texts name both models used. |
+| B3 | Release 1.1.1 (PyPI, GitHub Release → Zenodo) | To do, following `RELEASING.md`; then add the 1.1.1 DOI to `references.bib` (`quantumgroup111`). Until then the reference carries the release URL. |
+| B4 | arXiv | Account exists; first submission needs a personal endorsement. An endorsement for **math.QA** has been requested (29 Sep 2026). Upload `arxiv/arxiv_source.tar.gz` with primary math.QA. |
+| B5 | SciPost | Account and submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*. Submit **this** SciPost-format PDF by direct upload (see §7); optional suggested referees (the five in `archive/jors/POTENTIAL_REVIEWERS.md`). No fee at any stage. |
 
 ## 1. Template
 
@@ -37,13 +34,13 @@ The one overfull box it produces also occurs in the unmodified template.
 | Guide to using the software | Sec. 4 (installation, API table, documentation/support) and Appendix A (API reference) |
 | Worked-out examples; ≥1 example application in detail | Sec. 5: five listings with stored outputs; Sec. 5.2 is the thesis-audit application |
 | Benchmarking tests | Sec. 6: 202 tests incl. comparisons with published values and negative controls; cross-check against GAP/QuaGroup; performance table |
-| Complete documentation incl. download/install/run | Sec. 3.1, 3.3 |
+| Complete documentation incl. download/install/run | Sec. 4.1, 4.3 |
 | OSI licence | MIT (explicitly on the journal's list) |
 | Title ≤ ~150 characters | ~108 characters |
 | Abstract fits 8 template lines | exactly 8 lines (checked on the rendered PDF) |
-| Introduction and conclusion | Sec. 1, Sec. 7 |
+| Introduction and conclusion | Sec. 1, Sec. 8 |
 | Acknowledgements after conclusion; funding information (required); competing interests | present |
-| References with DOI links; "can only be published if references are externally linked" | all 16 linked; `check_submission.py` fails otherwise |
+| References with DOI links; "can only be published if references are externally linked" | all 17 linked; `check_submission.py` fails otherwise |
 | Everything hyperlinked | sections, equations, listings, tables, figure, citations, URLs |
 | Technical figures only | Fig. 1 is a workflow diagram |
 | Line numbers for refereeing; TOC for papers > 6 pages | both on |
@@ -81,15 +78,15 @@ findings and what was done:
 
 | Finding | Resolution |
 |---|---|
-| Dual submission with JORS | Blocker B1 above |
-| Listings 2–4 not in the v1.1.0 release | Stated in Sec. 3.1; optional patch release above |
+| Dual submission with JORS | Resolved: JORS submission withdrawn (B1) |
+| Listings 2–4 not in the v1.1.0 release | Resolved: all listings are part of release 1.1.1 (Sec. 4.1) |
 | AI disclosure omitted Claude Sonnet 5 | Fixed in the paper; B2 above for JORS |
 | Zenodo reference title differed from the record | Fixed (exact record title) |
 | Fig. 1 caption: `kron` not in the package namespace | Caption now says where it is imported from |
 | "Coproduct stated next to every tensor-product function" too strong | Now: stated in the `hopf`/`tensor` module docs and README |
 | Sec. 5.2 implied Listing 2's values are fixed by tests | Reworded to what the tests actually assert |
-| 27 Sep rerun timings/memory not recorded in the repo | Removed from the SciPost paper (still in `jors/paper.tex`) |
-| Timing-only "benchmarks" | Sec. 5.1 now names the comparisons with published values |
+| 27 Sep rerun timings/memory not recorded in the repo | Removed from the SciPost paper (still in `archive/jors/paper.tex`) |
+| Timing-only "benchmarks" | Sec. 6.1 now names the comparisons with published values |
 | Dropped from JORS text: issue-tracker URL, no-guaranteed-support note, Ubuntu 24.04 | Restored |
 | "Lower bounds exercised" imprecise | Now names the tested versions |
 | Drinfeld R: which coproduct | Stated |
@@ -107,3 +104,30 @@ findings and what was done:
 The checker was extended to Listings 5–6 and now also fails on overfull
 display equations (reported by LaTeX as "detected at line"), which the first
 version missed; an overfull display found this way was fixed.
+
+## 7. Release 1.1.1 and the arXiv version (29 Sep 2026)
+
+- The paper now describes release 1.1.1: package code and tests identical to
+  1.1.0 (`git diff v1.1.0 -- quantum_group tests` is empty), plus the
+  listings, the cross-check data and CI jobs that run Listings 1–6 against
+  the installed wheel. Version-dependent statements (Secs. 4.1, 5, 6.1,
+  Table 1, Appendix A) were updated; outputs were regenerated with 1.1.1 and
+  are byte-identical to the stored ones.
+- Three display equations (Eqs. 1, 2–3, 5) were split over two lines so that
+  they also fit the narrower amsart text block; content unchanged.
+- `arxiv/build.py` writes `arxiv/paper.tex` (amsart, MSC 2020 17B37; 16T25,
+  81R50, 68W30) from this file: same abstract, body, appendix and
+  statements. Layout-only changes: `\paragraph` becomes an italic run-in
+  heading, subsection headings stand on their own line, `\mathbb{1}` becomes
+  `\mathds{1}`, URLs break only at `/`, `.` and `-` (no `xurl`), the back
+  matter becomes a *Declarations* section, and the bibliography uses
+  `amsplain` with bracketed labels, DOIs repeated in `note` and page ranges
+  placed before URLs. An independent reviewer compared the text of both PDFs
+  word by word: nothing was lost or changed besides these.
+  `arxiv/check.py` fails if the generated files are stale, on LaTeX or
+  BibTeX warnings, on unlinked references, or if the upload bundle does not
+  compile on its own.
+- SciPost asks for manuscripts in its own template. Because the arXiv version
+  uses the amsart layout, submit to SciPost by **direct upload** of
+  `scipost/paper.pdf` rather than by quoting the arXiv identifier, and give
+  the arXiv identifier in the submission form's comments once it exists.

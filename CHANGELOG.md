@@ -4,6 +4,42 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.1] - 2026-09-29
+
+Documentation and packaging release. The package code (`quantum_group/`) and
+the test suite (`tests/`) are unchanged from 1.1.0; results computed with
+1.1.0 are reproduced exactly.
+
+### Added
+
+- `scipost/`: the userguide prepared for *SciPost Physics Codebases*, with
+  its worked examples (`scipost/examples/`, Listings 2–5) and a cross-check
+  against data exported from GAP's QuaGroup 1.8.4 (`scipost/crosscheck/`,
+  Listing 6), each with its expected output; `make -C scipost check`
+  verifies listings, outputs, references and the LaTeX build.
+- `arxiv/`: the same text as a preprint in the AMS `amsart` layout,
+  generated from `scipost/paper.tex` by `arxiv/build.py` (`make -C arxiv
+  check`, `make -C arxiv bundle`).
+- CI runs Listings 2–6 against the installed wheel and compares each output
+  with its stored copy; `make listings` does the same locally, and
+  `make paper` builds and checks the userguide.
+- `.zenodo.json`: complete metadata for the Zenodo record made from each
+  GitHub Release.
+- `RELEASING.md`: release checklist (PyPI, GitHub Release, Zenodo).
+
+### Changed
+
+- Release archives (GitHub source downloads and the Zenodo deposit) no longer
+  contain the earlier journal-submission records, the thesis poster, the
+  rendered thesis QA page images or the Word copies of the thesis
+  (`.gitattributes`); they stay in the repository. The archive shrinks from
+  about 13 MB to about 3 MB.
+- The JORS submission records (`jors/`, withdrawn 29 September 2026) and the
+  never-submitted JOSS draft (`paper/`) moved to `archive/jors/` and
+  `archive/joss/`, each with a status note; README, Makefile, `AUDIT.md`,
+  `MANUSCRIPT_CODE_MAPPING.md` and `thesis/` notes point to `scipost/`.
+- Makefile: `joss-pdf` removed; `listings` and `paper` added.
+
 ## [1.1.0] - 2026-09-28
 
 Tagged as GitHub Release `v1.1.0` (commit
@@ -11,7 +47,7 @@ Tagged as GitHub Release `v1.1.0` (commit
 [quantum-group 1.1.0](https://pypi.org/project/quantum-group/1.1.0/) and
 archived on Zenodo as
 [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576)
-(`jors/DISTRIBUTION.md`). The earlier Zenodo DOI 10.5281/zenodo.22997681
+(`archive/jors/DISTRIBUTION.md`). The earlier Zenodo DOI 10.5281/zenodo.22997681
 archives v1.0.0 only and does not contain these changes. This is a minor
 release under Semantic Versioning because it adds public functions; existing
 public functions keep their names and documented outputs, except that
