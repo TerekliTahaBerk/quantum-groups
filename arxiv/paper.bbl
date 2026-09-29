@@ -76,8 +76,7 @@ Aaron Meurer, Christopher~P. Smith, Mateusz Paprocki, Ond{\v{r}}ej
 \bibitem{quantumgroup111}
 Taha~Berk Terekli, \emph{quantum-group: {E}xact {SymPy} verification of
   explicit ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix
-  identities}, GitHub Release (archived on Zenodo), 2026, Version 1.1.1,
-  \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}.
+  identities}, Zenodo, 2026, Version 1.1.1, \doi{10.5281/zenodo.23039671}.
 
 \bibitem{quantumgroup110}
 \bysame, \emph{quantum-group: {E}xact {SymPy} verification of explicit

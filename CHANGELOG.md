@@ -6,6 +6,11 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [1.1.1] - 2026-09-29
 
+Tagged as GitHub Release `v1.1.1` (commit
+`7cb3877a5400c30ada625d9f577d78bf355e24a2`), published on PyPI as
+[quantum-group 1.1.1](https://pypi.org/project/quantum-group/1.1.1/) and
+archived on Zenodo as
+[10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671).
 Documentation and packaging release. The package code (`quantum_group/`) and
 the test suite (`tests/`) are unchanged from 1.1.0; results computed with
 1.1.0 are reproduced exactly.

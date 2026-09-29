@@ -237,9 +237,10 @@ author on a best-effort basis. Changes are listed in
 
 Please cite the software using [`CITATION.cff`](CITATION.cff) (GitHub's
 "Cite this repository" button exports it). Every GitHub Release is archived
-on Zenodo. Version 1.1.0 is
-[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576); version
-1.1.1 has the same package code and adds the userguide material. The earlier
+on Zenodo. Version 1.1.1 is
+[10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671); version
+1.1.0, with the same package code, is
+[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576). The earlier
 record [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681)
 archives version 1.0.0 only and does **not** contain the changes listed for
 1.1.0 in the changelog.

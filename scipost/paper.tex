@@ -316,7 +316,7 @@ The modules form three layers. A small foundation provides the default symbol $q
 
 \pkg{} requires CPython 3.10 or later and runs on any operating system; it has no compiled code and needs no special hardware. It is tested in continuous integration on Linux, macOS and Windows (Sec.~\ref{sec:tests}) and locally on Ubuntu 24.04 (x86-64). The runtime dependencies, installed automatically, are SymPy $\geq$ 1.10~\cite{meurer2017sympy}, NetworkX $\geq$ 2.6~\cite{hagberg2008networkx} and Matplotlib $\geq$ 3.5~\cite{hunter2007matplotlib}; continuous integration exercises the oldest supported versions (SymPy 1.10.1, NetworkX 2.6.3, Matplotlib 3.5.3). pytest~\cite{pytest} is needed only to run the test suite (extra \code{[test]}).
 
-The version described here is 1.1.1, tagged as the GitHub Release \code{v1.1.1}. Its package code and test suite are those of version 1.1.0; release 1.1.1 adds the listings of this paper with their expected outputs, the data of the cross-check in Sec.~\ref{sec:crosscheck}, and continuous-integration jobs that run them. It is installed from the Python Package Index, or directly from the tag:
+The version described here is 1.1.1, tagged as the GitHub Release \code{v1.1.1} (commit \code{7cb3877}). Its package code and test suite are those of version 1.1.0; release 1.1.1 adds the listings of this paper with their expected outputs, the data of the cross-check in Sec.~\ref{sec:crosscheck}, and continuous-integration jobs that run them. It is installed from the Python Package Index, or directly from the tag:
 \begin{lstlisting}[language=bash, frame=none]
 python -m pip install quantum-group==1.1.1
 python -m pip install \
@@ -331,7 +331,7 @@ python -m pytest                                          # 202 tests
 python benchmarks/benchmark.py --repeats 3 --max-n 5      # Table 3
 \end{lstlisting}
 
-\paragraph{Code availability.} Repository: \url{https://github.com/TerekliTahaBerk/quantum-groups} (MIT licence). Release: \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}. Package: \url{https://pypi.org/project/quantum-group/1.1.1/}. Archive: Zenodo~\cite{quantumgroup111}, a source archive of the release made from the GitHub Release; version 1.1.0 is archived as \doi{10.5281/zenodo.23015576}~\cite{quantumgroup110}. Listing~\ref{lst:example} is \code{examples/sample\_verification.py}, and Listings~\ref{lst:coproduct}--\ref{lst:crosscheck} are in \code{scipost/examples/} and \code{scipost/crosscheck/}; all six are part of the release, each with its expected output.
+\paragraph{Code availability.} Repository: \url{https://github.com/TerekliTahaBerk/quantum-groups} (MIT licence). Release: \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}. Package: \url{https://pypi.org/project/quantum-group/1.1.1/}. Archive: Zenodo, \doi{10.5281/zenodo.23039671}~\cite{quantumgroup111}, a source archive of the GitHub Release; version 1.1.0 is archived as \doi{10.5281/zenodo.23015576}~\cite{quantumgroup110}. Listing~\ref{lst:example} is \code{examples/sample\_verification.py}, and Listings~\ref{lst:coproduct}--\ref{lst:crosscheck} are in \code{scipost/examples/} and \code{scipost/crosscheck/}; all six are part of the release, each with its expected output.
 
 \subsection{Overview of the public interface}
 

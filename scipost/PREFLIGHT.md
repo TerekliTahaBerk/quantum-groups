@@ -11,7 +11,7 @@ Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
 |---|---|---|
 | B1 | JORS submission #798 | **Withdrawn** by the author on 29 Sep 2026 (records in the Git history, last in commit `7aafa2c`). The dual-submission blocker is gone. |
 | B2 | AI disclosure given to JORS (named only Claude Opus 5.5) | Moot after the withdrawal; the SciPost and arXiv texts name both models used. |
-| B3 | Release 1.1.1 (PyPI, GitHub Release → Zenodo) | To do, following `RELEASING.md`; then add the 1.1.1 DOI to `references.bib` (`quantumgroup111`). Until then the reference carries the release URL. |
+| B3 | Release 1.1.1 (PyPI, GitHub Release → Zenodo) | **Done** 29 Sep 2026: tag `v1.1.1` = commit `7cb3877`, PyPI 1.1.1, Zenodo `10.5281/zenodo.23039671` (in `references.bib`, `quantumgroup111`). |
 | B4 | arXiv | Account exists; first submission needs a personal endorsement. An endorsement for **math.QA** has been requested (29 Sep 2026). Upload `arxiv/arxiv_source.tar.gz` with primary math.QA. |
 | B5 | SciPost | Account and submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*. Submit **this** SciPost-format PDF by direct upload (see §7); optional suggested referees (the list screened for JORS is `archive/jors/POTENTIAL_REVIEWERS.md` at commit `7aafa2c`). No fee at any stage. |
 

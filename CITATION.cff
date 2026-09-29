@@ -25,8 +25,11 @@ version: 1.1.1
 date-released: "2026-09-29"
 identifiers:
   - type: doi
+    value: "10.5281/zenodo.23039671"
+    description: "Zenodo archive of quantum-group 1.1.1 (GitHub Release v1.1.1, commit 7cb3877a5400c30ada625d9f577d78bf355e24a2)"
+  - type: doi
     value: "10.5281/zenodo.23015576"
-    description: "Zenodo archive of quantum-group 1.1.0 (commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde); 1.1.1 has the same package code, and its archive DOI is added here once Zenodo assigns it"
+    description: "Zenodo archive of quantum-group 1.1.0 (commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde)"
 keywords:
   - quantum groups
   - Hopf algebras

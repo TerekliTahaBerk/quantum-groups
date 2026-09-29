@@ -42,10 +42,9 @@ C.~Kassel,
 T.~B. Terekli,
 \newblock \emph{quantum-group: {E}xact {SymPy} verification of explicit
   ${U}_q(\mathfrak{sl}_2)$ and $\mathit{GL}_q(2|1)$ matrix identities},
-\newblock GitHub Release (archived on Zenodo),
-\newblock Version 1.1.1,
-  \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1}
-  (2026).
+\newblock Zenodo,
+\newblock \doi{10.5281/zenodo.23039671},
+\newblock Version 1.1.1 (2026).
 
 \bibitem{meurer2017sympy}
 A.~Meurer, C.~P. Smith, M.~Paprocki, O.~{\v{C}}ert{\'i}k, S.~B. Kirpichev,
