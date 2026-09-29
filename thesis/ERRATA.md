@@ -5,7 +5,7 @@ Date: 27 September 2026. Applies to `thesis_ytu.tex` at revision
 The archived thesis/PDFs have not been silently replaced. The current English
 manuscript, the SciPost Physics Codebases userguide in `../scipost/`,
 incorporates these scope and convention corrections (as did the earlier
-JOSS draft, now `../archive/joss/paper.md`). Line numbers below refer to the archived source.
+JOSS draft, removed from the repository in 1.1.1). Line numbers below refer to the archived source.
 
 | Location | Correction |
 |---|---|

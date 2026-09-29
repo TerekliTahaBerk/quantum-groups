@@ -3,17 +3,17 @@
 Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
 (20 pages; 14 before the 29 Sep extension, see §6). Build and verify with
 `make -C scipost check` (prints `OK`). The arXiv preprint in the AMS
-`amsart` layout is generated from this file (`make -C arxiv check`, §7).
+`amsart` layout is generated from `paper.tex` (`make -C arxiv check`, §7).
 
 ## 0. Status and remaining author actions
 
 | # | Item | Status |
 |---|---|---|
-| B1 | JORS submission #798 | **Withdrawn** by the author on 29 Sep 2026 (records in `archive/jors/`). The dual-submission blocker is gone. |
+| B1 | JORS submission #798 | **Withdrawn** by the author on 29 Sep 2026 (records in the Git history, last in commit `7aafa2c`). The dual-submission blocker is gone. |
 | B2 | AI disclosure given to JORS (named only Claude Opus 5.5) | Moot after the withdrawal; the SciPost and arXiv texts name both models used. |
 | B3 | Release 1.1.1 (PyPI, GitHub Release → Zenodo) | To do, following `RELEASING.md`; then add the 1.1.1 DOI to `references.bib` (`quantumgroup111`). Until then the reference carries the release URL. |
 | B4 | arXiv | Account exists; first submission needs a personal endorsement. An endorsement for **math.QA** has been requested (29 Sep 2026). Upload `arxiv/arxiv_source.tar.gz` with primary math.QA. |
-| B5 | SciPost | Account and submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*. Submit **this** SciPost-format PDF by direct upload (see §7); optional suggested referees (the five in `archive/jors/POTENTIAL_REVIEWERS.md`). No fee at any stage. |
+| B5 | SciPost | Account and submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*. Submit **this** SciPost-format PDF by direct upload (see §7); optional suggested referees (the list screened for JORS is `archive/jors/POTENTIAL_REVIEWERS.md` at commit `7aafa2c`). No fee at any stage. |
 
 ## 1. Template
 
@@ -85,7 +85,7 @@ findings and what was done:
 | Fig. 1 caption: `kron` not in the package namespace | Caption now says where it is imported from |
 | "Coproduct stated next to every tensor-product function" too strong | Now: stated in the `hopf`/`tensor` module docs and README |
 | Sec. 5.2 implied Listing 2's values are fixed by tests | Reworded to what the tests actually assert |
-| 27 Sep rerun timings/memory not recorded in the repo | Removed from the SciPost paper (still in `archive/jors/paper.tex`) |
+| 27 Sep rerun timings/memory not recorded in the repo | Removed from the SciPost paper (still in the JORS text, `archive/jors/paper.tex` at commit `7aafa2c`) |
 | Timing-only "benchmarks" | Sec. 6.1 now names the comparisons with published values |
 | Dropped from JORS text: issue-tracker URL, no-guaranteed-support note, Ubuntu 24.04 | Restored |
 | "Lower bounds exercised" imprecise | Now names the tested versions |

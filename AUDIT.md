@@ -19,14 +19,16 @@ exhaustive page-by-page audit of all cited books is not claimed.
 
 **Path note (29 September 2026).** The JOSS draft that this audit refers to
 as `paper/` (`paper/paper.md`, `paper/paper.bib`, `paper/PREFLIGHT.md`) was
-never submitted and now lives in `archive/joss/`; the current manuscript is
-`scipost/paper.tex`. The audit text is otherwise unchanged.
+never submitted and was removed from the repository in version 1.1.1 (it
+remains in the Git history, as `archive/joss/` in commit `7aafa2c`); the
+current manuscript is `scipost/paper.tex`. The audit text is otherwise
+unchanged.
 
 **Repository status (updated 27 September 2026).** The corrections in §12
 were committed to `main` as `bc5c370`, after the `v1.0.0` tag, and GitHub
 Actions passed on that commit. They are therefore *not* contained in the
-v1.0.0 release or its Zenodo archive; they are part of the unreleased 1.1.0
-(`CHANGELOG.md`); 1.1.0 was released on 28 September 2026.
+v1.0.0 release or its Zenodo archive; they are part of 1.1.0
+(`CHANGELOG.md`), released on 28 September 2026.
 Archived thesis
 files are accompanied by `thesis/ERRATA.md`. Part 2's bounded feasibility assessment follows the
 completed GL comparison in §13 and identifies no defensible new mathematical

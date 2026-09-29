@@ -1,3 +1,3 @@
-# Keep the generated bibliography: arXiv does not run BibTeX.
+# Keep the generated bibliography, so the source builds without BibTeX.
 !paper.bbl
 scipost_source.tar.gz

@@ -34,8 +34,7 @@ Zenodo's GitHub integration (already enabled for this repository, as for
 record, with the metadata of `.zenodo.json`. Wait a few minutes and open
 <https://zenodo.org/records/23015576>: the *Versions* box lists v1.1.1 with
 its own DOI. Check title, creator/ORCID, description, keywords, license and
-that the file is about 3 MB (the archive leaves out `archive/`, `poster/`
-and other non-software material, see `.gitattributes`).
+that the file is about 3 MB.
 
 Published Zenodo records cannot be deleted, and 1.1.0's DOI is cited, so
 1.1.0 is **not** removed: it stays as the earlier version, and v1.1.1 becomes

@@ -1,27 +1,28 @@
-# Historical thesis material
+# Undergraduate thesis
 
-This directory preserves the undergraduate thesis from which the package
-originated, for provenance. **None of these files is the current
-manuscript; that is the SciPost Physics Codebases userguide in
-[`../scipost/`](../scipost/).** Section 5.2 of the userguide describes how
-the package was used to audit this thesis.
+The package originated in the author's undergraduate thesis. These files are
+kept for provenance and are not the current manuscript; that is the userguide
+in [`../scipost/`](../scipost/), whose Section 5.2 describes how the package
+was used to audit this thesis.
 
 - `Lisans Bitirme Tezi.pdf` — the submitted thesis, *Quantum Grup
   Yapılarının Python Ortamında Modellenmesi* ("Modelling Quantum Group
   Structures in Python"), Department of Mathematics, Yıldız Technical
   University, June 2026 (in Turkish; supervisor Prof. Dr. Salih Çelik).
-- `thesis_ytu.tex` — LaTeX source of the thesis; `thesis_ytu_docx.tex`,
-  `_*.py`, `build_ytu.sh`, `build_pdf_final.sh` and `_ref.docx` are the
-  author's thesis build pipeline (paths in the shell scripts are specific to
-  the author's macOS machine). `…FINAL-READY.docx` is the Word delivery copy.
-- `thesis.tex`, `thesis_revised.tex`, `math.cls` — an earlier Turkish
-  article version of the same material (`make historical-article-pdf`).
-- `figures/generate_figures.py` — regenerates the three package-derived
-  figures used in the thesis (`R_sl2_V1.pdf`, `R_gl21_structure.pdf`,
-  `ybe_products_27.pdf`) from `quantum_group` output (`make figures`).
-  The `tikz_*` files are hand-drawn diagrams.
-- `*KONTROL_NOTLARI*.md`, `qa_*.py`, `qa_pdf_pages/` — the author's
-  pre-submission formatting checks (Turkish) and page renders they refer to.
-- `ERRATA.md` — mathematical and convention corrections to the archived
-  thesis identified during the September 2026 audit (see `../AUDIT.md`).
-  The archived thesis files are intentionally left unchanged.
+- `thesis_ytu.tex` — its LaTeX source, assembled from an earlier article
+  version by a script that is now only in the Git history. The submitted PDF
+  was built with `lualatex thesis_ytu.tex` (three runs; needs Times New Roman
+  and babel's Turkish support); pdflatex also works, with other fonts.
+- `figures/` — the figures the thesis includes; `generate_figures.py`
+  regenerates the three package-derived ones (`R_sl2_V1.pdf`,
+  `R_gl21_structure.pdf`, `ybe_products_27.pdf`) from `quantum_group`
+  output (`make figures`).
+- `poster.pdf` — the poster presented with the thesis.
+- `ERRATA.md` — mathematical and convention corrections found in the
+  September 2026 audit (see `../AUDIT.md`). The thesis files themselves are
+  intentionally left unchanged.
+
+The thesis build pipeline (Word conversion, pre-submission check notes, page
+renders), an earlier article version (`thesis.tex`, `thesis_revised.tex`)
+and the poster sources were removed in version 1.1.1; they remain in the Git
+history (last in commit `7aafa2c`).

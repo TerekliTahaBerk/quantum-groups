@@ -214,18 +214,16 @@ benchmarks/           timing script and recorded results
 notebooks/            exploratory notebook
 scipost/              userguide (SciPost Physics Codebases), Listings 2-6, QuaGroup cross-check
 arxiv/                the userguide as an amsart preprint, generated from scipost/
-archive/              withdrawn JORS and unsubmitted JOSS records (not in release archives)
-thesis/, poster/      historical thesis material (Turkish); see thesis/README.md
+thesis/               the undergraduate thesis (Turkish), its poster and errata; see thesis/README.md
 AUDIT.md              mathematical/technical audit (September 2026)
 MANUSCRIPT_CODE_MAPPING.md
 main.py               demo script (writes outputs/V4_combined.png)
 ```
 
 Makefile targets: `make check`, `make quickstart`, `make listings`,
-`make paper`, `make demo`, `make figures`, `make benchmark-smoke`, and
-`make historical-article-pdf`, which builds the earlier Turkish article
-`thesis/thesis.tex` — not the userguide and not the submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`). Corrections to the
-archived thesis are listed in [`thesis/ERRATA.md`](thesis/ERRATA.md).
+`make paper`, `make demo`, `make figures` and `make benchmark-smoke`.
+Corrections to the submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`) are
+listed in [`thesis/ERRATA.md`](thesis/ERRATA.md).
 
 ## Contributing and support
 

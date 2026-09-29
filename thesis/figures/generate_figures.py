@@ -5,7 +5,7 @@ generate_figures.py
 Makale (thesis) icin GERCEK hesaplardan vektor (PDF) figurleri uretir.
 
 Bu script mevcut ``quantum_group`` paketinin public API'sini kullanir; paket
-kodunu DEGISTIRMEZ. Uretilen figurler thesis.tex tarafindan \includegraphics
+kodunu DEGISTIRMEZ. Uretilen figurler thesis_ytu.tex tarafindan \includegraphics
 ile gomulur.
 
 Cikti dosyalari (bu dizine yazilir):

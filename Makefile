@@ -3,7 +3,7 @@
 PYTHON ?= python3
 
 .PHONY: help check test quickstart listings demo figures benchmark-smoke \
-        paper historical-article-pdf
+        paper
 
 help:
 	@echo "check                   run tests and doctests (same as CI)"
@@ -13,7 +13,6 @@ help:
 	@echo "figures                 regenerate the thesis figures from package output"
 	@echo "benchmark-smoke         quick benchmark run written to build/benchmarks"
 	@echo "paper                   build and check the SciPost userguide scipost/paper.pdf (needs pdflatex, bibtex)"
-	@echo "historical-article-pdf  build the historical Turkish article thesis/thesis.tex (Tectonic)"
 
 check:
 	MPLBACKEND=Agg $(PYTHON) -m pytest
@@ -47,8 +46,3 @@ benchmark-smoke:
 
 paper:
 	$(MAKE) -C scipost check
-
-# Builds the earlier Turkish article source (not the userguide and not the
-# submitted thesis). Its corrections are listed in thesis/ERRATA.md.
-historical-article-pdf: figures
-	cd thesis && tectonic thesis.tex

@@ -29,16 +29,25 @@ the test suite (`tests/`) are unchanged from 1.1.0; results computed with
 
 ### Changed
 
-- Release archives (GitHub source downloads and the Zenodo deposit) no longer
-  contain the earlier journal-submission records, the thesis poster, the
-  rendered thesis QA page images or the Word copies of the thesis
-  (`.gitattributes`); they stay in the repository. The archive shrinks from
-  about 13 MB to about 3 MB.
-- The JORS submission records (`jors/`, withdrawn 29 September 2026) and the
-  never-submitted JOSS draft (`paper/`) moved to `archive/jors/` and
-  `archive/joss/`, each with a status note; README, Makefile, `AUDIT.md`,
-  `MANUSCRIPT_CODE_MAPPING.md` and `thesis/` notes point to `scipost/`.
-- Makefile: `joss-pdf` removed; `listings` and `paper` added.
+- Makefile: `joss-pdf` and `historical-article-pdf` removed; `listings` and
+  `paper` added. README, `AUDIT.md`, `MANUSCRIPT_CODE_MAPPING.md` and the
+  thesis notes point to the userguide in `scipost/`.
+- The TikZ source of Figure 1 is now `scipost/figures/figure1_workflow.tex`.
+
+### Removed
+
+- Material not needed for the software or the userguide; all of it remains
+  in the Git history (last present in commit `7aafa2c`, the journal records
+  there under `archive/jors/` and `archive/joss/`): the JORS submission
+  records (`jors/`; submission #798 was withdrawn on 29 September 2026), the
+  never-submitted JOSS draft (`paper/`), `.gitattributes` (its only rule
+  excluded `jors/` from archives), the poster build (`poster/`; the
+  final poster is kept as `thesis/poster.pdf`), and the thesis build
+  pipeline, Word copies, pre-submission check notes, QA page renders and the
+  earlier article drafts (`thesis.tex`, `thesis_revised.tex`). The thesis
+  keeps its submitted PDF, its LaTeX source `thesis_ytu.tex`, the figures it
+  uses, `figures/generate_figures.py` and `ERRATA.md`. The release archive
+  shrinks from about 13 MB to about 3 MB.
 
 ## [1.1.0] - 2026-09-28
 
@@ -47,11 +56,11 @@ Tagged as GitHub Release `v1.1.0` (commit
 [quantum-group 1.1.0](https://pypi.org/project/quantum-group/1.1.0/) and
 archived on Zenodo as
 [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576)
-(`archive/jors/DISTRIBUTION.md`). The earlier Zenodo DOI 10.5281/zenodo.22997681
-archives v1.0.0 only and does not contain these changes. This is a minor
-release under Semantic Versioning because it adds public functions; existing
-public functions keep their names and documented outputs, except that
-invalid arguments (listed below) now raise errors.
+(`jors/DISTRIBUTION.md`, removed in 1.1.1). The earlier Zenodo DOI
+10.5281/zenodo.22997681 archives v1.0.0 only and does not contain these
+changes. This is a minor release under Semantic Versioning because it adds
+public functions; existing public functions keep their names and documented
+outputs, except that invalid arguments (listed below) now raise errors.
 
 ### Fixed
 
