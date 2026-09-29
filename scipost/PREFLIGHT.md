@@ -1,7 +1,7 @@
 # SciPost Physics Codebases — preflight record
 
 Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
-(14 pages). Build and verify with `make -C scipost check` (prints `OK`);
+(20 pages; 14 before the 29 Sep extension, see §6). Build and verify with `make -C scipost check` (prints `OK`);
 `make -C scipost arxiv` writes `arxiv_source.tar.gz` for arXiv.
 
 ## 0. Blockers — author actions before submitting
@@ -32,11 +32,11 @@ The one overfull box it produces also occurs in the unmodified template.
 
 | Requirement (journal wording, abridged) | Where / status |
 |---|---|
-| Userguide: introduction with background | Sec. 1 |
-| Generic workings, novelty, added value | Sec. 2; added value vs QuaGroup/SageMath in Sec. 1 ("Related software") and Sec. 7 |
-| Guide to using the software | Sec. 3 (installation, API table, documentation/support) |
-| Worked-out examples; ≥1 example application in detail | Sec. 4: four listings with stored outputs; Sec. 4.2 is the thesis-audit application |
-| Benchmarking tests | Sec. 5: 202 tests incl. comparisons with published values and negative controls; performance table |
+| Userguide: introduction with background | Sec. 1 and Sec. 2 (mathematical background) |
+| Generic workings, novelty, added value | Sec. 3; added value vs QuaGroup/SageMath in Sec. 1 ("Related software"), Sec. 6.3 (cross-check) and Sec. 8 |
+| Guide to using the software | Sec. 4 (installation, API table, documentation/support) and Appendix A (API reference) |
+| Worked-out examples; ≥1 example application in detail | Sec. 5: five listings with stored outputs; Sec. 5.2 is the thesis-audit application |
+| Benchmarking tests | Sec. 6: 202 tests incl. comparisons with published values and negative controls; cross-check against GAP/QuaGroup; performance table |
 | Complete documentation incl. download/install/run | Sec. 3.1, 3.3 |
 | OSI licence | MIT (explicitly on the journal's list) |
 | Title ≤ ~150 characters | ~108 characters |
@@ -94,3 +94,16 @@ findings and what was done:
 | "Lower bounds exercised" imprecise | Now names the tested versions |
 | Drinfeld R: which coproduct | Stated |
 | Noisy first benchmark row | Min column and a note added |
+
+## 6. Extension of 29 Sep 2026 (author request: add all four proposed items)
+
+| Item | Where | Verification |
+|---|---|---|
+| Mathematical background | Sec. 2 | Every formula read from the package source (relations.py, representations.py, hopf.py, r_matrix.py, supergroup_gl21.py) and, where computable, re-derived by running the package; the 9×9 GL_q(2|1) matrix of Eq. (10) is `R_matrix_GLq21()` entry by entry, and its evenness was checked. Basis vectors are numbered from 0 (as in the code); Ref. [7] numbers them from 1, which the text states |
+| Second GL_q(2|1) example | Sec. 5.5, Listing 5, `examples/graded_four_factors.py` | Four-factor local YBE and far commutativity; the reordered basis (e_2, e_0, e_1) passes with parities (1,0,0) and fails with the stale list (0,0,1) (4 nonzero entries) |
+| Cross-check with existing software | Sec. 6.3, Listing 6, `crosscheck/` | Data exported from QuaGroup 1.8.4 (GAP 4.12.1, commit in `crosscheck/README.md`); findings listed in that README. SageMath itself was not installed: its `QuantumGroup` is an interface to QuaGroup, which was tested directly |
+| API reference | Appendix A | Signatures, return types and record fields read with `inspect`/`dataclasses`; behavioural claims (index validation, odd-operator rejection, q ∈ {0, 1, −1} rejection, dict keys) confirmed by running the code |
+
+The checker was extended to Listings 5–6 and now also fails on overfull
+display equations (reported by LaTeX as "detected at line"), which the first
+version missed; an overfull display found this way was fixed.

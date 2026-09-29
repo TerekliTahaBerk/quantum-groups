@@ -36,6 +36,10 @@ pairs = {
                  "scipost/examples/transcription_check_expected.txt"),
     "lst:cg": ("scipost/examples/clebsch_gordan.py",
                "scipost/examples/clebsch_gordan_expected.txt"),
+    "lst:graded4": ("scipost/examples/graded_four_factors.py",
+                    "scipost/examples/graded_four_factors_expected.txt"),
+    "lst:crosscheck": ("scipost/crosscheck/quagroup_crosscheck.py",
+                       "scipost/crosscheck/quagroup_crosscheck_expected.txt"),
 }
 
 
@@ -77,6 +81,10 @@ block = range(marks[0], marks[-1] + 1)
 for first, last in re.findall(r"Overfull \\hbox .* at lines (\d+)--(\d+)", log):
     if not (int(first) in block and int(last) in block):
         failures.append(f"overfull box at paper.tex lines {first}--{last}")
+# Display equations are reported as "Overfull \hbox (...) detected at line N".
+for line in re.findall(r"Overfull \\hbox .* detected at line (\d+)", log):
+    if int(line) not in block:
+        failures.append(f"overfull display at paper.tex line {line}")
 blg = (here / "paper.blg").read_text(encoding="latin-1")
 if "Warning" in blg or "error" in blg.lower().replace("error message", ""):
     failures.append("paper.blg reports BibTeX warnings or errors")

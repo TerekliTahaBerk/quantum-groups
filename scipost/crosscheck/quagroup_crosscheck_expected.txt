@@ -1,0 +1,11 @@
+V_1: relations True, equal after D: True
+V_2: relations True, equal after D: True
+V_3: relations True, equal after D: True
+V_1 (x) V_1: action = package coproduct: True
+  RMatrix as printed: QYBE True, braid True, theta P commutes with Delta False
+  RMatrix transposed: QYBE True, braid True, theta P commutes with Delta True
+V_2 (x) V_2: action = package coproduct: True
+  RMatrix as printed: QYBE True, braid True, theta P commutes with Delta False
+  RMatrix transposed: QYBE True, braid True, theta P commutes with Delta True
+theta = q * R_21(1/q): True
+V_2 R-matrix in package basis: QYBE True | commutes True | eigenvalues {q**(-2): 5, -q**2: 3, q**4: 1}
