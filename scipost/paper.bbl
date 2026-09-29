@@ -1,0 +1,125 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{drinfeld1987}
+V.~G. Drinfeld,
+\newblock \emph{Quantum groups},
+\newblock In \emph{Proceedings of the {I}nternational {C}ongress of
+  {M}athematicians, {B}erkeley, {C}alifornia, 1986}, vol.~1, pp. 798--820.
+  American Mathematical Society, Providence, RI,
+\newblock
+  \url{https://www.mathunion.org/fileadmin/ICM/Proceedings/ICM1986.1/ICM1986.1.ocr.pdf}
+  (1987).
+
+\bibitem{jimbo1985}
+M.~Jimbo,
+\newblock \emph{A $q$-difference analogue of ${U}(\mathfrak{g})$ and the
+  {Y}ang--{B}axter equation},
+\newblock Lett. Math. Phys. \textbf{10}, 63 (1985),
+\newblock \doi{10.1007/BF00704588}.
+
+\bibitem{jimbo1986}
+M.~Jimbo,
+\newblock \emph{A $q$-analogue of ${U}(\mathfrak{gl}({N}+1))$, {H}ecke algebra,
+  and the {Y}ang--{B}axter equation},
+\newblock Lett. Math. Phys. \textbf{11}, 247 (1986),
+\newblock \doi{10.1007/BF00400222}.
+
+\bibitem{kassel1995}
+C.~Kassel,
+\newblock \emph{Quantum Groups}, vol. 155 of \emph{Graduate Texts in
+  Mathematics},
+\newblock Springer, New York,
+\newblock \doi{10.1007/978-1-4612-0783-2} (1995).
+
+\bibitem{quantumgroup110}
+T.~B. Terekli,
+\newblock \emph{quantum-group: {E}xact {SymPy} verification of explicit
+  ${U}_q(\mathfrak{sl}_2)$ and ${GL}_q(2|1)$ matrix identities},
+\newblock Zenodo,
+\newblock \doi{10.5281/zenodo.23015576},
+\newblock Version 1.1.0 (2026).
+
+\bibitem{meurer2017sympy}
+A.~Meurer, C.~P. Smith, M.~Paprocki, O.~{\v{C}}ert{\'i}k, S.~B. Kirpichev,
+  M.~Rocklin, A.~Kumar, S.~Ivanov, J.~K. Moore, S.~Singh, T.~Rathnayake, S.~Vig
+  \emph{et~al.},
+\newblock \emph{{SymPy}: symbolic computing in {Python}},
+\newblock PeerJ Comput. Sci. \textbf{3}, e103 (2017),
+\newblock \doi{10.7717/peerj-cs.103}.
+
+\bibitem{celik2021}
+S.~{\c{C}}elik and S.~A. {\c{C}}elik,
+\newblock \emph{A new quantum supergroup and its {G}auss decomposition},
+\newblock Rep. Math. Phys. \textbf{88}, 259 (2021),
+\newblock \doi{10.1016/S0034-4877(21)00073-2}.
+
+\bibitem{terekli2026thesis}
+T.~B. Terekli,
+\newblock \emph{Quantum grup yap{\i}lar{\i}n{\i}n {P}ython ortam{\i}nda
+  modellenmesi [{M}odelling quantum group structures in {P}ython]},
+\newblock Undergraduate thesis, Department of Mathematics, Y{\i}ld{\i}z
+  Technical University, Istanbul,
+\newblock
+  \url{https://github.com/TerekliTahaBerk/quantum-groups/tree/main/thesis}
+  (2026).
+
+\bibitem{gap}
+{The GAP Group},
+\newblock \emph{{GAP} -- {G}roups, {A}lgorithms, and {P}rogramming},
+\newblock Version 4.16.1, \url{https://www.gap-system.org} (2026).
+
+\bibitem{quagroup}
+W.~A. de~Graaf,
+\newblock \emph{{QuaGroup}: computations with quantum groups ({GAP} package)},
+\newblock Version 1.8.4, \url{https://github.com/gap-packages/quagroup} (2024).
+
+\bibitem{degraaf2001}
+W.~A. de~Graaf,
+\newblock \emph{Computing with quantized enveloping algebras: {PBW}-type bases,
+  highest-weight modules and ${R}$-matrices},
+\newblock J. Symb. Comput. \textbf{32}, 475 (2001),
+\newblock \doi{10.1006/jsco.2001.0479}.
+
+\bibitem{sagemath}
+{The Sage Developers},
+\newblock \emph{{SageMath}, the {S}age {M}athematics {S}oftware {S}ystem},
+\newblock \doi{10.5281/zenodo.8042260},
+\newblock Version 10.9, \url{https://www.sagemath.org} (2026).
+
+\bibitem{bkk2000}
+G.~Benkart, S.-J. Kang and M.~Kashiwara,
+\newblock \emph{Crystal bases for the quantum superalgebra
+  ${U}_q(\mathfrak{gl}(m,n))$},
+\newblock J. Amer. Math. Soc. \textbf{13}, 295 (2000),
+\newblock \doi{10.1090/S0894-0347-00-00321-0}.
+
+\bibitem{hagberg2008networkx}
+A.~A. Hagberg, D.~A. Schult and P.~J. Swart,
+\newblock \emph{Exploring network structure, dynamics, and function using
+  {N}etwork{X}},
+\newblock In G.~Varoquaux, T.~Vaught and J.~Millman, eds., \emph{Proceedings of
+  the 7th {P}ython in {S}cience {C}onference ({SciPy} 2008)}, pp. 11--15.
+  Pasadena, CA,
+\newblock \url{https://conference.scipy.org/proceedings/SciPy2008/paper_2/}
+  (2008).
+
+\bibitem{hunter2007matplotlib}
+J.~D. Hunter,
+\newblock \emph{Matplotlib: a {2D} graphics environment},
+\newblock Comput. Sci. Eng. \textbf{9}, 90 (2007),
+\newblock \doi{10.1109/MCSE.2007.55}.
+
+\bibitem{pytest}
+H.~Krekel, B.~Oliveira, R.~Pfannschmidt, F.~Bruynooghe, B.~Laugher, F.~Bruhin
+  \emph{et~al.},
+\newblock \emph{pytest: simple powerful testing with {P}ython},
+\newblock \url{https://github.com/pytest-dev/pytest} (2004).
+
+\end{thebibliography}

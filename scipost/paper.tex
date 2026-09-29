@@ -1,0 +1,511 @@
+% =========================================================================
+% SciPost Physics Codebases submission: quantum-group 1.1.0
+%
+% Built on the official SciPost Physics Codebases LaTeX template
+% (SciPostPhysCodeb_LaTeX_Template.tgz, template version 2024-07, class
+% SciPost.cls v1f; downloaded 29 Sep 2026 from
+% https://scipost.org/SciPostPhysCodeb/authoring, SHA-256
+% 3305eab69cb2e4f1658ec2af5e461eb9875647f3a96a40b5d5e46f1d87441946, a copy is
+% kept in scipost/official_template/). Template blocks marked "TODO" have been
+% filled; the copyright block is left exactly as supplied, as instructed.
+%
+% The userguide follows the journal's "Content" requirements: introduction
+% with background, description of the workings and added value (Sec. 2),
+% guide to using the software (Sec. 3), worked examples (Sec. 4), tests and
+% benchmarks (Sec. 5). Every listing output in Sec. 4 is produced by a script
+% in scipost/examples/ (or examples/) and compared by `make -C scipost check`.
+%
+% Build (from scipost/):  make    (pdflatex, bibtex, pdflatex x2)
+% =========================================================================
+
+\documentclass{SciPost}
+
+% Prevent all line breaks in inline equations.
+\binoppenalty=10000
+\relpenalty=10000
+
+\hypersetup{
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\usepackage[bitstream-charter]{mathdesign}
+\urlstyle{same}
+
+% Fix \cal and \mathcal characters look (so it's not the same as \mathscr)
+\DeclareSymbolFont{usualmathcal}{OMS}{cmsy}{m}{n}
+\DeclareSymbolFontAlphabet{\mathcal}{usualmathcal}
+
+\fancypagestyle{SPstyle}{
+\fancyhf{}
+\lhead{\colorbox{scipostblue}{\bf \color{white} ~SciPost Physics Codebases }}
+\rhead{{\bf \color{scipostdeepblue} ~Submission }}
+\renewcommand{\headrulewidth}{1pt}
+\fancyfoot[C]{\textbf{\thepage}}
+}
+
+% --- Additional packages used by this paper --------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{xurl}
+\usepackage{seqsplit}
+
+% Extra interword stretch so paragraphs with long monospaced identifiers
+% still fit the text width (no effect on paragraphs that already fit).
+\setlength{\emergencystretch}{3em}
+
+\newcommand{\pkg}{\texttt{quantum-group}}
+% Inline code: allow line breaks after underscores so long identifiers fit.
+\newcommand{\code}[1]{\texttt{\begingroup\def\_{\textunderscore\allowbreak}#1\endgroup}}
+\newcommand{\Uq}{U_q(\mathfrak{sl}_2)}
+\newcommand{\GL}{GL_q(2|1)}
+\newcommand{\SnapshotSHA}{\texttt{\seqsplit{103d5384e70e8b0b746b296a0bdbd2d156ba8dde}}}
+
+\lstset{basicstyle=\ttfamily\footnotesize, columns=fullflexible, keepspaces=true,
+  frame=single, framerule=0.4pt, rulecolor=\color{black!40},
+  xleftmargin=4pt, xrightmargin=4pt, aboveskip=0.6em, belowskip=0.4em,
+  commentstyle=\color{black!60}, showstringspaces=false, upquote=true,
+  breaklines=true, breakatwhitespace=true, captionpos=b}
+\lstdefinestyle{output}{frame=none, basicstyle=\ttfamily\footnotesize\color{black!80},
+  aboveskip=0.2em, belowskip=0.6em}
+\renewcommand{\lstlistingname}{Listing}
+\captionsetup[lstlisting]{justification=centering}
+
+\begin{document}
+
+\pagestyle{SPstyle}
+
+\begin{center}{\Large \textbf{\color{scipostdeepblue}{
+\pkg: Exact symbolic verification of R-matrix and Yang--Baxter identities for $\boldsymbol{\Uq}$ and $\boldsymbol{\GL}$\\
+}}}\end{center}
+
+\begin{center}\textbf{
+Taha Berk Terekli\textsuperscript{$\star$}
+}\end{center}
+
+\begin{center}
+Department of Mathematics, Y{\i}ld{\i}z Technical University, Istanbul, Türkiye
+\\[\baselineskip]
+$\star$ \href{mailto:terekli@tahaberk.com}{\small terekli@tahaberk.com}\,,\quad
+{\small ORCID: \href{https://orcid.org/0009-0004-8266-1116}{0009-0004-8266-1116}}
+\end{center}
+
+
+\section*{\color{scipostdeepblue}{Abstract}}
+\textbf{\boldmath{%
+Explicit R-matrices of quantum groups are routinely transcribed from the literature, yet whether they satisfy an identity depends on basis order, tensor placement, the coproduct and, for superalgebras, the Koszul sign rule. \pkg{} is a Python package that builds such matrices exactly with SymPy and returns every identity as an exact residual matrix, whose nonzero entries locate the convention that disagrees. It covers $\Uq$ modules, tensor products and the fundamental R-matrix, and the graded Yang--Baxter equation for $\GL$. Applied to the thesis it was written for, it exposed an R-matrix that satisfies the Yang--Baxter equation but intertwines the opposite coproduct.
+}}
+
+\vspace{\baselineskip}
+
+%%%%%%%%%% BLOCK: Copyright information
+% This block will be filled during the proof stage, and finilized just before publication.
+% It exists here only as a placeholder, and should not be modified by authors.
+\noindent\textcolor{white!90!black}{%
+\fbox{\parbox{0.975\linewidth}{%
+\textcolor{white!40!black}{\begin{tabular}{lr}%
+  \begin{minipage}{0.6\textwidth}%
+    {\small Copyright attribution to authors. \newline
+    This work is a submission to SciPost Physics Codebases. \newline
+    License information to appear upon publication. \newline
+    Publication information to appear upon publication.}
+  \end{minipage} & \begin{minipage}{0.4\textwidth}
+    {\small Received Date \newline Accepted Date \newline Published Date}%
+  \end{minipage}
+\end{tabular}}
+}}
+}
+%%%%%%%%%% BLOCK: Copyright information
+
+
+% For convenience during refereeing we turn on line numbers:
+\linenumbers
+
+\vspace{10pt}
+\noindent\rule{\textwidth}{1pt}
+\setcounter{tocdepth}{1}
+\tableofcontents
+\noindent\rule{\textwidth}{1pt}
+\vspace{10pt}
+
+
+\section{Introduction}
+\label{sec:intro}
+
+Quantum groups are one-parameter deformations of classical symmetry algebras. Their representations yield solutions of the quantum Yang--Baxter equation (QYBE), which is why they appear in exactly solvable models of statistical mechanics, in knot invariants and in representation theory~\cite{drinfeld1987,jimbo1985,jimbo1986,kassel1995}. Much of the working knowledge in this area is recorded as explicit matrices whose entries are rational functions of the deformation parameter $q$: an R-matrix on $V\otimes V$, the generators of a module, a change of basis to irreducible summands. Before such a matrix can be reused it has to be checked, and checking it means multiplying $9\times9$, $27\times27$ or $81\times81$ matrices whose meaning depends on conventions that texts state in different ways, or not at all.
+
+The characteristic mistakes are not arithmetic ones. A matrix is transcribed in a different basis order from the one its source used. $R_{13}$ is formed by conjugating with the wrong permutation. An R-matrix is paired with the opposite of the coproduct it actually intertwines; this still satisfies the QYBE, so the most common test does not detect it. In a $\mathbb{Z}_2$-graded setting an ordinary flip is used where the Koszul sign rule requires a super-permutation. And a check that is run at a floating-point value of $q$ can hide cancellations or produce spurious nonzero entries. Each of these errors produces output that looks plausible.
+
+\pkg{}~\cite{quantumgroup110} addresses this with a deliberately narrow design. Every object is an ordinary exact \code{sympy.Matrix}~\cite{meurer2017sympy}; conventions (basis order, coproduct, parities) are fixed in documented functions; and every identity is exposed as a \emph{residual}, the exact matrix $\mathrm{LHS}-\mathrm{RHS}$, which is then tested entry by entry. For $\Uq$ the package constructs the irreducible modules $V_n$, checks the defining relations and generator-level Hopf identities, builds tensor products through the coproduct, computes Clebsch--Gordan highest-weight vectors, and verifies the fundamental R-matrix: QYBE, braid and Hecke relations and coproduct intertwining. For the quantum supergroup $\GL$ introduced by Çelik and Çelik~\cite{celik2021}, whose third basis vector is odd, it constructs the published $9\times9$ R-matrix and verifies the graded Yang--Baxter equation on three factors and on every triple of factors in $V^{\otimes4}$.
+
+The software was developed for and used in the author's undergraduate thesis~\cite{terekli2026thesis}, where it produced the thesis's tables, matrix figures and Yang--Baxter verifications. After the thesis was submitted in June 2026, the software was used to audit it: an explicit intertwining residual showed that the thesis's R-matrix intertwines the opposite of the coproduct used in the text, an error that passing QYBE, braid and Hecke checks had not revealed (Sec.~\ref{sec:ex-coproduct}). The correction is recorded in the repository (\code{thesis/ERRATA.md}, \code{AUDIT.md}), and the check is now part of the API and the test suite. No new mathematical results are claimed; the contribution is the software and its verification method.
+
+The intended users are researchers who need to confirm a matrix identity from the literature in their own conventions: mathematical physicists working with R-matrices and integrable models, representation theorists and computer-algebra users who want an inspectable reference calculation, and students reproducing standard quantum-group computations.
+
+\paragraph{Related software.} GAP's QuaGroup package~\cite{gap,quagroup,degraaf2001} and SageMath~\cite{sagemath}, which provides a \code{QuantumGroup} interface to it, work with the quantized enveloping algebra $U_q(\mathfrak{g})$ of any semisimple Lie algebra $\mathfrak{g}$: they construct PBW-type and canonical bases, highest-weight modules and their R-matrices; SageMath also implements crystals for the quantum superalgebras $U_q(\mathfrak{gl}(m|n))$~\cite{bkk2000}. These systems are far broader, and for general $U_q(\mathfrak{g})$ work they are the appropriate tools. \pkg{} does not replace them. Its added value is that of a small verification layer for concrete matrix calculations: it keeps the basis order and coproduct of a particular text, returns the matrices and residuals themselves rather than only a verdict, runs in an ordinary Python environment, encodes the graded sign rule once for every tensor placement, and includes a graded $\GL$ example that lies outside QuaGroup's documented $U_q(\mathfrak{g})$ scope.
+
+\paragraph{Outline.} Section~\ref{sec:design} describes how the package works and why it is built this way. Section~\ref{sec:usage} explains installation and the public interface, Sec.~\ref{sec:examples} gives worked examples, including the thesis audit, and Sec.~\ref{sec:tests} documents testing and performance. Section~\ref{sec:scope} states the scope and the ways the code can be reused or extended.
+
+
+\section{Design and workings}
+\label{sec:design}
+
+\pkg{} is a pure-Python package of fifteen modules (about 2{,}100 lines, including docstrings) with no compiled extensions. Figure~\ref{fig:workflow} shows the verification workflow that the modules implement; the design decisions behind each step are described below.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\textwidth]{figures/figure1_workflow.pdf}
+  \caption{Verification workflow in \pkg. A published identity and its conventions (1) are turned into exact SymPy matrices (2) and placed on tensor products through the coproduct or through graded adjacent swaps (3). The difference of the two sides is returned as an exact residual matrix (4) and tested entry by entry (5); a nonzero residual points to the entries, and hence the convention, that disagree. Zero residuals, and nonzero residuals for deliberately wrong conventions, are kept as regression tests (6). Function names are those of the package; \code{kron} is imported from \code{quantum\_group.linalg}, all others from the package namespace.}
+  \label{fig:workflow}
+\end{figure}
+
+\subsection{Explicit matrices rather than an abstract algebra engine}
+
+The package contains no noncommutative rewriting system; the symbols in \code{generators.py} only display the relations. Every check runs on concrete representation matrices. This keeps each object directly comparable, entry by entry, with a printed matrix, and makes every intermediate result an ordinary SymPy object that users can print, substitute into or pass to other SymPy code. The price is that a verification holds for the representations on which it is run, and that the cost grows with the dimension of the tensor product (Sec.~\ref{sec:benchmarks}). Identities that need a genuinely noncommutative graded algebra, such as the Gauss decomposition of $\GL$, are omitted rather than approximated with commuting symbols.
+
+\subsection{Residual-first verification}
+\label{sec:residual}
+
+Each check follows one pattern: build the left-hand side, build the right-hand side, return their difference, and decide whether every entry is zero. Functions named \code{*\_residual} (\code{qybe\_residual}, \code{braid\_relation\_residual}, \code{intertwining\_residual\_V1}, \code{graded\_yang\_baxter\_residual\_GLq21}, and others) return the exact difference matrix; the corresponding \code{*\_holds} functions apply \code{is\_zero\_matrix} to it; and \code{verify\_on\_representation} returns, for each defining relation, a \code{RelationCheck} record holding both the Boolean and the residual. Returning the residual rather than only a Boolean is what makes a failed check informative: the positions and values of the nonzero entries identify which basis vectors and which convention disagree (Sec.~\ref{sec:examples}).
+
+The zero test simplifies each entry with \code{sympy.simplify}. A \code{True} result means that every entry was reduced to the exact value 0; a \code{False} result is not by itself a proof of inequality, because \code{simplify} is not a decision procedure. For the rational functions of $q$ produced by the package, a nonzero entry can be confirmed with \code{sympy.cancel}, which the regression tests do.
+
+\subsection{Conventions for \texorpdfstring{$\Uq$}{Uq(sl2)}}
+\label{sec:conventions}
+
+For a highest weight $n$, the function \code{build\_representation(n)} returns the $(n+1)$-dimensional module $V_n$ as a \code{Representation} record with explicit matrices $E$, $F$, $K$ and $K^{-1}$ in the basis $v_0,\dots,v_n$, where $K$ is diagonal, $F$ is a lower shift and $E$ carries the products of $q$-integers. The coproduct is fixed as
+\begin{equation}
+\Delta(E)=E\otimes 1+K\otimes E,\qquad \Delta(F)=F\otimes K^{-1}+1\otimes F,\qquad \Delta(K)=K\otimes K,
+\label{eq:coproduct}
+\end{equation}
+and \code{coproduct} and \code{tensor\_product} realize it with Kronecker products in the lexicographic basis order (left factor slow, right factor fast). \code{find\_highest\_weight\_vectors} solves for the vectors annihilated by $E$ in each weight space of $V_m\otimes V_n$, giving one highest-weight vector per Clebsch--Gordan summand.
+
+\paragraph{Two R-matrix conventions.} On $V_1\otimes V_1$, in the basis $v_0\otimes v_0,\,v_0\otimes v_1,\,v_1\otimes v_0,\,v_1\otimes v_1$, the package provides
+\begin{equation}
+R=\begin{pmatrix} q&0&0&0\\ 0&1&q-q^{-1}&0\\ 0&0&1&0\\ 0&0&0&q\end{pmatrix},
+\qquad
+R_{21}=\begin{pmatrix} q&0&0&0\\ 0&1&0&0\\ 0&q-q^{-1}&1&0\\ 0&0&0&q\end{pmatrix},
+\label{eq:rmatrices}
+\end{equation}
+where $R_{21}=PRP$ and $P$ is the flip of the two factors. \code{R\_matrix\_V1} returns the historical upper-triangular matrix $R$, the image, rescaled by $q^{1/2}$, of Drinfeld's universal R-matrix~\cite{drinfeld1987} for the coproduct opposite to Eq.~\eqref{eq:coproduct}; accordingly it satisfies $R\,\Delta^{\mathrm{op}}(X)=\Delta(X)\,R$, i.e.\ it intertwines the \emph{opposite} of the coproduct~\eqref{eq:coproduct}. Rather than change its output, which would silently alter results already computed with it, version 1.1.0 keeps it unchanged and adds \code{R\_matrix\_V1\_coproduct} ($R_{21}$), \code{R\_check\_V1\_coproduct} ($PR_{21}$) and \code{intertwining\_residual\_V1}, which satisfy $R_{21}\Delta(X)=\Delta^{\mathrm{op}}(X)R_{21}$. Both conventions satisfy the QYBE, and both braided forms satisfy the braid relation and the Hecke relation $\check R-\check R^{-1}=(q-q^{-1})\,\mathbb{1}$, with eigenvalues $q$ (multiplicity three) and $-q^{-1}$; they differ in which tensor-product submodules are the braid eigenspaces. Keeping both, with the convention stated in each docstring, lets earlier calculations be reproduced exactly while new work uses the compatible matrices. The same policy applies to names: a renamed function keeps its old name as a thin wrapper that emits a \code{DeprecationWarning}.
+
+\subsection{Graded tensor embeddings for \texorpdfstring{$\GL$}{GLq(2|1)}}
+\label{sec:graded}
+
+For $\GL$ the basis parities $(0,0,1)$ are an explicit argument, and the graded flip is built once, by \code{super\_permutation\_matrix}, as
+\begin{equation}
+P_s(e_i\otimes e_j)=(-1)^{p(i)p(j)}\,e_j\otimes e_i .
+\end{equation}
+\code{embed\_R\_in\_tensor\_power} places a $d^2\times d^2$ operator on factors $(i,j)$ of $V^{\otimes n}$ by first embedding it on the adjacent pair $(i,i+1)$ with Kronecker products and then conjugating by graded adjacent swaps $S_k=\mathbb{1}^{\otimes k}\otimes P_s\otimes \mathbb{1}^{\otimes(n-k-2)}$ until the second factor reaches position $j$. The Koszul sign rule is therefore encoded in a single matrix and reused for every placement, instead of being written out separately for $R_{13}$, $R_{14}$, $R_{24}$ and so on. The construction is correct only for even (parity-preserving) operators, and the function checks this before embedding. Because the parity list is an argument, the same function also embeds operators on other super vector spaces, and an all-even parity list reproduces the ungraded placement. \code{R\_matrix\_GLq21} returns the $9\times9$ R-matrix exactly as printed on page~261 of Ref.~\cite{celik2021}, and \code{graded\_yang\_baxter\_residual\_GLq21} forms $R_{12}R_{13}R_{23}-R_{23}R_{13}R_{12}$ on $V^{\otimes3}$.
+
+\subsection{Exact parameters}
+
+The default parameter is a nonzero SymPy symbol, and the identities are rational in $q$, holding wherever their denominators are defined. Integers and exact rationals passed as $q$ are converted to exact SymPy numbers, so \code{build\_representation(2, 2)} yields entries such as $5/2$ rather than $2.5$; only floating-point values supplied by the user are approximate. $q$-integers and $q$-binomials are evaluated as Laurent polynomials, not as quotients, so that specializations with removable singularities, such as $q=-1$ or roots of unity, give the correct values instead of $0/0$.
+
+\subsection{Validation and failure modes}
+
+Public functions reject invalid input with specific errors rather than returning a misleading matrix: non-integral or negative highest weights, sizes and indices raise \code{TypeError} or \code{ValueError}; \code{verify\_on\_representation} rejects non-square or mismatched generator matrices and the singular values $q\in\{0,1,-1\}$ of the defining commutator quotient; \code{qybe\_residual} rejects matrices that are not $d^2\times d^2$; and \code{embed\_R\_in\_tensor\_power} rejects invalid positions, parity lists and odd operators. Symbolic input is not restricted: any SymPy expression can be used as $q$.
+
+\subsection{Package structure}
+
+The modules form three layers. A small foundation provides the default symbol $q$ (declared nonzero), $q$-integers, $q$-factorials and $q$-binomials (\code{utils}); the Kronecker product \code{kron}/\code{kron\_list} and the zero-residual test \code{is\_zero\_matrix} (\code{linalg}); and internal argument checks (\code{\_validation}). Construction modules build the matrices: $\Uq$ modules (\code{representations}), coproduct, counit and antipode (\code{hopf}), tensor products and Clebsch--Gordan vectors (\code{tensor}), $\Uq$ R-matrices (\code{r\_matrix}) and the $\GL$ R-matrix, super-permutation and embeddings (\code{supergroup\_gl21}). Verification functions sit next to the constructions they check and all use the same foundation. Auxiliary modules provide classical and root-of-unity specializations (\code{limits}), the crystal graph $B(n)$ as a NetworkX~\cite{hagberg2008networkx} graph (\code{crystal}), Matplotlib~\cite{hunter2007matplotlib} weight and crystal plots (\code{visualization}) and a convenience facade, \code{QuantumGroupSL2}. The main functions are re-exported from the package namespace and listed in \code{\_\_all\_\_}.
+
+
+\section{Installation and usage}
+\label{sec:usage}
+
+\subsection{Requirements, installation and availability}
+\label{sec:install}
+
+\pkg{} requires CPython 3.10 or later and runs on any operating system; it has no compiled code and needs no special hardware. It is tested in continuous integration on Linux, macOS and Windows (Sec.~\ref{sec:tests}) and locally on Ubuntu 24.04 (x86-64). The runtime dependencies, installed automatically, are SymPy $\geq$ 1.10~\cite{meurer2017sympy}, NetworkX $\geq$ 2.6~\cite{hagberg2008networkx} and Matplotlib $\geq$ 3.5~\cite{hunter2007matplotlib}; continuous integration exercises the oldest supported versions (SymPy 1.10.1, NetworkX 2.6.3, Matplotlib 3.5.3). pytest~\cite{pytest} is needed only to run the test suite (extra \code{[test]}).
+
+The version described here is 1.1.0, identified by commit \SnapshotSHA{} of the code repository and tagged as the GitHub Release \code{v1.1.0}. It is installed from the Python Package Index, or directly from that commit:
+\begin{lstlisting}[language=bash, frame=none]
+python -m pip install quantum-group==1.1.0
+python -m pip install \
+    "git+https://github.com/TerekliTahaBerk/quantum-groups@v1.1.0"
+python -c "import quantum_group; print(quantum_group.__version__)"   # 1.1.0
+\end{lstlisting}
+The tag \code{v1.1.0} points to commit \SnapshotSHA; the full hash can be used in its place.
+To run the tests and benchmarks, clone the repository and install it with the test extra:
+\begin{lstlisting}[language=bash, frame=none]
+git clone https://github.com/TerekliTahaBerk/quantum-groups.git
+cd quantum-groups && python -m pip install -e ".[test]"
+python -m pytest                                          # 202 tests
+python benchmarks/benchmark.py --repeats 3 --max-n 5      # Table 3
+\end{lstlisting}
+
+\paragraph{Code availability.} Repository: \url{https://github.com/TerekliTahaBerk/quantum-groups} (MIT licence). Release: \url{https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.0}. Package: \url{https://pypi.org/project/quantum-group/1.1.0/}. Archive: Zenodo, \doi{10.5281/zenodo.23015576}, a source archive of the same commit~\cite{quantumgroup110}. Listing~\ref{lst:example} is \code{examples/sample\_verification.py} of the release. Listings~\ref{lst:coproduct}--\ref{lst:cg} were written for this paper after version 1.1.0 was released; they use only the public interface of 1.1.0 and are in \code{scipost/examples/} on the repository's main branch, each with its expected output.
+
+\subsection{Overview of the public interface}
+
+Table~\ref{tab:api} lists the main functions by task. Functions that construct $q$-dependent objects accept an optional parameter \code{q\_sym} (default: the package symbol \code{q}); all return ordinary SymPy objects or plain Python records of them, and each states its convention in the docstring.
+
+\begin{table}[t]
+\centering
+\caption{Main public functions of \pkg{} 1.1.0, grouped by task. All are importable from the package namespace.}
+\label{tab:api}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}X@{}}
+\toprule
+Task & Functions \\
+\midrule
+$\Uq$ modules and relations & \texttt{build\_representation}, \texttt{verify\_on\_representation}, \texttt{all\_relations\_hold}, \texttt{symbolic\_relations} \\
+Hopf structure & \texttt{coproduct}, \texttt{counit}, \texttt{antipode}, \texttt{verify\_coassociativity}, \texttt{verify\_antipode}, \texttt{verify\_all\_hopf\_axioms} \\
+Tensor products & \texttt{tensor\_product}, \texttt{find\_highest\_weight\_vectors}, \texttt{cg\_summands}, \texttt{cg\_decomposition\_summary}, \texttt{swap\_matrix}, \texttt{kron\_list} \\
+$\Uq$ R-matrices & \texttt{R\_matrix\_V1}, \texttt{R\_matrix\_V1\_coproduct}, \texttt{R\_check\_V1}, \texttt{R\_check\_V1\_coproduct}, \texttt{R\_check\_eigenvalues} \\
+Generic residuals & \texttt{qybe\_residual}, \texttt{qybe\_holds}, \texttt{braid\_relation\_residual}, \texttt{braid\_relation\_holds}, \texttt{hecke\_skein\_relation\_check}, \texttt{intertwining\_residual\_V1}, \texttt{intertwining\_holds\_V1}, \texttt{is\_zero\_matrix} \\
+$\GL$ and grading & \texttt{R\_matrix\_GLq21}, \texttt{super\_parity\_gl21}, \texttt{super\_permutation\_matrix}, \texttt{embed\_R\_in\_tensor\_power}, \texttt{all\_Rij\_GLq21}, \texttt{graded\_yang\_baxter\_residual\_GLq21}, \texttt{graded\_yang\_baxter\_holds\_GLq21}, \texttt{local\_ybe\_on\_four\_tensor\_GLq21}, \texttt{braid\_far\_commutativity\_residual\_GLq21} \\
+Specializations & \texttt{q\_integer}, \texttt{q\_factorial}, \texttt{q\_binomial}, \texttt{classical\_limit}, \texttt{root\_of\_unity\_substitution} \\
+Crystals and plots & \texttt{build\_crystal}, \texttt{e\_tilde}, \texttt{f\_tilde}, \texttt{plot\_weight\_diagram}, \texttt{plot\_crystal\_graph} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Documentation and support}
+
+Documentation consists of the README (installation, quickstart, conventions, limitations), module and function docstrings that state the conventions used (basis order, coproduct, parities) and the relation each check tests, \code{CONTRIBUTING.md}, \code{CHANGELOG.md}, an exploratory Jupyter notebook, and \code{MANUSCRIPT\_CODE\_MAPPING.md}, which links the computational claims of the thesis to their implementation and tests. Questions, bug reports and feature requests are handled through the GitHub issue tracker (\url{https://github.com/TerekliTahaBerk/quantum-groups/issues}). \code{CONTRIBUTING.md} describes the development set-up, the validation command and the conventions for new checks (a \code{*\_residual} function with a \code{*\_holds} companion, input validation with a test for each error path, and a stated reference for any convention). The package is maintained by its author on a best-effort basis, with no institutional support or guaranteed response time; changes are recorded in \code{CHANGELOG.md} and versions follow semantic versioning.
+
+
+\section{Worked examples}
+\label{sec:examples}
+
+The outputs below were produced with \pkg{} 1.1.0, SymPy 1.14 and Python 3.11; each is stored next to its script and is compared automatically with a fresh run.
+
+\subsection{A first verification session}
+\label{sec:ex-first}
+
+Listing~\ref{lst:example} (\code{examples/sample\_verification.py}) checks an installation in a few seconds. It verifies the defining relations on $V_2$, the QYBE and coproduct intertwining of $R_{21}$, and the graded Yang--Baxter equation of $\GL$; it then repeats the last check with the $\GL$ R-matrix placed by ordinary, all-even swaps, as a negative control.
+
+\begin{lstlisting}[language=Python, caption={First verification session: \code{examples/sample\_verification.py}.}, label={lst:example}]
+from quantum_group import (
+    build_representation, verify_on_representation, R_matrix_V1_coproduct,
+    qybe_holds, intertwining_holds_V1, R_matrix_GLq21,
+    embed_R_in_tensor_power, graded_yang_baxter_residual_GLq21,
+    is_zero_matrix)
+
+rep = build_representation(2)            # V_2 of U_q(sl_2): 3x3 matrices
+print("E on V_2:", rep.E.tolist())
+checks = verify_on_representation(rep.E, rep.F, rep.K, rep.K_inv)
+print("relations:", {k: c.holds for k, c in checks.items()})
+
+R = R_matrix_V1_coproduct()              # R_21, matches the package coproduct
+print("QYBE:", qybe_holds(R))
+print("intertwines Delta:",
+      [intertwining_holds_V1(X) for X in ("E", "F", "K", "K_inv")])
+
+Y = graded_yang_baxter_residual_GLq21()  # GL_q(2|1), parities (0, 0, 1)
+print("graded YBE residual:", Y.shape, "zero:", is_zero_matrix(Y))
+
+# Negative control: the same R placed with ordinary (all-even) swaps.
+R12, R13, R23 = (embed_R_in_tensor_power(R_matrix_GLq21(), ij, 3, [0, 0, 0])
+                 for ij in [(0, 1), (0, 2), (1, 2)])
+bad = (R12 * R13 * R23 - R23 * R13 * R12).expand()
+print("ungraded residual, nonzero entries:",
+      {(i, j): x.factor()
+       for (i, j), x in sorted(bad.todok().items()) if x != 0})
+\end{lstlisting}
+Output (\code{examples/sample\_verification\_expected.txt}; the last line is wrapped here):
+\begin{lstlisting}[style=output]
+E on V_2: [[0, q + 1/q, 0], [0, 0, q + 1/q], [0, 0, 0]]
+relations: {'R1': True, 'R2': True, 'R3': True, 'R4': True}
+QYBE: True
+intertwines Delta: [True, True, True, True]
+graded YBE residual: (27, 27) zero: True
+ungraded residual, nonzero entries: {(8, 24): 2*q**2*(q - 1)**2*(q + 1)**2,
+  (17, 25): 2*q**2*(q - 1)**2*(q + 1)**2}
+\end{lstlisting}
+The negative control shows why the grading matters: with ordinary swaps, exactly two entries of the $27\times27$ residual are nonzero, both equal to $2q^2(q-1)^2(q+1)^2$. Rows and columns are indexed lexicographically, $e_a\otimes e_b\otimes e_c\mapsto 9a+3b+c$, so entry $(8,24)$ couples $e_0\otimes e_2\otimes e_2$ with $e_2\otimes e_2\otimes e_0$; both involve the odd vector $e_2$ twice, which is exactly where the Koszul sign $(-1)^{p(i)p(j)}$ differs from $+1$.
+
+\subsection{Application: which coproduct does an R-matrix intertwine?}
+\label{sec:ex-coproduct}
+
+This is the check that exposed the convention error in the author's thesis~\cite{terekli2026thesis}. The thesis used the coproduct~\eqref{eq:coproduct} together with the upper-triangular matrix $R$ of Eq.~\eqref{eq:rmatrices}. $R$ satisfies the QYBE and its braided form satisfies the braid and Hecke relations, so every Yang--Baxter-type test passed. The relation that fails is the one that ties an R-matrix to a coproduct, $R\,\Delta(X)=\Delta^{\mathrm{op}}(X)\,R$. Listing~\ref{lst:coproduct} forms this residual for both matrices of Eq.~\eqref{eq:rmatrices} with public functions only, so that the same code can be pointed at any other $4\times4$ R-matrix.
+
+\begin{lstlisting}[language=Python, caption={Testing an R-matrix against the coproduct: \code{scipost/examples/coproduct\_check.py}.}, label={lst:coproduct}]
+import sympy as sp
+from quantum_group import (build_representation, coproduct, swap_matrix,
+                           R_matrix_V1, R_matrix_V1_coproduct, qybe_holds,
+                           is_zero_matrix)
+
+D = coproduct(build_representation(1))   # Delta(X) on V_1 (x) V_1, 4x4
+P = swap_matrix(2)                       # ordinary flip of the two factors
+
+def intertwining_residual(R, X):
+    """R Delta(X) - Delta^op(X) R, with Delta^op(X) = P Delta(X) P."""
+    return R * D[X] - P * D[X] * P * R
+
+for name, R in [("R_matrix_V1", R_matrix_V1()),
+                ("R_matrix_V1_coproduct", R_matrix_V1_coproduct())]:
+    print(name, "- QYBE:", qybe_holds(R))
+    for X in ("E", "F", "K"):
+        res = intertwining_residual(R, X)
+        nonzero = {ij: sp.factor(x) for ij, x in sorted(res.todok().items())
+                   if sp.simplify(x) != 0}
+        print(f"  {X}:", "zero" if is_zero_matrix(res) else nonzero)
+\end{lstlisting}
+Output (\code{scipost/\allowbreak examples/\allowbreak coproduct\_check\_expected.txt}; long lines wrapped here):
+\begin{lstlisting}[style=output]
+R_matrix_V1 - QYBE: True
+  E: {(0, 1): (q - 1)*(q + 1), (0, 2): -(q - 1)*(q + 1)/q,
+      (1, 3): (q - 1)*(q + 1)/q**2, (2, 3): -(q - 1)*(q + 1)/q}
+  F: {(1, 0): (q - 1)*(q + 1)/q**2, (2, 0): -(q - 1)*(q + 1)/q,
+      (3, 1): (q - 1)*(q + 1), (3, 2): -(q - 1)*(q + 1)/q}
+  K: zero
+R_matrix_V1_coproduct - QYBE: True
+  E: zero
+  F: zero
+  K: zero
+\end{lstlisting}
+Both matrices pass the QYBE, but only $R_{21}$ intertwines $\Delta$. The residual of $R$ is informative in three ways. It vanishes for $K$, as it must for any weight-preserving matrix, so the problem is not the diagonal part. Every nonzero entry carries the factor $(q-1)(q+1)$, so all of them vanish at $q=\pm1$, where $q-q^{-1}=0$ and $R$ and $R_{21}$ coincide; the discrepancy is a genuine $q$-deformation effect. And every nonzero entry couples one of the middle basis vectors $v_0\otimes v_1$, $v_1\otimes v_0$ (indices 1 and 2), the block in which $R$ and $R_{21}$ differ, to $v_0\otimes v_0$ or $v_1\otimes v_1$. The same residual with $\Delta$ and $\Delta^{\mathrm{op}}$ exchanged vanishes for $R$, confirming that $R$ belongs to the opposite coproduct. The package now exposes this check as \code{intertwining\_residual\_V1}, and the test suite keeps the failing case as a negative control.
+
+\subsection{Locating a transcription error}
+\label{sec:ex-typo}
+
+A matrix typed from a paper can be passed to \code{qybe\_residual} directly. Listing~\ref{lst:typo} introduces a single sign error in $R$ of Eq.~\eqref{eq:rmatrices}, writing $q+q^{-1}$ for $q-q^{-1}$.
+
+\begin{lstlisting}[language=Python, caption={A mistyped entry: \code{scipost/examples/transcription\_check.py}.}, label={lst:typo}]
+import sympy as sp
+from quantum_group import q, qybe_residual, is_zero_matrix
+
+# R-matrix typed from a source with one mistyped sign: q + 1/q at (1, 2),
+# where the source (the package's R_matrix_V1) has q - 1/q.
+R_typed = sp.Matrix([[q, 0, 0,       0],
+                     [0, 1, q + 1/q, 0],
+                     [0, 0, 1,       0],
+                     [0, 0, 0,       q]])
+Y = qybe_residual(R_typed)                 # exact 8x8 residual
+print("QYBE holds:", is_zero_matrix(Y))
+print("nonzero entries:", {ij: sp.factor(x) for ij, x in sorted(Y.todok().items())
+                           if sp.simplify(x) != 0})
+\end{lstlisting}
+Output (\code{scipost/examples/transcription\_check\_expected.txt}):
+\begin{lstlisting}[style=output]
+QYBE holds: False
+nonzero entries: {(1, 4): -2*(q**2 + 1)/q, (3, 6): 2*(q**2 + 1)/q}
+\end{lstlisting}
+Only two of the 64 entries are nonzero. In the basis $e_a\otimes e_b\otimes e_c\mapsto 4a+2b+c$ of $V_1^{\otimes3}$, they couple $v_0\otimes v_0\otimes v_1$ with $v_1\otimes v_0\otimes v_0$ and $v_0\otimes v_1\otimes v_1$ with $v_1\otimes v_1\otimes v_0$, so the search for the error can start from the entries that move a $v_1$ between the first and third factors. A floating-point check at a sample value of $q$ would report a failure as well, but not the exact form of the error.
+
+\subsection{Clebsch--Gordan decomposition}
+\label{sec:ex-cg}
+
+Listing~\ref{lst:cg} decomposes $V_2\otimes V_1\cong V_3\oplus V_1$ by computing one highest-weight vector per summand in the tensor-product basis $v_i\otimes w_j\mapsto 2i+j$.
+
+\noindent\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=Python, caption={Highest-weight vectors of $V_2\otimes V_1$: \code{scipost/examples/clebsch\_gordan.py}.}, label={lst:cg}]
+from quantum_group import (build_representation, tensor_product,
+                           find_highest_weight_vectors, cg_summands)
+
+T = tensor_product(build_representation(2), build_representation(1))
+print("summands V_k, k =", cg_summands(2, 1))
+for k, v in find_highest_weight_vectors(T):
+    print(f"k = {k}:", list(v))
+\end{lstlisting}
+\end{minipage}
+Output (\code{scipost/examples/clebsch\_gordan\_expected.txt}):
+\begin{lstlisting}[style=output]
+summands V_k, k = [1, 3]
+k = 3: [1, 0, 0, 0, 0, 0]
+k = 1: [0, (-q**2 - 1)/q**3, 1, 0, 0, 0]
+\end{lstlisting}
+The highest-weight vector of the $V_1$ summand is $v_1\otimes w_0-q^{-3}(q^2+1)\,v_0\otimes w_1$; its $q$-dependent coefficient is fixed by the coproduct~\eqref{eq:coproduct}: with $\Delta^{\mathrm{op}}$ it would be $-(q^2+1)$ instead of $-q^{-3}(q^2+1)$, which is why the coproduct formulas are stated in the documentation of the \code{hopf} and \code{tensor} modules and in the README.
+
+
+\section{Testing and benchmarks}
+\label{sec:tests}
+
+\subsection{Test suite and continuous integration}
+
+Every change is checked by one command, \code{python -m pytest}, which runs the test suite with pytest~\cite{pytest} together with the package doctests. At version 1.1.0 the suite comprises 198 test cases in ten files and four doctests (202 in total, all passing). GitHub Actions runs it on every push and pull request on Python 3.10, 3.11, 3.12 and 3.13; once with the oldest supported dependency versions (SymPy 1.10.1, NetworkX 2.6.3, Matplotlib 3.5.3 on Python 3.10); and, after building and installing a wheel, runs the README quickstart and the example of Listing~\ref{lst:example} from outside the source tree, comparing the latter's output with the stored copy. A further job repeats the wheel installation, the examples and the full test suite on Linux, macOS and Windows runners (Python 3.12). Listing~\ref{lst:example} gives the same output with SymPy 1.14 on Python 3.12 and with SymPy 1.10.1 on Python 3.10. Table~\ref{tab:qc} summarizes what the tests establish. Besides algebraic identities, the suite benchmarks the implementation against published reference values: every nonzero entry of the $\GL$ R-matrix is compared with the printed source~\cite{celik2021}, and the normalization of the $\Uq$ R-matrix is recomputed from Drinfeld's universal R-matrix~\cite{drinfeld1987}.
+
+\begin{table}[t]
+\centering
+\caption{Evidence provided by the test suite. Entries in the last column abbreviate \code{tests/test\_\textit{name}.py}. ``Negative control'' marks tests that apply a known wrong convention and require a nonzero residual.}
+\label{tab:qc}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.17\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{0.235\textwidth}@{}}
+\toprule
+Evidence & What is checked & Test file \\
+\midrule
+Exact entries & Every nonzero entry of the $9\times9$ $\GL$ R-matrix against the display on printed page 261 of Ref.~\cite{celik2021}; exact entries of the $4\times4$ $\Uq$ R-matrix; shift and weight structure of $V_n$ & \texttt{audit\_regressions}, \texttt{r\_matrix}, \texttt{representations} \\
+Coproduct convention & $R_{21}\Delta(X)=\Delta^{\mathrm{op}}(X)R_{21}$ for $X=E,F,K,K^{-1}$; negative control: the historical matrix fails for $E$ and $F$ & \texttt{audit\_regressions} \\
+Clebsch--Gordan bases & Complete change of basis for $V_1\otimes V_1$, $V_2\otimes V_2$, $V_3\otimes V_2$: invertible over $\mathbb{Q}(q)$ and intertwining all four generators; braid eigenvalues $q$ and $-q^{-1}$ on the $V_2$ and $V_0$ summands & \texttt{audit\_regressions}, \texttt{tensor} \\
+Graded embeddings & All six placements $R_{ij}$ on $V^{\otimes4}$ equal an independently written signed basis-action formula that builds no swap matrix; disjoint placements commute & \texttt{audit\_regressions}, \texttt{supergroup\_gl21} \\
+Grading & Graded YBE residual ($27\times27$) is zero; negative control: with the ordinary flip exactly two entries are nonzero, with their values fixed & \texttt{supergroup\_gl21}, \texttt{audit\_regressions} \\
+Exact parameters & No floating-point atoms for integer, rational, $q=-1$ and $q=i$ inputs; Laurent-polynomial $q$-integers and $q$-binomials agree with generic formulas after substitution; root-of-unity orders validated & \texttt{audit\_regressions}, \texttt{limits} \\
+Algebraic identities & Defining relations on $V_n$; coassociativity, counit and antipode on generators; QYBE, braid and Hecke relations & \texttt{relations}, \texttt{hopf}, \texttt{r\_matrix} \\
+Input validation & Every validation path raises the documented error; shared helpers agree with \code{sympy.kronecker\_product} & \texttt{validation\_and\_\allowbreak linalg} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Negative controls and independent re-derivations}
+
+A suite that only checks that correct identities hold cannot show that the checks are able to fail. Several tests therefore apply a known wrong convention (the opposite coproduct, the ordinary instead of the graded flip, a mutated counit) and require the residual to be nonzero, in some cases at specified entries with specified values: the two nonzero entries of the ungraded residual in Listing~\ref{lst:example} are fixed by a test, and the failure of the historical R-matrix to intertwine the coproduct (Listing~\ref{lst:coproduct}) is kept as a test requiring a nonzero residual. These tests fix the scientific content of the conventions, not only the behaviour of the code. Two further tests are independent re-derivations: the four-factor placements are compared with a formula that acts on basis vectors directly, and the normalization of the fundamental R-matrix is recomputed from Drinfeld's universal R-matrix~\cite{drinfeld1987}.
+
+\subsection{Performance benchmarks}
+\label{sec:benchmarks}
+
+Operators on $V^{\otimes n}$ are stored as dense symbolic matrices, $3^n\times3^n$ for $\GL$, which keeps every entry inspectable but grows exponentially. Table~\ref{tab:bench} reproduces the recorded benchmark (\code{benchmarks/results.md}), generated by the command given in Sec.~\ref{sec:install}. Tensor powers $n\geq6$ have not been benchmarked. A sparse or tensor-network backend could reach larger $n$, at the cost of the entry-by-entry inspectability that motivates the design; the calculations the package targets involve at most four or five factors.
+
+\begin{table}[t]
+\centering
+\caption{Wall-clock times (mean and minimum of three runs after a first, separately reported run) from \code{benchmarks/results.md}; the smallest case is dominated by timing noise (standard deviation 0.080\,s). Environment: Python 3.11, SymPy 1.14, one core of a 2.1\,GHz Intel Xeon processor, 27 September 2026.}
+\label{tab:bench}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xlrrr@{}}
+\toprule
+Computation & $n$ & Matrix size & Mean (s) & Min (s) \\
+\midrule
+QYBE of $R$ for $\Uq$ (\code{qybe\_holds}) & 3 & $8\times8$ & 0.075 & 0.028 \\
+Graded YBE residual for $\GL$ & 3 & $27\times27$ & 0.025 & 0.024 \\
+Graded YBE, residual and zero test & 3 & $27\times27$ & 0.060 & 0.055 \\
+All placements $R_{ij}$ (\code{all\_Rij\_GLq21}) & 4 & $81\times81$ & 0.977 & 0.954 \\
+Local YBE on every triple (\code{local\_ybe\_on\_four\_tensor\_GLq21}) & 4 & $81\times81$ & 1.556 & 1.540 \\
+All placements $R_{ij}$ (\code{all\_Rij\_GLq21}) & 5 & $243\times243$ & 14.616 & 14.276 \\
+Graded YBE on one triple, incl.\ embedding & 5 & $243\times243$ & 15.221 & 14.799 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\section{Scope, limitations and extensions}
+\label{sec:scope}
+
+\paragraph{Scope and limitations.} A zero residual establishes an identity on the particular finite-dimensional representation used; it is not a proof in the abstract Hopf algebra, and the package is not a theorem prover. It does not implement general quantum groups. For $\GL$ it implements the R-matrix, the graded Yang--Baxter equation and tensor placements, not the RTT relations, the Hopf superalgebra structure or the Gauss decomposition of Ref.~\cite{celik2021}. It verifies the Hecke relation but does not compute a Markov trace or the Jones polynomial. It works with constant R-matrices; spectral-parameter-dependent solutions of the Yang--Baxter equation are not built in. Its root-of-unity helpers substitute special values into the generic construction; they do not implement the small quantum group. The crystal graph $B(n)$ is a combinatorial model rather than a crystal-basis algorithm.
+
+\paragraph{Reuse.} The extension points are ordinary Python functions that accept and return SymPy matrices, and the package is small enough to read in full. Any $d^2\times d^2$ matrix can be passed to \code{qybe\_residual} or \code{braid\_relation\_residual} (Sec.~\ref{sec:ex-typo}); the intertwining test of Listing~\ref{lst:coproduct} works for any R-matrix, module or coproduct formula; and \code{verify\_on\_representation} accepts any four square matrices, so alternative bases or normalizations of $V_n$ can be checked directly. \code{super\_permutation\_matrix} and \code{embed\_R\_in\_tensor\_power} take an arbitrary parity list and can place any even operator on factors $(i,j)$ of $V^{\otimes n}$ for other $\mathbb{Z}_2$-graded spaces, such as $\mathbb{C}^{m|n}$ with a different ordering of even and odd basis vectors. Because each check returns an exact matrix, an identity from a paper or thesis becomes a pytest test in a few lines, with a known wrong convention kept alongside it as a negative control; \code{tests/test\_audit\_regressions.py} contains worked examples of this pattern. Outputs can be exported with \code{sympy.latex} or compared against matrices computed elsewhere, for example in SageMath, by forming a residual.
+
+\paragraph{Where reuse requires new work.} Moving from $\mathfrak{sl}_2$ to general semisimple Lie algebras would need root data, PBW bases and higher-rank modules, which QuaGroup and SageMath already provide. Implementing the RTT relations or the Hopf superalgebra of $\GL$ would need a noncommutative graded algebra rather than matrices. The dense matrix representation limits practical calculations to about five tensor factors of a three-dimensional space. These directions are possible but would be substantial new software rather than reuse of the existing layer.
+
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+\pkg{} turns convention-sensitive identities of quantum-group theory into exact residual matrices that can be inspected entry by entry and kept as regression tests. Its value lies less in the range of algebras it covers, which is deliberately small, than in making the conventions explicit: basis order, coproduct and grading are fixed in documented functions, the Koszul sign rule is encoded once for every tensor placement, and every check can fail informatively. The thesis audit of Sec.~\ref{sec:ex-coproduct} shows that this matters in practice: an R-matrix that passes every Yang--Baxter-type test can still belong to the wrong coproduct, and only a residual tied to the coproduct reveals it. Natural next steps are further explicit rank-one and graded R-matrices, which reuse the existing residual and embedding layer unchanged, and a sparse backend for larger tensor powers.
+
+
+\section*{Acknowledgements}
+The author thanks Prof.\ Dr.\ Salih Çelik for supervising the undergraduate thesis from which this software originated.
+
+\paragraph{Author contributions}
+T.B.T. is the sole author: T.B.T. designed and wrote the original implementation; decided on, reviewed and integrated all later changes to the software, including AI-assisted ones; and prepared and approved the manuscript.
+
+\paragraph{Funding information}
+This work received no specific funding.
+
+\paragraph{Competing interests}
+The author has no competing interests to declare.
+
+\paragraph{Use of generative AI}
+No generative AI tools were used during the original development and thesis work (April--June 2026). In September 2026, Claude Code (Anthropic) was used for packaging and continuous-integration configuration, the benchmark script, the shared matrix helpers, input validation and their tests, the sample-verification example, documentation, translating Turkish docstrings and comments into English, a mathematical and technical audit that led to the parameter-handling corrections, the coproduct-compatible R-matrix functions and the audit regression tests, and drafting of this manuscript. The model was Claude Opus 5.5, except for part of the manuscript and submission-material preparation, which used Claude Sonnet 5; commits produced with Claude Code are authored or co-authored by ``Claude'' in the Git history, with the model named in the commit trailer. No other AI tool was used. Every AI-assisted code change is exercised by the test suite, and every AI-assisted mathematical claim was checked by an executable symbolic test or against the primary source, in particular the published Çelik--Çelik article. The author reviewed and validated all AI-assisted output, made the scientific and design decisions, and takes responsibility for the software and this paper.
+
+
+\bibliography{references}
+
+\end{document}

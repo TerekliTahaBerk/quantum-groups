@@ -1,0 +1,3 @@
+# Keep the generated bibliography: arXiv does not run BibTeX.
+!paper.bbl
+arxiv_source.tar.gz

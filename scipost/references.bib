@@ -1,0 +1,197 @@
+% Bibliography of the SciPost Physics Codebases submission (scipost/paper.tex).
+% Plain BibTeX for the official SciPost_bibstyle.bst (numbered by first
+% citation). SciPost requires every reference to be externally linked, so each
+% entry carries a DOI or, where none exists, a stable URL.
+%
+% The official SciPost_bibstyle.bst does not print the `url` field (its URL
+% output lines are commented out), so for entries without a DOI the link is
+% repeated in `note` as \url{...}, which the style prints; the `url` field is
+% kept as machine-readable metadata.
+%
+% Verification (see scipost/PREFLIGHT.md): entries carried over from the JORS
+% bibliography keep their earlier verification (jors/PREFLIGHT.md). New on
+% 29 Sep 2026: Benkart--Kang--Kashiwara DOI read from the AMS issue table of
+% contents (JAMS 13(2), 2000); Drinfeld ICM 1986 volume 1 URL confirmed to
+% resolve (HTTP 200, application/pdf) on the IMU proceedings page;
+% quantum-group Zenodo record 10.5281/zenodo.23015576 read from the Zenodo API
+% (title, version v1.1.0, MD5 2f6fafa8efb71a7f036f401ab6d8b370); SageMath DOI
+% 10.5281/zenodo.8042260 is Zenodo's concept DOI for all SageMath versions
+% (latest deposited version 10.6.beta3), so the sagemath.org URL is added.
+
+@article{meurer2017sympy,
+  author  = {Meurer, Aaron and Smith, Christopher P. and Paprocki, Mateusz and
+             {\v{C}}ert{\'i}k, Ond{\v{r}}ej and Kirpichev, Sergey B. and
+             Rocklin, Matthew and Kumar, Amit and Ivanov, Sergiu and
+             Moore, Jason K. and Singh, Sartaj and Rathnayake, Thilina and
+             Vig, Sean and Granger, Brian E. and Muller, Richard P. and
+             Bonazzi, Francesco and Gupta, Harsh and Vats, Shivam and
+             Johansson, Fredrik and Pedregosa, Fabian and Curry, Matthew J. and
+             Terrel, Andy R. and Rou{\v{c}}ka, {\v{S}}t{\v{e}}p{\'a}n and
+             Saboo, Ashutosh and Fernando, Isuru and Kulal, Sumith and
+             Cimrman, Robert and Scopatz, Anthony},
+  title   = {{SymPy}: symbolic computing in {Python}},
+  journal = {PeerJ Comput. Sci.},
+  volume  = {3},
+  pages   = {e103},
+  year    = {2017},
+  doi     = {10.7717/peerj-cs.103}
+}
+
+@inproceedings{drinfeld1987,
+  author    = {Drinfeld, Vladimir G.},
+  title     = {Quantum groups},
+  booktitle = {Proceedings of the {I}nternational {C}ongress of
+               {M}athematicians, {B}erkeley, {C}alifornia, 1986},
+  volume    = {1},
+  pages     = {798--820},
+  publisher = {American Mathematical Society},
+  address   = {Providence, RI},
+  year      = {1987},
+  url       = {https://www.mathunion.org/fileadmin/ICM/Proceedings/ICM1986.1/ICM1986.1.ocr.pdf},
+  note         = {\url{https://www.mathunion.org/fileadmin/ICM/Proceedings/ICM1986.1/ICM1986.1.ocr.pdf}}
+}
+
+@article{jimbo1985,
+  author  = {Jimbo, Michio},
+  title   = {A $q$-difference analogue of ${U}(\mathfrak{g})$ and the
+             {Y}ang--{B}axter equation},
+  journal = {Lett. Math. Phys.},
+  volume  = {10},
+  pages   = {63},
+  year    = {1985},
+  doi     = {10.1007/BF00704588}
+}
+
+@article{jimbo1986,
+  author  = {Jimbo, Michio},
+  title   = {A $q$-analogue of ${U}(\mathfrak{gl}({N}+1))$, {H}ecke algebra, and
+             the {Y}ang--{B}axter equation},
+  journal = {Lett. Math. Phys.},
+  volume  = {11},
+  pages   = {247},
+  year    = {1986},
+  doi     = {10.1007/BF00400222}
+}
+
+@book{kassel1995,
+  author    = {Kassel, Christian},
+  title     = {Quantum Groups},
+  series    = {Graduate Texts in Mathematics},
+  volume    = {155},
+  publisher = {Springer},
+  address   = {New York},
+  year      = {1995},
+  doi       = {10.1007/978-1-4612-0783-2}
+}
+
+@article{celik2021,
+  author  = {{\c{C}}elik, Salih and {\c{C}}elik, Sultan A.},
+  title   = {A new quantum supergroup and its {G}auss decomposition},
+  journal = {Rep. Math. Phys.},
+  volume  = {88},
+  pages   = {259},
+  year    = {2021},
+  doi     = {10.1016/S0034-4877(21)00073-2}
+}
+
+@misc{terekli2026thesis,
+  author       = {Terekli, Taha Berk},
+  title        = {Quantum grup yap{\i}lar{\i}n{\i}n {P}ython ortam{\i}nda
+                  modellenmesi [{M}odelling quantum group structures in
+                  {P}ython]},
+  howpublished = {Undergraduate thesis, Department of Mathematics,
+                  Y{\i}ld{\i}z Technical University, Istanbul},
+  year         = {2026},
+  url          = {https://github.com/TerekliTahaBerk/quantum-groups/tree/main/thesis},
+  note         = {\url{https://github.com/TerekliTahaBerk/quantum-groups/tree/main/thesis}}
+}
+
+@misc{quantumgroup110,
+  author       = {Terekli, Taha Berk},
+  title        = {quantum-group: {E}xact {SymPy} verification of explicit
+                  ${U}_q(\mathfrak{sl}_2)$ and ${GL}_q(2|1)$ matrix identities},
+  howpublished = {Zenodo},
+  note         = {Version 1.1.0},
+  year         = {2026},
+  doi          = {10.5281/zenodo.23015576}
+}
+
+@misc{gap,
+  author       = {{The GAP Group}},
+  title        = {{GAP} -- {G}roups, {A}lgorithms, and {P}rogramming},
+  note         = {Version 4.16.1, \url{https://www.gap-system.org}},
+  year         = {2026},
+  url          = {https://www.gap-system.org}
+}
+
+@misc{quagroup,
+  author       = {de Graaf, Willem A.},
+  title        = {{QuaGroup}: computations with quantum groups ({GAP} package)},
+  note         = {Version 1.8.4, \url{https://github.com/gap-packages/quagroup}},
+  year         = {2024},
+  url          = {https://github.com/gap-packages/quagroup}
+}
+
+@article{degraaf2001,
+  author  = {de Graaf, Willem A.},
+  title   = {Computing with quantized enveloping algebras: {PBW}-type bases,
+             highest-weight modules and ${R}$-matrices},
+  journal = {J. Symb. Comput.},
+  volume  = {32},
+  pages   = {475},
+  year    = {2001},
+  doi     = {10.1006/jsco.2001.0479}
+}
+
+@misc{sagemath,
+  author       = {{The Sage Developers}},
+  title        = {{SageMath}, the {S}age {M}athematics {S}oftware {S}ystem},
+  note         = {Version 10.9, \url{https://www.sagemath.org}},
+  year         = {2026},
+  doi          = {10.5281/zenodo.8042260},
+  url          = {https://www.sagemath.org}
+}
+
+@article{bkk2000,
+  author  = {Benkart, Georgia and Kang, Seok-Jin and Kashiwara, Masaki},
+  title   = {Crystal bases for the quantum superalgebra
+             ${U}_q(\mathfrak{gl}(m,n))$},
+  journal = {J. Amer. Math. Soc.},
+  volume  = {13},
+  pages   = {295},
+  year    = {2000},
+  doi     = {10.1090/S0894-0347-00-00321-0}
+}
+
+@inproceedings{hagberg2008networkx,
+  author    = {Hagberg, Aric A. and Schult, Daniel A. and Swart, Pieter J.},
+  title     = {Exploring network structure, dynamics, and function using
+               {N}etwork{X}},
+  booktitle = {Proceedings of the 7th {P}ython in {S}cience {C}onference
+               ({SciPy} 2008)},
+  editor    = {Varoquaux, Ga{\"e}l and Vaught, Travis and Millman, Jarrod},
+  address   = {Pasadena, CA},
+  pages     = {11--15},
+  year      = {2008},
+  url       = {https://conference.scipy.org/proceedings/SciPy2008/paper_2/},
+  note         = {\url{https://conference.scipy.org/proceedings/SciPy2008/paper_2/}}
+}
+
+@article{hunter2007matplotlib,
+  author  = {Hunter, John D.},
+  title   = {Matplotlib: a {2D} graphics environment},
+  journal = {Comput. Sci. Eng.},
+  volume  = {9},
+  pages   = {90},
+  year    = {2007},
+  doi     = {10.1109/MCSE.2007.55}
+}
+
+@misc{pytest,
+  author       = {Krekel, Holger and Oliveira, Bruno and Pfannschmidt, Ronny and
+                  Bruynooghe, Floris and Laugher, Brianna and Bruhin, Freya and others},
+  title        = {pytest: simple powerful testing with {P}ython},
+  year         = {2004},
+  url          = {https://github.com/pytest-dev/pytest},
+  note         = {\url{https://github.com/pytest-dev/pytest}}
+}

@@ -1,0 +1,2 @@
+QYBE holds: False
+nonzero entries: {(1, 4): -2*(q**2 + 1)/q, (3, 6): 2*(q**2 + 1)/q}
