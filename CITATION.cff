@@ -30,6 +30,21 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23015576"
     description: "Zenodo archive of quantum-group 1.1.0 (commit 103d5384e70e8b0b746b296a0bdbd2d156ba8dde)"
+preferred-citation:
+  type: article
+  title: "quantum-group: Exact symbolic verification of R-matrix and Yang-Baxter identities for U_q(sl_2) and GL_q(2|1)"
+  authors:
+    - family-names: Terekli
+      given-names: Taha Berk
+      affiliation: "Department of Mathematics, Yıldız Technical University"
+      orcid: "https://orcid.org/0009-0004-8266-1116"
+  year: 2026
+  month: 9
+  publisher:
+    name: Zenodo
+  doi: "10.5281/zenodo.23040093"
+  url: "https://doi.org/10.5281/zenodo.23040093"
+  notes: "Preprint (userguide of quantum-group 1.1.1), prepared for submission to SciPost Physics Codebases"
 keywords:
   - quantum groups
   - Hopf algebras

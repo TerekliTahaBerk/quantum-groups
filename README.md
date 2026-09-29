@@ -181,7 +181,8 @@ The userguide is [`scipost/paper.pdf`](scipost/paper.pdf) (source
 `scipost/paper.tex`, prepared for *SciPost Physics Codebases*); the same text
 in the AMS `amsart` layout of an arXiv preprint is
 [`arxiv/paper.pdf`](arxiv/paper.pdf), generated from it by
-`arxiv/build.py`. Its six code listings are scripts in `examples/`,
+`arxiv/build.py`, and is archived on Zenodo as
+[10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093). Its six code listings are scripts in `examples/`,
 `scipost/examples/` and `scipost/crosscheck/`, each stored with its expected
 output:
 
@@ -235,8 +236,12 @@ author on a best-effort basis. Changes are listed in
 
 ## Citation
 
-Please cite the software using [`CITATION.cff`](CITATION.cff) (GitHub's
-"Cite this repository" button exports it). Every GitHub Release is archived
+Please cite the userguide, T. B. Terekli, *quantum-group: Exact symbolic
+verification of R-matrix and Yang–Baxter identities for U_q(sl_2) and
+GL_q(2|1)*, preprint (2026),
+[10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093), and the
+software version you used. [`CITATION.cff`](CITATION.cff) contains both
+(GitHub's "Cite this repository" button exports it). Every GitHub Release is archived
 on Zenodo. Version 1.1.1 is
 [10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671); version
 1.1.0, with the same package code, is
