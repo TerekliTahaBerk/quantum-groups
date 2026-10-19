@@ -4,6 +4,21 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- Make arXiv:2610.07867 (6 October 2026), DOI
+  10.48550/arXiv.2610.07867, the primary paper citation in the README,
+  citation metadata, package links and Zenodo metadata.
+- Distinguish the paper DOI from the versioned software archives; provide
+  downloadable BibTeX citations for the paper and software 1.1.1.
+- Add documentation and reproducibility guides, manuscript-folder guides,
+  issue forms and a pull request template; refresh the release checklist
+  and arXiv publication status.
+- Validate citation metadata and distribution metadata in CI, and mark
+  generated manuscript files for GitHub language statistics.
+
 ## [1.1.1] - 2026-09-29
 
 Tagged as GitHub Release `v1.1.1` (commit
@@ -189,5 +204,7 @@ in Python"; thesis in Turkish):
 - limits, crystal graphs and visualization;
 - the `pytest` suite.
 
-[1.1.0]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.0.0...main
+[Unreleased]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1
+[1.1.0]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.0
 [1.0.0]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.0.0

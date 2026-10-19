@@ -1,0 +1,18 @@
+name: Feature request
+description: Suggest a calculation, verification check or documentation improvement.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: Describe the calculation or workflow you want to support.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include a small example and mathematical references or conventions where relevant.
+    validations:
+      required: true

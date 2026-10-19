@@ -1,0 +1,31 @@
+name: Bug report
+description: Report an error, unexpected result or convention mismatch.
+title: "[Bug]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Expected and observed behavior
+      description: For mathematical results, state the basis, coproduct or grading and cite the reference you follow.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproducing example
+      description: Include imports, exact parameter values and the failing check.
+      render: python
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output or traceback
+      render: text
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python, quantum-group, SymPy, operating system and installation method; include a commit SHA for a source checkout.
+    validations:
+      required: true

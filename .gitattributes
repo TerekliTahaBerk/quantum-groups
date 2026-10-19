@@ -1,0 +1,9 @@
+# Generated manuscript sources and bibliographies have editable upstream files.
+arxiv/paper.tex linguist-generated=true
+arxiv/references.bib linguist-generated=true
+**/paper.bbl linguist-generated=true
+
+# Upstream SciPost template assets are retained unchanged.
+scipost/SciPost.cls linguist-vendored=true
+scipost/SciPost_bibstyle.bst linguist-vendored=true
+scipost/official_template/** linguist-vendored=true

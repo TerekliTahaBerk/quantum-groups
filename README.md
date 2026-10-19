@@ -1,5 +1,13 @@
-# quantum-group: exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities
+# quantum-group
 
+Exact symbolic verification of R-matrix and Yang–Baxter identities for
+`U_q(sl_2)` and `GL_q(2|1)`.
+
+[![arXiv](https://img.shields.io/badge/arXiv-2610.07867-b31b1b.svg)](https://arxiv.org/abs/2610.07867)
+[![DOI](https://img.shields.io/badge/paper_DOI-10.48550%2FarXiv.2610.07867-blue.svg)](https://doi.org/10.48550/arXiv.2610.07867)
+[![PyPI](https://img.shields.io/pypi/v/quantum-group.svg)](https://pypi.org/project/quantum-group/)
+[![Python](https://img.shields.io/pypi/pyversions/quantum-group.svg)](https://pypi.org/project/quantum-group/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![tests](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml/badge.svg)](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml)
 
 `quantum-group` builds the explicit matrices behind concrete quantum-group
@@ -9,6 +17,15 @@ zero. It covers finite-dimensional `U_q(sl_2)` representations and the graded
 `GL_q(2|1)` R-matrix of Çelik and Çelik (2021). It verifies identities on
 concrete representations; it is not a general quantum-group computer algebra
 system and not a theorem prover.
+
+> **Paper:** Taha Berk Terekli (2026), *quantum-group: Exact symbolic
+> verification of R-matrix and Yang–Baxter identities for U_q(sl_2) and
+> GL_q(2|1)*. [arXiv:2610.07867](https://arxiv.org/abs/2610.07867),
+> submitted 6 October 2026.
+
+[Quickstart](#quickstart) · [Reproduce the paper](docs/reproducibility.md) ·
+[Documentation](docs/README.md) · [Citation](#citation) ·
+[Contributing](CONTRIBUTING.md)
 
 ## Main features
 
@@ -177,12 +194,16 @@ identifies where the two systems' conventions differ.
 
 ## Userguide and reproducing its calculations
 
-The userguide is [`scipost/paper.pdf`](scipost/paper.pdf) (source
-`scipost/paper.tex`, prepared for *SciPost Physics Codebases*); the same text
-in the AMS `amsart` layout of an arXiv preprint is
-[`arxiv/paper.pdf`](arxiv/paper.pdf), generated from it by
-`arxiv/build.py`, and is archived on Zenodo as
-[10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093). Its six code listings are scripts in `examples/`,
+The published preprint is [arXiv:2610.07867](https://arxiv.org/abs/2610.07867)
+([PDF](https://arxiv.org/pdf/2610.07867),
+[DOI](https://doi.org/10.48550/arXiv.2610.07867)). The repository keeps the
+[SciPost-format userguide](scipost/paper.pdf) and the generated
+[AMS-format preprint](arxiv/paper.pdf). The earlier Zenodo preprint remains
+available at [10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093).
+See the [reproducibility guide](docs/reproducibility.md) for a complete
+installation and validation workflow.
+
+Its six code listings are scripts in `examples/`,
 `scipost/examples/` and `scipost/crosscheck/`, each stored with its expected
 output:
 
@@ -213,8 +234,9 @@ tests/                pytest suite; doctests in quantum_group/ run with it
 examples/             quickstart.py, sample_verification.py (+ expected output)
 benchmarks/           timing script and recorded results
 notebooks/            exploratory notebook
+docs/                 documentation index and paper reproducibility guide
 scipost/              userguide (SciPost Physics Codebases), Listings 2-6, QuaGroup cross-check
-arxiv/                the userguide as an amsart preprint, generated from scipost/
+arxiv/                arXiv preprint sources and PDF, generated from scipost/
 thesis/               the undergraduate thesis (Turkish), its poster and errata; see thesis/README.md
 AUDIT.md              mathematical/technical audit (September 2026)
 MANUSCRIPT_CODE_MAPPING.md
@@ -236,19 +258,37 @@ author on a best-effort basis. Changes are listed in
 
 ## Citation
 
-Please cite the userguide, T. B. Terekli, *quantum-group: Exact symbolic
-verification of R-matrix and Yang–Baxter identities for U_q(sl_2) and
-GL_q(2|1)*, preprint (2026),
-[10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093), and the
-software version you used. [`CITATION.cff`](CITATION.cff) contains both
-(GitHub's "Cite this repository" button exports it). Every GitHub Release is archived
-on Zenodo. Version 1.1.1 is
-[10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671); version
-1.1.0, with the same package code, is
-[10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576). The earlier
-record [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681)
-archives version 1.0.0 only and does **not** contain the changes listed for
-1.1.0 in the changelog.
+If you use this work, cite the paper and the software version used in your
+calculations. The paper DOI identifies the manuscript; the Zenodo software
+DOI identifies the archived code.
+
+| Resource | Identifier |
+| --- | --- |
+| Paper (arXiv, 6 October 2026) | [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867) |
+| Software 1.1.1 | [10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671) |
+| Software 1.1.0 | [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576) |
+| Earlier Zenodo preprint | [10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093) |
+
+```bibtex
+@misc{terekli2026quantumgroup,
+  title         = {quantum-group: Exact symbolic verification of R-matrix and
+                   Yang--Baxter identities for {$U_q(\mathfrak{sl}_2)$} and {$GL_q(2|1)$}},
+  author        = {Terekli, Taha Berk},
+  year          = {2026},
+  eprint        = {2610.07867},
+  archivePrefix = {arXiv},
+  primaryClass  = {math.QA},
+  doi           = {10.48550/arXiv.2610.07867},
+  url           = {https://arxiv.org/abs/2610.07867}
+}
+```
+
+Download both entries in [BibTeX](CITATION.bib).
+[CITATION.cff](CITATION.cff) powers GitHub’s **Cite this repository** button;
+its preferred citation is the arXiv paper. Software 1.1.0 and 1.1.1 contain
+the same package code. The earlier software archive
+[10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681) contains
+version 1.0.0 only; see [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

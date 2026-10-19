@@ -16,7 +16,10 @@ Open an issue at <https://github.com/TerekliTahaBerk/quantum-groups/issues>.
 - **Feature requests:** describe the structure or check you would like to see
   and how it relates to the existing modules.
 
-Please search existing issues before opening a new one.
+Please search existing issues before opening a new one. The issue forms
+include fields for reproducing examples and mathematical conventions.
+See the [documentation index](docs/README.md) and
+[reproducibility guide](docs/reproducibility.md) for paper-related work.
 
 ## Development setup
 

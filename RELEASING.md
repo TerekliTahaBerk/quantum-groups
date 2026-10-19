@@ -1,64 +1,67 @@
-# Releasing
+# Releasing quantum-group
 
-Checklist for a release of `quantum-group`, written for 1.1.1. Every step
-names who does it: **maintainer** steps need the maintainer's GitHub, PyPI or
-Zenodo login.
+Current released version: **1.1.1** (29 September 2026).
+The paper is published as [arXiv:2610.07867](https://arxiv.org/abs/2610.07867),
+DOI [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867).
+A paper revision and a software release have separate identifiers.
+Documentation updates alone do not republish the existing PyPI version.
 
-## 0. Before tagging (repository)
+## Prepare a software release
 
-1. Version in `pyproject.toml`, `CITATION.cff` (`version`, `date-released`),
-   the `CHANGELOG.md` heading and the release paragraph of `.zenodo.json`
-   agree. If the release happens on a later day than the changelog date,
-   change `date-released` and the changelog date first.
-2. Locally: `make check` (tests and doctests), `make listings`,
-   `make paper`, `make -C arxiv check`. All must pass.
-3. The commit is pushed to `main` and every job of the `tests` workflow is
-   green on it.
+1. Choose a new version following the existing Semantic Versioning policy.
+   Update `pyproject.toml`, `quantum_group.__version__`, `CITATION.cff`
+   (`version`, `date-released`), the changelog and the release description
+   in `.zenodo.json`. Update installation examples and software citations
+   to match. Preserve identifiers for previously published versions.
+2. Run `make check`, `make quickstart`, `make listings`, `make paper` and
+   `make -C arxiv check`. Validate `CITATION.cff` with `cffconvert --validate`.
+   Build distributions with `python -m build` and check them with
+   `python -m twine check --strict dist/*` in a clean output directory.
+3. Push the release commit and verify that every job of the `tests`
+   workflow passes. Record its full 40-character SHA.
 
-## 1. PyPI (maintainer)
+## Publish to PyPI
 
-GitHub → *Actions* → *publish* → *Run workflow*, with `ref` = the full
-40-character SHA from step 0.3 and `expected_version` = `1.1.1`. Approve the
-`pypi` environment when asked. The workflow builds, checks and test-installs
-the wheel before uploading; afterwards <https://pypi.org/project/quantum-group/1.1.1/>
-exists. (The trusted publisher was registered for 1.1.0 and is reused.)
+The maintainer runs **Actions → publish → Run workflow**, setting `ref`
+to the verified SHA and `expected_version` to the new version. Approve
+the `pypi` environment when prompted. The workflow builds and validates
+distributions, tests the installed wheel and uses Trusted Publishing.
+Check the resulting version on [PyPI](https://pypi.org/project/quantum-group/).
+Never reuse a published version number for different files.
 
-## 2. GitHub Release → Zenodo (maintainer)
+## Create the GitHub release and Zenodo archive
 
-GitHub → *Releases* → *Draft a new release*: tag `v1.1.1` (create it on
-publish), target = the same SHA, title `v1.1.1`, notes = the 1.1.1 section of
-`CHANGELOG.md`. *Publish release*.
+Create tag `vX.Y.Z` on the same verified commit and publish a GitHub release
+with the corresponding changelog entry. The configured Zenodo integration
+archives it as a new software version. Verify the deposited files, version,
+author/ORCID, license and paper relationship before recording the new DOI.
+Existing archives remain available for reproducibility.
 
-Zenodo's GitHub integration (already enabled for this repository, as for
-1.1.0) then deposits the source archive as a **new version** of the existing
-record, with the metadata of `.zenodo.json`. Wait a few minutes and open
-<https://zenodo.org/records/23015576>: the *Versions* box lists v1.1.1 with
-its own DOI. Check title, creator/ORCID, description, keywords, license and
-that the file is about 3 MB.
+After the DOI is registered, update the software DOI in `CITATION.cff`,
+`CITATION.bib`, the README and manuscript software references. Rebuild both
+manuscript layouts if their references change. Keep the arXiv paper DOI
+as `preferred-citation`; `.zenodo.json` links the software to that paper
+using `isDocumentedBy`.
 
-Published Zenodo records cannot be deleted, and 1.1.0's DOI is cited, so
-1.1.0 is **not** removed: it stays as the earlier version, and v1.1.1 becomes
-the latest version under the same concept record. If 1.1.0's own metadata
-should be improved, use *Edit* on that record (metadata only, no new files).
+## Update the arXiv paper
 
-## 3. After the DOI exists (repository)
+Edit the manuscript in `scipost/`, then run `make paper` and
+`make -C arxiv bundle`. Upload `arxiv/arxiv_source.tar.gz` as a replacement
+for **2610.07867**. The existing record has primary category **math.QA** and
+cross-list **cs.MS**. Do not create a new arXiv record for a revision.
+After publication, check the version and update any version-specific links
+and reproduction instructions. The unversioned arXiv DOI remains the paper
+identifier.
 
-Send the new DOI to whoever maintains the manuscript, then in one commit on
-`main`:
+The earlier Zenodo preprint
+[10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093) is a
+separate manuscript archive. It is not the software DOI.
 
-- `scipost/references.bib`, entry `quantumgroup111`: set
-  `howpublished = {Zenodo}`, add `doi = {…}`, and keep only `Version 1.1.1`
-  in `note` (drop the release URL); rebuild with `make paper` and
-  `make -C arxiv bundle`;
-- `CITATION.cff`: add the 1.1.1 DOI under `identifiers`;
-- `README.md`, *Citation*: add the 1.1.1 DOI.
+## Existing archives
 
-## 4. Preprint
-
-- arXiv: upload `arxiv/arxiv_source.tar.gz` (from `make -C arxiv bundle`),
-  primary category **math.QA** (the endorsement requested is for math.QA),
-  cross-lists math-ph and cs.MS; comments: "21 pages, 1 figure. Code:
-  https://github.com/TerekliTahaBerk/quantum-groups".
-- Zenodo (optional, no endorsement needed): *New upload*, resource type
-  *Publication → Preprint*, file `arxiv/paper.pdf`, license CC BY 4.0,
-  related work of type *Documents* pointing to the software's 1.1.1 DOI.
+| Resource | Identifier |
+| --- | --- |
+| Software 1.1.1 | [10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671) |
+| Software 1.1.0 | [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576) |
+| Software 1.0.0 | [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681) |
+| Paper | [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867) |

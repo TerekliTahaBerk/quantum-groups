@@ -4,5 +4,6 @@ paper.out
 paper.blg
 paper.toc
 arxiv_source.tar.gz
+quantum-group-arxiv.tar.gz
 # Keep the generated bibliography: arXiv does not run BibTeX.
 !paper.bbl

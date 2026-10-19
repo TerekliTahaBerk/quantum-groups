@@ -1,6 +1,6 @@
 # SciPost Physics Codebases — preflight record
 
-Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
+Prepared 29 September 2026; arXiv status updated 19 October 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
 (20 pages; 14 before the 29 Sep extension, see §6). Build and verify with
 `make -C scipost check` (prints `OK`). The arXiv preprint in the AMS
 `amsart` layout is generated from `paper.tex` (`make -C arxiv check`, §7).
@@ -13,7 +13,7 @@ Prepared 29 September 2026. Manuscript: `scipost/paper.tex` → `paper.pdf`
 | B2 | AI disclosure given to JORS (named only Claude Opus 5.5) | Moot after the withdrawal; the SciPost and arXiv texts name both models used. |
 | B3 | Release 1.1.1 (PyPI, GitHub Release → Zenodo) | **Done** 29 Sep 2026: tag `v1.1.1` = commit `7cb3877`, PyPI 1.1.1, Zenodo `10.5281/zenodo.23039671` (in `references.bib`, `quantumgroup111`). |
 | B3a | Zenodo preprint | **Done** 29 Sep 2026: `arxiv/paper.pdf` archived as `10.5281/zenodo.23040093` (Publication/Preprint, CC BY 4.0), linked both ways with the software record 23039671 (*Documents* / *Is documented by*). |
-| B4 | arXiv | Account exists; first submission needs a personal endorsement. An endorsement for **math.QA** has been requested (29 Sep 2026). Upload `arxiv/arxiv_source.tar.gz` with primary math.QA. |
+| B4 | arXiv | **Published** 6 October 2026: [arXiv:2610.07867](https://arxiv.org/abs/2610.07867), primary **math.QA**, cross-list **cs.MS**; DOI [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867). |
 | B5 | SciPost | Account and submission form: journal *SciPost Physics Codebases*, specialty *Mathematical Physics*. Submit **this** SciPost-format PDF by direct upload (see §7); optional suggested referees (the list screened for JORS is `archive/jors/POTENTIAL_REVIEWERS.md` at commit `7aafa2c`). No fee at any stage. |
 
 ## 1. Template
@@ -131,4 +131,4 @@ version missed; an overfull display found this way was fixed.
 - SciPost asks for manuscripts in its own template. Because the arXiv version
   uses the amsart layout, submit to SciPost by **direct upload** of
   `scipost/paper.pdf` rather than by quoting the arXiv identifier, and give
-  the arXiv identifier in the submission form's comments once it exists.
+  `arXiv:2610.07867` in the submission form's comments.

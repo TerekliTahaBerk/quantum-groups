@@ -40,6 +40,9 @@ notebooks = ["jupyter"]
 [project.urls]
 Homepage = "https://github.com/TerekliTahaBerk/quantum-groups"
 Repository = "https://github.com/TerekliTahaBerk/quantum-groups"
+Documentation = "https://github.com/TerekliTahaBerk/quantum-groups/blob/main/docs/README.md"
+Paper = "https://arxiv.org/abs/2610.07867"
+DOI = "https://doi.org/10.48550/arXiv.2610.07867"
 Issues = "https://github.com/TerekliTahaBerk/quantum-groups/issues"
 Changelog = "https://github.com/TerekliTahaBerk/quantum-groups/blob/main/CHANGELOG.md"
 

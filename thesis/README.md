@@ -2,7 +2,8 @@
 
 The package originated in the author's undergraduate thesis. These files are
 kept for provenance and are not the current manuscript; that is the userguide
-in [`../scipost/`](../scipost/), whose Section 5.2 describes how the package
+published as [arXiv:2610.07867](https://arxiv.org/abs/2610.07867)
+(source in [`../scipost/`](../scipost/)), whose Section 5.2 describes how the package
 was used to audit this thesis.
 
 - `Lisans Bitirme Tezi.pdf` — the submitted thesis, *Quantum Grup

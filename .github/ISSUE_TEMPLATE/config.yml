@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation and reproducibility
+    url: https://github.com/TerekliTahaBerk/quantum-groups/blob/main/docs/README.md
+    about: Installation, conventions, paper listings and citation information.
