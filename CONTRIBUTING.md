@@ -28,10 +28,12 @@ git clone https://github.com/TerekliTahaBerk/quantum-groups.git
 cd quantum-groups
 python3 -m venv .venv
 source .venv/bin/activate
-python3 -m pip install -e ".[test]"
+python3 -m pip install -e ".[dev]"        # tests, lint, type check, coverage
+python3 -m pip install -e ".[docs]"       # optional: the documentation site
 ```
 
-Python 3.10 or newer is required.
+Python 3.10 or newer is required. `.[test]` installs only pytest, which is
+enough to run the suite.
 
 ## Running the tests
 
@@ -52,6 +54,34 @@ python3 -m pytest tests/test_supergroup_gl21.py
 The `GL_q(2|1)` tensor-power checks manipulate symbolic `81x81` matrices and
 are the slowest part of the suite.
 
+## Lint, type checking and coverage
+
+Ruff, mypy and coverage are configured in `pyproject.toml`, and CI runs all
+three:
+
+```bash
+make lint        # ruff check . && mypy
+make coverage    # pytest with coverage; fails below the configured threshold
+```
+
+`ruff check --fix .` applies the safe automatic fixes. `examples/` and the
+manuscript folders are excluded from linting, because they are quoted
+verbatim in the README and the userguide; change them only together with
+their quoted copies and expected outputs.
+
+## Documentation site
+
+The site at <https://tereklitahaberk.github.io/quantum-groups/> is built with
+MkDocs from `mkdocs.yml` and `docs/`; the API reference is generated from the
+docstrings. README sections, the changelog and the quickstart script are
+included rather than copied (see `docs/_hooks/repo_files.py`), so edit them
+in place. Build or preview the site with:
+
+```bash
+make docs          # strict build into site/; warnings are errors, as in CI
+make docs-serve    # live preview at http://127.0.0.1:8000/
+```
+
 ## Support and maintenance
 
 The package is maintained by its author on a best-effort basis. Use GitHub
@@ -63,13 +93,14 @@ issues for questions as well as bug reports.
 2. Make your change, adding or updating tests in `tests/` for any new or
    modified behaviour.
 3. **Run `python3 -m pytest` locally; the full suite, including doctests,
-   must pass before you open a pull request.**
+   must pass before you open a pull request.** Run `make lint` as well.
 4. Open a pull request describing what changed and why. For mathematical
    changes, cite the convention or reference you follow.
 5. GitHub Actions runs the suite on Python 3.10–3.13, with the oldest
    supported dependency versions, and on Linux, macOS and Windows, and runs
    the examples against an installed wheel, for every push and pull
-   request; a pull request is merged only when CI is green.
+   request. It also runs ruff, mypy and a coverage threshold, and builds the
+   documentation site; a pull request is merged only when CI is green.
 
 Keep pull requests focused: one logical change per pull request is easier to
 review.

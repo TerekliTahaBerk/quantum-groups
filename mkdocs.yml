@@ -1,0 +1,89 @@
+site_name: quantum-group
+site_description: Exact symbolic verification of R-matrix and Yang–Baxter identities for U_q(sl_2) and GL_q(2|1)
+site_author: Taha Berk Terekli
+site_url: https://tereklitahaberk.github.io/quantum-groups/
+repo_url: https://github.com/TerekliTahaBerk/quantum-groups
+repo_name: TerekliTahaBerk/quantum-groups
+edit_uri: edit/main/docs/
+copyright: Copyright &copy; 2026 Taha Berk Terekli · MIT License
+
+docs_dir: docs
+# docs/README.md is the documentation index for readers browsing GitHub;
+# the site's home page is docs/index.md.
+exclude_docs: |
+  README.md
+  _hooks/
+
+hooks:
+  - docs/_hooks/repo_files.py
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_root_full_path: false
+            show_source: true
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            filters: ["!^_"]
+            heading_level: 2
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Conventions and scope: conventions.md
+  - Reproducing the paper: reproducibility.md
+  - API reference:
+      - Overview: api/index.md
+      - U_q(sl_2) facade: api/quantum_group_sl2.md
+      - Generators and relations: api/relations.md
+      - Representations: api/representations.md
+      - Hopf structure: api/hopf.md
+      - Tensor products: api/tensor.md
+      - R-matrix: api/r_matrix.md
+      - GL_q(2|1): api/supergroup_gl21.md
+      - Limits: api/limits.md
+      - Crystals and plots: api/crystal.md
+      - q-arithmetic and helpers: api/utils.md
+  - Citation: citation.md
+  - Changelog: changelog.md

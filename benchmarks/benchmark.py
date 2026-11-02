@@ -30,8 +30,9 @@ import platform
 import statistics
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable, List, NamedTuple
+from typing import NamedTuple
 
 import sympy as sp
 
@@ -63,7 +64,7 @@ def _ybe_triple_holds(n: int) -> bool:
     return is_zero_matrix(R01 * R02 * R12 - R12 * R02 * R01)
 
 
-def build_tasks(max_n: int) -> List[Task]:
+def build_tasks(max_n: int) -> list[Task]:
     tasks = [
         Task("qybe_holds(R_matrix_V1()) [U_q(sl_2)]", "3", "8x8",
              lambda: qybe_holds(R_matrix_V1())),
@@ -88,7 +89,7 @@ def build_tasks(max_n: int) -> List[Task]:
     return tasks
 
 
-def time_task(task: Task, repeats: int) -> List[float]:
+def time_task(task: Task, repeats: int) -> list[float]:
     times = []
     for _ in range(repeats):
         start = time.perf_counter()

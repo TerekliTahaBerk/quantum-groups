@@ -13,12 +13,16 @@ Documentation updates alone do not republish the existing PyPI version.
    (`version`, `date-released`), the changelog and the release description
    in `.zenodo.json`. Update installation examples and software citations
    to match. Preserve identifiers for previously published versions.
-2. Run `make check`, `make quickstart`, `make listings`, `make paper` and
+2. Run `make check`, `make lint`, `make coverage`, `make docs`,
+   `make quickstart`, `make listings`, `make paper` and
    `make -C arxiv check`. Validate `CITATION.cff` with `cffconvert --validate`.
    Build distributions with `python -m build` and check them with
    `python -m twine check --strict dist/*` in a clean output directory.
 3. Push the release commit and verify that every job of the `tests`
    workflow passes. Record its full 40-character SHA.
+
+The documentation site is redeployed from `main` by the `docs` workflow;
+it describes the default branch, not a specific release.
 
 ## Publish to PyPI
 

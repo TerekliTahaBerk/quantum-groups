@@ -10,8 +10,6 @@ relations and representation-building methods.
 
 from __future__ import annotations
 
-from typing import Dict, Optional
-
 import sympy as sp
 
 from . import generators as gens
@@ -75,9 +73,9 @@ class QuantumGroupSL2:
 
     def verify(
         self,
-        rep: Optional[reps.Representation] = None,
-        n: Optional[int] = None,
-    ) -> Dict[str, rels.RelationCheck]:
+        rep: reps.Representation | None = None,
+        n: int | None = None,
+    ) -> dict[str, rels.RelationCheck]:
         """Check the four relations on a representation.
 
         If `rep` is omitted and `n` is supplied, construct and check V_n.

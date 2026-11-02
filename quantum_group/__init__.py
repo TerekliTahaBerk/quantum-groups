@@ -26,23 +26,64 @@ Typical use
 True
 """
 
-from importlib.metadata import PackageNotFoundError, version as _version
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _version
 
 try:
     __version__ = _version("quantum-group")
 except PackageNotFoundError:  # pragma: no cover - running from an uninstalled tree
     __version__ = "unknown"
 
-from .quantum_group_sl2 import QuantumGroupSL2
+from .crystal import (
+    CrystalNode,
+    build_crystal,
+    crystal_nodes,
+    crystal_string,
+    e_tilde,
+    f_tilde,
+)
 from .generators import E, F, K, K_inv, all_generators, commutator
+from .hopf import (
+    HopfAxiomCheck,
+    antipode,
+    coproduct,
+    counit,
+    kron_list,
+    verify_all_hopf_axioms,
+    verify_antipode,
+    verify_coassociativity,
+)
+from .limits import (
+    classical_commutator_EF,
+    classical_K_to_h,
+    root_of_unity_substitution,
+    three_limit_summary,
+)
+from .quantum_group_sl2 import QuantumGroupSL2
+from .r_matrix import (
+    R_check_eigenvalues,
+    R_check_V1,
+    R_check_V1_coproduct,
+    R_matrix_V1,
+    R_matrix_V1_coproduct,
+    braid_relation_holds,
+    braid_relation_residual,
+    hecke_skein_relation_check,
+    intertwining_holds_V1,
+    intertwining_residual_V1,
+    jones_skein_relation_check,
+    qybe_holds,
+    qybe_residual,
+    swap_matrix,
+)
 from .relations import (
-    symbolic_relations,
-    pretty_print_relations,
-    verify_on_representation,
-    verify_relations_core,
+    RelationCheck,
     all_relations_hold,
     is_zero_matrix,
-    RelationCheck,
+    pretty_print_relations,
+    symbolic_relations,
+    verify_on_representation,
+    verify_relations_core,
 )
 from .representations import (
     Representation,
@@ -52,49 +93,31 @@ from .representations import (
     lowest_weight_vector,
     weight_of,
 )
-from .utils import q, q_integer, q_factorial, q_binomial, classical_limit
-from .crystal import (
-    build_crystal, crystal_nodes, crystal_string, f_tilde, e_tilde, CrystalNode,
-)
-from .visualization import plot_weight_diagram, plot_crystal_graph, plot_combined
-from .hopf import (
-    coproduct, counit, antipode, kron_list,
-    verify_all_hopf_axioms, verify_antipode, verify_coassociativity,
-    HopfAxiomCheck,
-)
-from .tensor import (
-    TensorRepresentation, tensor_product,
-    cg_summands, find_highest_weight_vectors, cg_decomposition_summary,
-)
-from .r_matrix import (
-    R_matrix_V1, R_check_V1, swap_matrix,
-    R_matrix_V1_coproduct, R_check_V1_coproduct,
-    intertwining_residual_V1, intertwining_holds_V1,
-    qybe_holds, braid_relation_holds,
-    qybe_residual, braid_relation_residual,
-    R_check_eigenvalues, hecke_skein_relation_check,
-    jones_skein_relation_check,
-)
-from .limits import (
-    classical_K_to_h, classical_commutator_EF,
-    root_of_unity_substitution, three_limit_summary,
-)
 from .supergroup_gl21 import (
-    super_parity_gl21,
-    basis_pairs_gl21,
-    R_matrix_GLq21,
-    super_permutation_matrix,
     R12_GLq21,
     R13_GLq21,
     R23_GLq21,
-    graded_yang_baxter_residual_GLq21,
-    graded_yang_baxter_holds_GLq21,
-    summarize_GLq21_ybe,
-    embed_R_in_tensor_power,
+    R_matrix_GLq21,
     all_Rij_GLq21,
+    basis_pairs_gl21,
     braid_far_commutativity_residual_GLq21,
+    embed_R_in_tensor_power,
+    graded_yang_baxter_holds_GLq21,
+    graded_yang_baxter_residual_GLq21,
     local_ybe_on_four_tensor_GLq21,
+    summarize_GLq21_ybe,
+    super_parity_gl21,
+    super_permutation_matrix,
 )
+from .tensor import (
+    TensorRepresentation,
+    cg_decomposition_summary,
+    cg_summands,
+    find_highest_weight_vectors,
+    tensor_product,
+)
+from .utils import classical_limit, q, q_binomial, q_factorial, q_integer
+from .visualization import plot_combined, plot_crystal_graph, plot_weight_diagram
 
 __all__ = [
     "__version__",

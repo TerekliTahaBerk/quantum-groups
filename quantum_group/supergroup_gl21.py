@@ -47,7 +47,6 @@ tested and reproduced in Python/SymPy.
 from __future__ import annotations
 
 from itertools import combinations
-from typing import Dict, List, Tuple
 
 import sympy as sp
 
@@ -55,12 +54,11 @@ from ._validation import as_int, check_square
 from .linalg import is_zero_matrix, kron_list
 from .utils import q as default_q
 
-
 # ---------------------------------------------------------------------------
 # Core data: parity, basis and R-matrix
 # ---------------------------------------------------------------------------
 
-def super_parity_gl21() -> List[int]:
+def super_parity_gl21() -> list[int]:
     """Return the Z_2 parities of the GL_q(2|1) basis vectors.
 
     e_1 and e_2 are even (0); e_3 is odd (1). Thus [0, 0, 1].
@@ -68,7 +66,7 @@ def super_parity_gl21() -> List[int]:
     return [0, 0, 1]
 
 
-def basis_pairs_gl21() -> List[Tuple[int, int]]:
+def basis_pairs_gl21() -> list[tuple[int, int]]:
     """Return (i, j) pairs of the V ⊗ V basis with **zero-based indices**.
 
     Row-major order:
@@ -101,7 +99,7 @@ def R_matrix_GLq21(q_sym: sp.Expr = default_q) -> sp.Matrix:
 # Super-permutation and Kronecker helpers
 # ---------------------------------------------------------------------------
 
-def super_permutation_matrix(parity: List[int]) -> sp.Matrix:
+def super_permutation_matrix(parity: list[int]) -> sp.Matrix:
     """Return the graded swap (super-permutation) matrix on V ⊗ V.
 
         P(e_i ⊗ e_j) = (-1)^{p(i) p(j)} e_j ⊗ e_i.
@@ -123,7 +121,7 @@ def super_permutation_matrix(parity: List[int]) -> sp.Matrix:
     return P
 
 
-def _kron_list(mats: List[sp.Matrix]) -> sp.Matrix:
+def _kron_list(mats: list[sp.Matrix]) -> sp.Matrix:
     """Backward-compatible private alias; use ``kron_list`` publicly."""
     return kron_list(mats)
 
@@ -198,7 +196,7 @@ def summarize_GLq21_ybe(q_sym: sp.Expr = default_q) -> dict:
 # General tensor-power embedding: R_{ij} on V^{⊗n}
 # ---------------------------------------------------------------------------
 
-def _adjacent_swap(parity: List[int], n: int, k: int) -> sp.Matrix:
+def _adjacent_swap(parity: list[int], n: int, k: int) -> sp.Matrix:
     """Graded swap of factors k and k+1 on V^{⊗n}.
 
     S_k = I^{⊗k} ⊗ P ⊗ I^{⊗(n-k-2)}.
@@ -210,9 +208,9 @@ def _adjacent_swap(parity: List[int], n: int, k: int) -> sp.Matrix:
 
 def embed_R_in_tensor_power(
     R: sp.Matrix,
-    positions: Tuple[int, int],
+    positions: tuple[int, int],
     tensor_power: int,
-    parity: List[int],
+    parity: list[int],
 ) -> sp.Matrix:
     """Embed the R-matrix into factors (i, j) of V^{⊗n}.
 
@@ -259,7 +257,7 @@ def embed_R_in_tensor_power(
 
 def all_Rij_GLq21(
     tensor_power: int, q_sym: sp.Expr = default_q
-) -> Dict[Tuple[int, int], sp.Matrix]:
+) -> dict[tuple[int, int], sp.Matrix]:
     """Return all R_{ij} operators (i < j) on V^{⊗n}.
 
     For example, ``all_Rij_GLq21(3)`` -> {(0,1), (0,2), (1,2)};
@@ -290,7 +288,7 @@ def braid_far_commutativity_residual_GLq21(
 
 def local_ybe_on_four_tensor_GLq21(
     q_sym: sp.Expr = default_q,
-) -> Dict[Tuple[int, int, int], bool]:
+) -> dict[tuple[int, int, int], bool]:
     """Check the YBE on every triple of factors in V^{⊗4}.
 
     Triples (zero-based): (0,1,2), (0,1,3), (0,2,3), (1,2,3). For each,
@@ -298,7 +296,7 @@ def local_ybe_on_four_tensor_GLq21(
     return whether the equation holds.
     """
     Rij = all_Rij_GLq21(4, q_sym)
-    result: Dict[Tuple[int, int, int], bool] = {}
+    result: dict[tuple[int, int, int], bool] = {}
     for a, b, c in combinations(range(4), 3):
         Rab = Rij[(a, b)]
         Rac = Rij[(a, c)]

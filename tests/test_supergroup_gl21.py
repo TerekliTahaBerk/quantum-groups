@@ -9,22 +9,20 @@ Yang–Baxter verification for the GL_q(2|1) supergroup.
 import sympy as sp
 
 from quantum_group import (
-    R_matrix_GLq21,
-    super_parity_gl21,
-    super_permutation_matrix,
-    swap_matrix,
     R12_GLq21,
     R13_GLq21,
     R23_GLq21,
-    graded_yang_baxter_residual_GLq21,
-    graded_yang_baxter_holds_GLq21,
-    embed_R_in_tensor_power,
+    R_matrix_GLq21,
     all_Rij_GLq21,
     braid_far_commutativity_residual_GLq21,
+    embed_R_in_tensor_power,
+    graded_yang_baxter_holds_GLq21,
+    graded_yang_baxter_residual_GLq21,
     local_ybe_on_four_tensor_GLq21,
+    super_parity_gl21,
+    super_permutation_matrix,
+    swap_matrix,
 )
-from quantum_group.utils import q
-
 
 # ---------------------------------------------------------------------------
 # R-matrix and super-permutation

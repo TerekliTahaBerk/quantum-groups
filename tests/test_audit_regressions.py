@@ -1,19 +1,33 @@
 """Independent regressions for the publication audit; exact arithmetic only."""
-from itertools import product, combinations
+from itertools import combinations, product
 
 import pytest
 import sympy as sp
 
 from quantum_group import (
-    q, q_integer, q_binomial, build_representation, coproduct,
-    R_matrix_V1, R_check_V1, R_matrix_V1_coproduct, R_check_V1_coproduct,
-    intertwining_residual_V1, intertwining_holds_V1, swap_matrix,
-    qybe_holds, braid_relation_holds, tensor_product, find_highest_weight_vectors,
-    R_matrix_GLq21, all_Rij_GLq21, embed_R_in_tensor_power,
+    R_check_V1,
+    R_check_V1_coproduct,
+    R_matrix_GLq21,
+    R_matrix_V1,
+    R_matrix_V1_coproduct,
+    all_Rij_GLq21,
+    braid_relation_holds,
+    build_representation,
+    coproduct,
+    embed_R_in_tensor_power,
+    find_highest_weight_vectors,
+    intertwining_holds_V1,
+    intertwining_residual_V1,
+    q,
+    q_binomial,
+    q_integer,
+    qybe_holds,
     root_of_unity_substitution,
+    swap_matrix,
+    tensor_product,
 )
 from quantum_group.limits import crystal_asymptotics_E_pattern
-from quantum_group.r_matrix import qybe_residual, braid_relation_residual
+from quantum_group.r_matrix import braid_relation_residual, qybe_residual
 
 
 def zero(M):

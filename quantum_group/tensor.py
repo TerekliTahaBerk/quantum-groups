@@ -25,13 +25,12 @@ computes a highest-weight vector for each direct-sum component.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Tuple
 
 import sympy as sp
 
-from .representations import Representation, build_representation
 from ._validation import as_int
 from .linalg import kron
+from .representations import Representation
 from .utils import q as default_q
 
 
@@ -72,7 +71,7 @@ def tensor_product(repA: Representation, repB: Representation) -> TensorRepresen
 # Clebsch–Gordan decomposition
 # ---------------------------------------------------------------------------
 
-def cg_summands(m: int, n: int) -> List[int]:
+def cg_summands(m: int, n: int) -> list[int]:
     """List the k values appearing in V_m ⊗ V_n = ⊕ V_k.
 
     k = |m-n|, |m-n|+2, ..., m+n  (all have the parity of m+n).
@@ -87,7 +86,7 @@ def cg_summands(m: int, n: int) -> List[int]:
 def find_highest_weight_vectors(
     tensor_rep: TensorRepresentation,
     q_sym: sp.Expr = default_q,
-) -> List[Tuple[int, sp.Matrix]]:
+) -> list[tuple[int, sp.Matrix]]:
     """Find highest-weight vectors for generic q in V_m ⊗ V_n.
 
     Both factors must use the same parameter. Candidate weights come from
@@ -115,7 +114,7 @@ def find_highest_weight_vectors(
             # K-exponents: m - 2i for v_i^A and n - 2j for v_j^B.
             K_diag_exponents.append((m - 2 * i) + (n - 2 * j))
 
-    results: List[Tuple[int, sp.Matrix]] = []
+    results: list[tuple[int, sp.Matrix]] = []
     for k in reversed(summands):
         # Collect indices of the weight-k subspace.
         idx = [t for t, w in enumerate(K_diag_exponents) if w == k]

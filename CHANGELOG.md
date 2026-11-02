@@ -6,7 +6,35 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-11-02
+
+Documentation, packaging and tooling release. The package's behaviour is
+unchanged from 1.1.1: the edits to `quantum_group/` and `tests/` are
+lint and typing clean-ups only (built-in generic annotations, sorted imports,
+unused imports removed), and the test suite, doctests and Listings 1–6
+give the same results.
+
+### Added
+
+- Documentation site built with MkDocs (`mkdocs.yml`, `docs/`) and published
+  to GitHub Pages at <https://tereklitahaberk.github.io/quantum-groups/>,
+  with an API reference generated from the docstrings. README sections, the
+  changelog and the quickstart script are included from their files rather
+  than copied. The `docs` workflow builds it in strict mode on every push and
+  pull request.
+- Ruff and mypy configuration in `pyproject.toml`, a `lint` CI job and
+  `make lint`.
+- Test coverage measurement with `pytest-cov`: a `coverage` CI job with a
+  90 % threshold (currently 93 %) and `make coverage`.
+- Optional dependency groups `dev` (pytest, pytest-cov, ruff, mypy) and
+  `docs` (MkDocs, Material for MkDocs, mkdocstrings).
+
 ### Changed
+
+- The `Documentation` project URL now points to the documentation site.
+- Removed unused imports from module namespaces (for example `q` in
+  `quantum_group.hopf`); the public interface exported by `quantum_group`
+  is unchanged.
 
 - Make arXiv:2610.07867 (6 October 2026), DOI
   10.48550/arXiv.2610.07867, the primary paper citation in the README,
@@ -204,7 +232,8 @@ in Python"; thesis in Turkish):
 - limits, crystal graphs and visualization;
 - the `pytest` suite.
 
-[Unreleased]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/TerekliTahaBerk/quantum-groups/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.1
 [1.1.0]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.1.0
 [1.0.0]: https://github.com/TerekliTahaBerk/quantum-groups/releases/tag/v1.0.0
