@@ -6,8 +6,18 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Record the Zenodo archive of 1.1.2 (10.5281/zenodo.23883612) in the
+  citation metadata, BibTeX file, README and release checklist.
+
 ## [1.1.2] - 2026-11-02
 
+Tagged as GitHub Release `v1.1.2` (commit
+`5bd4399cb1274bd58a5e7d087ef0d14a9d160693`), published on PyPI as
+[quantum-group 1.1.2](https://pypi.org/project/quantum-group/1.1.2/) and
+archived on Zenodo as
+[10.5281/zenodo.23883612](https://doi.org/10.5281/zenodo.23883612).
 Documentation, packaging and tooling release. The package's behaviour is
 unchanged from 1.1.1: the edits to `quantum_group/` and `tests/` are
 lint and typing clean-ups only (built-in generic annotations, sorted imports,

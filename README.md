@@ -268,6 +268,7 @@ DOI identifies the archived code.
 | Resource | Identifier |
 | --- | --- |
 | Paper (arXiv, 6 October 2026) | [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867) |
+| Software 1.1.2 | [10.5281/zenodo.23883612](https://doi.org/10.5281/zenodo.23883612) |
 | Software 1.1.1 | [10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671) |
 | Software 1.1.0 | [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576) |
 | Earlier Zenodo preprint | [10.5281/zenodo.23040093](https://doi.org/10.5281/zenodo.23040093) |
@@ -286,10 +287,11 @@ DOI identifies the archived code.
 }
 ```
 
-Download both entries in [BibTeX](CITATION.bib).
+Download the paper and software entries in [BibTeX](CITATION.bib).
 [CITATION.cff](CITATION.cff) powers GitHub’s **Cite this repository** button;
 its preferred citation is the arXiv paper. Software 1.1.0 and 1.1.1 contain
-the same package code. The earlier software archive
+the same package code; 1.1.2 differs from them only by lint and typing
+clean-ups and gives the same results. The earlier software archive
 [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681) contains
 version 1.0.0 only; see [CHANGELOG.md](CHANGELOG.md).
 
