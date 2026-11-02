@@ -1,6 +1,6 @@
 # Releasing quantum-group
 
-Current released version: **1.1.1** (29 September 2026).
+Current released version: **1.1.2** (2 November 2026).
 The paper is published as [arXiv:2610.07867](https://arxiv.org/abs/2610.07867),
 DOI [10.48550/arXiv.2610.07867](https://doi.org/10.48550/arXiv.2610.07867).
 A paper revision and a software release have separate identifiers.
@@ -65,6 +65,7 @@ separate manuscript archive. It is not the software DOI.
 
 | Resource | Identifier |
 | --- | --- |
+| Software 1.1.2 | [10.5281/zenodo.23883612](https://doi.org/10.5281/zenodo.23883612) |
 | Software 1.1.1 | [10.5281/zenodo.23039671](https://doi.org/10.5281/zenodo.23039671) |
 | Software 1.1.0 | [10.5281/zenodo.23015576](https://doi.org/10.5281/zenodo.23015576) |
 | Software 1.0.0 | [10.5281/zenodo.22997681](https://doi.org/10.5281/zenodo.22997681) |

@@ -21,10 +21,13 @@ authors:
 repository-code: "https://github.com/TerekliTahaBerk/quantum-groups"
 url: "https://github.com/TerekliTahaBerk/quantum-groups"
 license: MIT
-doi: "10.5281/zenodo.23039671"
+doi: "10.5281/zenodo.23883612"
 version: 1.1.2
 date-released: "2026-11-02"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23883612"
+    description: "Zenodo archive of quantum-group 1.1.2 (GitHub Release v1.1.2, commit 5bd4399cb1274bd58a5e7d087ef0d14a9d160693)"
   - type: doi
     value: "10.5281/zenodo.23039671"
     description: "Zenodo archive of quantum-group 1.1.1 (GitHub Release v1.1.1, commit 7cb3877a5400c30ada625d9f577d78bf355e24a2)"
