@@ -10,13 +10,13 @@ import quantum_group.supergroup_gl21 as gl21
 from quantum_group import (
     QuantumGroupSL2,
     R_matrix_GLq21,
+    all_Rij_GLq21,
     build_crystal,
     build_representation,
     cg_summands,
     crystal_nodes,
     crystal_string,
     embed_R_in_tensor_power,
-    all_Rij_GLq21,
     is_zero_matrix,
     kron_list,
     plot_weight_diagram,
@@ -30,7 +30,6 @@ from quantum_group import (
     weight_of,
 )
 from quantum_group.linalg import kron
-
 
 # ---------------------------------------------------------------------------
 # Shared helpers and backward-compatible aliases

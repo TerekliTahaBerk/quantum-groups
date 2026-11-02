@@ -2,11 +2,15 @@
 # runs exactly what CI runs: `python -m pytest` (tests/ plus doctests).
 PYTHON ?= python3
 
-.PHONY: help check test quickstart listings demo figures benchmark-smoke \
-        paper
+.PHONY: help check test lint coverage docs docs-serve quickstart listings demo \
+        figures benchmark-smoke paper
 
 help:
 	@echo "check                   run tests and doctests (same as CI)"
+	@echo "lint                    run ruff and mypy (needs .[dev])"
+	@echo "coverage                run tests with coverage; fails below the configured threshold (needs .[dev])"
+	@echo "docs                    build the documentation site into site/ (needs .[docs])"
+	@echo "docs-serve              serve the documentation site locally with live reload (needs .[docs])"
 	@echo "quickstart              run the README quickstart"
 	@echo "listings                run the userguide's Listings 1-6 and compare with their expected outputs"
 	@echo "demo                    run main.py (writes outputs/V4_combined.png)"
@@ -18,6 +22,19 @@ check:
 	MPLBACKEND=Agg $(PYTHON) -m pytest
 
 test: check
+
+lint:
+	$(PYTHON) -m ruff check .
+	$(PYTHON) -m mypy
+
+coverage:
+	MPLBACKEND=Agg $(PYTHON) -m pytest --cov --cov-report=term
+
+docs:
+	NO_MKDOCS_2_WARNING=1 $(PYTHON) -m mkdocs build --strict
+
+docs-serve:
+	NO_MKDOCS_2_WARNING=1 $(PYTHON) -m mkdocs serve
 
 quickstart:
 	$(PYTHON) examples/quickstart.py

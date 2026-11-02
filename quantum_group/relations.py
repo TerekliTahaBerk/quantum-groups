@@ -20,21 +20,19 @@ all four relations by checking that their residual matrices are zero.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
 
 import sympy as sp
 
-from .generators import E, F, K, K_inv, commutator
 from ._validation import check_square
+from .generators import E, F, K, K_inv, commutator
 from .linalg import is_zero_matrix
 from .utils import q
-
 
 # ---------------------------------------------------------------------------
 # Symbolic relation list (for reference documentation)
 # ---------------------------------------------------------------------------
 
-def symbolic_relations() -> List[Tuple[str, sp.Expr, sp.Expr]]:
+def symbolic_relations() -> list[tuple[str, sp.Expr, sp.Expr]]:
     """Return the four defining U_q(sl_2) relations as (LHS, RHS) pairs.
 
     At the symbolic level, these pairs only name the relations.
@@ -84,7 +82,7 @@ def verify_on_representation(
     K_mat: sp.Matrix,
     Kinv_mat: sp.Matrix,
     q_sym: sp.Expr = q,
-) -> Dict[str, RelationCheck]:
+) -> dict[str, RelationCheck]:
     """Check the U_q(sl_2) relations for matrices E, F, K, K^{-1}.
 
     Parameters
@@ -118,7 +116,7 @@ def verify_on_representation(
     n = E_mat.rows
     I = sp.eye(n)
 
-    checks: Dict[str, RelationCheck] = {}
+    checks: dict[str, RelationCheck] = {}
 
     # R1: K K^{-1} = I
     res = K_mat * Kinv_mat - I
@@ -149,7 +147,7 @@ def verify_relations_core(
     K: sp.Matrix,
     K_inv: sp.Matrix,
     q_sym: sp.Expr = q,
-) -> Dict[str, RelationCheck]:
+) -> dict[str, RelationCheck]:
     """Manuscript-compatible wrapper for ``verify_on_representation``.
 
     The repository's stable API is ``verify_on_representation``. The manuscript
@@ -160,6 +158,6 @@ def verify_relations_core(
     return verify_on_representation(E, F, K, K_inv, q_sym=q_sym)
 
 
-def all_relations_hold(checks: Dict[str, RelationCheck]) -> bool:
+def all_relations_hold(checks: dict[str, RelationCheck]) -> bool:
     """Return whether all relations hold (convenience function)."""
     return all(c.holds for c in checks.values())

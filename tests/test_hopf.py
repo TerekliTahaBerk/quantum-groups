@@ -1,12 +1,14 @@
 """Tests of the Hopf structure and its axioms."""
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
+    antipode,
     build_representation,
+    coproduct,
+    counit,
     verify_all_hopf_axioms,
-    coproduct, antipode, counit,
 )
 
 
@@ -22,7 +24,7 @@ def test_hopf_axioms_on_Vn(n):
 def test_coproduct_dimensions():
     rep = build_representation(2)
     Delta = coproduct(rep)
-    for X, M in Delta.items():
+    for _X, M in Delta.items():
         assert M.shape == (rep.dim**2, rep.dim**2)
 
 

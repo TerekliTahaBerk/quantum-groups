@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quantum-group"
-version = "1.1.1"
+version = "1.1.2"
 description = "Exact SymPy verification of explicit U_q(sl_2) and GL_q(2|1) matrix identities"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -36,11 +36,15 @@ dependencies = [
 [project.optional-dependencies]
 test = ["pytest"]
 notebooks = ["jupyter"]
+# Lint, type checking and coverage, as run by the `lint` and `coverage` CI jobs.
+dev = ["pytest", "pytest-cov", "ruff", "mypy"]
+# The documentation site (mkdocs.yml), as built by the `docs` workflow.
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9.5", "mkdocstrings[python]>=0.26"]
 
 [project.urls]
 Homepage = "https://github.com/TerekliTahaBerk/quantum-groups"
 Repository = "https://github.com/TerekliTahaBerk/quantum-groups"
-Documentation = "https://github.com/TerekliTahaBerk/quantum-groups/blob/main/docs/README.md"
+Documentation = "https://tereklitahaberk.github.io/quantum-groups/"
 Paper = "https://arxiv.org/abs/2610.07867"
 DOI = "https://doi.org/10.48550/arXiv.2610.07867"
 Issues = "https://github.com/TerekliTahaBerk/quantum-groups/issues"
@@ -54,3 +58,37 @@ packages = ["quantum_group"]
 [tool.pytest.ini_options]
 testpaths = ["tests", "quantum_group"]
 addopts = "--doctest-modules"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+# examples/ and the manuscript folders are quoted verbatim in the README and the
+# userguide, so they are kept byte-for-byte as published.
+extend-exclude = ["examples", "thesis", "scipost", "arxiv", "notebooks"]
+
+[tool.ruff.lint]
+# pyflakes, pycodestyle errors, import sorting, bugbear, pyupgrade.
+select = ["F", "E4", "E7", "E9", "W", "I", "B", "UP"]
+# Single-letter names such as `l` and `I` follow the mathematical notation.
+ignore = ["E741"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["quantum_group"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+
+# SymPy and NetworkX ship without type information.
+[[tool.mypy.overrides]]
+module = ["sympy", "sympy.*", "networkx", "networkx.*"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["quantum_group"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 90

@@ -33,20 +33,17 @@ generator using Kronecker products (matrix tensor products).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict
 
 import sympy as sp
 
 from .linalg import kron, kron_list  # noqa: F401  (kron_list re-exported)
 from .representations import Representation
-from .utils import q as default_q
-
 
 # ---------------------------------------------------------------------------
 # Hopf structure maps at the matrix level
 # ---------------------------------------------------------------------------
 
-def coproduct(rep: Representation) -> Dict[str, sp.Matrix]:
+def coproduct(rep: Representation) -> dict[str, sp.Matrix]:
     """Return the matrix representation of Δ(X) on V ⊗ V.
 
     For a representation V, compute the matrix from the formulas using the
@@ -63,7 +60,7 @@ def coproduct(rep: Representation) -> Dict[str, sp.Matrix]:
     }
 
 
-def counit() -> Dict[str, sp.Expr]:
+def counit() -> dict[str, sp.Expr]:
     """Return the counit ε: U_q(sl_2) -> Q(q) on generators."""
     return {
         "E": sp.Integer(0),
@@ -73,7 +70,7 @@ def counit() -> Dict[str, sp.Expr]:
     }
 
 
-def antipode(rep: Representation) -> Dict[str, sp.Matrix]:
+def antipode(rep: Representation) -> dict[str, sp.Matrix]:
     """Return the matrix representation of S(X) on V."""
     return {
         "E": -rep.K_inv * rep.E,
@@ -101,7 +98,7 @@ class HopfAxiomCheck:
         return f"<{self.name}: {'OK' if self.holds else 'FAILED'}>"
 
 
-def verify_counit(rep: Representation) -> Dict[str, HopfAxiomCheck]:
+def verify_counit(rep: Representation) -> dict[str, HopfAxiomCheck]:
     """Check (ε ⊗ id) Δ(X) = X = (id ⊗ ε) Δ(X).
 
     The counit ε is scalar-valued, and ε ⊗ id contracts a tensor from
@@ -113,7 +110,7 @@ def verify_counit(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     return _verify_counit_via_labels(rep)
 
 
-def _verify_counit_via_labels(rep: Representation) -> Dict[str, HopfAxiomCheck]:
+def _verify_counit_via_labels(rep: Representation) -> dict[str, HopfAxiomCheck]:
     """Check the counit axiom using a labelled decomposition of Δ."""
     n = rep.dim
     I = sp.eye(n)
@@ -133,7 +130,7 @@ def _verify_counit_via_labels(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     label_to_eps = {**eps, "1": sp.S.One}
     target = {"E": rep.E, "F": rep.F, "K": rep.K, "K_inv": rep.K_inv}
 
-    results: Dict[str, HopfAxiomCheck] = {}
+    results: dict[str, HopfAxiomCheck] = {}
     for X, terms in decompositions.items():
         # Left application: (ε ⊗ id) Δ(X) = Σ ε(X1_i) · X2_i
         left = sum((sp.Integer(label_to_eps[a]) * label_to_mat[b]
@@ -150,7 +147,7 @@ def _verify_counit_via_labels(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     return results
 
 
-def verify_antipode(rep: Representation) -> Dict[str, HopfAxiomCheck]:
+def verify_antipode(rep: Representation) -> dict[str, HopfAxiomCheck]:
     """Check μ ∘ (S ⊗ id) ∘ Δ(X) = ε(X) · I = μ ∘ (id ⊗ S) ∘ Δ(X).
 
     The results are n×n matrix equations on V.
@@ -171,7 +168,7 @@ def verify_antipode(rep: Representation) -> Dict[str, HopfAxiomCheck]:
         "K_inv": [("K_inv", "K_inv")],
     }
 
-    results: Dict[str, HopfAxiomCheck] = {}
+    results: dict[str, HopfAxiomCheck] = {}
     for X, terms in decompositions.items():
         # μ ∘ (S ⊗ id) ∘ Δ(X) = Σ S(X1_i) · X2_i
         left = sum((label_to_S[a] * label_to_mat[b]
@@ -189,7 +186,7 @@ def verify_antipode(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     return results
 
 
-def verify_coassociativity(rep: Representation) -> Dict[str, HopfAxiomCheck]:
+def verify_coassociativity(rep: Representation) -> dict[str, HopfAxiomCheck]:
     """Check (Δ ⊗ id) Δ(X) = (id ⊗ Δ) Δ(X) on V ⊗ V ⊗ V.
 
     This follows from the definition of Δ, but gives an explicit matrix-level
@@ -218,7 +215,7 @@ def verify_coassociativity(rep: Representation) -> Dict[str, HopfAxiomCheck]:
         "1": kron(I, I),
     }
 
-    results: Dict[str, HopfAxiomCheck] = {}
+    results: dict[str, HopfAxiomCheck] = {}
     for X, terms in decompositions.items():
         # Left: Σ Δ(A_i) ⊗ B_i  (n^3 x n^3)
         left = sum((kron(label_to_Delta[a], label_to_mat[b])
@@ -235,7 +232,7 @@ def verify_coassociativity(rep: Representation) -> Dict[str, HopfAxiomCheck]:
     return results
 
 
-def verify_all_hopf_axioms(rep: Representation) -> Dict[str, Dict[str, HopfAxiomCheck]]:
+def verify_all_hopf_axioms(rep: Representation) -> dict[str, dict[str, HopfAxiomCheck]]:
     """Check all Hopf axioms on V and return grouped results."""
     return {
         "coassociativity": verify_coassociativity(rep),

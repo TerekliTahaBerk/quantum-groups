@@ -35,13 +35,11 @@ aspects of quantum groups and frame the thesis's comparison section.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Tuple
 
 import sympy as sp
 
 from .representations import Representation, build_representation
 from .utils import q as default_q
-
 
 # ---------------------------------------------------------------------------
 # (L1) Classical limit
@@ -78,7 +76,7 @@ def root_of_unity_substitution(
     rep: Representation,
     N: int,
     q_sym: sp.Expr = default_q,
-) -> Dict[str, sp.Matrix]:
+) -> dict[str, sp.Matrix]:
     """Evaluate q at a primitive Nth root of unity and compute E^N.
 
     For primitive roots with N > 2, E^N = 0 for every V_n in this
@@ -90,7 +88,8 @@ def root_of_unity_substitution(
     if not isinstance(N, (int, sp.Integer)) or N <= 2:
         raise ValueError("N must be an integer greater than 2.")
     zeta = sp.exp(2 * sp.pi * sp.I / N)
-    sub = lambda M: sp.simplify(M.subs(q_sym, zeta))
+    def sub(M):
+        return sp.simplify(M.subs(q_sym, zeta))
     E_N = sub(rep.E**N)
     F_N = sub(rep.F**N)
     K_2N = sub(rep.K**(2 * N))
@@ -134,7 +133,6 @@ def crystal_asymptotics_E_pattern(
     q^{-(k + (n-k+1) - 2)} = q^{-(n-1)} ...; return the leading term
     of each entry for the single-term asymptotic behavior.
     """
-    n = rep.n
     out = sp.zeros(rep.dim, rep.dim)
     for k in range(1, rep.dim):
         coeff = rep.E[k - 1, k]
@@ -151,7 +149,7 @@ def three_limit_summary(n: int) -> str:
     h_match = sp.simplify(h - comm_lim) == sp.zeros(rep.dim, rep.dim)
 
     lines = [f"Three regimes for V_{n} (dimension {rep.dim}):"]
-    lines.append(f"  (L1) Classical q->1:")
+    lines.append("  (L1) Classical q->1:")
     lines.append(f"      h-eigenvalues = {h_diag}")
     lines.append(f"      [E,F] -> h verified? {h_match}")
     lines.append(f"  (L2) Generic q: K-weights = {[sp.simplify(w) for w in rep.weights]}")

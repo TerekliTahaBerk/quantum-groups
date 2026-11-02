@@ -1,11 +1,12 @@
 """Tests of three regimes (classical / generic q / root of unity)."""
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
     build_representation,
-    classical_K_to_h, classical_commutator_EF,
+    classical_commutator_EF,
+    classical_K_to_h,
     root_of_unity_substitution,
 )
 

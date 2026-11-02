@@ -19,7 +19,6 @@ This module constructs the crystal as a directed labelled graph: nodes carry
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
 
 import networkx as nx
 
@@ -64,14 +63,14 @@ def build_crystal(n: int) -> nx.DiGraph:
     return G
 
 
-def crystal_nodes(n: int) -> List[CrystalNode]:
+def crystal_nodes(n: int) -> list[CrystalNode]:
     """Return the nodes of B(n) as a list of CrystalNode objects."""
     n = as_int(n, "n", minimum=0)
     return [CrystalNode(index=k, weight=n - 2 * k, label=f"b_{k}")
             for k in range(n + 1)]
 
 
-def f_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
+def f_tilde(node: CrystalNode, n: int) -> CrystalNode | None:
     """Apply the crystal operator tilde_f."""
     if node.index >= n:
         return None
@@ -79,7 +78,7 @@ def f_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
                        label=f"b_{node.index + 1}")
 
 
-def e_tilde(node: CrystalNode, n: int) -> Optional[CrystalNode]:
+def e_tilde(node: CrystalNode, n: int) -> CrystalNode | None:
     """Apply the crystal operator tilde_e."""
     if node.index <= 0:
         return None

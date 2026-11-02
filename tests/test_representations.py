@@ -9,23 +9,22 @@ Structural tests of V_n representations:
 - strict lower-triangular F and strict upper-triangular E
 """
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
+    CrystalNode,
+    build_crystal,
     build_representation,
-    highest_weight_vector,
-    lowest_weight_vector,
-    weight_of,
     classical_limit,
     crystal_string,
-    build_crystal,
-    f_tilde,
     e_tilde,
-    CrystalNode,
+    f_tilde,
+    highest_weight_vector,
+    lowest_weight_vector,
     q,
+    weight_of,
 )
-
 
 # ---------------------------------------------------------------------------
 # Dimension and structure

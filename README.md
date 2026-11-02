@@ -9,6 +9,7 @@ Exact symbolic verification of R-matrix and Yang–Baxter identities for
 [![Python](https://img.shields.io/pypi/pyversions/quantum-group.svg)](https://pypi.org/project/quantum-group/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![tests](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml/badge.svg)](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/tests.yml)
+[![docs](https://github.com/TerekliTahaBerk/quantum-groups/actions/workflows/docs.yml/badge.svg)](https://tereklitahaberk.github.io/quantum-groups/)
 
 `quantum-group` builds the explicit matrices behind concrete quantum-group
 calculations with SymPy, forms the difference between the two sides of an
@@ -24,8 +25,9 @@ system and not a theorem prover.
 > submitted 6 October 2026.
 
 [Quickstart](#quickstart) · [Reproduce the paper](docs/reproducibility.md) ·
-[Documentation](docs/README.md) · [Citation](#citation) ·
-[Contributing](CONTRIBUTING.md)
+[Documentation site](https://tereklitahaberk.github.io/quantum-groups/) ·
+[API reference](https://tereklitahaberk.github.io/quantum-groups/api/) ·
+[Citation](#citation) · [Contributing](CONTRIBUTING.md)
 
 ## Main features
 
@@ -50,7 +52,7 @@ Matplotlib ≥ 3.5 (installed automatically). Distribution name
 From PyPI:
 
 ```bash
-python3 -m pip install quantum-group==1.1.1
+python3 -m pip install quantum-group==1.1.2
 ```
 
 From this repository (for development, or to install a specific commit):
@@ -123,7 +125,7 @@ python3 -m pytest          # or: make check
 Plots use Matplotlib's noninteractive `Agg` backend in the tests. The
 `GL_q(2|1)` checks use symbolic 81x81 matrices; the full suite took about
 15 s when prepared for 1.1.0 (Python 3.12, SymPy 1.14, x86-64 Linux; the
-suite is unchanged in 1.1.1). Targeted runs, e.g.
+tests are unchanged in substance through 1.1.2). Targeted runs, e.g.
 `python3 -m pytest tests/test_supergroup_gl21.py`, also work.
 
 ## Conventions and mathematical background
@@ -234,7 +236,7 @@ tests/                pytest suite; doctests in quantum_group/ run with it
 examples/             quickstart.py, sample_verification.py (+ expected output)
 benchmarks/           timing script and recorded results
 notebooks/            exploratory notebook
-docs/                 documentation index and paper reproducibility guide
+docs/                 documentation site sources (mkdocs.yml), reproducibility guide
 scipost/              userguide (SciPost Physics Codebases), Listings 2-6, QuaGroup cross-check
 arxiv/                arXiv preprint sources and PDF, generated from scipost/
 thesis/               the undergraduate thesis (Turkish), its poster and errata; see thesis/README.md
@@ -243,8 +245,9 @@ MANUSCRIPT_CODE_MAPPING.md
 main.py               demo script (writes outputs/V4_combined.png)
 ```
 
-Makefile targets: `make check`, `make quickstart`, `make listings`,
-`make paper`, `make demo`, `make figures` and `make benchmark-smoke`.
+Makefile targets: `make check`, `make lint`, `make coverage`, `make docs`,
+`make quickstart`, `make listings`, `make paper`, `make demo`,
+`make figures` and `make benchmark-smoke`.
 Corrections to the submitted thesis (`thesis/Lisans Bitirme Tezi.pdf`) are
 listed in [`thesis/ERRATA.md`](thesis/ERRATA.md).
 

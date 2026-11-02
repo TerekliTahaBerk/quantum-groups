@@ -33,3 +33,9 @@ outputs/
 
 # macOS
 .DS_Store
+
+# Documentation site and coverage output
+site/
+.coverage
+coverage.xml
+htmlcov/

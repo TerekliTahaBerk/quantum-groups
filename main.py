@@ -29,11 +29,11 @@ import sympy as sp
 
 from quantum_group import (
     QuantumGroupSL2,
-    q_integer,
-    q_factorial,
     classical_limit,
-    plot_combined,
     crystal_string,
+    plot_combined,
+    q_factorial,
+    q_integer,
     summarize_GLq21_ybe,
 )
 

@@ -1,14 +1,17 @@
 """Tests of the R-matrix, Yang–Baxter equation and braid relation."""
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
-    R_matrix_V1, R_check_V1,
-    qybe_holds, braid_relation_holds,
-    R_check_eigenvalues, hecke_skein_relation_check,
+    R_check_eigenvalues,
+    R_check_V1,
+    R_matrix_V1,
+    braid_relation_holds,
+    hecke_skein_relation_check,
     jones_skein_relation_check,
     q,
+    qybe_holds,
 )
 
 

@@ -2,6 +2,11 @@
 
 `quantum-group` verifies explicit quantum-group matrices with exact SymPy
 arithmetic. Start with the [README quickstart](../README.md#quickstart).
+
+The **documentation site**, <https://tereklitahaberk.github.io/quantum-groups/>,
+contains the guides below and an API reference generated from the
+docstrings. It is built from this directory and `mkdocs.yml`
+(`make docs`); this file is the index for reading the sources on GitHub.
 The [paper on arXiv](https://arxiv.org/abs/2610.07867) includes the
 mathematical conventions, worked examples and a public API reference
 (Appendix A).

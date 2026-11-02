@@ -1,14 +1,16 @@
 """Tests of tensor products and Clebsch–Gordan decomposition."""
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
     build_representation,
-    tensor_product, cg_summands, find_highest_weight_vectors,
-    verify_on_representation,
     cg_decomposition_summary,
+    cg_summands,
+    find_highest_weight_vectors,
     q,
+    tensor_product,
+    verify_on_representation,
 )
 
 
@@ -43,7 +45,7 @@ def test_highest_weight_vectors_killed_by_E(m, n):
     B = build_representation(n)
     T = tensor_product(A, B)
     hws = find_highest_weight_vectors(T)
-    for k, v in hws:
+    for _k, v in hws:
         Ev = sp.simplify(T.E * v)
         assert Ev == sp.zeros(T.dim, 1)
 

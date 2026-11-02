@@ -19,7 +19,6 @@ Basis order: k = 0, 1, ..., n; v_k is represented by the kth standard basis vect
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List
 
 import sympy as sp
 
@@ -36,7 +35,7 @@ class Representation:
     F: sp.Matrix
     K: sp.Matrix
     K_inv: sp.Matrix
-    weights: List[sp.Expr]  # K-eigenvalues q^{n-2k}, k=0..n
+    weights: list[sp.Expr]  # K-eigenvalues q^{n-2k}, k=0..n
 
     def __repr__(self) -> str:  # pragma: no cover
         return f"<U_q(sl_2) representation V_{self.n}, dimension={self.dim}>"

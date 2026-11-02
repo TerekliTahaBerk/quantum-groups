@@ -5,24 +5,23 @@ test_relations.py
 Matrix-level tests of q-arithmetic and U_q(sl_2) relations.
 """
 
-import sympy as sp
 import pytest
+import sympy as sp
 
 from quantum_group import (
     QuantumGroupSL2,
+    all_relations_hold,
     build_representation,
     build_representation_core,
+    classical_limit,
+    is_zero_matrix,
+    q,
+    q_binomial,
+    q_factorial,
+    q_integer,
     verify_on_representation,
     verify_relations_core,
-    all_relations_hold,
-    is_zero_matrix,
-    q_integer,
-    q_factorial,
-    q_binomial,
-    classical_limit,
-    q,
 )
-
 
 # ---------------------------------------------------------------------------
 # q-arithmetic

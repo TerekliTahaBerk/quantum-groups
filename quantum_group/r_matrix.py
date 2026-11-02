@@ -38,15 +38,12 @@ from __future__ import annotations
 import math
 import warnings
 from dataclasses import dataclass
-from typing import Dict
 
 import sympy as sp
 
-from .representations import Representation
 from ._validation import as_int, check_square
 from .linalg import is_zero_matrix, kron
 from .utils import q as default_q
-
 
 # ---------------------------------------------------------------------------
 # R-matrix and its braided version
@@ -225,7 +222,7 @@ def qybe_holds(R: sp.Matrix) -> bool:
 # Spectral decomposition
 # ---------------------------------------------------------------------------
 
-def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
+def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> dict[sp.Expr, int]:
     """Return eigenvalues and multiplicities of Ř on V_1 ⊗ V_1.
 
     Generically q has multiplicity 3 and −q^{-1} multiplicity 1. These
@@ -238,7 +235,7 @@ def R_check_eigenvalues(q_sym: sp.Expr = default_q) -> Dict[sp.Expr, int]:
     return {sp.simplify(k): v for k, v in raw.items()}
 
 
-def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
+def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> dict[str, bool]:
     """Check the Hecke (skein) relation.
 
     The quadratic Hecke relation between Ř and Ř^{-1} is:
@@ -258,7 +255,7 @@ def hecke_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
     }
 
 
-def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> Dict[str, bool]:
+def jones_skein_relation_check(q_sym: sp.Expr = default_q) -> dict[str, bool]:
     """Deprecated: use ``hecke_skein_relation_check``.
 
     The old name was misleading: this verifies the Hecke relation, not a

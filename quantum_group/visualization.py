@@ -19,7 +19,7 @@ All functions return a Matplotlib `Figure`; the caller handles display or saving
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import cast
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -27,12 +27,11 @@ import networkx as nx
 from ._validation import as_int
 from .crystal import build_crystal
 
-
 # ---------------------------------------------------------------------------
 # Weight diagram
 # ---------------------------------------------------------------------------
 
-def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
+def plot_weight_diagram(n: int, ax: plt.Axes | None = None) -> plt.Figure:
     """Plot the weight diagram of V_n as points on a number line.
 
     The weights are n, n-2, ..., -n+2, -n.
@@ -43,7 +42,8 @@ def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
     if ax is None:
         fig, ax = plt.subplots(figsize=(max(4, n + 2), 1.8))
     else:
-        fig = ax.figure
+        # An Axes placed in a SubFigure reports that SubFigure here.
+        fig = cast(plt.Figure, ax.figure)
 
     ax.axhline(0, color="lightgray", linewidth=1, zorder=0)
     ax.scatter(weights, [0] * len(weights), s=120, color="C0", zorder=3)
@@ -70,14 +70,15 @@ def plot_weight_diagram(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
 # Crystal graph
 # ---------------------------------------------------------------------------
 
-def plot_crystal_graph(n: int, ax: Optional[plt.Axes] = None) -> plt.Figure:
+def plot_crystal_graph(n: int, ax: plt.Axes | None = None) -> plt.Figure:
     """Plot the crystal graph B(n) as a horizontal directed path."""
     G = build_crystal(n)
 
     if ax is None:
         fig, ax = plt.subplots(figsize=(max(5, n + 2), 2.0))
     else:
-        fig = ax.figure
+        # An Axes placed in a SubFigure reports that SubFigure here.
+        fig = cast(plt.Figure, ax.figure)
 
     pos = {f"b_{k}": (k, 0) for k in range(n + 1)}
 
